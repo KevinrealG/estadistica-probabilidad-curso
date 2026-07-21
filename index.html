@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura, Planeación y Plan de Videos: Estadística y Probabilidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        canvas: {
+                            blue: '#0374B5',
+                            dark: '#2D3B45',
+                            light: '#EEF7FA',
+                            border: '#BCE0EF',
+                            accent: '#02588A'
+                        },
+                        youtube: '#FF0000',
+                        reel: '#E1306C',
+                        notion: {
+                            bg: '#FFFFFF',
+                            hover: '#F1F3F5',
+                            border: '#E9ECEF',
+                            text: '#37352F',
+                            muted: '#787774',
+                            toggleBg: '#F8F9FA'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .toggle-icon {
+            transition: transform 0.2s ease-in-out;
+        }
+        details[open] > summary .toggle-icon {
+            transform: rotate(90deg);
+        }
+        .completed-item {
+            text-decoration: line-through;
+            opacity: 0.55;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed antialiased min-h-screen pb-20">
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-canvas-blue text-white p-2 rounded-lg font-bold text-base sm:text-lg tracking-wider shadow-sm">
+                    CBAS-E01A
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-canvas-dark leading-tight">Estadística y Probabilidad</h1>
+                    <p class="text-xs text-gray-500 hidden sm:block">Planeador Docente & Control de Producción Audiovisual (16 Semanas)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <label for="quickWeekSelect" class="text-xs font-semibold text-gray-500 hidden md:inline-block">Ir a Semana:</label>
+                <select id="quickWeekSelect" onchange="scrollToWeek(this.value)" class="text-xs bg-gray-100 border border-gray-300 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-canvas-blue">
+                    <option value="">Seleccionar semana...</option>
+                    <optgroup label="Corte I: Descriptiva">
+                        <option value="semana-1">Semana 1: Silabo, Historia & Sesgos</option>
+                        <option value="semana-2">Semana 2: Variables Categóricas & PowerBI</option>
+                        <option value="semana-3">Semana 3: Tendencia Central</option>
+                        <option value="semana-4">Semana 4: Dispersión & Boxplot</option>
+                        <option value="semana-5">Semana 5: Agrupadas & Parcial I</option>
+                    </optgroup>
+                    <optgroup label="Corte II: Bivariado & Probabilidad">
+                        <option value="semana-6">Semana 6: Covarianza & Pearson</option>
+                        <option value="semana-7">Semana 7: Regresión Lineal</option>
+                        <option value="semana-8">Semana 8: Exp. Aleatorios</option>
+                        <option value="semana-9">Semana 9: Bayes & Condicional</option>
+                        <option value="semana-10">Semana 10: Conteo & Statgraphics</option>
+                    </optgroup>
+                    <optgroup label="Corte III: Modelos Probabilísticos">
+                        <option value="semana-11">Semana 11: V.A. Discretas</option>
+                        <option value="semana-12">Semana 12: Binomial & Poisson</option>
+                        <option value="semana-13">Semana 13: V.A. Continuas</option>
+                        <option value="semana-14">Semana 14: Distribución Normal</option>
+                        <option value="semana-15">Semana 15: Apl. Normal</option>
+                        <option value="semana-16">Semana 16: Sustentaciones</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-gray-100 border-t border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 text-xs sm:text-sm font-medium overflow-x-auto no-scrollbar">
+                <button id="tab-btn-1" onclick="switchTab('plan-curso')" class="py-3 px-4 border-b-2 font-bold flex items-center gap-2 border-canvas-blue text-canvas-blue bg-white shadow-sm transition-all rounded-t-md whitespace-nowrap">
+                    <span>📚 Pestaña 1: Plan de Curso</span>
+                    <span class="bg-canvas-light text-canvas-blue text-[10px] font-semibold px-2 py-0.5 rounded-full border border-canvas-border">16 Semanas</span>
+                </button>
+                <button id="tab-btn-2" onclick="switchTab('videos-recursos')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>🎬 Pestaña 2: Plan de Videos & Recursos</span>
+                    <span class="bg-red-50 text-red-600 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-red-200">YouTube / Reels</span>
+                </button>
+                <button id="tab-btn-3" onclick="switchTab('proyectos')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>🚀 Pestaña 3: Proyectos Integradores & Rúbricas</span>
+                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200">Corte I, II y III</span>
+                </button>
+                <button id="tab-btn-4" onclick="switchTab('laboratorios')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>💻 Pestaña 4: Laboratorios</span>
+                    <span class="bg-indigo-50 text-indigo-700 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-indigo-200">Guías & YouTube</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-canvas-dark text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-gray-700 hidden flex items-center gap-2 transition-all">
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">Progreso guardado correctamente</span>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA 1: PLAN DE CURSO -->
+        <!-- ========================================== -->
+        <div id="tab-plan-curso" class="tab-content active space-y-10">
+
+            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8 border-l-8 border-l-canvas-blue">
+                <div class="flex flex-col lg:flex-row justify-between lg:items-start gap-6">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-canvas-light text-canvas-blue border border-canvas-border">
+                            📅 Inicio: 3 de Agosto | 16 Semanas
+                        </div>
+                        <h2 class="text-2xl font-bold text-canvas-dark">Estadística y Probabilidad (CBAS-E01A)</h2>
+                        <p class="text-sm text-gray-600 max-w-3xl">
+                            Curso práctico orientado al desarrollo de habilidades analíticas y de toma de decisiones basadas en datos. Sincronizado con notas de Notion y laboratorios de software especializado (Excel, Power BI, Python, Statgraphics y R).
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 min-w-[260px] space-y-2 text-xs">
+                        <div class="flex justify-between py-1 border-b border-gray-200">
+                            <span class="text-gray-500">⏱️ Intensidad Horaria:</span>
+                            <span class="font-bold text-gray-800">144 horas (64 HAD / 80 HTI)</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-gray-200">
+                            <span class="text-gray-500">🏫 Clase Teórica 1:</span>
+                            <span class="font-medium text-gray-800">1 hora / semana</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-gray-200">
+                            <span class="text-gray-500">📚 Clase Teórica 2:</span>
+                            <span class="font-medium text-gray-800">2 horas / semana</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span class="text-gray-500">💻 Lab. Práctico:</span>
+                            <span class="font-medium text-canvas-blue">1 hora (Sala de Cómputo)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-8">
+                <div class="border-b border-gray-200 pb-3 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-canvas-dark">📊 Resumen General del Plan de Estudios</h2>
+                        <p class="text-xs text-gray-500">Utiliza los botones de la tabla para desplazarte directamente a la planeación detallada semana a semana.</p>
+                    </div>
+                    <a href="#planeacion-semanal" class="text-xs font-semibold text-canvas-blue hover:underline flex items-center gap-1">
+                        Ir a la Planeación ⬇️
+                    </a>
+                </div>
+
+                <!-- CORTE I -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte I: Estadística Descriptiva y Análisis Univariado (Semanas 1 a 5)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 30%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 sm:p-4 w-24">Semana</th>
+                                    <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
+                                    <th class="p-3 sm:p-4">Recursos / Notion</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 1</td>
+                                    <td class="p-3 sm:p-4">Sílabo, Historia de la estadística, sesgos cognitivos (Steve, moneda) y conceptos básicos.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 1:</strong> Microsoft Forms & Casos en vivo.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Notion S1, Forms de Historia.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-1')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S1 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 2</td>
+                                    <td class="p-3 sm:p-4">Variables categóricas, tablas de frecuencias y distribuciones cualitativas.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 2:</strong> Gráficos en Power BI Desktop.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Notion S2, Power BI.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-2')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S2 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 3</td>
+                                    <td class="p-3 sm:p-4">Medidas de tendencia central y posición (media, mediana, moda, percentiles).</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 3:</strong> Distribuciones cualitativas en Excel.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Excel, Guía No. 3.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-3')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S3 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 4</td>
+                                    <td class="p-3 sm:p-4">Medidas de dispersión (rango, varianza, desv. est.), Boxplots y atípicos.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 4:</strong> Boxplots y detección de atípicos en Excel.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Excel, Dataset univariado.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-4')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S4 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 5</td>
+                                    <td class="p-3 sm:p-4">Frecuencias agrupadas e histogramas.Kurtosis Y Sesgo. Parcial Corte I.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 5:</strong> Limpieza de datos en Power BI.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Power BI, Datasets ODS.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-5')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S5 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CORTE II -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte II: Análisis Bivariado, Regresión y Probabilidades (Semanas 6 a 10)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 30%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 sm:p-4 w-24">Semana</th>
+                                    <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
+                                    <th class="p-3 sm:p-4">Recursos</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 6</td>
+                                    <td class="p-3 sm:p-4">Distribuciones bidimensionales, covarianza y Pearson ($r_{xy}$).</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 6:</strong> Muestreo de medias en Excel.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Excel, Guía No. 6.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-6')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S6 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 7</td>
+                                    <td class="p-3 sm:p-4">Regresión lineal simple, mínimos cuadrados y $R^2$.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 7:</strong> Python en Google Colab (Pandas/NumPy).</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Google Colab Notebook.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-7')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S7 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 8</td>
+                                    <td class="p-3 sm:p-4">Fundamentos de probabilidad: aleatorios vs. determinísticos, axiomas.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 8:</strong> EDA con Python en Colab (Parte 1).</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Google Colab, Python scripts.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-8')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S8 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 9</td>
+                                    <td class="p-3 sm:p-4">Probabilidad condicional, ley de probabilidad total y Teorema de Bayes.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 9:</strong> EDA con Python (Seaborn/Plotly - Parte 2).</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Google Colab, Seaborn.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-9')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S9 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 10</td>
+                                    <td class="p-3 sm:p-4">Técnicas de conteo (permutaciones y combinaciones). Parcial II.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 10:</strong> Análisis de 1 variable con Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Statgraphics Licenciado.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-10')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S10 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CORTE III -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte III: Modelos Probabilísticos y Cierre (Semanas 11 a 16)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 40%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 sm:p-4 w-24">Semana</th>
+                                    <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
+                                    <th class="p-3 sm:p-4">Recursos</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 11</td>
+                                    <td class="p-3 sm:p-4">Variables aleatorias discretas, valor esperado y varianza.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 11:</strong> Análisis de subgrupos en Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-11')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S11 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 12</td>
+                                    <td class="p-3 sm:p-4">Modelos discretos: Binomial, Poisson e Hipergeométrica.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 12:</strong> RStudio / Posit Cloud (Partes 1 y 2).</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">RStudio, Scripts R.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-12')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S12 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 13</td>
+                                    <td class="p-3 sm:p-4">Variables aleatorias continuas, densidad y distribución Uniforme.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 13:</strong> Demostración de Teoremas Límite (TLC).</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Google Colab interactivo.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-13')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S13 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 14</td>
+                                    <td class="p-3 sm:p-4">Distribución Normal y estandarización Z.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 14:</strong> Simulación de modelos discretos en Python/Excel.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Excel / Python.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-14')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S14 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 15</td>
+                                    <td class="p-3 sm:p-4">Aplicaciones prácticas de la normal y aproximaciones.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 15:</strong> Cálculo de probabilidades continuas.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Python / Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-15')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S15 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 16</td>
+                                    <td class="p-3 sm:p-4">Sustentación de Proyectos Finales y notas definitivas.</td>
+                                    <td class="p-3 sm:p-4"><strong>Lab 16:</strong> Sesión de nivelación y entrega final.</td>
+                                    <td class="p-3 sm:p-4 text-gray-500">Canvas / SAVIO.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-16')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S16 ⬇️
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="planeacion-semanal" class="space-y-6 pt-6">
+                <div class="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-4 sticky top-16 z-40">
+                    <div>
+                        <h2 class="text-xl font-bold text-canvas-dark">📝 Planeación Semana a Semana (Detalle Notion S1 y S2)</h2>
+                        <p class="text-xs text-gray-500">Despliega los toggles para ver/completar las instrucciones detalladas de clase basadas en tus páginas de Notion.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleAllDetails(true)" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md font-medium border border-gray-300 transition-colors">
+                            📂 Desplegar Todos
+                        </button>
+                        <button onclick="toggleAllDetails(false)" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md font-medium border border-gray-300 transition-colors">
+                            📁 Plegar Todos
+                        </button>
+                        <button onclick="resetCheckboxes()" class="text-xs bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-md font-medium border border-red-200 transition-colors">
+                            🔄 Reiniciar Progreso
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+
+                    <!-- SEMANA 1: NOTION DETAILED SYNC -->
+                    <div id="semana-1" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 1</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Semana 1: Silabo, historia, importancia, conceptos breves</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I • 3 Horas Teóricas + 1 Hora Lab</span>
+                        </div>
+
+                        <div class="p-6 space-y-4 text-sm">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Presentación de los estudiantes:</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>1. Darle un caso Pregunta y que expliquen como toman desición y que me digan sus nombres.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>a. ejemplo 1: nuevo empleado.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>b. como eligieron sus carreras.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>c. Microsoft Forms: <a href="https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUQzBTTk0xQTdSVVBTRUFWNURZMExPRlVJQS4u" target="_blank" class="text-canvas-blue underline">Crear encuestas y formularios</a></span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>d. Steve es muy tímido y retraído, siempre servicial, pero poco interesado por la gente o por el mundo real. De carácter disciplinado y metódico, necesitaba ordenarlo y organizarlo todo, y tiene obsesión por el detalle. ¿Es probable que Steve sea un bibliotecario o un agricultor?</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>e. ¿aceptaría usted una apuesta con lanzamiento de una moneda en la que ganara 130 dólares si saliese cara y perdiera 100 dólares si saliese cruz?</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>f. Sesgo de asociación</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>g. Aversión a la perdida.</span>
+                                        </label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Explicación del marco de una elección</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Análisis del framing o encuadre en la toma de decisiones gerenciales.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Importancia de los Datos</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> El rol activo de los datos crudos en la construcción de información corporativa y social.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Importancia de la Estadística.</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. Los estudiantes dan ejemplos de como se puede aplicar la estadística a sus vidas y a sus carreras.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Quiz de repaso Historia</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. <a href="https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUN0NOTlU2OUQ1QVpZRVM1MFIwUk1RSVk0Wi4u" target="_blank" class="text-canvas-blue underline font-medium">La historia de la estadística (Microsoft Forms)</a></label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Discutimos la historia de la estadística, pasar de contar en piedra, cuero, a papeles a computadores a machine learning y Probabilidad.</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Evolución temporal de los registros censales hasta la inferencia automatizada.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Quiz de clasificación de Variables y conceptos básicos de estadística</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. Evaluación interactiva en Quizzis.</label>
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 2. Clasificación de variables cualitativas y cuantitativas.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Mi investigación (Definición del proyecto integrador inicial)</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Asignación del problema ODS / comunitario para el equipo.</label>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 2 -->
+                    <div id="semana-2" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 2</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Semana 2: Variables Catégoricas & Tablas de Frecuencia</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-3" open>
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Variables Categóricas, Frecuencia Absoluta y Relativa en Power BI</span>
+                                </summary>
+                                <div class="mt-3 pl-6 space-y-2 text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Definición y distinción de variables nominales y ordinales.</label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Construcción manual de tablas de frecuencia ($f_i, h_i, p_i$).</label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 2:</strong> Visualización de barras apiladas y diagramas circulares en Power BI Desktop.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- SEMANAS 3 A 16 -->
+                    <div id="semana-3" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 3</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Medidas de Tendencia Central y Posición</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Media, Mediana, Moda y Percentiles</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Sensibilidad de la Media y Cuartiles (Q1, Q2, Q3).</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 3:</strong> Fórmulas en Excel (`PROMEDIO`, `MEDIANA`, `PERCENTIL.INC`).</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-4" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 4</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Medidas de Dispersión, Forma y Boxplot</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Rango Intercuartílico (IQR) y Outliers</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Varianza, Desviación Estándar y Coeficiente de Variación.</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 4:</strong> Diagrama de Caja y Bigotes en Excel.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-5" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 5</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Frecuencias Agrupadas e Histogramas. Kurtosis y Sesgo (Parcial I)</h3>
+                            </div>
+                            <span class="text-xs text-emerald-600 font-bold">Examen Parcial I (30%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Sturges y Cierre de Corte</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Regla de Sturges e Histogramas de Frecuencia.</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> 📝 Examen Parcial I y Entrega de Mi Proyecto Corte I.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-6" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 6</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Covarianza y Coeficiente de Pearson</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Análisis Bivariado</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Cálculo de covarianza muestral y correlación lineal.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-7" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 7</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Regresión Lineal Simple y Mínimos Cuadrados</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Python Colab & Regresión</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Ajuste de pendiente e intercepto.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-8" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 8</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Fundamentos de Probabilidad</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Axiomas y Espacio Muestral</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Definición clásica y frecuentista de probabilidad.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-9" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 9</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Probabilidad Condicional y Teorema de Bayes</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Bayes y Árboles de Decisión</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Resolución de casos con diagramas de árbol.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-10" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 10</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Técnicas de Conteo y Parcial II</h3>
+                            </div>
+                            <span class="text-xs text-blue-600 font-bold">Examen Parcial II (30%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Permutaciones y Combinaciones</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Evaluaciones parciales y entrega de proyecto Corte II.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-11" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 11</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Variables Aleatorias Discretas</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Valor Esperado E(X)</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Esperanza matemática y varianza de V.A. discretas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-12" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 12</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Distribuciones Binomial y Poisson</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Modelos Discretos en RStudio</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Funciones `dbinom`, `dpois` en Posit Cloud.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-13" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 13</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Variables Aleatorias Continuas</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Funciones de Densidad y Uniforme</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Integrales de densidad y cálculo de áreas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-14" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 14</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Distribución Normal y Estandarización Z</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Campana de Gauss</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Uso de tabla Z y funciones estadísticas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-15" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 15</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Aplicaciones Prácticas y Teorema del Límite Central</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Simulación TLC</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Demostración de convergencia en Python/R.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-16" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 16</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Sustentación Final de Proyectos</h3>
+                            </div>
+                            <span class="text-xs text-purple-700 font-bold">Cierre General (40%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Presentaciones Orales</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Sustentación ante jurados y notas definitivas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA 2: PLAN DE VIDEOS & RECURSOS -->
+        <!-- ========================================== -->
+        <div id="tab-videos-recursos" class="tab-content space-y-8">
+            <section class="bg-gradient-to-r from-canvas-dark via-gray-800 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-3xl space-y-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/20">
+                        🎬 Checklist de Producción & Entrega de Videos
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Plan de Videos: YouTube & Reels</h2>
+                    <p class="text-xs sm:text-sm text-gray-200">
+                        Ingresa tus links de YouTube/Reels una vez grabados y mantén al día tus fechas límite. El sistema calcula automáticamente el progreso de producción.
+                    </p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Videos YouTube Publicados</p>
+                        <h3 id="yt-count" class="text-2xl font-black text-youtube">0 / 8</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-red-50 text-youtube rounded-xl flex items-center justify-center font-bold text-xl">▶</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Reels / Shorts Publicados</p>
+                        <h3 id="reels-count" class="text-2xl font-black text-reel">0 / 8</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-pink-50 text-reel rounded-xl flex items-center justify-center font-bold text-xl">📱</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Progreso Global Producción</p>
+                        <h3 id="total-progress-percent" class="text-2xl font-black text-canvas-blue">0%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-canvas-blue rounded-xl flex items-center justify-center font-bold text-xl">🚀</div>
+                </div>
+            </section>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="font-bold text-canvas-dark text-base">📋 Gestor de Enlaces Audiovisuales por Semana</h3>
+                    <button onclick="saveAllVideoLinks()" class="bg-canvas-blue hover:bg-canvas-accent text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-sm">
+                        💾 Guardar Todos los Links
+                    </button>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <!-- Semana 1 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 1</span>
+                                <span>Sílabo, Historia, Importancia y Conceptos Básicos</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Fecha Límite: 2 Ago 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube (8-12 min)</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s1" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado/Publicado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Introducción a la Estadística y el Dilema de Steve (Sesgo de Disponibilidad).</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s1" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s1')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical (&lt;60 seg)</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s1" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado/Publicado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "¿Steve es bibliotecario o agricultor? La trampa mental que el 90% comete."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s1" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s1')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 2 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 2</span>
+                                <span>Variables Categóricas y Tablas de Frecuencia</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Fecha Límite: 9 Ago 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s2" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Cómo construir tablas de frecuencia para variables cualitativas y dashboards en Power BI.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s2" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s2')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s2" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "¡Deja de usar gráficos de pastel con más de 5 categorías! Haz esto en Power BI."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s2" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s2')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 3 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 3</span>
+                                <span>Medidas de Tendencia Central y Posición</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Fecha Límite: 16 Ago 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s3" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Media vs. Mediana: Cuándo la media te miente en los datos financieros.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s3" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s3')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s3" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Si Bill Gates entra a un bar, ¡todos son millonarios en promedio! La mentira del promedio."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s3" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s3')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 4 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 4</span>
+                                <span>Medidas de Dispersión y Boxplots</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">⏱️ Fecha Límite: 23 Ago 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ YouTube: Boxplots y Outliers en Excel</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s4" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s4" placeholder="URL YouTube" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s4')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel: ¿Qué es un outlier y por qué arruina tu modelo?</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s4" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s4" placeholder="URL Reel" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s4')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 5 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 5</span>
+                                <span>Histogramas y Regla de Sturges</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">⏱️ Fecha Límite: 30 Ago 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ YouTube: Sturges e Histogramas en PowerBI</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s5" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s5" placeholder="URL YouTube" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s5')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel: Cómo calcular K clases en 15 segundos</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s5" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s5" placeholder="URL Reel" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s5')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 6-7 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 6-7</span>
+                                <span>Covarianza, Pearson y Regresión Lineal en Python</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">⏱️ Fecha Límite: 13 Sep 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ YouTube: Regresión Lineal desde Cero en Colab</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s6" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s6" placeholder="URL YouTube" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s6')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel: Correlación NO es Causalidad (Ej. helados vs ahogamientos)</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s6" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s6" placeholder="URL Reel" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s6')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 8-9 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 8-9</span>
+                                <span>Probabilidad Condicional y Teorema de Bayes</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">⏱️ Fecha Límite: 27 Sep 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ YouTube: Teorema de Bayes aplicado a Test Médicos</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s8" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s8" placeholder="URL YouTube" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s8')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel: ¿Por qué un resultado positivo no siempre es 99% seguro?</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s8" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s8" placeholder="URL Reel" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s8')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semana 12-14 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 12-14</span>
+                                <span>Distribución Binomial, Poisson y Normal</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">⏱️ Fecha Límite: 1 Nov 2026</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ YouTube: La Distribución Normal y Estandarización Z</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s12" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s12" placeholder="URL YouTube" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s12')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel: ¿Por qué casi todo en la naturaleza sigue la Campana de Gauss?</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s12" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s12" placeholder="URL Reel" class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s12')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+                <h3 class="font-bold text-canvas-dark text-base border-b pb-3">📁 Banco de Recursos y Repositorio de Materiales</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">📊 Datasets Públicos (ODS)</h4>
+                        <p class="text-gray-600">Bases de datos para talleres en Excel, Power BI y Colab.</p>
+                        <a href="https://unstats.un.org/sdgs/" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">🌐 Banco Mundial Datos Abiertos ↗</a>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">💻 Notebooks Colab / Python</h4>
+                        <p class="text-gray-600">Plantillas en Python para EDA y Regresión Lineal.</p>
+                        <a href="https://colab.research.google.com" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">🐍 Ir a Google Colab ↗</a>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">📈 Licencias & Software</h4>
+                        <p class="text-gray-600">Acceso a Statgraphics, Power BI y RStudio Cloud.</p>
+                        <a href="https://posit.cloud" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">☁️ Posit Cloud RStudio ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA 3: PROYECTOS INTEGRADORES & RÚBRICAS -->
+        <!-- ========================================== -->
+        <div id="tab-proyectos" class="tab-content space-y-10">
+            <section class="bg-gradient-to-r from-canvas-dark via-canvas-accent to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-4xl space-y-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/20">
+                        🎯 Aprendizaje Basado en Proyectos (ABP)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Proyectos Integradores & Rúbricas 5x5</h2>
+                    <p class="text-xs sm:text-sm text-gray-100">
+                        Guías detalladas y rúbricas de evaluación con igual ponderación (20% por criterio) para los Cortes I, II y III.
+                    </p>
+                </div>
+            </section>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div class="text-xs font-bold text-canvas-dark">🔍 Filtrar Vista por Proyecto:</div>
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <button onclick="filterProjectView('all')" id="btn-proj-all" class="px-3 py-1.5 rounded-lg font-semibold bg-canvas-blue text-white shadow-sm transition-all">🌐 Ver Todos</button>
+                    <button onclick="filterProjectView('corte-1')" id="btn-proj-corte-1" class="px-3 py-1.5 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all">📌 Corte I: Análisis Univariado</button>
+                    <button onclick="filterProjectView('corte-2')" id="btn-proj-corte-2" class="px-3 py-1.5 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all">📊 Corte II: Regresión</button>
+                    <button onclick="filterProjectView('corte-3')" id="btn-proj-corte-3" class="px-3 py-1.5 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all">🎯 Corte III: Simulación</button>
+                </div>
+            </div>
+
+            <!-- PROYECTO CORTE I ACTUALIZADO -->
+            <section id="proj-card-corte-1" class="proj-section space-y-6">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden border-l-8 border-l-emerald-500 p-6 sm:p-8 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b pb-4 gap-2">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full">Corte I • 30%</span>
+                            <h3 class="text-xl sm:text-2xl font-bold text-canvas-dark mt-2">Proyecto Corte I: Diagnóstico Exploratorio y Análisis Univariado</h3>
+                        </div>
+                        <span class="text-xs font-semibold bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">⏱️ Semanas 1 a 5</span>
+                    </div>
+
+                    <!-- 1. Descripción -->
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <h4 class="font-bold text-canvas-blue text-base">1. Descripción del Proyecto para los Estudiantes</h4>
+                        <p class="text-gray-700">
+                            <strong>Duración:</strong> Semanas 1 a 5 | <strong>Modalidad:</strong> Grupal (2 a 5 integrantes)
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Objetivo del Proyecto:</strong> Desarrollar competencias en estadística descriptiva y análisis univariado mediante la recolección, tabulación e interpretación de un dataset real asociado a uno de los <strong>Objetivos de Desarrollo Sostenible (ODS)</strong> de la ONU. Los estudiantes aplicarán tablas de frecuencia, medidas de tendencia central, medidas de dispersión y construirán una visualización interactiva desplegada en un dashboard.
+                        </p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2 mt-3">
+                            <span class="font-bold text-canvas-dark block text-xs uppercase tracking-wider">Fases de Desarrollo:</span>
+                            <ol class="list-decimal pl-5 space-y-1.5 text-gray-700">
+                                <li><strong>Selección del ODS y Dataset:</strong> Elegir un Objetivo de Desarrollo Sostenible de interés, justificar su relevancia y recolectar/limpiar un conjunto de datos con suficientes observaciones y variables cuantitativas y cualitativas.</li>
+                                <li><strong>Análisis Univariado:</strong> Calcular distribuciones de frecuencias, parámetros de tendencia central (media, mediana, moda) y dispersión (desviación estándar, varianza, rango intercuartílico).</li>
+                                <li><strong>Visualización y Dashboard:</strong> Implementar gráficos estadísticos claros (histogramas, diagramas de caja, gráficos de barras) utilizando herramientas interactivas (Streamlit, Plotly, Python o R).</li>
+                                <li><strong>Storytelling y Conclusiones:</strong> Sintetizar los hallazgos en una presentación ejecutiva orientada a la toma de decisiones basada en evidencia.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 2. Ruta de Trabajo -->
+                    <div class="space-y-3 pt-2">
+                        <h4 class="font-bold text-canvas-blue text-base">2. Ruta de Trabajo Semanal (Seguimiento y Actividades)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 space-y-1.5">
+                                <span class="font-bold text-canvas-dark block">📌 Semana 1</span>
+                                <p class="text-gray-600"><strong>Actividades:</strong> Presentación de casos de estudio sobre toma de decisiones y estadística. Conformación de equipos. Selección del ODS.</p>
+                                <p class="text-canvas-blue font-medium">Entregable: Perfil del proyecto (Tema, ODS, fuentes).</p>
+                            </div>
+                            <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 space-y-1.5">
+                                <span class="font-bold text-canvas-dark block">📌 Semana 2</span>
+                                <p class="text-gray-600"><strong>Actividades:</strong> Clasificación de variables (nominales, ordinales, discretas, continuas). Limpieza de datos en Python/R/Excel.</p>
+                                <p class="text-canvas-blue font-medium">Entregable: Dataset depurado y diccionario de datos.</p>
+                            </div>
+                            <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 space-y-1.5">
+                                <span class="font-bold text-canvas-dark block">📌 Semana 3</span>
+                                <p class="text-gray-600"><strong>Actividades:</strong> Construcción de tablas de frecuencia y cálculo de medidas de tendencia central y dispersión.</p>
+                                <p class="text-canvas-blue font-medium">Entregable: Avance analítico preliminar.</p>
+                            </div>
+                            <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 space-y-1.5">
+                                <span class="font-bold text-canvas-dark block">📌 Semana 4</span>
+                                <p class="text-gray-600"><strong>Actividades:</strong> Diseño de gráficos univariados e integración de componentes en una app o dashboard web.</p>
+                                <p class="text-canvas-blue font-medium">Entregable: Prototipo funcional del dashboard.</p>
+                            </div>
+                            <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 space-y-1.5 md:col-span-2 lg:col-span-2">
+                                <span class="font-bold text-canvas-dark block">📌 Semana 5</span>
+                                <p class="text-gray-600"><strong>Actividades:</strong> Consolidación de conclusiones conectando los resultados con el contexto real del ODS y preparación del pitch ejecutivo.</p>
+                                <p class="text-canvas-blue font-medium">Entregable: Presentación final y sustentación evaluada por rúbrica.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Rúbrica de Evaluación -->
+                    <div class="space-y-3 pt-2">
+                        <h4 class="font-bold text-canvas-blue text-base">3. Rúbrica de Evaluación - Presentación Final del Proyecto (Corte I)</h4>
+                        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-gray-100 text-canvas-dark uppercase font-semibold text-[10px] tracking-wider border-b border-gray-200">
+                                        <th class="p-3">Criterio</th>
+                                        <th class="p-3">Nivel 5: Excelente</th>
+                                        <th class="p-3">Nivel 4: Avanzado</th>
+                                        <th class="p-3">Nivel 3: Adecuado</th>
+                                        <th class="p-3">Nivel 2: Básico</th>
+                                        <th class="p-3">Nivel 1: Inicial</th>
+                                        <th class="p-3 text-center">Puntaje</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 text-gray-700">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-semibold text-canvas-dark">1. Comprensión y descripción del dataset</td>
+                                        <td class="p-3">Describe rigurosamente el contexto, las observaciones y todas las variables con excelente claridad.</td>
+                                        <td class="p-3">Describe correctamente el dataset con mínimas omisiones.</td>
+                                        <td class="p-3">Presenta la mayoría de los elementos solicitados.</td>
+                                        <td class="p-3">Descripción incompleta o parcialmente correcta.</td>
+                                        <td class="p-3">No logra explicar adecuadamente el dataset.</td>
+                                        <td class="p-3 text-center font-mono">_____</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-semibold text-canvas-dark">2. Calidad del análisis estadístico</td>
+                                        <td class="p-3">Realiza análisis univariado completo, correcto y profundamente interpretado.</td>
+                                        <td class="p-3">Presenta análisis correcto con interpretaciones adecuadas.</td>
+                                        <td class="p-3">Realiza análisis básico suficiente.</td>
+                                        <td class="p-3">Presenta errores o interpretaciones limitadas.</td>
+                                        <td class="p-3">El análisis es incorrecto o insuficiente.</td>
+                                        <td class="p-3 text-center font-mono">_____</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-semibold text-canvas-dark">3. Uso de visualizaciones y software</td>
+                                        <td class="p-3">Utiliza herramientas digitales de manera sobresaliente; gráficos claros, pertinentes y profesionales.</td>
+                                        <td class="p-3">Visualizaciones adecuadas y bien diseñadas.</td>
+                                        <td class="p-3">Visualizaciones funcionales.</td>
+                                        <td class="p-3">Gráficos poco claros o mal utilizados.</td>
+                                        <td class="p-3">No utiliza adecuadamente herramientas de análisis.</td>
+                                        <td class="p-3 text-center font-mono">_____</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-semibold text-canvas-dark">4. Interpretación, correlación y regresión</td>
+                                        <td class="p-3">Interpreta rigurosamente asociaciones y modelos; conecta resultados con el contexto real.</td>
+                                        <td class="p-3">Interpretaciones correctas y bien justificadas.</td>
+                                        <td class="p-3">Interpretaciones parcialmente correctas.</td>
+                                        <td class="p-3">Presenta confusiones conceptuales.</td>
+                                        <td class="p-3">No interpreta adecuadamente los resultados.</td>
+                                        <td class="p-3 text-center font-mono">_____</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-semibold text-canvas-dark">5. Storytelling, comunicación y conclusiones</td>
+                                        <td class="p-3">Construye una narrativa clara, convincente y orientada a la toma de decisiones basada en evidencia.</td>
+                                        <td class="p-3">Comunica resultados de forma organizada y comprensible.</td>
+                                        <td class="p-3">Presentación clara aunque con poca profundidad narrativa.</td>
+                                        <td class="p-3">Presentación desorganizada o con escasa conexión entre resultados.</td>
+                                        <td class="p-3">La presentación carece de coherencia y conclusiones fundamentadas.</td>
+                                        <td class="p-3 text-center font-mono">_____</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-end pt-2 text-sm font-bold text-canvas-dark">
+                            Puntaje Total: &nbsp;<span class="border-b-2 border-canvas-dark px-6 font-mono">_____ / 25</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="proj-card-corte-2" class="proj-section space-y-6">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden border-l-8 border-l-blue-500 p-6 sm:p-8 space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2.5 py-0.5 rounded-full">Corte II • 30%</span>
+                            <h3 class="text-lg sm:text-xl font-bold text-canvas-dark mt-1">📊 Proyecto Corte II: Modelado Predictivo & Regresión Lineal</h3>
+                        </div>
+                        <span class="text-xs text-gray-500">Semanas 6 a 10</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-600">
+                        Análisis bivariado, cálculo de covarianza y Pearson $r_{xy}$, estimación de modelos de mínimos cuadrados en Google Colab (Python) y evaluación de bondad de ajuste $R^2$.
+                    </p>
+                </div>
+            </section>
+
+            <section id="proj-card-corte-3" class="proj-section space-y-6">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden border-l-8 border-l-purple-600 p-6 sm:p-8 space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <span class="text-xs font-bold text-purple-700 bg-purple-100 px-2.5 py-0.5 rounded-full">Corte III • 40%</span>
+                            <h3 class="text-lg sm:text-xl font-bold text-canvas-dark mt-1">🎯 Proyecto Final: Modelos Probabilísticos, Simulación & Sustentación</h3>
+                        </div>
+                        <span class="text-xs text-gray-500">Semanas 11 a 16</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-600">
+                        Ajuste de modelos discretos (Binomial, Poisson) y continuos (Normal), demostración del Teorema del Límite Central en RStudio y sustentación oral final.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA 4: LABORATORIOS (GUÍAS & VIDEOS) -->
+        <!-- ========================================== -->
+        <div id="tab-laboratorios" class="tab-content space-y-8">
+            <section class="bg-gradient-to-r from-canvas-dark via-indigo-900 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-3xl space-y-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/20">
+                        💻 Gestor de Laboratorios Prácticos
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Laboratorios por Semana (Guías & YouTube)</h2>
+                    <p class="text-xs sm:text-sm text-gray-200">
+                        Administra y vincula los enlaces directos a las guías de laboratorio (PDF/Notion) y los videos explicativos en YouTube para cada una de las 16 sesiones prácticas.
+                    </p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Laboratorios Programados</p>
+                        <h3 class="text-2xl font-black text-canvas-blue">16 Sesiones</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-canvas-blue rounded-xl flex items-center justify-center font-bold text-xl">🏫</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Guías Registradas</p>
+                        <h3 id="guides-count" class="text-2xl font-black text-indigo-600">0 / 16</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold text-xl">📄</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Videos de Lab Publicados</p>
+                        <h3 id="lab-yt-count" class="text-2xl font-black text-youtube">0 / 16</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-red-50 text-youtube rounded-xl flex items-center justify-center font-bold text-xl">▶</div>
+                </div>
+            </section>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b pb-3 gap-3">
+                    <h3 class="font-bold text-canvas-dark text-base">🔬 Tabla Maestra de Laboratorios (Semanas 1 a 16)</h3>
+                    <div class="flex gap-2">
+                        <button onclick="saveAllLabLinks()" class="bg-canvas-blue hover:bg-canvas-accent text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-sm">
+                            💾 Guardar Todos los Enlaces
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                <th class="p-3">Semana / Lab</th>
+                                <th class="p-3">Título del Laboratorio</th>
+                                <th class="p-3">Herramienta</th>
+                                <th class="p-3">Guía (URL / Notion / PDF)</th>
+                                <th class="p-3">Video YouTube (Lab)</th>
+                                <th class="p-3 text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="labs-table-body" class="divide-y divide-gray-200 text-gray-700">
+                            <!-- Injected dynamically or rendered via HTML structure -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 1</td>
+                                <td class="p-3 font-semibold">Microsoft Forms & Casos en Vivo</td>
+                                <td class="p-3"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">MS Forms</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s1" placeholder="URL Guía Lab 1" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s1" placeholder="URL YouTube Lab 1" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s1" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 2</td>
+                                <td class="p-3 font-semibold">Gráficos y Dashboards en Power BI Desktop</td>
+                                <td class="p-3"><span class="bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded border border-yellow-200 font-medium">Power BI</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s2" placeholder="URL Guía Lab 2" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s2" placeholder="URL YouTube Lab 2" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s2" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 3</td>
+                                <td class="p-3 font-semibold">Distribuciones Cualitativas y Medidas en Excel</td>
+                                <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">Excel</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s3" placeholder="URL Guía Lab 3" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s3" placeholder="URL YouTube Lab 3" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s3" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 4</td>
+                                <td class="p-3 font-semibold">Boxplots y Detección de Atípicos en Excel</td>
+                                <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">Excel</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s4" placeholder="URL Guía Lab 4" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s4" placeholder="URL YouTube Lab 4" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s4" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 5</td>
+                                <td class="p-3 font-semibold">Limpieza de Datos ODS en Power BI</td>
+                                <td class="p-3"><span class="bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded border border-yellow-200 font-medium">Power BI</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s5" placeholder="URL Guía Lab 5" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s5" placeholder="URL YouTube Lab 5" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s5" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 6</td>
+                                <td class="p-3 font-semibold">Muestreo de Medias y Covarianza en Excel</td>
+                                <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">Excel</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s6" placeholder="URL Guía Lab 6" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s6" placeholder="URL YouTube Lab 6" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s6" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 7</td>
+                                <td class="p-3 font-semibold">Regresión Lineal en Google Colab (Python)</td>
+                                <td class="p-3"><span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded border border-purple-200 font-medium">Python</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s7" placeholder="URL Guía Lab 7" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s7" placeholder="URL YouTube Lab 7" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s7" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 8</td>
+                                <td class="p-3 font-semibold">EDA con Python en Colab (Parte 1)</td>
+                                <td class="p-3"><span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded border border-purple-200 font-medium">Python</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s8" placeholder="URL Guía Lab 8" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s8" placeholder="URL YouTube Lab 8" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s8" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 9</td>
+                                <td class="p-3 font-semibold">EDA con Seaborn y Plotly (Parte 2)</td>
+                                <td class="p-3"><span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded border border-purple-200 font-medium">Python</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s9" placeholder="URL Guía Lab 9" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s9" placeholder="URL YouTube Lab 9" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s9" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 10</td>
+                                <td class="p-3 font-semibold">Análisis Univariado con Statgraphics</td>
+                                <td class="p-3"><span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded border border-sky-200 font-medium">Statgraphics</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s10" placeholder="URL Guía Lab 10" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s10" placeholder="URL YouTube Lab 10" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s10" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 11</td>
+                                <td class="p-3 font-semibold">Análisis de Subgrupos en Statgraphics</td>
+                                <td class="p-3"><span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded border border-sky-200 font-medium">Statgraphics</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s11" placeholder="URL Guía Lab 11" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s11" placeholder="URL YouTube Lab 11" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s11" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 12</td>
+                                <td class="p-3 font-semibold">Modelos Discretos en RStudio (Posit Cloud)</td>
+                                <td class="p-3"><span class="bg-orange-50 text-orange-700 px-2 py-0.5 rounded border border-orange-200 font-medium">RStudio</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s12" placeholder="URL Guía Lab 12" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s12" placeholder="URL YouTube Lab 12" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s12" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 13</td>
+                                <td class="p-3 font-semibold">Teorema del Límite Central (TLC Interactivo)</td>
+                                <td class="p-3"><span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded border border-purple-200 font-medium">Python</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s13" placeholder="URL Guía Lab 13" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s13" placeholder="URL YouTube Lab 13" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s13" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 14</td>
+                                <td class="p-3 font-semibold">Simulación de Modelos Discretos (Excel/Python)</td>
+                                <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">Excel/Python</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s14" placeholder="URL Guía Lab 14" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s14" placeholder="URL YouTube Lab 14" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s14" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 15</td>
+                                <td class="p-3 font-semibold">Cálculo de Probabilidades Continuas</td>
+                                <td class="p-3"><span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded border border-sky-200 font-medium">Statgraphics</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s15" placeholder="URL Guía Lab 15" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s15" placeholder="URL YouTube Lab 15" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s15" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-bold text-canvas-blue">Semana 16</td>
+                                <td class="p-3 font-semibold">Sesión de Nivelación y Cierre de Laboratorios</td>
+                                <td class="p-3"><span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded border border-gray-300 font-medium">General</span></td>
+                                <td class="p-3"><input type="url" id="lab-guide-s16" placeholder="URL Guía Lab 16" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3"><input type="url" id="lab-yt-s16" placeholder="URL YouTube Lab 16" class="w-full border rounded px-2 py-1 focus:ring-2 focus:ring-canvas-blue" onchange="saveLabData()"></td>
+                                <td class="p-3 text-center"><label class="cursor-pointer"><input type="checkbox" id="lab-chk-s16" onchange="saveLabData()" class="rounded text-canvas-blue"></label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const btn1 = document.getElementById('tab-btn-1');
+            const btn2 = document.getElementById('tab-btn-2');
+            const btn3 = document.getElementById('tab-btn-3');
+            const btn4 = document.getElementById('tab-btn-4');
+
+            const inactiveStyle = "py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap";
+            const activeStyle = "py-3 px-4 border-b-2 font-bold flex items-center gap-2 border-canvas-blue text-canvas-blue bg-white shadow-sm transition-all rounded-t-md whitespace-nowrap";
+
+            btn1.className = inactiveStyle;
+            btn2.className = inactiveStyle;
+            if (btn3) btn3.className = inactiveStyle;
+            if (btn4) btn4.className = inactiveStyle;
+
+            if (tabName === 'plan-curso') {
+                document.getElementById('tab-plan-curso').classList.add('active');
+                btn1.className = activeStyle;
+            } else if (tabName === 'videos-recursos') {
+                document.getElementById('tab-videos-recursos').classList.add('active');
+                btn2.className = activeStyle;
+            } else if (tabName === 'proyectos') {
+                document.getElementById('tab-proyectos').classList.add('active');
+                if (btn3) btn3.className = activeStyle;
+            } else if (tabName === 'laboratorios') {
+                document.getElementById('tab-laboratorios').classList.add('active');
+                if (btn4) btn4.className = activeStyle;
+            }
+        }
+
+        function filterProjectView(corteKey) {
+            const sections = document.querySelectorAll('.proj-section');
+            const btnAll = document.getElementById('btn-proj-all');
+            const btnC1 = document.getElementById('btn-proj-corte-1');
+            const btnC2 = document.getElementById('btn-proj-corte-2');
+            const btnC3 = document.getElementById('btn-proj-corte-3');
+
+            const btnInactive = "px-3 py-1.5 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all";
+            const btnActive = "px-3 py-1.5 rounded-lg font-semibold bg-canvas-blue text-white shadow-sm transition-all";
+
+            btnAll.className = btnInactive;
+            btnC1.className = btnInactive;
+            btnC2.className = btnInactive;
+            btnC3.className = btnInactive;
+
+            if (corteKey === 'all') {
+                sections.forEach(sec => sec.style.display = 'block');
+                btnAll.className = btnActive;
+            } else if (corteKey === 'corte-1') {
+                sections.forEach(sec => sec.style.display = sec.id === 'proj-card-corte-1' ? 'block' : 'none');
+                btnC1.className = btnActive;
+            } else if (corteKey === 'corte-2') {
+                sections.forEach(sec => sec.style.display = sec.id === 'proj-card-corte-2' ? 'block' : 'none');
+                btnC2.className = btnActive;
+            } else if (corteKey === 'corte-3') {
+                sections.forEach(sec => sec.style.display = sec.id === 'proj-card-corte-3' ? 'block' : 'none');
+                btnC3.className = btnActive;
+            }
+        }
+
+        function scrollToWeek(weekId) {
+            if (!weekId) return;
+            switchTab('plan-curso');
+            setTimeout(() => {
+                const element = document.getElementById(weekId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    element.querySelectorAll('details').forEach(d => d.open = true);
+                    element.classList.add('ring-2', 'ring-canvas-blue');
+                    setTimeout(() => element.classList.remove('ring-2', 'ring-canvas-blue'), 2000);
+                }
+            }, 100);
+        }
+
+        function toggleAllDetails(openState) {
+            document.querySelectorAll('details').forEach(d => d.open = openState);
+        }
+
+        function toggleCheck(checkbox) {
+            const container = checkbox.closest('label');
+            if (checkbox.checked) {
+                container.classList.add('completed-item');
+            } else {
+                container.classList.remove('completed-item');
+            }
+            saveCourseProgress();
+        }
+
+        function showToast(message, icon = "✅") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            document.getElementById('toast-icon').innerText = icon;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        function saveCourseProgress() {
+            const checkboxes = document.querySelectorAll('#tab-plan-curso input[type="checkbox"]');
+            const state = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('canvas_course_progress', JSON.stringify(state));
+        }
+
+        function loadCourseProgress() {
+            const saved = localStorage.getItem('canvas_course_progress');
+            if (saved) {
+                const state = JSON.parse(saved);
+                const checkboxes = document.querySelectorAll('#tab-plan-curso input[type="checkbox"]');
+                checkboxes.forEach((cb, index) => {
+                    if (state[index] !== undefined) {
+                        cb.checked = state[index];
+                        if (cb.checked) {
+                            const container = cb.closest('label');
+                            if (container) container.classList.add('completed-item');
+                        }
+                    }
+                });
+            }
+        }
+
+        function resetCheckboxes() {
+            const checkboxes = document.querySelectorAll('#tab-plan-curso input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = false;
+                const container = cb.closest('label');
+                if (container) container.classList.remove('completed-item');
+            });
+            localStorage.removeItem('canvas_course_progress');
+            showToast("Progreso del plan de curso reiniciado", "🔄");
+        }
+
+        function saveSingleVideoLink(id) {
+            const input = document.getElementById(`link-${id}`);
+            const chk = document.getElementById(`chk-${id}`);
+            if (input) {
+                const url = input.value.trim();
+                localStorage.setItem(`video_link_${id}`, url);
+                if (url !== "" && chk) chk.checked = true;
+                updateVideoStats();
+                showToast(`Enlace para ${id.toUpperCase()} guardado con éxito`, "🎬");
+            }
+        }
+
+        function saveAllVideoLinks() {
+            document.querySelectorAll('#tab-videos-recursos input[type="url"]').forEach(input => {
+                const id = input.id.replace('link-', '');
+                localStorage.setItem(`video_link_${id}`, input.value.trim());
+            });
+            updateVideoStats();
+            showToast("Todos los enlaces de videos han sido guardados", "💾");
+        }
+
+        function loadVideoData() {
+            document.querySelectorAll('#tab-videos-recursos input[type="url"]').forEach(input => {
+                const id = input.id.replace('link-', '');
+                const savedUrl = localStorage.getItem(`video_link_${id}`);
+                if (savedUrl) input.value = savedUrl;
+            });
+
+            document.querySelectorAll('#tab-videos-recursos input[type="checkbox"]').forEach(chk => {
+                const id = chk.id.replace('chk-', '');
+                const savedState = localStorage.getItem(`video_chk_${id}`);
+                if (savedState !== null) chk.checked = JSON.parse(savedState);
+            });
+
+            updateVideoStats();
+        }
+
+        function updateVideoStats() {
+            const ytCheckboxes = document.querySelectorAll('#tab-videos-recursos input[id^="chk-yt"]');
+            const reelCheckboxes = document.querySelectorAll('#tab-videos-recursos input[id^="chk-reel"]');
+
+            let ytDone = 0;
+            ytCheckboxes.forEach(chk => {
+                if (chk.checked) ytDone++;
+                localStorage.setItem(`video_chk_${chk.id.replace('chk-', '')}`, chk.checked);
+            });
+
+            let reelDone = 0;
+            reelCheckboxes.forEach(chk => {
+                if (chk.checked) reelDone++;
+                localStorage.setItem(`video_chk_${chk.id.replace('chk-', '')}`, chk.checked);
+            });
+
+            const totalYT = ytCheckboxes.length;
+            const totalReel = reelCheckboxes.length;
+
+            document.getElementById('yt-count').innerText = `${ytDone} / ${totalYT}`;
+            document.getElementById('reels-count').innerText = `${reelDone} / ${totalReel}`;
+
+            const totalItems = totalYT + totalReel;
+            const percentage = totalItems > 0 ? Math.round(((ytDone + reelDone) / totalItems) * 100) : 0;
+            document.getElementById('total-progress-percent').innerText = `${percentage}%`;
+        }
+
+        function saveLabData() {
+            for (let i = 1; i <= 16; i++) {
+                const guideInput = document.getElementById(`lab-guide-s${i}`);
+                const ytInput = document.getElementById(`lab-yt-s${i}`);
+                const chk = document.getElementById(`lab-chk-s${i}`);
+
+                if (guideInput) localStorage.setItem(`lab_guide_s${i}`, guideInput.value.trim());
+                if (ytInput) localStorage.setItem(`lab_yt_s${i}`, ytInput.value.trim());
+                if (chk) localStorage.setItem(`lab_chk_s${i}`, chk.checked);
+            }
+            updateLabStats();
+        }
+
+        function saveAllLabLinks() {
+            saveLabData();
+            showToast("Todos los enlaces y estados de laboratorios guardados", "💻");
+        }
+
+        function loadLabData() {
+            for (let i = 1; i <= 16; i++) {
+                const guideInput = document.getElementById(`lab-guide-s${i}`);
+                const ytInput = document.getElementById(`lab-yt-s${i}`);
+                const chk = document.getElementById(`lab-chk-s${i}`);
+
+                const savedGuide = localStorage.getItem(`lab_guide_s${i}`);
+                const savedYt = localStorage.getItem(`lab_yt_s${i}`);
+                const savedChk = localStorage.getItem(`lab_chk_s${i}`);
+
+                if (savedGuide && guideInput) guideInput.value = savedGuide;
+                if (savedYt && ytInput) ytInput.value = savedYt;
+                if (savedChk !== null && chk) chk.checked = JSON.parse(savedChk);
+            }
+            updateLabStats();
+        }
+
+        function updateLabStats() {
+            let guidesDone = 0;
+            let ytDone = 0;
+
+            for (let i = 1; i <= 16; i++) {
+                const guideInput = document.getElementById(`lab-guide-s${i}`);
+                const ytInput = document.getElementById(`lab-yt-s${i}`);
+
+                if (guideInput && guideInput.value.trim() !== "") guidesDone++;
+                if (ytInput && ytInput.value.trim() !== "") ytDone++;
+            }
+
+            const guidesCountEl = document.getElementById('guides-count');
+            const labYtCountEl = document.getElementById('lab-yt-count');
+
+            if (guidesCountEl) guidesCountEl.innerText = `${guidesDone} / 16`;
+            if (labYtCountEl) labYtCountEl.innerText = `${ytDone} / 16`;
+        }
+
+        window.onload = function() {
+            loadCourseProgress();
+            loadVideoData();
+            loadLabData();
+        };
+    </script>
+</body>
+</html>
