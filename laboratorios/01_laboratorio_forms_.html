@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Uso de Microsoft Forms y análisis previo</h2>
+<p>Recolección y sistematización de datos cuantitativos y cualitativos para análisis exploratorio, utilizando herramientas digitales.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Procedimiento</a></li>
+<li><a href="#entregables">Compromisos para entregar</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias por desarrollar</h2>
+    <ul>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de aprendizaje</h2>
+    <ul>
+        <li>Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables en distintos contextos.</li>
+        <li>Analizo e interpreto datos univariados y bivariados mediante el uso de descriptores estadísticos, gráficos y modelos de regresión, para identificar patrones y tomar decisiones informadas.</li>
+        <li>Utilizo software especializado (Excel, Power BI, Statgraphics, Google Colab, Microsoft Forms y R) para resolver problemas estadísticos, comunicar resultados y sustentar decisiones con rigor y claridad.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en la práctica</h2>
+    <ul>
+        <li>Conceptos básicos en estadística: poblaciones, muestras, tipos de variables y escalas de medición.</li>
+        <li>Tablas de frecuencias para variables cualitativas: gráficos de barras y circulares en una y dos dimensiones.</li>
+        <li>Práctica de laboratorio: construcción de una base de datos sencilla utilizando Microsoft Excel.</li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Los estudiantes ingresan a un formulario de Microsoft Forms creado previamente por el docente, con el fin de experimentar el proceso de recolección de datos en línea a partir de la información suministrada por sus compañeros. Posteriormente, los datos recolectados serán exportados a Excel para la construcción de una base de datos y su análisis exploratorio.</p>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">Procedimiento</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1. Acceso al formulario</h3>
+    <p>Ingresa al enlace de Microsoft Forms proporcionado por el docente y completa la información solicitada. <br><em>(El enlace será compartido en clase o en la plataforma institucional).</em></p>
+    
+    <h3 style="color: var(--primary);">Paso 2. Análisis inmediato</h3>
+    <p>Explora las respuestas recopiladas en Microsoft Forms, observando los gráficos automáticos generados por la plataforma y realizando una primera interpretación de los resultados.</p>
+    
+    <div class="grid" style="margin-top: 1.5rem; gap: 2rem;">
+        <div>
+            <img src="image_8501fc.png" alt="Gráfico: ¿Qué programa estudias?" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px;">
+        </div>
+        <div>
+            <img src="image_8501db.png" alt="Gráfico: Compromiso de puntualidad" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px;">
+        </div>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos para entregar</h2>
+    <ol>
+        <li>Crea un formulario con cinco (5) preguntas utilizando Microsoft Forms.</li>
+        <li>Solicita la participación de tus compañeros para diligenciar el formulario.</li>
+        <li>Exporta las respuestas a Excel y genera al menos dos (2) gráficas correspondientes a las preguntas del formulario.</li>
+        <li>Elabora un documento en Word que incluya:
+            <ul>
+                <li>Nombre de la experiencia</li>
+                <li>Enlace del formulario de Microsoft Forms</li>
+                <li>Dos gráficas con su respectiva interpretación</li>
+            </ul>
+        </li>
+        <li>Guarda el documento en formato PDF y súbelo al espacio asignado por el docente en la plataforma SAVIO.</li>
+    </ol>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Rúbrica de Evaluación</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Ítem a evaluar</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. Creación del formulario (5 preguntas en MS Forms)</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>2. Recolección de datos (Participación de compañeros)</td>
+                <td>10%</td>
+            </tr>
+            <tr>
+                <td>3. Exportación a Excel y generación de gráficas</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td>4. Documento con enlace e interpretación analítica de las gráficas</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td>5. Formato (PDF) y entrega correcta en SAVIO</td>
+                <td>10%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
