@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Ecuaciones 2x2</title>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: 90vh;
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+        }
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 90px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 2.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: clamp(1rem, 2vw, 2rem);
+            color: var(--blue);
+            font-weight: bold;
+            flex-wrap: wrap;
+        }
+        .flow-diagram span {
+            background: var(--bg-color);
+            padding: 12px 22px;
+            border-radius: 10px;
+            border: 2px solid var(--green);
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        svg {
+            max-height: 300px;
+            width: min(100%, 320px);
+            height: auto;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .step-list li::before {
+            content: '✓';
+        }
+        /* --- ESTILOS DE INTERACTIVIDAD Y TEMA --- */
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Mostrar solo la diapositiva activa */
+        .slide.active {
+            display: flex;
+        }
+
+        /* Estilos de los botones de control */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .controls:hover {
+            transform: translateX(-50%) translateY(-2px);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                width: min(96vw, 100%);
+                min-height: auto;
+                padding: 20px;
+                border-radius: 16px;
+            }
+            .slides-container {
+                padding-bottom: 110px;
+            }
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            .flow-diagram {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .flow-diagram span {
+                width: 100%;
+                text-align: center;
+            }
+            h1 {
+                text-align: center;
+                border-bottom-width: 3px;
+            }
+            li {
+                padding-left: 28px;
+            }
+            .visual-container {
+                margin-top: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                width: 100%;
+                margin: 8px 0 12px;
+                border-radius: 12px;
+            }
+            .slides-container {
+                height: 100svh;
+                padding-bottom: 130px;
+            }
+            .controls {
+                bottom: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: calc(100% - 16px);
+            }
+            button {
+                width: 100%;
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h1>Introducción a Sistemas de Ecuaciones</h1>
+                    <ul>
+                        <li>Objetivo: Resolver sistemas lineales 2x2.</li>
+                        <li>Competencia: Modelar matemáticamente problemas reales.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Icono Ingeniería -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h1>Reto Inicial</h1>
+            <ul>
+                <li>Una empresa fabrica dos productos distintos.</li>
+                <li>¿Qué variables desconocemos?</li>
+                <li>¿Qué restricciones existen?</li>
+                <li>¿Cómo comprobarían una respuesta?</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h1>Del problema al modelo matemático</h1>
+            <div class="math-eq">x = Cantidad producto 1</div>
+            <div class="math-eq">y = Cantidad producto 2</div>
+            
+            <div class="visual-container">
+                <div class="flow-diagram">
+                    <span>Problema</span> ➔ <span>Variables</span> ➔ <span>Ecuaciones</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h1>¿Qué es una solución?</h1>
+                    <ul>
+                        <li>Satisface ambas ecuaciones simultáneamente.</li>
+                        <li>Es el punto de intersección.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Gráfico Cartesiano SVG -->
+                    <svg viewBox="-20 -20 240 240" stroke="var(--blue)">
+                        <!-- Ejes -->
+                        <line x1="0" y1="200" x2="200" y2="200" stroke-width="2" />
+                        <line x1="0" y1="0" x2="0" y2="200" stroke-width="2" />
+                        <!-- Recta 1 (Verde) -->
+                        <line x1="20" y1="180" x2="180" y2="20" stroke="var(--green)" stroke-width="4" />
+                        <!-- Recta 2 (Azul) -->
+                        <line x1="20" y1="40" x2="160" y2="190" stroke="var(--blue)" stroke-width="4" />
+                        <!-- Punto de Intersección -->
+                        <circle cx="107" cy="94" r="6" fill="#ff5722" stroke="none" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- Nueva Diapositiva: Sistema nxn -->
+        <div class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h1>Sistemas n×n</h1>
+                    <ul>
+                        <li>Tienen "n" ecuaciones.</li>
+                        <li>Tienen "n" variables desconocidas.</li>
+                        <li>Se modelan con matrices (Ax = b).</li>
+                        <li>Mayor complejidad requiere software.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="math-eq">
+                        a₁₁x₁ + ... + a₁ₙxₙ = b₁<br>
+                        ...<br>
+                        aₙ₁x₁ + ... + aₙₙxₙ = bₙ
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>Método de Sustitución</h1>
+            <ul class="step-list">
+                <li>Despejar una variable.</li>
+                <li>Sustituir en la otra ecuación.</li>
+                <li>Resolver la ecuación resultante.</li>
+                <li>Encontrar la otra variable.</li>
+                <li>Verificar los resultados obtenidos.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h1>Actividad Colaborativa</h1>
+                    <ul>
+                        <li>Formen equipos de trabajo.</li>
+                        <li>Planteen el sistema matemático.</li>
+                        <li>Resuélvanlo paso a paso.</li>
+                        <li>Comparen resultados obtenidos.</li>
+                        <li>Validen en herramienta web.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Icono Colaboración -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <h1>Nuevo Desafío</h1>
+            <ul>
+                <li>Caso Ingeniería: Mezcla de materiales.</li>
+                <li>Caso Finanzas: Inversión de capital.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h1>Reflexión Final</h1>
+                    <ul>
+                        <li>¿Qué ocurre si las rectas son paralelas?</li>
+                        <li>¿Qué ocurre si coinciden?</li>
+                        <li>¿Qué aprendiste hoy?</li>
+                        <li>¿Cuál es tu mayor duda?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Icono Reflexión/Foco -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="9" y1="18" x2="15" y2="18"></line>
+                        <line x1="10" y1="22" x2="14" y2="22"></line>
+                        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Controles de Navegación y Tema -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+
+    </div>
+    <script>
+        // Seleccionamos todas las diapositivas y los controles
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        // Función para mostrar la diapositiva correcta
+        function showSlide(index) {
+            // Ocultamos todas
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Validamos los límites para hacer un ciclo
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            
+            // Mostramos la diapositiva actual
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        // Funciones de navegación
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX > 50) {
+                prevSlide();
+            } else if (deltaX < -50) {
+                nextSlide();
+            }
+        }
+
+        // Función para alternar el tema visual
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Inicializar la primera diapositiva al cargar
+        showSlide(currentSlideIndex);
+
+        // Soporte para swipe en pantallas táctiles
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>

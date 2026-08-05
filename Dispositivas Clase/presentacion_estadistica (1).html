@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadística I - Sesgos e Intuición</title>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: 90vh;
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+        }
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 90px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(36pt, 4vw, 44pt);
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        h2 {
+            color: var(--blue);
+            font-size: clamp(28pt, 3vw, 36pt);
+            text-align: center;
+        }
+        p, blockquote {
+            font-size: clamp(24pt, 2.5vw, 28pt);
+            text-align: center;
+            line-height: 1.5;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(24pt, 2.5vw, 28pt);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: clamp(24pt, 2.5vw, 28pt);
+            color: var(--blue);
+            font-weight: bold;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        .flow-diagram span {
+            background: var(--bg-color);
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid var(--green);
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        
+        .photo-placeholder {
+            width: 80%;
+            aspect-ratio: 3/4;
+            background: #e0e0e0;
+            border: 4px dashed #999;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #666;
+            margin: 0 auto;
+        }
+        
+        .highlight-box {
+            background: var(--bg-color);
+            border-left: 6px solid var(--green);
+            padding: 20px 40px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .icon { font-size: 1.2em; }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .photo-placeholder {
+            background: #333;
+            border-color: #555;
+        }
+        body.dark-theme .highlight-box {
+            background: #2a2a2a;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .controls:hover {
+            transform: translateX(-50%) translateY(-2px);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                width: min(96vw, 100%);
+                min-height: auto;
+                padding: 20px;
+                border-radius: 16px;
+            }
+            .slides-container { padding-bottom: 110px; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .flow-diagram { flex-direction: column; gap: 10px; }
+            .flow-diagram span { width: 100%; text-align: center; }
+            h1 { text-align: center; border-bottom-width: 3px; }
+            li { padding-left: 28px; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { width: 100%; margin: 8px 0 12px; border-radius: 12px; }
+            .slides-container { height: 100svh; padding-bottom: 130px; }
+            .controls { bottom: 12px; flex-wrap: wrap; justify-content: center; width: calc(100% - 16px); }
+            button { width: 100%; max-width: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <div style="text-align: center; width: 100%;">
+                <h1 style="margin-bottom: 5px;">Estadística I 📊</h1>
+                <h2 style="font-style: italic; color: var(--text-color); border: none; font-size: clamp(20pt, 2vw, 28pt); margin-top: 0;">¿Podemos confiar siempre en nuestra intuición?</h2>
+            </div>
+            
+            <div class="grid-layout" style="margin-top: 40px;">
+                <div class="visual-container">
+                    <div class="photo-placeholder">
+                        <span class="icon">👤</span><br>Foto
+                    </div>
+                </div>
+                <div>
+                    <h2 style="text-align: left; margin-bottom: 10px;">Kevin Sossa</h2>
+                    <ul>
+                        <li>Docente</li>
+                        <li>Estadístico / Ciencia de Datos</li>
+                        <li>correo@institucion.edu</li>
+                        <li>Horario de atención: Martes 10am</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 30px;">
+                <p style="font-style: italic; margin: 0;">"Durante este semestre aprenderemos a tomar decisiones utilizando evidencia y no únicamente intuición."</p>
+            </div>
+            
+            <p style="font-weight: bold; color: var(--blue); margin-top: 20px;">¿Alguna vez has tomado una decisión de la que luego te arrepentiste? 🧠</p>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>Antes de conocer la asignatura...</h1>
+            </div>
+            
+            <div class="highlight-box">
+                <p>No respondan pensando en "la respuesta correcta".</p>
+                <p><strong>Respondan únicamente con su intuición.</strong></p>
+            </div>
+
+            <h2 style="text-align: left; margin-top: 40px;">Instrucciones:</h2>
+            <p style="text-align: left;">Durante los próximos minutos aparecerán dos situaciones.</p>
+            <ul>
+                <li>Elijan una opción.</li>
+                <li>Preséntense: Nombre y Carrera.</li>
+                <li>Expliquen por qué eligieron esa respuesta.</li>
+            </ul>
+
+            <p style="text-align: right; font-style: italic; color: #888; font-size: clamp(18pt, 2vw, 22pt); position: absolute; bottom: 40px; right: 40px;">
+                No existe calificación.
+            </p>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>¿Steve es bibliotecario o agricultor?</h1>
+            </div>
+            
+            <div style="margin: 30px auto; max-width: 800px; text-align: center;">
+                <p>Steve es una persona tímida, reservada y muy ordenada.</p>
+                <p>Le gusta leer.</p>
+                <p>Disfruta trabajar solo.</p>
+                <p>Prefiere ambientes tranquilos.</p>
+                <p>No le interesan mucho las reuniones sociales.</p>
+            </div>
+
+            <h2 style="margin-top: 40px;">¿Qué profesión es más probable?</h2>
+            
+            <div class="grid-layout" style="text-align: center; margin-top: 20px;">
+                <div style="font-size: clamp(24pt, 2.5vw, 28pt); font-weight: bold; background: #e3f2fd; padding: 20px; border-radius: 15px; color: var(--blue);">🟦 Bibliotecario</div>
+                <div style="font-size: clamp(24pt, 2.5vw, 28pt); font-weight: bold; background: #e8f5e9; padding: 20px; border-radius: 15px; color: var(--green);">🟩 Agricultor</div>
+            </div>
+
+            <p style="font-weight: bold; color: var(--blue); margin-top: 60px; text-align: center;">Levanta la mano cuando tengas tu respuesta. 🙋‍♂️</p>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>¿Por qué elegiste esa respuesta?</h1>
+            </div>
+            
+            <ul style="margin: 40px auto; max-width: 900px;">
+                <li>¿Qué palabras llamaron más tu atención?</li>
+                <li>¿Qué imaginaste al leer la descripción?</li>
+                <li>¿En qué basaste tu decisión?</li>
+            </ul>
+
+            <div class="highlight-box" style="margin-top: 60px; text-align: center;">
+                <h2 style="color: var(--blue); margin-top: 0;">Sesgo de representatividad 🧠</h2>
+                <p style="margin-bottom: 0;">La mente suele decidir usando estereotipos en lugar de considerar las probabilidades reales.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>¿Aceptarías esta apuesta?</h1>
+            </div>
+            
+            <p style="font-weight: bold; font-size: clamp(28pt, 3vw, 34pt);">Lanzas una moneda una sola vez.</p>
+            
+            <div class="grid-layout" style="margin: 40px 0; text-align: center;">
+                <div style="background: #e8f5e9; padding: 40px 20px; border-radius: 20px;">
+                    <h2>Si ganas:</h2>
+                    <p style="font-size: clamp(36pt, 4vw, 48pt); font-weight: bold; color: var(--green); margin: 10px 0;">💰 Recibes $130</p>
+                </div>
+                <div style="background: #ffebee; padding: 40px 20px; border-radius: 20px;">
+                    <h2>Si pierdes:</h2>
+                    <p style="font-size: clamp(36pt, 4vw, 48pt); font-weight: bold; color: #f44336; margin: 10px 0;">💸 Pierdes $100</p>
+                </div>
+            </div>
+
+            <h2>¿Aceptarías? &nbsp; &nbsp; 🟩 Sí &nbsp; &nbsp; 🟥 No</h2>
+
+            <p style="text-align: center; font-style: italic; margin-top: 40px;">Piensa durante 30 segundos antes de responder. ⏱️</p>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>¿Por qué muchas personas dicen "No"?</h1>
+            </div>
+            
+            <div class="highlight-box" style="margin: 50px auto; max-width: 900px; text-align: center; border-left: none; border-top: 6px solid #f44336; border-radius: 15px;">
+                <p style="font-weight: bold;">Perder $100 suele sentirse peor que la satisfacción de ganar $130.</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <h2>Sesgo de aversión a la pérdida 📉</h2>
+                <p>Las personas no siempre toman decisiones racionales.</p>
+                <p>Las emociones influyen más de lo que creemos.</p>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1>¿Qué tiene que ver esto con la Estadística?</h1>
+            </div>
+            
+            <div class="flow-diagram">
+                <span>Intuición 🧠</span> ➔ <span>Datos 📊</span> ➔ <span>Evidencia 🔍</span> ➔ <span style="background: var(--green); color: white;">Decisiones mejores ✨</span>
+            </div>
+
+            <div style="margin: 40px auto; max-width: 900px;">
+                <p style="text-align: left; font-weight: bold;">Durante este curso aprenderemos a:</p>
+                <div class="grid-layout" style="gap: 20px;">
+                    <ul>
+                        <li>Formular preguntas.</li>
+                        <li>Analizar datos.</li>
+                    </ul>
+                    <ul>
+                        <li>Medir la incertidumbre.</li>
+                        <li>Tomar decisiones fundamentadas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 40px; text-align: center; background: #e3f2fd; border-left-color: var(--blue);">
+                <p style="font-weight: bold; color: var(--blue); margin: 0;">La estadística no reemplaza la intuición; la complementa con evidencia.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Controles de Navegación y Tema -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+
+        function handleTouchStart(event) { touchStartX = event.touches[0].clientX; }
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }
+
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>

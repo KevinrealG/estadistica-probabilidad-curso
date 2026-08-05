@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboratorio {{NUMERO}} - {{TITULO}}</title>
+<link rel="stylesheet" href="css/style.css">
+<script defer src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Laboratorio {{NUMERO}}</h1>
+<h2>{{TITULO}}</h2>
+<p>{{DESCRIPCION}}</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#intro">Introducción</a></li>
+<li><a href="#objetivos">Objetivos</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#materiales">Materiales</a></li>
+<li><a href="#metodologia">Metodología</a></li>
+<li><a href="#desarrollo">Desarrollo</a></li>
+<li><a href="#codigo">Código</a></li>
+<li><a href="#resultados">Resultados</a></li>
+<li><a href="#entrega">Entregables</a></li>
+<li><a href="#evaluacion">Evaluación</a></li>
+<li><a href="#bibliografia">Bibliografía</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="intro" class="section card"><h2 class="section-title">Introducción</h2><p>...</p></section>
+
+<section id="objetivos" class="section card"><h2 class="section-title">Objetivos</h2><ul><li>...</li></ul></section>
+
+<section id="competencias" class="section">
+<div class="grid">
+<div class="card"><h3>Competencia 1</h3></div>
+<div class="card"><h3>Competencia 2</h3></div>
+<div class="card"><h3>Competencia 3</h3></div>
+</div></section>
+
+<section id="materiales" class="section">
+<div class="grid">
+<div class="card">💻 Google Colab</div>
+<div class="card">🐍 Python</div>
+<div class="card">📦 NumPy / SymPy</div>
+<div class="card">📈 Matplotlib</div>
+</div></section>
+
+<section id="metodologia" class="section card">
+<h2>Metodología</h2>
+<div class="timeline">
+<div class="timeline-item">Preparación</div>
+<div class="timeline-item">Desarrollo</div>
+<div class="timeline-item">Análisis</div>
+<div class="timeline-item">Entrega</div>
+</div>
+</section>
+
+<section id="desarrollo" class="section">
+<div class="accordion">
+<button>Paso 1</button><div class="accordion-content"><p>...</p></div>
+<button>Paso 2</button><div class="accordion-content"><p>...</p></div>
+<button>Paso 3</button><div class="accordion-content"><p>...</p></div>
+</div>
+</section>
+
+<section id="codigo" class="section card">
+<h2>Código Python</h2>
+<pre><code>import numpy as np
+A=np.array([[1,2],[3,4]])
+print(A)</code></pre>
+</section>
+
+<section class="section card">
+<h2>Fórmula</h2>
+<p>\(A\mathbf{x}=\mathbf{b}\)</p>
+</section>
+
+<section class="section card">
+<h2>Diagrama</h2>
+<pre class="mermaid">
+flowchart LR
+A[Inicio]-->B[Resolver]
+B-->C[Analizar]
+</pre>
+</section>
+
+<section id="resultados" class="section">
+<div class="alert alert-success"><b>Resultados esperados</b><p>...</p></div>
+<div class="alert alert-danger"><b>Errores comunes</b><p>...</p></div>
+</section>
+
+<section id="entrega" class="section card"><h2>Entregables</h2><ul><li>Notebook</li><li>Informe PDF</li></ul></section>
+<section id="evaluacion" class="section card"><h2>Evaluación</h2><table><tr><th>Criterio</th><th>%</th></tr><tr><td>Desarrollo</td><td>40</td></tr><tr><td>Informe</td><td>40</td></tr><tr><td>Conclusiones</td><td>20</td></tr></table></section>
+<section id="bibliografia" class="section card"><h2>Bibliografía</h2><ol><li>...</li></ol></section>
+</main>
+</div>
+<footer>© 2026 · Álgebra Lineal · Kevin Sossa</footer>
+</body></html>

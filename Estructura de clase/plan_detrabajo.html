@@ -200,41 +200,65 @@
                                     <th class="p-3 sm:p-4 w-24">Semana</th>
                                     <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
                                     <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
-                                    <th class="p-3 sm:p-4">Recursos</th>
+                                    <th class="p-3 sm:p-4">Recursos / Notion</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 1</td>
-                                    <td class="p-3 sm:p-4">Sílabo, Historia de la estadística,  y conceptos básicos.</td>
+                                    <td class="p-3 sm:p-4">Sílabo, Historia de la estadística, sesgos cognitivos (Steve, moneda) y conceptos básicos.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 1:</strong> Microsoft Forms & Casos en vivo.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Notion S1, Forms de Historia.</td>
-                                    
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-1')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S1 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 2</td>
                                     <td class="p-3 sm:p-4">Variables categóricas, tablas de frecuencias y distribuciones cualitativas.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 2:</strong> Gráficos en Power BI Desktop.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Notion S2, Power BI.</td>
-                                    
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-2')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S2 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 3</td>
                                     <td class="p-3 sm:p-4">Medidas de tendencia central y posición (media, mediana, moda, percentiles).</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 3:</strong> Distribuciones cualitativas en Excel.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Excel, Guía No. 3.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-3')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S3 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 4</td>
                                     <td class="p-3 sm:p-4">Medidas de dispersión (rango, varianza, desv. est.), Boxplots y atípicos.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 4:</strong> Boxplots y detección de atípicos en Excel.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Excel, Dataset univariado.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-4')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S4 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 5</td>
                                     <td class="p-3 sm:p-4">Frecuencias agrupadas e histogramas.Kurtosis Y Sesgo. Parcial Corte I.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 5:</strong> Limpieza de datos en Power BI.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Power BI, Datasets ODS.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-5')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S5 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -255,6 +279,7 @@
                                     <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
                                     <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
                                     <th class="p-3 sm:p-4">Recursos</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -263,30 +288,55 @@
                                     <td class="p-3 sm:p-4">Distribuciones bidimensionales, covarianza y Pearson ($r_{xy}$).</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 6:</strong> Muestreo de medias en Excel.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Excel, Guía No. 6.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-6')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S6 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 7</td>
                                     <td class="p-3 sm:p-4">Regresión lineal simple, mínimos cuadrados y $R^2$.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 7:</strong> Python en Google Colab (Pandas/NumPy).</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Google Colab Notebook.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-7')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S7 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 8</td>
                                     <td class="p-3 sm:p-4">Fundamentos de probabilidad: aleatorios vs. determinísticos, axiomas.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 8:</strong> EDA con Python en Colab (Parte 1).</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Google Colab, Python scripts.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-8')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S8 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 9</td>
                                     <td class="p-3 sm:p-4">Probabilidad condicional, ley de probabilidad total y Teorema de Bayes.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 9:</strong> EDA con Python (Seaborn/Plotly - Parte 2).</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Google Colab, Seaborn.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-9')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S9 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 10</td>
                                     <td class="p-3 sm:p-4">Técnicas de conteo (permutaciones y combinaciones). Parcial II.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 10:</strong> Análisis de 1 variable con Statgraphics.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Statgraphics Licenciado.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-10')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S10 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -307,6 +357,7 @@
                                     <th class="p-3 sm:p-4">Componente Teórico (3 hrs)</th>
                                     <th class="p-3 sm:p-4">Laboratorio Práctico (1 hr)</th>
                                     <th class="p-3 sm:p-4">Recursos</th>
+                                    <th class="p-3 sm:p-4 text-center w-36">Acción</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -315,36 +366,66 @@
                                     <td class="p-3 sm:p-4">Variables aleatorias discretas, valor esperado y varianza.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 11:</strong> Análisis de subgrupos en Statgraphics.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-11')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S11 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 12</td>
                                     <td class="p-3 sm:p-4">Modelos discretos: Binomial, Poisson e Hipergeométrica.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 12:</strong> RStudio / Posit Cloud (Partes 1 y 2).</td>
                                     <td class="p-3 sm:p-4 text-gray-500">RStudio, Scripts R.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-12')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S12 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 13</td>
                                     <td class="p-3 sm:p-4">Variables aleatorias continuas, densidad y distribución Uniforme.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 13:</strong> Demostración de Teoremas Límite (TLC).</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Google Colab interactivo.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-13')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S13 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 14</td>
                                     <td class="p-3 sm:p-4">Distribución Normal y estandarización Z.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 14:</strong> Simulación de modelos discretos en Python/Excel.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Excel / Python.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-14')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S14 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 15</td>
                                     <td class="p-3 sm:p-4">Aplicaciones prácticas de la normal y aproximaciones.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 15:</strong> Cálculo de probabilidades continuas.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Python / Statgraphics.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-15')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S15 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50/50 transition-colors">
                                     <td class="p-3 sm:p-4 font-bold text-canvas-blue">Semana 16</td>
                                     <td class="p-3 sm:p-4">Sustentación de Proyectos Finales y notas definitivas.</td>
                                     <td class="p-3 sm:p-4"><strong>Lab 16:</strong> Sesión de nivelación y entrega final.</td>
                                     <td class="p-3 sm:p-4 text-gray-500">Canvas / SAVIO.</td>
+                                    <td class="p-3 sm:p-4 text-center">
+                                        <button onclick="scrollToWeek('semana-16')" class="bg-canvas-blue hover:bg-canvas-accent text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all shadow-sm">
+                                            Planear S16 ⬇️
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -352,7 +433,492 @@
                 </div>
             </section>
 
-            
+            <section id="planeacion-semanal" class="space-y-6 pt-6">
+                <div class="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-4 sticky top-16 z-40">
+                    <div>
+                        <h2 class="text-xl font-bold text-canvas-dark">📝 Planeación Semana a Semana (Detalle Notion S1 y S2)</h2>
+                        <p class="text-xs text-gray-500">Despliega los toggles para ver/completar las instrucciones detalladas de clase basadas en tus páginas de Notion.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleAllDetails(true)" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md font-medium border border-gray-300 transition-colors">
+                            📂 Desplegar Todos
+                        </button>
+                        <button onclick="toggleAllDetails(false)" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md font-medium border border-gray-300 transition-colors">
+                            📁 Plegar Todos
+                        </button>
+                        <button onclick="resetCheckboxes()" class="text-xs bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-md font-medium border border-red-200 transition-colors">
+                            🔄 Reiniciar Progreso
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+
+                    <!-- SEMANA 1: NOTION DETAILED SYNC -->
+                    <div id="semana-1" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 1</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Semana 1: Silabo, historia, importancia, conceptos breves</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I • 3 Horas Teóricas + 1 Hora Lab</span>
+                        </div>
+
+                        <div class="p-6 space-y-4 text-sm">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Presentación de los estudiantes:</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>1. Darle un caso Pregunta y que expliquen como toman desición y que me digan sus nombres.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>a. ejemplo 1: nuevo empleado.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>b. como eligieron sus carreras.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>c. Microsoft Forms: <a href="https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUQzBTTk0xQTdSVVBTRUFWNURZMExPRlVJQS4u" target="_blank" class="text-canvas-blue underline">Crear encuestas y formularios</a></span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>d. Steve es muy tímido y retraído, siempre servicial, pero poco interesado por la gente o por el mundo real. De carácter disciplinado y metódico, necesitaba ordenarlo y organizarlo todo, y tiene obsesión por el detalle. ¿Es probable que Steve sea un bibliotecario o un agricultor?</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>e. ¿aceptaría usted una apuesta con lanzamiento de una moneda en la que ganara 130 dólares si saliese cara y perdiera 100 dólares si saliese cruz?</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>f. Sesgo de asociación</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded ml-4">
+                                            <input type="checkbox" onchange="toggleCheck(this)" class="mt-0.5 rounded text-canvas-blue focus:ring-canvas-blue">
+                                            <span>g. Aversión a la perdida.</span>
+                                        </label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Explicación del marco de una elección</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Análisis del framing o encuadre en la toma de decisiones gerenciales.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Importancia de los Datos</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> El rol activo de los datos crudos en la construcción de información corporativa y social.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Importancia de la Estadística.</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. Los estudiantes dan ejemplos de como se puede aplicar la estadística a sus vidas y a sus carreras.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Quiz de repaso Historia</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. <a href="https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUN0NOTlU2OUQ1QVpZRVM1MFIwUk1RSVk0Wi4u" target="_blank" class="text-canvas-blue underline font-medium">La historia de la estadística (Microsoft Forms)</a></label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Discutimos la historia de la estadística, pasar de contar en piedra, cuero, a papeles a computadores a machine learning y Probabilidad.</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Evolución temporal de los registros censales hasta la inferencia automatizada.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Quiz de clasificación de Variables y conceptos básicos de estadística</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 1. Evaluación interactiva en Quizzis.</label>
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> 2. Clasificación de variables cualitativas y cuantitativas.</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-notion-bg">
+                                <details class="group p-3">
+                                    <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none text-xs sm:text-sm">
+                                        <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                        <span>Mi investigación (Definición del proyecto integrador inicial)</span>
+                                    </summary>
+                                    <div class="mt-3 pl-6 space-y-2 text-xs text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Asignación del problema ODS / comunitario para el equipo.</label>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 2 -->
+                    <div id="semana-2" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 2</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Semana 2: Variables Catégoricas & Tablas de Frecuencia</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-3" open>
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Variables Categóricas, Frecuencia Absoluta y Relativa en Power BI</span>
+                                </summary>
+                                <div class="mt-3 pl-6 space-y-2 text-gray-600 border-l-2 border-canvas-blue ml-2 pt-1">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Definición y distinción de variables nominales y ordinales.</label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> Construcción manual de tablas de frecuencia ($f_i, h_i, p_i$).</label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 2:</strong> Visualización de barras apiladas y diagramas circulares en Power BI Desktop.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- SEMANAS 3 A 16 -->
+                    <div id="semana-3" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 3</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Medidas de Tendencia Central y Posición</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Media, Mediana, Moda y Percentiles</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Sensibilidad de la Media y Cuartiles (Q1, Q2, Q3).</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 3:</strong> Fórmulas en Excel (`PROMEDIO`, `MEDIANA`, `PERCENTIL.INC`).</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-4" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 4</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Medidas de Dispersión, Forma y Boxplot</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte I</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Rango Intercuartílico (IQR) y Outliers</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Varianza, Desviación Estándar y Coeficiente de Variación.</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> <strong>Lab 4:</strong> Diagrama de Caja y Bigotes en Excel.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-5" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 5</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Frecuencias Agrupadas e Histogramas. Kurtosis y Sesgo (Parcial I)</h3>
+                            </div>
+                            <span class="text-xs text-emerald-600 font-bold">Examen Parcial I (30%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Sturges y Cierre de Corte</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Regla de Sturges e Histogramas de Frecuencia.</label>
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> 📝 Examen Parcial I y Entrega de Mi Proyecto Corte I.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-6" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 6</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Covarianza y Coeficiente de Pearson</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Análisis Bivariado</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Cálculo de covarianza muestral y correlación lineal.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-7" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 7</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Regresión Lineal Simple y Mínimos Cuadrados</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Python Colab & Regresión</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Ajuste de pendiente e intercepto.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-8" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 8</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Fundamentos de Probabilidad</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Axiomas y Espacio Muestral</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Definición clásica y frecuentista de probabilidad.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-9" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 9</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Probabilidad Condicional y Teorema de Bayes</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte II</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Bayes y Árboles de Decisión</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Resolución de casos con diagramas de árbol.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-10" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 10</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Técnicas de Conteo y Parcial II</h3>
+                            </div>
+                            <span class="text-xs text-blue-600 font-bold">Examen Parcial II (30%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Permutaciones y Combinaciones</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Evaluaciones parciales y entrega de proyecto Corte II.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-11" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 11</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Variables Aleatorias Discretas</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Valor Esperado E(X)</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Esperanza matemática y varianza de V.A. discretas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-12" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 12</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Distribuciones Binomial y Poisson</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Modelos Discretos en RStudio</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Funciones `dbinom`, `dpois` en Posit Cloud.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-13" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 13</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Variables Aleatorias Continuas</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Funciones de Densidad y Uniforme</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Integrales de densidad y cálculo de áreas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-14" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 14</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Distribución Normal y Estandarización Z</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Campana de Gauss</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Uso de tabla Z y funciones estadísticas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-15" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 15</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Aplicaciones Prácticas y Teorema del Límite Central</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-medium">Corte III</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Simulación TLC</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Demostración de convergencia en Python/R.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div id="semana-16" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
+                        <div class="bg-gray-100 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="bg-canvas-blue text-white font-bold text-xs px-2.5 py-1 rounded-md">Semana 16</span>
+                                <h3 class="font-bold text-canvas-dark text-base">Sustentación Final de Proyectos</h3>
+                            </div>
+                            <span class="text-xs text-purple-700 font-bold">Cierre General (40%)</span>
+                        </div>
+                        <div class="p-6 space-y-3 text-xs">
+                            <details class="group rounded-md border border-gray-200 bg-notion-toggleBg p-2">
+                                <summary class="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer list-none select-none">
+                                    <span class="toggle-icon text-gray-400 font-mono">▶</span>
+                                    <span>Paso a Paso: Presentaciones Orales</span>
+                                </summary>
+                                <div class="mt-2 pl-6 space-y-1 text-gray-600">
+                                    <label class="flex items-center gap-2"><input type="checkbox" onchange="toggleCheck(this)"> Sustentación ante jurados y notas definitivas.</label>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
 
         </div>
 
