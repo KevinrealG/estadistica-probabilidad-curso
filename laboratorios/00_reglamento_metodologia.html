@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    ol, ul {
+        margin-left: 1rem;
+    }
+    li {
+        margin-bottom: 0.5rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+</div>
+<h1>Normativas y Metodología</h1>
+<h2>Reglamento y lineamientos para prácticas de laboratorio</h2>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#reglamento">Reglamento de Laboratorios</a></li>
+<li><a href="#metodologia">Metodología</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="reglamento" class="section card">
+    <h2 class="section-title">Reglamento de los Laboratorios</h2>
+    <p>La realización de los laboratorios no se limitará a la utilización de los computadores de las salas de informática; se tendrá en cuenta el procesamiento, análisis e interpretación de los resultados, conclusiones de la práctica, y no solo la utilización de la bibliografía complementaria, sino que adicionalmente y de carácter obligatorio se tendrán en cuenta estos otros factores:</p>
+    <ul>
+        <li>El primer día de clase el profesor establecerá la normatividad general en la utilización de la sala de informática y cualquier observación debe hacerse inmediatamente al profesor, la cual, después de tenerse claridad entre las partes, debe quedar explicitada en el silabo que se encuentra en la plataforma SAVIO.</li>
+        <li>El desarrollo de las clases del laboratorio debe iniciar y finalizar de acuerdo con el horario establecido, ya que para este tiempo está diseñado el laboratorio, garantizando con esto que el estudiante finalizará la práctica en el tiempo establecido previamente para su ejecución.</li>
+    </ul>
+    
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Instalación de Software</h3>
+    <p>Para la instalación de softwares en los equipos de cómputo de la institución, se deben tener en cuenta los siguientes lineamientos y normas establecidas por la Universidad:</p>
+    <ul>
+        <li>Actuar de acuerdo con las políticas de usos de los recursos y servicios informáticos, establecidas por el Consejo Administrativo de la Universidad Tecnológica de Bolívar.</li>
+        <li>Es deber de los usuarios de los equipos de cómputo de la Universidad, la estricta observación y cumplimiento de la legalidad y los acuerdos de licenciamiento de cada software para la Universidad, de las normas sobre propiedad intelectual y derechos de autor.</li>
+        <li>Todos los usuarios responsables de equipos de cómputo de la Universidad, que requieran instalar cualquier tipo de software para el desarrollo de sus actividades, deberán enviar previamente su solicitud al profesor y al auxiliar de laboratorio.</li>
+        <li>La Dirección de Tecnología de Información y Comunicaciones estará informada de los softwares instalados en la Universidad y para asegurar el cumplimiento de su legalidad, realizará visitas de verificación. En caso de encontrar softwares que infrinjan alguna de las políticas de licenciamiento, se procederá con la desinstalación de este, seguidamente, se registrará el incidente para determinar responsabilidades y finalmente, se aplicarán los correctivos que se requieran.</li>
+    </ul>
+    
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Normas de Convivencia</h3>
+    <ul>
+        <li>En el laboratorio está prohibido consumir bebidas o alimentos, y arrojar basura.</li>
+        <li>En todo tiempo se debe actuar con respeto y cortesía. Evite los juegos, gritar o hablar en voz alta durante las prácticas en el laboratorio, ya sea durante la clase o en jornadas extra-clase.</li>
+    </ul>
+</section>
+
+<section id="metodologia" class="section card">
+    <h2 class="section-title">Metodología</h2>
+    <p>Se presenta a continuación los aspectos generales a tener en cuenta en la Guía de Estadística Descriptiva y Probabilidad para el desarrollo de los laboratorios, por lo que, en la primera clase en la sala de informática, el profesor disertará con los estudiantes los aspectos generales de los laboratorios a desarrollar, entre estos:</p>
+    <ol style="list-style-type: lower-alpha;">
+        <li>La realización de los laboratorios es presencial y tiene carácter obligatorio, cumplir con el reglamento del laboratorio.</li>
+        <li>La realización de cada laboratorio exige revisar los fundamentos básicos, para tener el conocimiento y apropiación de la teoría que ha de aplicarse a cada uno de los laboratorios, entre estos:
+            <ul>
+                <li>El número del laboratorio y el nombre correspondiente.</li>
+                <li>La competencia a adquirir y los elementos que la conforman.</li>
+            </ul>
+        </li>
+        <li>Cumplir con los pasos que exige cada uno de los laboratorios. Para ello se proporciona un video del Laboratorio que el estudiante debe desarrollar en el Aula de Informática, así como la actividad independiente que debe incorporar en el informe de Laboratorio. El Video del Laboratorio aparecerá publicado en la Plataforma Savio en la Semana Respectiva.</li>
+        <li>Desarrollar el laboratorio individualmente de acuerdo con la orientación que el profesor dará en SAVIO, asignando la HERRAMIENTA INFORMATICA DE ESTADÍSTICA a usar. Se incluyen prácticas con herramientas como Power BI, Python usando Google Colab y R usando Posit Cloud, promoviendo un aprendizaje aplicado y contextualizado.</li>
+        <li>De acuerdo con las instrucciones del punto d, las actividades después del laboratorio son de refuerzo que tienen como propósito afianzar y profundizar en los conocimientos tratados en el laboratorio.</li>
+        <li>El estudiante debe elaborar un informe después de finalizar cada laboratorio. En este se tienen que describir los pasos del punto c, y si es del caso, anotar observaciones, resultados, interpretaciones, conclusiones y recomendaciones.</li>
+        <li>La Presentación del informe será la siguiente: Si la Herramienta usada es R, Statgraphics o Colab o Power BI, el estudiante deberá compilar en pdf o en Word lo solicitado en el Laboratorio y subir el Archivo a la Plataforma Savio, en el espacio creado para el Laboratorio respectivo. Si la herramienta es Excel, deberá subir el archivo respectivo a la Plataforma Savio, en el espacio creado para el Laboratorio respectivo.</li>
+        <li>En el desarrollo del laboratorio, además del conocimiento y preparación con lecturas previas, se evaluarán otros factores tales como: trabajo en grupo, destreza y habilidad para resolver problemas y orden en el laboratorio, mediante una rúbrica detallada con los diferentes aspectos y criterios de calidad, que el profesor da a conocer previamente a los estudiantes.</li>
+    </ol>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body>
+</html>
