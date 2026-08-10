@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Proyecto de Estadística Bivariable Aplicada a la Música</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin:40px;
+    line-height:1.6;
+    color:#333;
+}
+h1,h2,h3{
+    color:#0d47a1;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+th,td{
+    border:1px solid #999;
+    padding:8px;
+}
+th{
+    background:#e3f2fd;
+}
+.caja{
+    border:1px solid #999;
+    padding:15px;
+    margin:15px 0;
+    background:#f8f9fa;
+}
+</style>
+</head>
+<body>
+
+<h1>Proyecto de Estadística Descriptiva Bivariable Aplicada a la Música</h1>
+
+<h2>1. Descripción General</h2>
+
+<p>
+En este proyecto los estudiantes aplicarán herramientas de estadística descriptiva
+bivariable para analizar el comportamiento de variables musicales y de popularidad
+en canciones de un artista, banda o género musical de su interés.
+</p>
+
+<p>
+A partir de datos reales obtenidos de plataformas digitales, los estudiantes
+explorarán relaciones estadísticas entre variables, calcularán correlaciones,
+estimarán modelos de regresión lineal y evaluarán la capacidad predictiva de dichos
+modelos mediante el coeficiente de determinación R².
+</p>
+
+<p>
+Los resultados serán comunicados mediante una presentación creativa basada en
+Storytelling, utilizando recursos visuales y argumentos cuantitativos sólidos.
+</p>
+
+<h2>2. Competencias a Desarrollar</h2>
+
+<ul>
+<li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+
+<li>Calcular e interpretar medidas estadísticas (tendencia central, dispersión, posición y asociación) para describir y analizar conjuntos de datos univariados y bivariados.</li>
+
+<li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+</ul>
+
+<h2>3. Temáticas Evaluadas</h2>
+
+<ul>
+<li>Distribuciones bidimensionales.</li>
+<li>Representación gráfica.</li>
+<li>Covarianza.</li>
+<li>Coeficiente de correlación de Pearson (r).</li>
+<li>Ecuación de regresión por mínimos cuadrados.</li>
+<li>Interpretación de pendiente e intercepto.</li>
+<li>Bondad de ajuste (R²).</li>
+<li>Comunicación estadística de resultados.</li>
+</ul>
+
+<h2>4. Selección del Tema Musical</h2>
+
+<p>Cada equipo o estudiante seleccionará UNO de los siguientes objetos de estudio:</p>
+
+<ul>
+<li>Un artista.</li>
+<li>Una banda.</li>
+<li>Un género musical.</li>
+</ul>
+
+<p>
+Todos los datos deben pertenecer exclusivamente al objeto de estudio seleccionado.
+</p>
+
+<h2>5. Recolección de Datos</h2>
+
+<h3>Variables Obligatorias</h3>
+
+<table>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+<th>Unidad</th>
+</tr>
+<tr>
+<td>Duración</td>
+<td>Tiempo total de la canción</td>
+<td>Minutos o segundos</td>
+</tr>
+<tr>
+<td>Tempo</td>
+<td>Velocidad musical</td>
+<td>BPM</td>
+</tr>
+<tr>
+<td>Popularidad</td>
+<td>Cantidad de likes en YouTube</td>
+<td>Número de likes</td>
+</tr>
+<tr>
+<td>Reproducciones</td>
+<td>Visualizaciones o streams</td>
+<td>Número de reproducciones</td>
+</tr>
+</table>
+
+<h3>Tamaño de Muestra</h3>
+
+<p>
+Se deberá recopilar información de un mínimo de 10 canciones.
+</p>
+
+<p>
+Se recomienda una muestra entre 15 y 25 canciones para obtener conclusiones más confiables.
+</p>
+
+<h2>6. Organización de la Base de Datos</h2>
+
+<p>La base de datos debe contener como mínimo:</p>
+
+<table>
+<tr>
+<th>#</th>
+<th>Canción</th>
+<th>Duración</th>
+<th>BPM</th>
+<th>Likes</th>
+<th>Reproducciones</th>
+</tr>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<h2>7. Análisis Univariado</h2>
+
+<p>
+Para cada variable deberá calcularse:
+</p>
+
+<ul>
+<li>Media.</li>
+<li>Mediana.</li>
+<li>Moda (si aplica).</li>
+<li>Rango.</li>
+<li>Desviación estándar.</li>
+<li>Interpretación de resultados.</li>
+</ul>
+
+<p>
+Además deberán elaborarse gráficos adecuados para cada variable:
+</p>
+
+<ul>
+<li>Histogramas.</li>
+<li>Diagramas de barras.</li>
+<li>Diagramas de caja.</li>
+</ul>
+
+<h2>8. Análisis Bivariable</h2>
+
+<h3>Selección del Par de Variables</h3>
+
+<p>
+Cada equipo escogerá una pareja de variables para estudiar la relación existente
+entre ellas.
+</p>
+
+<p>Ejemplos:</p>
+
+<ul>
+<li>BPM y reproducciones.</li>
+<li>BPM y likes.</li>
+<li>Duración y reproducciones.</li>
+<li>Duración y likes.</li>
+</ul>
+
+<h3>Representación Gráfica</h3>
+
+<p>
+Construir un diagrama de dispersión (scatter plot).
+</p>
+
+<p>
+Incluir:
+</p>
+
+<ul>
+<li>Título.</li>
+<li>Ejes identificados.</li>
+<li>Unidades.</li>
+<li>Línea de tendencia.</li>
+</ul>
+
+<h2>9. Covarianza</h2>
+
+<p>
+Calcular la covarianza de las variables seleccionadas.
+</p>
+
+<p>
+Interpretar:
+</p>
+
+<ul>
+<li>Covarianza positiva.</li>
+<li>Covarianza negativa.</li>
+<li>Covarianza cercana a cero.</li>
+</ul>
+
+<h2>10. Correlación de Pearson</h2>
+
+<p>
+Calcular el coeficiente de correlación de Pearson (r).
+</p>
+
+<table>
+<tr>
+<th>Valor de r</th>
+<th>Interpretación aproximada</th>
+</tr>
+<tr>
+<td>0.00 - 0.19</td>
+<td>Muy débil</td>
+</tr>
+<tr>
+<td>0.20 - 0.39</td>
+<td>Débil</td>
+</tr>
+<tr>
+<td>0.40 - 0.59</td>
+<td>Moderada</td>
+</tr>
+<tr>
+<td>0.60 - 0.79</td>
+<td>Fuerte</td>
+</tr>
+<tr>
+<td>0.80 - 1.00</td>
+<td>Muy fuerte</td>
+</tr>
+</table>
+
+<p>
+Responder:
+</p>
+
+<ul>
+<li>¿Existe relación entre las variables?</li>
+<li>¿La relación es positiva o negativa?</li>
+<li>¿Qué tan intensa es?</li>
+</ul>
+
+<h2>11. Modelo de Regresión Lineal</h2>
+
+<p>
+Determinar la ecuación de regresión:
+</p>
+
+<p style="text-align:center;font-size:20px;">
+y = a + bx
+</p>
+
+<p>Interpretar:</p>
+
+<ul>
+<li>Intercepto (a).</li>
+<li>Pendiente (b).</li>
+<li>Sentido práctico de la pendiente.</li>
+</ul>
+
+<h3>Predicción</h3>
+
+<p>
+Realizar al menos dos predicciones utilizando el modelo.
+</p>
+
+<h2>12. Bondad de Ajuste</h2>
+
+<p>
+Calcular e interpretar el coeficiente de determinación:
+</p>
+
+<p style="text-align:center;font-size:20px;">
+R²
+</p>
+
+<p>
+Responder:
+</p>
+
+<ul>
+<li>¿Qué porcentaje de la variabilidad de Y es explicado por X?</li>
+<li>¿El modelo parece útil?</li>
+<li>¿Existen factores externos no considerados?</li>
+</ul>
+
+<h2>13. Herramientas Digitales Sugeridas</h2>
+
+<ul>
+<li>Excel.</li>
+<li>Google Sheets.</li>
+<li>Jamovi.</li>
+<li>SPSS.</li>
+<li>GeoGebra.</li>
+<li>R.</li>
+<li>Python.</li>
+<li>Power BI.</li>
+</ul>
+
+<h2>14. Storytelling Estadístico</h2>
+
+<p>
+La presentación NO debe limitarse a mostrar cálculos.
+</p>
+
+<p>
+Debe construirse una historia basada en una pregunta central.
+</p>
+
+<div class="caja">
+<h3>Ejemplo</h3>
+<p>
+¿Las canciones más rápidas de Bad Bunny tienen más reproducciones?
+</p>
+
+<p>
+A partir de esta pregunta se organiza toda la narrativa:
+introducción del artista, recopilación de datos, análisis,
+hallazgos, sorpresas estadísticas y conclusiones.
+</p>
+</div>
+
+<h2>15. Estructura Sugerida de la Presentación</h2>
+
+<ol>
+<li>Portada.</li>
+<li>Pregunta de investigación.</li>
+<li>Descripción del artista, banda o género.</li>
+<li>Muestra seleccionada.</li>
+<li>Base de datos.</li>
+<li>Análisis univariado.</li>
+<li>Diagrama de dispersión.</li>
+<li>Covarianza.</li>
+<li>Correlación de Pearson.</li>
+<li>Ecuación de regresión.</li>
+<li>Interpretación de R².</li>
+<li>Predicciones.</li>
+<li>Conclusiones.</li>
+<li>Reflexión final.</li>
+</ol>
+
+<h2>16. Producto Final</h2>
+
+<ul>
+<li>Base de datos completa.</li>
+<li>Cálculos estadísticos.</li>
+<li>Gráficos.</li>
+<li>Modelo de regresión.</li>
+<li>Presentación creativa con Storytelling.</li>
+<li>Conclusiones sustentadas cuantitativamente.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bachué Analytics Hub | Bachue Lab SAS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Configuración personalizada de colores para mantener la identidad de las imágenes
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDarkBlue: '#1e3d75',
+                        brandLightBlue: '#f0f7ff',
+                        brandYellow: '#fcd34d',
+                        brandYellowHover: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <!-- 1. NAVBAR -->
+    <nav class="bg-brandDarkBlue text-white py-4 px-6 md:px-12 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Bachué Analytics Hub</h1>
+                    <p class="text-xs text-blue-200">Bachue Lab SAS - Ciencia de datos con excelencia</p>
+                </div>
+            </div>
+            <div class="flex gap-6 text-sm font-medium">
+                <a href="#" class="hover:text-brandYellow transition">Inicio</a>
+                <a href="#cursos" class="hover:text-brandYellow transition">Cursos</a>
+                <a href="#calculadoras" class="hover:text-brandYellow transition">Calculadoras</a>
+                <a href="#contacto" class="hover:text-brandYellow transition">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <header class="bg-gradient-to-b from-brandLightBlue to-white py-16 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+            <div class="max-w-xl">
+                <h2 class="text-4xl md:text-5xl font-black leading-tight text-slate-900 mb-6">
+                    Bienvenidos a <span class="bg-brandYellow px-2 py-1 rounded">Bachué Analytics</span>
+                </h2>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    Transformando datos en decisiones. Explora nuestro hub de conocimiento especializado en 
+                    <strong>Estadística Aplicada</strong>, <strong>Analítica de Datos</strong> y herramientas interactivas en la nube.
+                </p>
+                <a href="#cursos" class="inline-flex items-center gap-2 bg-brandDarkBlue hover:bg-blue-900 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5">
+                    ¡Empieza ahora! <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+            <!-- Foto de perfil / Logo circular -->
+            <div class="flex flex-col items-center">
+                <div class="w-64 h-64 rounded-full border-4 border-brandYellow overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=500&h=500" alt="Bachue Lab SAS" class="w-full h-full object-cover">
+                </div>
+                <span class="text-xs text-gray-500 mt-3 italic"><i class="fa-solid fa-camera mr-1"></i> Bachue Lab SAS</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. NUESTROS CURSOS -->
+    <section id="cursos" class="py-16 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-black text-brandDarkBlue flex justify-center items-center gap-2">
+                    📊 Nuestros Cursos
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-yellow-500 mx-auto mt-3 rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tarjeta 1 -->
+                <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="text-brandDarkBlue text-5xl mb-6"><i class="fa-solid fa-chart-line"></i></div>
+                    <h4 class="text-xl font-bold mb-3 text-slate-800">Estadística Inferencial</h4>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">
+                        Pruebas paramétricas y no paramétricas, intervalos de confianza y ANOVA.
+                    </p>
+                    <span class="bg-brandYellow text-xs font-bold px-4 py-1.5 rounded-full text-slate-800">Próximamente</span>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="text-brandDarkBlue text-5xl mb-6"><i class="fa-solid fa-calculator"></i></div>
+                    <h4 class="text-xl font-bold mb-3 text-slate-800">Diseño de Experimentos</h4>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">
+                        Todos los diseños de experimentos para optimización y análisis de varianza (ANOVA).
+                    </p>
+                    <span class="bg-brandYellow text-xs font-bold px-4 py-1.5 rounded-full text-slate-800">Próximamente</span>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="text-brandDarkBlue text-5xl mb-6"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h4 class="text-xl font-bold mb-3 text-slate-800">Probabilidad Aplicada</h4>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">
+                        Distribuciones, Teorema Central del Límite, simulaciones en R y Python.
+                    </p>
+                    <div class="flex gap-2">
+                        <button class="bg-brandDarkBlue hover:bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded-full transition">
+                            Ir al curso →
+                        </button>
+                        <span class="bg-brandYellow text-xs font-bold px-3 py-2 rounded-full text-slate-800">Disponible</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TIP INTERACTIVO DEL DÍA -->
+    <section class="py-12 bg-white px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-2xl font-bold text-brandDarkBlue mb-2">
+                📈 Tip del día: Aprende Fácilmente Estadística
+            </h3>
+            <div class="w-16 h-1 bg-gradient-to-r from-purple-500 to-yellow-500 mx-auto mb-8 rounded"></div>
+
+            <div class="bg-brandDarkBlue text-white rounded-3xl p-8 shadow-lg max-w-2xl mx-auto">
+                <p id="text-tip" class="text-lg font-medium mb-6">
+                    Haz clic en el botón para recibir un consejo de analítica de datos de Bachué Lab.
+                </p>
+                <button onclick="nuevoTip()" class="bg-brandYellow hover:bg-brandYellowHover text-slate-900 font-bold px-5 py-2.5 rounded-full text-sm inline-flex items-center gap-2 transition transform active:scale-95 shadow">
+                    <i class="fa-solid fa-lightbulb"></i> Nuevo tip
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-gray-400 py-8 text-center text-sm border-t border-slate-800">
+        <p>&copy; 2026 Bachue Lab SAS. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- INTERACTIVIDAD CON JAVASCRIPT -->
+    <script>
+        const tips = [
+            "El Teorema Central del Límite asegura que, con muestras grandes, la distribución de la media será aproximadamente normal.",
+            "Para variables categóricas, prefiere gráficos de barras o de sectores para visualizar frecuencias.",
+            "Antes de aplicar ANOVA, siempre verifica el cumplimiento de los supuestos de normalidad y homocedasticidad.",
+            "El p-valor no mide la fuerza de un efecto, sino la probabilidad de observar tus datos si la hipótesis nula fuera cierta."
+        ];
+
+        function nuevoTip() {
+            const index = Math.floor(Math.random() * tips.length);
+            document.getElementById('text-tip').innerText = tips[index];
+        }
+    </script>
+</body>

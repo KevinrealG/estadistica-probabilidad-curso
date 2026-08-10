@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Estadística Descriptiva</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.5.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2025.5.1/core.js"></script>
+
+    <style>
+        body {
+            background: #f7f9fc;
+            font-family: "Segoe UI", sans-serif;
+            color: #16395f;
+        }
+
+        .header {
+            padding: 1rem 1.5rem;
+            background: white;
+            border-bottom: 1px solid #e6ebf2;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: #16395f;
+        }
+
+        .sidebar {
+            background: #eef2f5;
+            padding: 1.5rem;
+            border-radius: 8px;
+            min-height: 780px;
+        }
+
+        .panel-box {
+            background: white;
+            border: 1px solid #d9e2ec;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            min-height: 160px;
+            border-radius: 6px !important;
+        }
+
+        .btn-calcular {
+            background: #16395f;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 0.9rem;
+        }
+
+        .btn-calcular:hover {
+            background: #102d4a;
+        }
+
+        .tabs {
+            background: transparent;
+            border: none;
+        }
+
+        .tabs-title > a {
+            color: #0aa89e;
+            font-weight: 600;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tabs-title > a[aria-selected='true'] {
+            background: white;
+            color: #16395f;
+            border: 1px solid #d9e2ec;
+            border-bottom: none;
+        }
+
+        .tabs-content {
+            border: 1px solid #d9e2ec;
+            background: white;
+            border-radius: 0 8px 8px 8px;
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f2f5f9;
+            color: #16395f;
+        }
+
+        th, td {
+            border: 1px solid #d9e2ec;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.45rem;
+            font-size: 0.98rem;
+        }
+
+        .stat-item b {
+            color: #16395f;
+        }
+
+        .stat-item span {
+            color: #0aa89e;
+            font-weight: 600;
+        }
+
+        .info-bar {
+            background: #eef6ff;
+            border: 1px solid #c7def8;
+            color: #245a9b;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>📊 Calculadora Estadística Descriptiva</h1>
+    </div>
+
+    <div class="grid-container fluid" style="margin-top:1rem;">
+
+        <ul class="tabs" data-tabs id="menu-principal">
+            <li class="tabs-title is-active"><a href="#datos-lista" aria-selected="true">📈 Datos en Lista</a></li>
+            <li class="tabs-title"><a href="#agrupados">📊 Datos Agrupados</a></li>
+            <li class="tabs-title"><a href="#cualitativos">🎯 Cualitativas (Datos)</a></li>
+            <li class="tabs-title"><a href="#frecuencias">📶 Cualitativas (Frecuencias)</a></li>
+            <li class="tabs-title"><a href="#contingencia">📋 Tabla de Contingencia</a></li>
+            <li class="tabs-title"><a href="#bivariado">🔗 Bivariado (Cuantitativo)</a></li>
+            <li class="tabs-title"><a href="#guia">📖 Guía de Interpretación</a></li>
+        </ul>
+
+        <div class="tabs-content" data-tabs-content="menu-principal">
+
+            <div class="tabs-panel is-active" id="datos-lista">
+                <div class="grid-x grid-margin-x">
+
+                    <div class="cell medium-4">
+                        <div class="sidebar">
+                            <h3>📊 Ingreso de Datos</h3>
+
+                            <label>
+                                Ingresa los datos separados por comas o espacios.
+                                <textarea id="datos" placeholder="Ejemplo: 12, 15, 18, 20, 22"></textarea>
+                            </label>
+
+                            <button class="button btn-calcular" py-click="calcular">🧮 🔍 Calcular</button>
+
+                            <br><br>
+
+                            <h3>📌 Resumen de Resultados</h3>
+                            <div class="panel-box" id="resumen">
+                                <em>Ingresa datos y presiona "Calcular"</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell medium-8">
+
+                        <ul class="tabs" data-tabs id="result-tabs">
+                            <li class="tabs-title is-active"><a href="#tabla" aria-selected="true">📊 Tabla de Frecuencias</a></li>
+                            <li class="tabs-title"><a href="#graficos">📈 Gráficos</a></li>
+                            <li class="tabs-title"><a href="#poligono">📉 Polígono y Ojiva</a></li>
+                            <li class="tabs-title"><a href="#estadisticas">📊 Estadísticas</a></li>
+                        </ul>
+
+                        <div class="tabs-content" data-tabs-content="result-tabs">
+
+                            <div class="tabs-panel is-active" id="tabla">
+                                <h4>Tabla de Frecuencias</h4>
+                                <div id="tabla-frecuencias"></div>
+                            </div>
+
+                            <div class="tabs-panel" id="graficos">
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell medium-6">
+                                        <div class="panel-box">
+                                            <h5>Histograma</h5>
+                                            <div id="histograma"></div>
+                                        </div>
+                                    </div>
+                                    <div class="cell medium-6">
+                                        <div class="panel-box">
+                                            <h5>Caja y Bigotes</h5>
+                                            <div id="boxplot"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tabs-panel" id="poligono">
+                                <div class="grid-x grid-margin-x">
+                                    <div class="cell medium-6">
+                                        <div class="panel-box">
+                                            <h5>Polígono de Frecuencias</h5>
+                                            <div id="poligono-frecuencias"></div>
+                                        </div>
+                                    </div>
+                                    <div class="cell medium-6">
+                                        <div class="panel-box">
+                                            <h5>Ojiva (Frecuencia Acumulada)</h5>
+                                            <div id="ojiva"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tabs-panel" id="estadisticas">
+                                <div id="estadisticas-detalle"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="info-bar">
+                            ℹ️ Análisis completado correctamente. Explora las diferentes pestañas para ver los resultados.
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tabs-panel" id="agrupados"><h4>📊 Módulo de Datos Agrupados</h4></div>
+            <div class="tabs-panel" id="cualitativos"><h4>🎯 Módulo de Variables Cualitativas</h4></div>
+            <div class="tabs-panel" id="frecuencias"><h4>📶 Frecuencias Cualitativas</h4></div>
+            <div class="tabs-panel" id="contingencia"><h4>📋 Tabla de Contingencia</h4></div>
+            <div class="tabs-panel" id="bivariado"><h4>🔗 Análisis Bivariado</h4></div>
+            <div class="tabs-panel" id="guia"><h4>📖 Guía de Interpretación</h4></div>
+
+        </div>
+    </div>
+
+    <py-config>
+        packages = ["plotly", "numpy"]</py-config>
+
+    <py-script>
+from pyscript import document, display
+import numpy as np
+import plotly.graph_objects as go
+from collections import Counter
+import math
+
+# ============================================================
+# UTILIDADES
+# ============================================================
+def parsear_datos(texto):
+    texto = texto.replace(",", " ")
+    return [float(x) for x in texto.split()]
+
+# ============================================================
+# TABLA DE FRECUENCIAS SIMPLE
+# ============================================================
+def tabla_html(valores, frec):
+    total = sum(frec)
+    acum = 0
+    filas = ""
+
+    for v, f in zip(valores, frec):
+        acum += f
+        hi = f / total
+        Hi = acum / total
+
+        filas += f"""
+        <tr>
+            <td>{v:g}</td>
+            <td>{f}</td>
+            <td>{hi:.3f}</td>
+            <td>{acum}</td>
+            <td>{Hi:.3f}</td>
+        </tr>
+        """
+
+    return f"""
+    <table>
+        <thead>
+            <tr>
+                <th>Valor</th>
+                <th>Frecuencia (fi)</th>
+                <th>Frecuencia Relativa (hi)</th>
+                <th>Frecuencia Acumulada (Fi)</th>
+                <th>Frecuencia Relativa Acumulada (Hi)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {filas}
+            <tr>
+                <th>Total</th>
+                <th>{total}</th>
+                <th>1.000</th>
+                <th>{total}</th>
+                <th>1.000</th>
+            </tr>
+        </tbody>
+    </table>
+    """
+
+# ============================================================
+# TABLA DE FRECUENCIAS AGRUPADA (CORREGIDA)
+# ============================================================
+def tabla_agrupada_html(datos):
+    n = len(datos)
+    k = round(1 + 3.322 * math.log10(n))  # Regla de Sturges
+
+    frecuencias, bordes = np.histogram(datos, bins=k)
+
+    filas = ""
+    total = frecuencias.sum()
+    acum = 0
+
+    for i in range(len(frecuencias)):
+        li = bordes[i]
+        ls = bordes[i + 1]
+        fi = int(frecuencias[i])
+        acum += fi
+        hi = fi / total
+        Hi = acum / total
+
+        intervalo = f"[{li:.2f}, {ls:.2f})" if i < len(frecuencias)-1 else f"[{li:.2f}, {ls:.2f}]"
+
+        filas += f"""
+        <tr>
+            <td>{i+1}</td>
+            <td>{intervalo}</td>
+            <td>{fi}</td>
+            <td>{hi:.3f}</td>
+            <td>{acum}</td>
+            <td>{Hi:.3f}</td>
+        </tr>
+        """
+
+    return f"""
+    <table>
+        <thead>
+            <tr>
+                <th>Clase</th>
+                <th>Intervalo</th>
+                <th>Frecuencia</th>
+                <th>hi</th>
+                <th>Fi</th>
+                <th>Hi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {filas}
+            <tr>
+                <th colspan='2'>Total</th>
+                <th>{total}</th>
+                <th>1.000</th>
+                <th>{total}</th>
+                <th>1.000</th>
+            </tr>
+        </tbody>
+    </table>
+    """
+
+# ============================================================
+# RESUMEN ESTADÍSTICO
+# ============================================================
+def resumen_html(datos):
+    moda = Counter(datos).most_common(1)[0][0]
+    q1 = np.percentile(datos, 25)
+    q3 = np.percentile(datos, 75)
+
+    return f"""
+    <div class='stat-item'><b>n:</b> <span>{len(datos)}</span></div>
+    <div class='stat-item'><b>Mínimo:</b> <span>{min(datos):.2f}</span></div>
+    <div class='stat-item'><b>Máximo:</b> <span>{max(datos):.2f}</span></div>
+    <div class='stat-item'><b>Media:</b> <span>{np.mean(datos):.2f}</span></div>
+    <div class='stat-item'><b>Mediana:</b> <span>{np.median(datos):.2f}</span></div>
+    <div class='stat-item'><b>Moda:</b> <span>{moda:.2f}</span></div>
+    <div class='stat-item'><b>Desv. Estándar:</b> <span>{np.std(datos, ddof=1):.2f}</span></div>
+    <div class='stat-item'><b>Varianza:</b> <span>{np.var(datos, ddof=1):.2f}</span></div>
+    <div class='stat-item'><b>Q1:</b> <span>{q1:.2f}</span></div>
+    <div class='stat-item'><b>Q3:</b> <span>{q3:.2f}</span></div>
+    """
+
+# ============================================================
+# FUNCIÓN PRINCIPAL
+# ============================================================
+def calcular(event=None):
+    texto = document.getElementById("datos").value.strip()
+    if not texto:
+        return
+
+    datos = parsear_datos(texto)
+    datos.sort()
+
+    # Frecuencia simple
+    conteo = Counter(datos)
+    valores = sorted(conteo.keys())
+    frecuencias = [conteo[v] for v in valores]
+
+    document.getElementById("tabla-frecuencias").innerHTML = tabla_html(valores, frecuencias)
+
+    # Frecuencia agrupada (si existe el contenedor)
+    try:
+        document.getElementById("tabla-frecuencias-agrupada").innerHTML = tabla_agrupada_html(datos)
+    except:
+        pass
+
+    # Resumen
+    document.getElementById("resumen").innerHTML = resumen_html(datos)
+
+    # Histograma
+    fig1 = go.Figure(go.Histogram(x=datos, nbinsx=7, marker_color="#2f6fb2"))
+    fig1.update_layout(template="plotly_white", height=320)
+    display(fig1, target="histograma", append=False)
+
+    # Boxplot
+    fig2 = go.Figure(go.Box(x=datos, orientation='h', marker_color="#2f6fb2"))
+    fig2.update_layout(template="plotly_white", height=320)
+    display(fig2, target="boxplot", append=False)
+
+# Datos iniciales
+document.getElementById("datos").value = "12, 15, 18, 20, 22, 12, 14, 16, 18, 21, 23, 25, 17, 19, 22, 24, 26, 28, 30, 16, 14, 18"
+calcular()
+
+
+    </py-script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/js/foundation.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+
+</body>
+</html>

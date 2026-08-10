@@ -1,0 +1,777 @@
+---
+ title: "Dashboard - Modelo Naive Bayes"
+ author: "Egduer Alexander Ovalles Rojas"
+ format:
+  dashboard:
+    orientation: rows
+    logo: utb-logotipo.png
+    theme:
+      light: flatly
+      dark: darkly
+    self-contained: true
+ jupyter: python3
+ execute:
+  echo: false
+  warning: false
+  message: false
+  error: false
+---
+
+
+# Libreria
+
+
+
+## Row {height=25%}
+
+
+
+### Column {width=40%}
+
+
+
+::: {.card title="Contexto del Proyecto"}
+
+
+
+Este tablero interactivo presenta los resultados del modelo predictivo **Naive Bayes (GaussianNB)** aplicado al análisis de la deserción y éxito estudiantil.
+
+
+A partir de variables socio-demográficas y de rendimiento académico (como la edad al enrolamiento, nota de admisión y calificaciones de los primeros semestres), el modelo clasifica el estado final de los estudiantes (*Target*). El objetivo es identificar patrones clave que permitan alertar de manera temprana situaciones de riesgo académico.
+
+:::
+
+
+### Column {width=60%}r.
+
+```{python}
+#| title: Activación de la Librerías
+#| echo: true
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import confusion_matrix, accuracy_score
+import ipywidgets as widgets
+
+
+df = pd.read_csv("data.csv", sep=";")
+
+df = df.dropna()
+
+
+
+```
+
+
+
+
+
+
+
+# 3. Variables Predictora y objetivo
+
+
+
+
+
+```{python}
+
+
+
+target = "Target"
+
+features = [
+
+    "Age at enrollment",
+
+    "Admission grade",
+
+    "Curricular units 1st sem (grade)",
+
+    "Curricular units 2nd sem (grade)"
+
+]
+
+
+
+
+
+
+
+```
+
+
+
+```{python}
+
+
+
+encoder = LabelEncoder()
+
+
+
+df["Target_encoded"] = encoder.fit_transform(df[target])
+
+
+
+X = df[features]
+
+y = df["Target_encoded"]
+
+
+
+```
+
+
+
+```{python}
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+
+
+    X, y,
+
+
+
+    test_size=0.3,
+
+
+
+    random_state=42,
+
+
+
+    stratify=y
+
+
+
+)
+
+
+
+```
+
+
+
+```{python}
+
+
+
+model = GaussianNB()
+
+
+
+model.fit(X_train, y_train)
+
+
+
+```
+
+
+
+```{python}
+
+
+
+y_pred = model.predict(X_test)
+
+
+
+y_prob = model.predict_proba(X_test)
+
+
+
+```
+
+
+
+```{python}
+
+
+
+accuracy = accuracy_score(y_test, y_pred)
+
+
+
+error = 1 - accuracy
+
+
+
+```
+
+
+
+
+
+
+
+```{python}
+
+
+
+#| title: Métricas del modelo
+
+
+
+
+
+
+
+metricas = pd.DataFrame({
+
+
+
+    "Métrica": ["Accuracy", "Error", "Registros"],
+
+
+
+    "Valor": [
+
+
+
+        round(accuracy,4),
+
+
+
+        round(error,4),
+
+
+
+        len(df)
+
+
+
+    ]
+
+
+
+})
+
+
+
+
+
+
+
+metricas
+
+
+
+```
+
+
+
+
+
+
+
+#  Gráficos de undimensionales
+
+
+
+
+
+
+
+### Column {.tabset}
+
+
+
+```{python}
+
+
+
+#| title: Distribución del target
+
+
+
+fig = px.histogram(
+
+
+
+    df,
+
+
+
+    x=target,
+
+
+
+    color=target,
+
+
+
+    title="Distribución de la variable objetivo"
+
+
+
+)
+
+
+
+fig.show()
+
+
+
+```
+
+
+
+```{python}
+
+
+
+#| title: Histogram 1
+
+
+
+fig = px.histogram(
+
+
+
+    df,
+
+
+
+    x="Age at enrollment",
+
+
+
+    color=target,
+
+
+
+    title="Edad al enrolamiento vs Target"
+
+
+
+)
+
+
+
+fig.show()
+
+
+
+```
+
+
+
+```{python}
+
+
+
+#| title: Histogram 2
+
+
+
+fig = px.histogram(
+
+
+
+    df,
+
+
+
+    x="Admission grade",
+
+
+
+    color=target,
+
+
+
+    title="Nota de admisión vs Target"
+
+
+
+)
+
+
+
+fig.show()
+
+
+
+```
+
+
+
+```{python}
+
+
+
+#| title: Boxplot 1
+
+
+
+fig = px.box(
+
+    df,
+
+    x=target,
+
+    y="Age at enrollment",
+
+    color=target,
+
+    title="Edad vs Target"
+
+)
+
+fig.show()
+
+
+
+```
+
+
+
+```{python}
+
+
+
+#| title: Boxplot 2
+
+
+
+fig = px.box(
+
+    df,
+
+    x=target,
+
+    y="Admission grade",
+
+    color=target,
+
+    title="Nota de admisión vs Target"
+
+)
+
+fig.show()
+
+
+
+```
+
+
+
+
+
+
+
+# Graficos bidimensionales
+
+
+
+
+
+
+
+### columns{.tabset}
+
+
+
+
+
+
+
+```{python}
+
+#| title: Relacion entre variables
+
+fig = px.scatter(
+
+    df,
+
+    x="Admission grade",
+
+    y="Curricular units 1st sem (grade)",
+
+    color=target,
+
+    title="Relación entre variables académicas"
+
+)
+
+fig.show()
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{python}
+
+#| title: Matriz correlación
+
+fig = px.imshow(
+
+    X.corr(),
+
+    text_auto=True,
+
+    title="Matriz de correlación"
+
+)
+
+fig.show()
+
+
+
+```
+
+
+
+```{python}
+
+#| title: Matriz confusión
+
+cm = confusion_matrix(y_test, y_pred)
+
+cm_df = pd.DataFrame(
+
+    cm,
+
+    index=encoder.classes_,
+
+    columns=encoder.classes_
+
+)
+
+px.imshow(
+
+    cm_df,
+
+    text_auto=True,
+
+    color_continuous_scale="Blues",
+
+    labels=dict(x="Predicción", y="Valor real"),
+
+    title="Matriz de confusión - Naive Bayes"
+
+)
+
+
+
+```
+
+
+
+
+
+
+
+# Dataframe
+
+
+
+
+
+
+
+## probabilidad
+
+
+
+```{python}
+
+#| title: Comparación entre valor real y predicción
+
+#| echo: true
+
+comparacion = pd.DataFrame({
+
+    "Valor Real": encoder.inverse_transform(y_test),
+
+    "Predicción": encoder.inverse_transform(y_pred)
+
+
+
+})
+
+
+
+comparacion["Correcto"] = (
+
+    comparacion["Valor Real"] ==
+
+    comparacion["Predicción"]
+
+)
+
+
+
+comparacion.head(20)
+
+
+
+```
+
+
+
+
+
+
+
+## Filtro interactivo
+
+
+
+ 
+
+
+
+```{python}
+
+dropdown = widgets.Dropdown(
+
+    options=df[target].unique(),
+
+    description="Clase:"
+
+)
+
+dropdown
+
+
+
+```
+
+
+
+# Probabilidad
+
+```{python}
+
+
+
+filtered = df[df[target] == dropdown.value]
+
+fig = px.scatter(
+
+    filtered,
+
+    x="Admission grade",
+
+    y="Curricular units 1st sem (grade)",
+
+    color=target,
+
+    title="Datos filtrados"
+
+)
+
+
+
+fig.show()
+
+
+
+```
+
+
+
+
+
+# Simulación de nuevos casos (input del usuario)
+
+
+
+```{python}
+
+
+
+# Simulación de un nuevo estudiante (manual)
+
+
+
+edad = 20
+
+admision = 120
+
+sem1 = 10
+
+sem2 = 10
+
+
+
+nuevo = pd.DataFrame({
+
+    "Age at enrollment": [edad],
+
+    "Admission grade": [admision],
+
+    "Curricular units 1st sem (grade)": [sem1],
+
+    "Curricular units 2nd sem (grade)": [sem2]
+
+})
+
+
+
+pred = model.predict(nuevo)
+
+pred_label = encoder.inverse_transform(pred)
+
+
+
+prob = model.predict_proba(nuevo)
+
+
+
+prob_df = pd.DataFrame({
+
+    "Clase": encoder.classes_,
+
+    "Probabilidad": prob[0]
+
+})
+
+
+
+print("Predicción:", pred_label[0])
+
+
+
+px.bar(
+
+    prob_df,
+
+    x="Clase",
+
+    y="Probabilidad",
+
+    title="Probabilidad del nuevo estudiante"
+
+)
+
+```
+
+
+# Tabla
+
+
+```{python}
+
+df.head(20)
+```
