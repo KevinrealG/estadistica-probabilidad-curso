@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Bivariado - Bachué Toolbox</title>
+    <style>
+        /* Estilos base reutilizados del estándar del curso */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+            --tool-color: #ff9800; /* Color de acento para la herramienta Bachué */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            flex-direction: column;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .highlight-box {
+            background: #eef8ff;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid var(--blue);
+            margin-top: 20px;
+        }
+        .tool-box {
+            background: #fff8e1;
+            padding: 30px;
+            border-radius: 16px;
+            border: 3px solid var(--tool-color);
+            text-align: center;
+        }
+
+        /* --- Estilos Tabla de Contingencia --- */
+        .contingency-table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+        .contingency-table th, .contingency-table td {
+            border: 2px solid #ccc;
+            padding: 15px;
+        }
+        .contingency-table th { background-color: #f0f0f0; color: var(--blue); }
+        .contingency-table .marginal { background-color: #e3f2fd; font-weight: bold; }
+
+        /* --- ESTILOS DE INTERACTIVIDAD Y TEMA OSCURO --- */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .highlight-box { background: #263238; border-left-color: #64b5f6; }
+        body.dark-theme .tool-box { background: #3e2723; border-color: #ffb300; }
+        
+        body.dark-theme .contingency-table th, body.dark-theme .contingency-table td { border-color: #555; }
+        body.dark-theme .contingency-table th { background-color: #333; }
+        body.dark-theme .contingency-table .marginal { background-color: #0d47a1; color: white; }
+
+        .slide.active { display: flex; }
+        
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <h1>El Cruce de Dos Mundos</h1>
+            <h2 style="color: #555;">Análisis Bivariado de Variables Cualitativas</h2>
+            
+            <div class="visual-container">
+                <div class="highlight-box" style="width: 80%; text-align: center;">
+                    <p style="font-size: 1.6rem; font-weight: bold; margin: 0; color: var(--blue);">El Reto Inicial:</p>
+                    <p style="font-size: 1.4rem; font-style: italic; margin-top: 15px;">
+                        "¿Cómo se relacionan nuestros perfiles con nuestras preferencias?<br><br>
+                        ¿Existe una relación real entre el <strong>programa académico</strong> que estudiamos y nuestra <strong>preferencia de modalidad de estudio</strong> en la UTB?"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Desarrollo Conceptual (Tabla) -->
+        <div class="slide">
+            <h1>La Tabla de Contingencia</h1>
+            
+            <div class="grid-layout">
+                <div>
+                    <ul style="line-height: 1.6;">
+                        <li>Estructura básica que cruza categorías en <strong>filas (X)</strong> y <strong>columnas (Y)</strong>.</li>
+                        <li>Los bordes de la tabla muestran las sumas o <strong>frecuencias marginales</strong>.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p style="font-size: 1.2rem; margin: 0;">
+                            <strong>Frecuencia Conjunta ($n_{ij}$):</strong><br>
+                            Es el número de observaciones que comparten simultáneamente una categoría específica de la fila <em>i</em> y de la columna <em>j</em>.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="visual-container">
+                    <table class="contingency-table">
+                        <tr>
+                            <th rowspan="2" colspan="2" style="background: none; border: none;"></th>
+                            <th colspan="2">Modalidad (Y)</th>
+                            <th rowspan="2" class="marginal">Total Marginal</th>
+                        </tr>
+                        <tr>
+                            <th>Presencial</th>
+                            <th>Virtual</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2" style="writing-mode: vertical-rl; transform: rotate(180deg);">Programa</th>
+                            <th>Ingeniería</th>
+                            <td>$n_{11}$</td>
+                            <td>$n_{12}$</td>
+                            <td class="marginal">Total Ing.</td>
+                        </tr>
+                        <tr>
+                            <th>Derecho</th>
+                            <td>$n_{21}$</td>
+                            <td>$n_{22}$</td>
+                            <td class="marginal">Total Der.</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" class="marginal">Total Marginal</th>
+                            <td class="marginal">Total Pres.</td>
+                            <td class="marginal">Total Virt.</td>
+                            <td class="marginal" style="background-color: var(--blue); color: white;">Total (n)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Visualización -->
+        <div class="slide">
+            <h1>Visualización: Barras y Calor</h1>
+            
+            <div class="grid-layout">
+                <div class="visual-container" style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
+                    <h3 style="color: var(--blue);">1. Gráficos de Barras</h3>
+                    <ul style="font-size: 1.1rem;">
+                        <li><strong>Agrupadas:</strong> Muestran la <em>magnitud absoluta</em>. Útiles para ver volúmenes totales.</li>
+                        <li><strong>Apiladas al 100%:</strong> Muestran la <em>proporción</em> relativa. Ideales para comparar composiciones internas sin importar el tamaño del grupo.</li>
+                    </ul>
+                </div>
+                
+                <div class="visual-container" style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
+                    <h3 style="color: var(--tool-color);">2. Mapa de Calor (Heat Map)</h3>
+                    <p style="font-size: 1.1rem;">Una matriz de colores donde la intensidad del tono representa la magnitud de la frecuencia conjunta ($n_{ij}$).</p>
+                    <p style="font-size: 1.1rem; color: #666; font-style: italic;">A mayor frecuencia, color más intenso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Laboratorio en Vivo -->
+        <div class="slide">
+            <h1>Laboratorio en Vivo: Bachué Toolbox</h1>
+            
+            <div class="visual-container">
+                <div class="tool-box" style="width: 90%;">
+                    <h2 style="color: var(--tool-color); font-size: 2.2rem; margin-top: 0;">Bachué Data Toolbox</h2>
+                    <h3 style="margin-bottom: 30px;">Módulo de Contingencia</h3>
+                    
+                    <div style="text-align: left; background: rgba(255,255,255,0.7); padding: 20px; border-radius: 10px;">
+                        <p style="font-size: 1.4rem; font-weight: bold;">Instrucciones de la práctica:</p>
+                        <ol style="font-size: 1.2rem;">
+                            <li>Ingresa al enlace de la plataforma que he compartido en Teams.</li>
+                            <li>Carga o ingresa el dataset bivariado de prueba.</li>
+                            <li>Genera la Tabla de Contingencia en la plataforma.</li>
+                            <li>Explora el Mapa de Calor interactivo generado por el sistema.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Reto Bivariado -->
+        <div class="slide">
+            <h1>¡Reto Bivariado en Teams!</h1>
+            
+            <div class="grid-layout">
+                <div class="visual-container">
+                    <!-- Placeholder para ícono o imagen alusiva al trabajo -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 200px;">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 style="color: var(--green);">Tu Tarea:</h2>
+                    <ol>
+                        <li>Analiza detenidamente el gráfico de <strong>barras apiladas</strong> o el <strong>mapa de calor</strong> que obtuviste en Bachué Toolbox.</li>
+                        <li>Identifica si el programa académico parece afectar la preferencia de modalidad.</li>
+                        <li>Redacta <strong>2 conclusiones claras</strong> sobre la dependencia o independencia de las variables.</li>
+                        <li>Sube una captura de tu gráfico y tus conclusiones al chat general de Teams.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cierre / Pensamiento Crítico -->
+        <div class="slide">
+            <h1>Pensamiento Crítico</h1>
+            
+            <div class="visual-container" style="height: 100%; justify-content: center;">
+                <div style="padding: 40px; background: white; border: 4px dashed var(--tool-color); border-radius: 20px; box-shadow: 0 10px 20px rgba(255, 152, 0, 0.1);">
+                    <h2 style="text-align: center; color: var(--blue); font-size: 2rem; margin-top: 0;">Reflexión Final:</h2>
+                    <p style="font-size: 1.8rem; text-align: center; margin: 0; line-height: 1.5;">
+                        "Si generamos un Mapa de Calor y resulta ser <strong>totalmente homogéneo</strong> (todos los cuadrantes tienen el mismo color o intensidad)... <br><br>
+                        <strong>¿Qué nos indica esto sobre la relación matemática entre las variables estudiadas?</strong>"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación proporcionados por la plantilla base -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de navegación reutilizado de la plantilla de Sistemas 2x2 -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

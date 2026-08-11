@@ -1,8 +1,4 @@
-¡Excelente propuesta! Tienes una base sólida de aprendizaje activo. Como **Academic Class Designer AI**, he ajustado tu plan para que encaje perfectamente en los **50 minutos** disponibles, garantizando dinamismo y alineación con las competencias de tu syllabus (recolectar y sistematizar datos cualitativos, construir tablas de frecuencias y gráficos).
-
-Aquí tienes el diseño instruccional optimizado, breve y directo.
-
-### 📋 Información General de la Sesión
+## 📋 Clase 1
 
 * **Curso:** Estadística y Probabilidad (UTB).
 
@@ -83,6 +79,150 @@ Aquí tienes el diseño instruccional optimizado, breve y directo.
 3. **Set de Datos (Reto):** Un archivo Excel o CSV (listo en MS Teams) con la muestra de datos preparada para el reto de los 5 estudiantes.
 4. **Consolidación:** El *Quizizz* ya diseñado (máx 5-6 preguntas). https://wayground.com/admin/quiz/642dbc30054993001e9a8a15?source=quiz_share
 5. **Calculadoras:** Pide a los estudiantes desde la clase anterior que tengan a mano la calculadora de sus teléfonos o calculadoras básicas para agilizar el cálculo de la frecuencia relativa.
+
+## 📋 Clase #2
+
+* **Tema:** Análisis Bivariado: Dos variables cualitativas (Tablas de contingencia y gráficos).
+* **Herramienta Principal:** **Bachué Data Toolbox** ([Acceso a Contingencias](https://kevinrealg.github.io/calculadora-distribuciones/estadistica#sub-contingencia)).
+
+
+* **Duración:** 50 minutos exactos.
+
+---
+
+### ⏱️ Cronograma de la Sesión (50 Minutos)
+
+1. **Apertura y Reto (5 min):** Planteamiento del dilema: ¿Existe relación entre el programa académico y la preferencia de modalidad de estudio en la UTB?
+2. **Exploración (5 min):** Discusión sobre cómo organizar dos variables cualitativas simultáneamente mediante frecuencias conjuntas.
+3. **Desarrollo Conceptual (10 min):** Explicación ágil de Tablas de Contingencia, Gráficos de barras agrupados/apilados y Mapas de calor.
+4. **Actividad Guiada con Bachué Data Toolbox (15 min):**
+* Los estudiantes ingresan a [Bachué Data Toolbox - Módulo de Contingencia](https://kevinrealg.github.io/calculadora-distribuciones/estadistica#sub-contingencia).
+* Ingresan o cargan el dataset bivariado de prueba.
+* Generan y analizan la tabla de contingencia y el mapa de calor integrado en la plataforma.
+
+
+5. **Aplicación Práctica / Reto (10 min):** Los estudiantes interpretan los gráficos de barras apiladas/agrupadas de la herramienta y suben sus conclusiones a Teams.
+6. **Cierre y Consolidación (5 min):** Preguntas de control y reflexión crítica sobre independencia de variables.
+
+---
+
+### 🖥️ Estructura Optimizada de las Diapositivas
+
+| Slide | Título | Contenido y Uso de la Herramienta |
+| --- | --- | --- |
+| **1** | **El Cruce de Dos Mundos** | • Título: Análisis Bivariado de Variables Cualitativas.<br> |<br>• Reto inicial: ¿Cómo se relacionan nuestros perfiles con nuestras preferencias? |
+| **2** | **La Tabla de Contingencia** | • Estructura básica de filas y margínales.<br> <br>• Concepto de frecuencia conjunta ($n_{ij}$). |
+| **3** | **Visualización: Barras y Calor** | • Diferencia entre barras agrupadas (magnitud) y apiladas (proporción al 100%).<br><br>• Introducción al mapa de calor visual. |
+| **4** | **Laboratorio en Vivo: Bachué Toolbox** | • **Enlace en pantalla:** [Bachué Data Toolbox - Módulo de Contingencia](https://kevinrealg.github.io/calculadora-distribuciones/estadistica#sub-contingencia).<br> <br>• Instrucción: Cargar datos en la herramienta web y explorar el mapa de calor interactivo. |
+| **5** | **¡Reto Bivariado en Teams!** | • Tarea: Analizar el mapa de calor generado en la herramienta.<br> <br>• Redactar 2 conclusiones sobre la dependencia de las variables y subir captura. |
+| **6** | **Pensamiento Crítico** | • Pregunta de cierre: ¿Qué nos indica visualmente un mapa de calor totalmente homogéneo respecto a la relación de las variables? |
+
+Para asegurar el cumplimiento de mis parámetros de diseño, confirmo la información base utilizando nuestro contexto previo:
+
+* **Tema:** Tablas de frecuencia para datos numéricos y recolección de datos.
+* **Curso y Nivel:** Estadística y Probabilidad, pregrado UTB.
+* **Duración:** 50 minutos (factor crítico).
+* **Modalidad:** Presencial con apoyo digital.
+* **Nota sobre tu propuesta:** Ajusté la actividad para resolver la discrepancia en tus instrucciones. Los grupos seleccionarán **3 variables (2 categóricas y 1 numérica)** para conectar el tema anterior con el nuevo.
+
+Aquí tienes el diseño instruccional conciso y activo para la Clase 3.
+
+## Clase # 3
+
+**1. Apertura (5 min) - *El Reto***
+
+* **Reto:** Muestra en pantalla un dato numérico impactante (ej. "El estudiante promedio de la UTB gasta $X a la semana en transporte").
+* **Preguntas detonantes:**
+* *"¿Cómo creen que llegamos a este número exacto?"*
+* *"¿Es lo mismo organizar respuestas como 'Bus/Taxi' que organizar respuestas como '$5000/$12000'?"*
+* *"¿Qué desafío adicional nos presenta un número frente a una palabra?"*
+
+
+
+**2. Exploración (5 min) - *Hipótesis***
+
+* Pide a los estudiantes que discutan en parejas durante 2 minutos cómo modificarían la tabla de frecuencias de la clase pasada para que funcione con edades, salarios o estaturas. Escucha 2 o 3 hipótesis sin corregirlos aún.
+
+**3. Desarrollo Conceptual (10 min) - *Teoría Mínima***
+
+* Introduce la notación oficial para datos numéricos:
+* **xi:** Variable (ordenada de menor a mayor).
+* **fi:** Frecuencia absoluta.
+* **fir / fir%:** Frecuencia relativa y su expresión porcentual.
+* **Fa:** Frecuencia acumulada.
+* **Far / Far%:** Frecuencia relativa acumulada y su expresión porcentual.
+
+
+* *Tip de facilitación:* Explica que organizar datos nos obliga a detener nuestra intuición rápida y forzar un pensamiento más despacio y analítico para evitar sesgos al interpretar la realidad.
+
+**4. Actividad Guiada y Colaborativa (15 min) - *Diseño del Instrumento***
+
+* **Formación:** Grupos de 3-4 estudiantes.
+* **Selección:** Definen 3 variables: 2 categóricas (ej. medio de transporte, deporte) y 1 numérica (ej. gasto semanal, horas de sueño).
+* **Herramienta:** Crean un formulario digital (Google Forms/Microsoft Forms).
+* *Nota de tiempo:* Como recolectar 40 respuestas en vivo toma demasiado tiempo de los 50 minutos, la meta de la clase es **diseñar el formulario y compartir el link en Teams**. La recolección de los 40 datos quedará como trabajo independiente (HTI) para la socialización de la próxima clase.
+
+**5. Aplicación (10 min) - *Simulación de Análisis***
+
+* Mientras terminan el formulario, dales un mini-set de 10 datos numéricos de prueba en pantalla.
+* Pídeles que, usando la notación recién aprendida (xi, fi, Fa), calculen rápidamente la tabla en sus cuadernos y respondan:
+* *¿Cuál es el número mínimo de categorías/valores que necesitas sumar en la Frecuencia Acumulada Porcentual (Far%) para superar el 70%?*
+
+
+
+**6. Cierre, Reflexión y Consolidación (5 min)**
+
+* **Prohibido el "¿Alguna pregunta?".** En su lugar, proyecta:
+* *"¿Por qué la columna de frecuencia acumulada (Fa) tiene sentido en datos numéricos, pero no tendría sentido si la variable fuera 'Color favorito'?"*
+
+
+* **Consolidación:** Cada grupo debe dejar el enlace de su encuesta publicado en MS Teams antes de salir por la puerta, garantizando que el insumo para la presentación final esté listo.
+
+---
+
+¿Consideras que el tiempo asignado a la creación del formulario (15 minutos) es suficiente para el nivel técnico de tus estudiantes, o preferirías que traigan las variables ya pensadas desde casa?
+
+Tienes toda la razón, omití esa parte fundamental en la respuesta anterior. Fiel a mi rol de **Academic Class Designer AI** y a tu preferencia por la concisión, aquí tienes la estructura visual y los recursos exactos para completar la Clase 3, diseñados para activar el pensamiento reflexivo y pausado frente a los datos.
+
+### 🎒 Recursos Previos y Preparación
+
+1. **Dato Detonante:** Un dato numérico real o estimado sobre los estudiantes en Cartagena (ej. promedio de gasto semanal en transporte o horas de sueño).
+2. **Microsoft Teams:** Canal o carpeta pre-creada llamada "Formularios Clase 3" para que los grupos dejen sus enlaces.
+3. **Dispositivos:** Los estudiantes deben tener a la mano sus laptops (o al menos un celular por grupo) para crear los formularios en Google Forms/Microsoft Forms.
+
+
+4. **Mini-Dataset:** 10 datos numéricos simples listos en tu presentación para la prueba de cálculo rápido.
+
+---
+
+### 🖥️ Estructura de las Diapositivas (Máximo 6 slides)
+
+| Slide | Título | Contenido y Visuales |
+| --- | --- | --- |
+| **1** | **El Reto Numérico** | • **Visual:** Un número grande en el centro (Ej. $45,000 COP).<br>
+
+<br>• **Preguntas:** ¿Cómo se calculó esto? ¿Qué pasa cuando la respuesta a una encuesta no es una palabra, sino un número? |
+| **2** | **Categorías vs. Números** | • **Visual:** Lado A (Variable: Transporte = Bus/Moto). Lado B (Variable: Edad = 18, 19, 18, 20, 19).<br>
+
+<br>• **Hipótesis:** 2 minutos de discusión en parejas sobre cómo adaptar la tabla para el Lado B. |
+| **3** | **El Nuevo Lenguaje** | • **Visual:** Captura exacta de la tabla de notación.<br>
+
+<br>• **Fórmulas:** Explicación breve de $x_i$ (variable), $f_i$ (absoluta), $f_{ir}$ (relativa), $f_{ir}\%$ (relativa porcentual), $F_a$ (acumulada), $F_{ar}$ y $F_{ar}\%$ (acumuladas relativas). |
+| **4** | **Laboratorio de Instrumentos** | • **Instrucciones:** <br>
+
+<br>1. Grupos de 3-4.<br>
+
+<br>2. Elegir 3 variables (2 categóricas, 1 numérica).<br>
+
+<br>3. Diseñar formulario (Mínimo 40 encuestados esperados).<br>
+
+<br>4. Pegar el enlace del form en MS Teams antes de salir.
+
+ |
+| **5** | **Simulación Rápida** | • **Visual:** 10 datos numéricos sueltos (Ej: 2, 3, 2, 4, 5, 2, 3, 3, 4, 5).<br>
+
+<br>• **Reto de cálculo:** ¿Cuál es el número mínimo de categorías que necesitas sumar en $F_{ar}\%$ para superar el 70%? |
+| **6** | **Pensamiento Crítico** | • **Pregunta de cierre en texto grande:** ¿Por qué la columna de frecuencia acumulada ($F_a$) tiene total sentido matemático en variables numéricas, pero carece de sentido si la variable fuera "Color de camisa"? |
 
 - Presento mi investigación
     
