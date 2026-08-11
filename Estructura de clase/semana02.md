@@ -1,3 +1,89 @@
+¡Excelente propuesta! Tienes una base sólida de aprendizaje activo. Como **Academic Class Designer AI**, he ajustado tu plan para que encaje perfectamente en los **50 minutos** disponibles, garantizando dinamismo y alineación con las competencias de tu syllabus (recolectar y sistematizar datos cualitativos, construir tablas de frecuencias y gráficos).
+
+Aquí tienes el diseño instruccional optimizado, breve y directo.
+
+### 📋 Información General de la Sesión
+
+* **Curso:** Estadística y Probabilidad (UTB).
+
+
+* **Tema:** Organización de datos cualitativos (Tablas de frecuencia y gráficos).
+
+
+* **Tiempo:** 50 minutos exactos.
+* **Modalidad:** Presencial con apoyo digital.
+* **Competencia:** Sistematizar datos para construir tablas y representaciones gráficas pertinentes.
+
+
+
+---
+
+### ⏱️ Estructura de la Sesión (50 Minutos)
+
+**1. Apertura y Exploración (10 min) - *El gancho***
+
+* **Reto Inicial:** Presenta tu investigación sobre las técnicas de enseñanza en la UTB. Define la población.
+* **Recolección:** Pregunta: *"¿Cuál es la red social que más utilizas para fines académicos?"*. Recolecta las respuestas en vivo.
+* **Exploración (Hipótesis):** Muestra los datos crudos en la pantalla y lanza estas preguntas desafiantes antes de explicar teoría:
+* *"¿Lo que ven en pantalla ya es información útil o solo son datos?"*
+* *"A simple vista, ¿qué decisiones podríamos tomar con este bloque de texto?"*
+
+
+
+**2. Desarrollo Conceptual Breve (10 min) - *Teoría mínima***
+
+* **Repaso Rápido:** Pregunta abierta para clasificar la variable "Red Social" (Cualitativa nominal).
+* **Construcción:** Transforma los datos crudos recolectados en la Apertura a una **Tabla de Frecuencia** (Absoluta y Relativa) de forma colaborativa en el tablero o pantalla.
+
+**3. Actividad Guiada (10 min) - *Aprender haciendo***
+
+* **Uso de Software:** Abre tu aplicación de análisis descriptivo.
+* **Replicación:** Ingresen los datos de la tabla y generen en conjunto el gráfico de barras y el circular.
+* **Análisis:** Pide a los estudiantes que, observando las gráficas, dicten 2 o 3 conclusiones precisas (Ej. *"El 40% de los estudiantes prefiere..."*).
+
+**4. Aplicación Práctica (10 min) - *Reto del mundo real***
+
+* **El Reto:** Entrega una base de datos nueva (una muestra de 50-100 datos sobre otra variable, ej. "Horas de estudio").
+* **Gamificación:** Los primeros **5 estudiantes** que generen la tabla, las gráficas, redacten 2 conclusiones y lo suban al canal de MS Teams, obtienen puntos de participación. El docente actúa solo como facilitador y validador de los envíos.
+
+**5. Consolidación Final (7 min) - *Evaluación gamificada***
+
+* **Quizizz en Parejas:** Lanza el Quizizz de 5 preguntas sobre clasificación de variables y lectura básica de tablas.
+* **Incentivo:** Puntos de participación a las 3 mejores parejas.
+
+**6. Cierre y Reflexión (3 min) - *Metacognición***
+
+* **Prohibido decir "¿Alguna pregunta?".** En su lugar, proyecta estas preguntas y pide a un estudiante al azar que responda:
+* *"¿Por qué un gráfico circular no sería útil si tuviéramos 20 redes sociales distintas?"*
+* *"¿Cómo cambia nuestra percepción de un problema al pasar de datos desorganizados a una tabla de frecuencias?"*
+
+
+
+---
+
+### 🖥️ Estructura de las Diapositivas (Máximo 6 slides)
+
+* **Slide 1: El Reto (Contexto).** Título de la investigación UTB, definición de la población y código QR/Enlace para recolectar el dato en vivo de los estudiantes.
+* **Slide 2: El Caos vs. El Orden.** Los datos crudos recolectados vs. la estructura vacía de una Tabla de Frecuencias (Absoluta y Relativa).
+* **Slide 3: Herramientas Visuales.** Capturas de la interfaz de la aplicación de análisis descriptivo que usarán. Fórmulas visuales simples de cómo se calcula la frecuencia relativa.
+* **Slide 4: Gráficos Adecuados.** Comparativa visual: Gráfico de Barras vs. Gráfico Circular (pastel). ¿Cuándo usar cuál?.
+
+
+* **Slide 5: ¡Reto Teams!** Instrucciones claras del reto de los 5 primeros puestos. Código QR para descargar el set de datos de muestra.
+* **Slide 6: Reflexión Final.** Las dos preguntas de cierre en texto grande.
+
+---
+
+### 🎒 Recursos Previos y Preparación
+
+1. **Recolección en vivo:** Crea un *Google Forms* o un *Mentimeter* de 1 sola pregunta (Red social principal) para que te genere los datos crudos instantáneamente al inicio de la clase.
+2. **Aplicación Descriptiva:** Ten abierta y probada la aplicación (como Statgraphics, R, o Excel) que menciona tu syllabus para evitar tiempos de carga.
+
+
+3. **Set de Datos (Reto):** Un archivo Excel o CSV (listo en MS Teams) con la muestra de datos preparada para el reto de los 5 estudiantes.
+4. **Consolidación:** El *Quizizz* ya diseñado (máx 5-6 preguntas). https://wayground.com/admin/quiz/642dbc30054993001e9a8a15?source=quiz_share
+5. **Calculadoras:** Pide a los estudiantes desde la clase anterior que tengan a mano la calculadora de sus teléfonos o calculadoras básicas para agilizar el cálculo de la frecuencia relativa.
+
 - Presento mi investigación
     
     Variables Sugeridas

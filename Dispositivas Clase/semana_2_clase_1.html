@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiografía Digital: Impacto de las Redes Sociales - UTB</title>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 2rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            flex-direction: column;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* --- ESTILOS DE INTERACTIVIDAD Y TEMA --- */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .slide.active {
+            display: flex;
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <h1>El Reto: Radiografía Digital UTB</h1>
+            <p style="font-size: 1.2rem;"><strong>Objetivo:</strong> Analizar la correlación entre uso de redes y hábitos de estudio.</p>
+            <div class="visual-container">
+                <!-- 🖼️ INDICACIÓN DE IMAGEN: Guarda tu código QR de Mentimeter aquí -->
+                <img src="img/qr_mentimeter.png" alt="Código QR Mentimeter" style="max-width: 280px;">
+                <p style="margin-top: 15px; font-weight: bold; color: var(--blue);">Escanea y vota. Tu dato es la materia prima de nuestra clase hoy.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h1>Del Caos al Orden</h1>
+            <div class="grid-layout">
+                <div class="visual-container">
+                    <p><strong>Caos (Nube de palabras / Apps)</strong></p>
+                    <!-- 🖼️ INDICACIÓN DE IMAGEN: Guarda la captura o imagen del caos/nube de apps aquí -->
+                    <img src="img/caos_nube.png" alt="Nube de palabras desordenada">
+                </div>
+                <div class="visual-container">
+                    <p><strong>Estructura (Tabla de frecuencias vacía)</strong></p>
+                    <!-- 🖼️ INDICACIÓN DE IMAGEN: Guarda la tabla de frecuencias vacía o estructura aquí -->
+                    <img src="img/tabla_vacia.png" alt="Tabla vacía">
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-weight: bold;">¿Es este desorden información? ¿Cómo transformamos el 'ruido' en una decisión?</p>
+        </div>
+
+        <!-- Slide 3 -->
+        <!-- Slide 3 modificado -->
+<div class="slide">
+    <h1>Notación Estadística</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+        <ul style="margin: 0; padding-left: 20px;">
+            <li><strong>f<sub>i</sub>:</strong> frecuencia absoluta.</li>
+            <li><strong>F<sub>i</sub>:</strong> Frecuencia absoluta acumulada.</li>
+            <li><strong>f<sub>ri</sub>:</strong> frecuencia relativa.</li>
+            <li><strong>F<sub>ri</sub>:</strong> Frecuencia relativa acumulada.</li>
+        </ul>
+        
+        <div style="background: #f4fbf4; padding: 20px; border-radius: 12px; border-left: 5px solid var(--green);">
+            <h3 style="margin-top: 0; color: var(--blue);">Cálculo de frecuencia relativa</h3>
+            <div class="math-eq" style="font-size: 1.8rem; margin: 15px 0;">
+                f<sub>ri</sub> = <sup>f<sub>i</sub></sup>/<sub>n</sub>
+            </div>
+            <p style="font-size: 1rem; color: #555;">Donde <em>n</em> es el tamaño total de la muestra.</p>
+        </div>
+    </div>
+</div>
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h1>¿Qué historia cuenta tu gráfico?</h1>
+            <div class="visual-container">
+                <!-- 🖼️ INDICACIÓN DE IMAGEN: Gráficos comparativos (Barras vs Circular) -->
+                <img src="img/comparativa_graficos.png" alt="Comparativa de gráfico de barras y circular" style="max-height: 250px;">
+            </div>
+            <ul>
+                <li><strong>Gráfico de Barras:</strong> Ideal para comparar magnitudes entre categorías.</li>
+                <li><strong>Gráfico Circular:</strong> Útil para mostrar proporciones del total.</li>
+            </ul>
+            <p style="font-weight: bold; color: var(--blue);">¿Cuál elegirías si quisieras mostrar qué red es la más usada por el 70% del salón?</p>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>¡Reto: Desafío de Datos en Vivo!</h1>
+            <ol>
+                <li>Descarga el set de datos en [Enlace a Teams].</li>
+                <li>Construye la Tabla de Frecuencias y Gráficos correspondientes.</li>
+                <li>Redacta 2 conclusiones clave (Insight estadístico).</li>
+                <li>Sube tu archivo a Teams.</li>
+            </ol>
+            <div style="background: #eef8ff; padding: 15px; border-radius: 10px; margin-top: 15px; border-left: 4px solid var(--blue);">
+                <strong>Premio:</strong> Puntos de participación para los 5 más rápidos y precisos.
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h1>Pensamiento Crítico</h1>
+            <p style="font-size: 1.3rem; color: var(--blue); font-weight: bold;">Más allá del gráfico</p>
+            <ol style="font-size: 1.2rem; line-height: 1.6;">
+                <li>Si nuestra muestra fuera solo este salón de clases, ¿podemos generalizar los resultados a toda la Universidad Tecnológica de Bolívar (UTB)? ¿Por qué?</li>
+                <li>¿Qué sesgos analíticos o de recolección podrían existir en nuestros datos actuales?</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>
