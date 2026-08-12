@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Botón de descarga */
+    .btn-download {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease;
+    }
+    .btn-download:hover {
+        background-color: #dca000;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 2 en Power BI: Gráficas y distribuciones de frecuencia</h2>
+<p>Construcción de gráficos bivariados utilizando herramientas digitales y datos de la plataforma SAVIO.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Procedimiento</a></li>
+<li><a href="#entregables">Compromisos para entregar</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias por desarrollar</h2>
+    <ul>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de aprendizaje</h2>
+    <ul>
+        <li>Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables en distintos contextos.</li>
+        <li>Analizo e interpreto datos univariados y bivariados mediante el uso de descriptores estadísticos, gráficos y modelos de regresión, para identificar patrones y tomar decisiones informadas.</li>
+        <li>Utilizo software especializado (Excel, Power BI, Statgraphics, Google Colab, Google Form y R) para resolver problemas estadísticos, comunicar resultados y sustentar decisiones con rigor y claridad.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en la práctica</h2>
+    <ul>
+        <li>Conceptos Básicos en Estadística: Poblaciones, muestras. Tipos de variables y escalas de Medición.</li>
+        <li>Tablas de frecuencias para variables cualitativas: Gráficos de barras, circulares en una y dos dimensiones.</li>
+        <li>Práctica de laboratorios: Gráficas y distribuciones de frecuencia: Gráfica circular, Gráfica de barras – Usando Power BI.</li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Los estudiantes usarán los datos cargados en la plataforma Savio y haciendo uso de la herramienta de Power BI deberán construir un gráfico de barras Bivariados y un gráfico circular Bivariados con dos variables cualitativas de la base de datos siguiendo rigurosamente las instrucciones desarrolladas en el video cargado en la plataforma SAVIO – Semana 2.</p>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">Procedimiento</h2>
+
+    <h3 style="color: var(--primary);">Preparación: Descarga de datos</h3>
+    <p>Antes de iniciar, por favor descarga el archivo con los datos necesarios para este laboratorio.</p>
+    <a href="./datos_laboratorio.xlsx" download class="btn-download">
+        ⬇️ Descargar Base de Datos
+    </a>
+    
+    <h3 style="color: var(--primary); margin-top: 2rem;">Paso 1. Desarrollo guiado mediante video</h3>
+    <p>Los estudiantes en el Aula de informática seguirán paso a paso las instrucciones del siguiente video:</p>
+    
+    <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/r5xucGu8xZU?si=HnNuhQ8WjJtGRUyt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;"><strong>Enlace alternativo:</strong> <a href="https://youtu.be/c9rrAcSwHrs" target="_blank" style="color: var(--primary); font-weight: bold;">LABORATORIO 2 EN POWER BI</a></p>
+    
+    <div class="grid" style="margin-top: 1.5rem; gap: 2rem;">
+        <div>
+            <!-- Espacio mantenido para la primera imagen (Gráfico de barras) -->
+            <div style="width: 100%; height: 250px; background-color: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; text-align: center; padding: 1rem;">
+                [Espacio para imagen:<br>Gráfico de barras Bivariado]
+            </div>
+        </div>
+        <div>
+            <!-- Espacio mantenido para la segunda imagen (Gráfico circular) -->
+             <div style="width: 100%; height: 250px; background-color: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; text-align: center; padding: 1rem;">
+                [Espacio para imagen:<br>Gráfico circular Bivariado]
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos para entregar</h2>
+    <ul>
+        <li><strong>Entregable 1:</strong> Descarga el pdf en el cual se evidencia el trabajo realizado en el Laboratorio.</li>
+        <li><strong>Entregable 2:</strong> Repite la Experiencia del Laboratorio donde Se analicen las variables <strong>SEXO vs ESTRATO</strong>, descarga el pdf creado.</li>
+        <li><strong>Entrega final:</strong> Sube los archivos en el espacio creado por tu docente en SAVIO.</li>
+    </ul>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
