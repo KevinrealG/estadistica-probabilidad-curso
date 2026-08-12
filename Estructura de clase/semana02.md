@@ -131,7 +131,7 @@ Aquí tienes el diseño instruccional conciso y activo para la Clase 3.
 
 **1. Apertura (5 min) - *El Reto***
 
-* **Reto:** Muestra en pantalla un dato numérico impactante (ej. "El estudiante promedio de la UTB gasta $X a la semana en transporte").
+* **Reto:** Muestra en pantalla un dato numérico impactante (ej. "Al menos el 70% de la UTB gasta $X a la semana en transporte").
 * **Preguntas detonantes:**
 * *"¿Cómo creen que llegamos a este número exacto?"*
 * *"¿Es lo mismo organizar respuestas como 'Bus/Taxi' que organizar respuestas como '$5000/$12000'?"*

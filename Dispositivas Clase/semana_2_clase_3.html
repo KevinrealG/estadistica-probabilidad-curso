@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Reto Numérico</title>
+    <!-- Script para renderizar LaTeX matemático en la web -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol { padding-left: 20px; }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            flex-direction: column;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .highlight-box {
+            background: #eef8ff;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid var(--blue);
+            margin-top: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        /* Tabla de notación */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background-color: var(--blue); color: white; }
+        
+        /* Interactividad y Tema Oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .highlight-box { background: #263238; border-left-color: #64b5f6; }
+        body.dark-theme th, body.dark-theme td { border-color: #555; }
+        body.dark-theme th { background-color: #333; }
+
+        .slide.active { display: flex; }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) { .grid-layout { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <h1>El Reto Numérico</h1>
+            <div class="visual-container" style="height: 100%; justify-content: center;">
+                <div style="font-size: clamp(4rem, 8vw, 8rem); font-weight: bold; color: var(--green); margin-bottom: 40px;">
+                    45,000 COP
+                </div>
+                <div class="highlight-box" style="text-align: center; width: 80%;">
+                    <strong>¿Cómo se calculó esto?</strong><br>
+                    ¿Qué pasa cuando la respuesta a una encuesta no es una palabra, sino un número?
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h1>Categorías vs. Números</h1>
+            <div class="grid-layout">
+                <div class="visual-container" style="background: #f4f5f7; padding: 30px; border-radius: 15px;">
+                    <h2 style="color: var(--blue);">Lado A (Categorías)</h2>
+                    <p style="font-size: 1.5rem;"><strong>Variable: Transporte</strong><br>Opciones: Bus, Moto, Auto</p>
+                </div>
+                <div class="visual-container" style="background: #eef8ff; padding: 30px; border-radius: 15px; border: 2px dashed var(--blue);">
+                    <h2 style="color: var(--blue);">Lado B (Números)</h2>
+                    <p style="font-size: 1.5rem;"><strong>Variable: Edad</strong><br>Datos: 18, 19, 18, 20, 19</p>
+                </div>
+            </div>
+            <div style="margin-top: 30px; padding: 20px; background: #fff8e1; border-left: 5px solid #ff9800; border-radius: 10px;">
+                <strong>Hipótesis (2 min en parejas):</strong> ¿Cómo adaptarían la tabla de frecuencias para organizar los datos del Lado B?
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h1>El Nuevo Lenguaje</h1>
+            <div class="grid-layout" style="align-items: start;">
+                <div>
+                    <table>
+                        <tr><th>Símbolo</th><th>Significado</th></tr>
+                        <tr><td><strong>x<sub>i</sub></strong> </td><td>Variable (El dato en sí)</td></tr>
+                        <tr><td><strong>f<sub>i</sub></strong> </td><td>Frecuencia absoluta</td></tr>
+                        <tr><td><strong>f<sub>ri</sub></strong> </td><td>Frecuencia relativa</td></tr>
+                        <tr><td><strong>f<sub>ri</sub></strong>%</td><td>Frecuencia relativa porcentual</td></tr>
+                        <tr><td><strong>F<sub>i</sub></strong> </td><td>Frecuencia acumulada</td></tr>
+                        <tr><td><strong>F<sub>ri</sub></strong> </td><td>Frecuencia acumulada relativa</td></tr>
+                        <tr><td><strong>F<sub>ri</sub></strong>%</td><td>Acumulada relativa porcentual</td></tr>
+                    </table>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Nota clave:</strong> Las minúsculas f representan eventos individuales de una categoría o número. Las mayúsculas F representan la <strong>acumulación</strong> o suma progresiva de esos eventos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h1>Laboratorio de Instrumentos</h1>
+            <div class="visual-container" style="align-items: stretch;">
+                <ol style="font-size: 1.5rem; line-height: 2; padding-left: 40px;">
+                    <li>Formen <strong>grupos de 3-4</strong> personas.</li>
+                    <li>Elijan <strong>3 variables</strong> para su estudio (Deberán ser 2 categóricas y 1 numérica).</li>
+                    <li>Diseñen su formulario (Mínimo de <strong>40 encuestados</strong> esperados). Tambien Pueden llenarlo de forma manual, como encuestadores</li>
+                    <li>Analizar los datos recolectados y generar conclusiones. Apoyarse en las técnicas de análisis estadístico.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>Simulación Rápida</h1>
+            <div class="visual-container">
+                <div style="font-size: 2.5rem; letter-spacing: 5px; color: var(--blue); background: #f0f0f0; padding: 20px 40px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
+                    2, 3, 2, 4, 5, 2, 3, 3, 4, 5
+                </div>
+                
+                <div class="highlight-box" style="width: 100%; border-left-color: var(--green); text-align: center;">
+                    <h2 style="color: var(--green); margin-top: 0;">Reto de Cálculo Analítico:</h2>
+                    <p style="font-size: 1.5rem; margin: 0;">
+                        ¿Cuál es el número mínimo de categorías x<sub>ri</sub> que necesitas sumar en tu columna f<sub>ri</sub>% para superar el <strong>70%</strong> del total?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h1>Pensamiento Crítico</h1>
+            <div class="visual-container" style="height: 100%; justify-content: center;">
+                <div style="padding: 40px; border: 4px solid #f0545b; border-radius: 20px; text-align: center; max-width: 900px; box-shadow: 0 10px 20px rgba(240, 84, 91, 0.1);">
+                    <p style="font-size: 2.2rem; font-weight: bold; margin: 0; line-height: 1.4; color: var(--text-color);">
+                        ¿Por qué la columna de frecuencia acumulada F<sub>ri</sub> tiene total sentido matemático en variables numéricas, pero carece de sentido lógico si la variable fuera "Color de camisa"?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Tema</button>
+    </div>
+
+    <!-- Script de navegación[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>
