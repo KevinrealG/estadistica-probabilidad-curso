@@ -1,0 +1,1 @@
+Sesgo de sustitución, de estado de animo, y como el orden de las preguntas afecta la recolección de los datos.
