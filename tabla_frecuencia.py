@@ -382,8 +382,82 @@ class TablaFrecuencia(Scene):
             Create(linea_final),
             run_time=0.5
         )
+        
 
         self.wait(1)
+        # =====================================================
+        # RESALTAR WHATSAPP E INSTAGRAM
+        # =====================================================
+
+        fila_whatsapp = SurroundingRectangle(
+            VGroup(
+                objetos_redes[0],
+                objetos_f[0],
+                objetos_fr[0]
+            ),
+            color=VERDE_WHATSAPP,
+            fill_color=VERDE_WHATSAPP,
+            fill_opacity=0.20,
+            stroke_opacity=0,
+            buff=0.15
+        )
+
+        fila_instagram = SurroundingRectangle(
+            VGroup(
+                objetos_redes[1],
+                objetos_f[1],
+                objetos_fr[1]
+            ),
+            color=ROSADO_INSTAGRAM,
+            fill_color=ROSADO_INSTAGRAM,
+            fill_opacity=0.20,
+            stroke_opacity=0,
+            buff=0.15
+        )
+
+        # -----------------------------------------------------
+        # WHATSAPP
+        # -----------------------------------------------------
+
+        self.play(
+            FadeIn(fila_whatsapp),
+            run_time=0.6
+        )
+
+        self.wait(1)
+
+        # -----------------------------------------------------
+        # INSTAGRAM
+        # -----------------------------------------------------
+
+        self.play(
+            FadeOut(fila_whatsapp),
+            FadeIn(fila_instagram),
+            run_time=0.7
+        )
+
+        self.wait(1)
+
+        self.play(
+            Indicate(
+                VGroup(
+                    objetos_redes[1],
+                    objetos_f[1],
+                    objetos_fr[1]
+                ),
+                color=ROSADO_INSTAGRAM,
+                scale_factor=1.03
+            ),
+            run_time=0.8
+        )
+
+        self.wait(2)
+
+        # Quitar el resaltado antes de continuar
+        self.play(
+            FadeOut(fila_instagram),
+            run_time=0.5
+        )
 
         # =====================================================
         # RESALTAR TOTAL
@@ -714,4 +788,5 @@ class TablaFrecuencia(Scene):
         )
 
         self.wait(2)
+        
 
