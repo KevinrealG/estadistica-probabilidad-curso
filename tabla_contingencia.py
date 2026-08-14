@@ -238,12 +238,283 @@ class TablaContingencia(Scene):
         # DESAPARECEN LOS DATOS
         # =====================================================
 
+        # =====================================================
+# ESCENA INTERMEDIA
+# DATOS + TABLA DE CONTINGENCIA AL LADO
+# =====================================================
+
         self.play(
-            FadeOut(pares),
             FadeOut(mensaje),
             FadeOut(subtitulo),
+            run_time=0.5
+        )
+
+        # -----------------------------------------------------
+        # TÍTULO DE LA ESCENA
+        # -----------------------------------------------------
+
+        titulo_intermedio = Text(
+            "De los datos a la tabla",
+            font_size=30,
+            color=AMARILLO
+        )
+
+        titulo_intermedio.to_edge(UP)
+
+        self.play(
+            Transform(
+                titulo,
+                titulo_intermedio
+            ),
+            run_time=0.7
+        )
+
+        # -----------------------------------------------------
+        # MOVER LOS DATOS A LA IZQUIERDA
+        # -----------------------------------------------------
+
+        self.play(
+            pares.animate.scale(0.68).move_to(
+                LEFT * 4.1
+            ),
+            run_time=1
+        )
+
+        # -----------------------------------------------------
+        # CREAR UNA TABLA PEQUEÑA A LA DERECHA
+        # -----------------------------------------------------
+
+        # Dimensiones
+        ancho_tabla = 5.0
+        alto_tabla = 4.6
+
+        tabla_preview = Rectangle(
+            width=ancho_tabla,
+            height=alto_tabla,
+            color=WHITE,
+            stroke_width=2
+        )
+
+        tabla_preview.move_to(
+            RIGHT * 2.3
+            + DOWN * 0.25
+        )
+
+        # -----------------------------------------------------
+        # LÍNEAS DE LA TABLA
+        # -----------------------------------------------------
+
+        # Separación entre nombre de red y columnas
+        linea_vertical_preview = Line(
+            tabla_preview.get_top() + LEFT * 0.65,
+            tabla_preview.get_bottom() + LEFT * 0.65,
+            color=GREY_B
+        )
+
+        # Línea debajo de encabezados
+        linea_horizontal_preview = Line(
+            tabla_preview.get_left() + UP * 1.15,
+            tabla_preview.get_right() + UP * 1.15,
+            color=GREY_B
+        )
+
+        # -----------------------------------------------------
+        # ENCABEZADOS
+        # -----------------------------------------------------
+
+        red_social_preview = Text(
+            "Red social",
+            font_size=19,
+            color=WHITE
+        )
+
+        red_social_preview.move_to(
+            tabla_preview.get_left()
+            + RIGHT * 0.65
+            + UP * 1.55
+        )
+
+        f_preview = Text(
+            "F",
+            font_size=24,
+            color=ROSADO
+        )
+
+        f_preview.move_to(
+            tabla_preview.get_center()
+            + LEFT * 0.25
+            + UP * 1.55
+        )
+
+        m_preview = Text(
+            "M",
+            font_size=24,
+            color=AZUL
+        )
+
+        m_preview.move_to(
+            tabla_preview.get_center()
+            + RIGHT * 1.0
+            + UP * 1.55
+        )
+
+        total_preview = Text(
+            "Total",
+            font_size=19,
+            color=AMARILLO
+        )
+
+        total_preview.move_to(
+            tabla_preview.get_right()
+            + LEFT * 0.45
+            + UP * 1.55
+        )
+
+        # -----------------------------------------------------
+        # CATEGORÍAS DE LAS FILAS
+        # -----------------------------------------------------
+
+        filas_preview = VGroup()
+
+        for i, red in enumerate(redes):
+
+            texto = Text(
+                red,
+                font_size=17,
+                color=colores_redes[red]
+            )
+
+            texto.move_to(
+                tabla_preview.get_left()
+                + RIGHT * 0.65
+                + DOWN * (0.05 + i * 0.72)
+            )
+
+            filas_preview.add(texto)
+
+        # -----------------------------------------------------
+        # APARECER LA ESTRUCTURA
+        # -----------------------------------------------------
+
+        self.play(
+            Create(tabla_preview),
+            Create(linea_vertical_preview),
+            Create(linea_horizontal_preview),
             run_time=0.8
         )
+
+        self.play(
+            FadeIn(red_social_preview),
+            FadeIn(f_preview),
+            FadeIn(m_preview),
+            FadeIn(total_preview),
+            run_time=0.6
+        )
+
+        self.play(
+            LaggedStart(
+                *[
+                    FadeIn(
+                        fila,
+                        shift=RIGHT
+                    )
+                    for fila in filas_preview
+                ],
+                lag_ratio=0.12
+            ),
+            run_time=1
+        )
+
+        self.wait(1)
+
+        # -----------------------------------------------------
+        # MENSAJE EXPLICATIVO
+        # -----------------------------------------------------
+
+        mensaje_intermedio = Text(
+            "Organizamos las observaciones según dos variables",
+            font_size=21,
+            color=WHITE
+        )
+
+        mensaje_intermedio.to_edge(
+            DOWN,
+            buff=0.3
+        )
+
+        self.play(
+            FadeIn(
+                mensaje_intermedio,
+                shift=UP
+            ),
+            run_time=0.7
+        )
+
+        self.wait(2)
+
+        # -----------------------------------------------------
+        # DESTACAR LAS DOS VARIABLES
+        # -----------------------------------------------------
+
+        highlight_red = SurroundingRectangle(
+            VGroup(
+                *[
+                    p[0]
+                    for p in pares
+                ]
+            ),
+            color=GREEN,
+            stroke_width=2,
+            buff=0.1
+        )
+
+        highlight_sexo = SurroundingRectangle(
+            VGroup(
+                *[
+                    p[2]
+                    for p in pares
+                ]
+            ),
+            color=BLUE,
+            stroke_width=2,
+            buff=0.1
+        )
+
+        self.play(
+            Create(highlight_red),
+            run_time=0.6
+        )
+
+        self.wait(0.6)
+
+        self.play(
+            Create(highlight_sexo),
+            run_time=0.6
+        )
+
+        self.wait(1)
+
+        # -----------------------------------------------------
+        # LIMPIAR ESCENA
+        # -----------------------------------------------------
+
+        self.play(
+            FadeOut(pares),
+            FadeOut(highlight_red),
+            FadeOut(highlight_sexo),
+            FadeOut(tabla_preview),
+            FadeOut(linea_vertical_preview),
+            FadeOut(linea_horizontal_preview),
+            FadeOut(red_social_preview),
+            FadeOut(f_preview),
+            FadeOut(m_preview),
+            FadeOut(total_preview),
+            FadeOut(filas_preview),
+            FadeOut(mensaje_intermedio),
+            run_time=1
+        )
+
+        self.wait(0.5)
 
         # =====================================================
         # NUEVO TÍTULO
@@ -269,7 +540,7 @@ class TablaContingencia(Scene):
         # CREAR ESTRUCTURA VACÍA
         # =====================================================
 
-        ancho = 8
+        ancho = 9
         alto = 4.6
 
         tabla = Rectangle(
@@ -280,7 +551,7 @@ class TablaContingencia(Scene):
         )
 
         tabla.move_to(
-            LEFT * 1
+            LEFT * 0.5
             + DOWN * 0.2
         )
 
@@ -345,10 +616,10 @@ class TablaContingencia(Scene):
             color=AMARILLO
         )
 
+        # Más hacia la derecha, dentro de su propia columna
         total_columna.move_to(
-            [3.0, 1.35, 0]
+            [3.45, 1.35, 0]
         )
-
         # =====================================================
         # FILAS
         # =====================================================
@@ -446,8 +717,8 @@ class TablaContingencia(Scene):
         # =====================================================
 
         posiciones_x = {
-            "F": -0.1,
-            "M": 2.1
+            "F": -0.3,
+            "M": 1.9
         }
 
         posiciones_y = {
@@ -515,7 +786,7 @@ class TablaContingencia(Scene):
 
             numero.move_to(
                 [
-                    3.0,
+                    3.45,
                     posiciones_y[red],
                     0
                 ]
@@ -579,7 +850,7 @@ class TablaContingencia(Scene):
         )
 
         total_general.move_to(
-            [3.0, -2.75, 0]
+            [3.45, -2.75, 0]
         )
 
         self.play(
