@@ -142,7 +142,7 @@ All        10  10   20
 
 Aquí tienes la producción adaptada a tus datos exactos de forma breve y directa.
 
-### 1. Resumen
+# 1. Resumen
 
 * **Tema:** Creación de tabla de contingencia (Redes Sociales vs. Género).
 * **Plataforma:** Reels / Shorts / TikTok.
@@ -192,7 +192,7 @@ Aquí tienes la producción adaptada a tus datos exactos de forma breve y direct
 * **Visual:** Una tabla 2x2 en 3D brillante con el texto gigante "ORDENA EL CAOS". Un celular de fondo con los íconos de WhatsApp e Instagram.
 
 
-### 1. Resumen
+# 1. Resumen
 
 * **Tema:** Construcción de tabla de frecuencias para datos cualitativos ordinales univariados.
 * **Público Objetivo:** Estudiantes, emprendedores y analistas de datos.
@@ -249,7 +249,7 @@ Aquí tienes la producción adaptada a tus datos exactos de forma breve y direct
 
 Aquí tienes una propuesta completa, directa y aplicable, integrando la estructura de las 7 columnas estadísticas utilizando un contexto real y dinámico.
 
-### 1. Resumen
+# 1. Resumen
 
 * **Tema:** Construcción de la tabla de frecuencias completa (7 columnas) para datos cuantitativos discretos (Variable: *Cantidad de boletas compradas por persona para un evento de champeta*).
 * **Público Objetivo:** Emprendedores, estudiantes y creadores de eventos.
