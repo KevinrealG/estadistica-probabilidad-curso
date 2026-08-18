@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidas de Posición: ¿Estoy entre los mejores?</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Estilos base reutilizados */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 2.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .step-list li::before {
+            content: '✓';
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0 0 10px;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            text-align: center;
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <h1>¿Estoy entre los mejores?</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-weight: bold; color: var(--blue);">El Caso:</p>
+                        <p>Un finalista obtuvo <strong>85/100</strong> en su prueba de admisión y afirma con seguridad:</p>
+                        <p style="font-style: italic; font-size: 1.8rem; margin-top: 15px;">"Estoy en el 15% superior del grupo".</p>
+                    </div>
+                </div>
+                <div class="visual-container">
+                    <ul style="width: 100%;">
+                        <li>¿Qué significa <strong>matemáticamente</strong> estar en el 15% superior?</li>
+                        <li>¿Cómo lo demostraríamos antes de ver todos los datos?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Exploración -->
+        <div class="slide">
+            <h1>Exploración: Los Datos Reales</h1>
+            <p style="font-size: 1.5rem; color: #555;">Aquí están las 20 calificaciones ordenadas de menor a mayor:</p>
+            
+            <div class="visual-container" style="margin-top: 40px;">
+                <div class="matrix-card" style="width: 100%; border: 2px dashed var(--blue);">
+                    <div style="font-size: 2.2rem; line-height: 2; font-family: monospace; color: var(--text-color); letter-spacing: 2px;">
+                        45, 52, 60, 63, 67, 70, 72, 75, 78, 80,<br>
+                        82, 85, 87, 90, 92, 94, 96, 97, 98, 100
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; background: #fff8e1; padding: 20px; border-radius: 12px; border-left: 6px solid #ffb300; text-align: center;">
+                <p style="font-size: 1.8rem; margin: 0; font-weight: bold;">
+                    Reto Intuitivo: ¿Dónde creen que empieza el "15% superior"?
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Desarrollo Conceptual 1 (Percentiles) -->
+        <!-- Slide: Fórmulas y Estándar de Oro -->
+        <div class="slide">
+            <h1>El Estándar de Oro: Interpolación Lineal</h1>
+            <div class="slide-intro">
+                <p>Es el método más preciso y utilizado por defecto en herramientas de Ciencia de Datos (como Python, Pandas o R). En lugar de simplemente redondear a la posición más cercana, este método <strong>calcula un valor exacto promediando proporcionalmente</strong> los datos.</p>
+            </div>
+            
+            <div class="grid-layout" style="margin-top: 20px;">
+                <!-- Tarjeta 1: Posición -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0;">1. La Fórmula de Posición</h3>
+                    <div class="math-eq" style="font-size: clamp(1.2rem, 2vw, 2.2rem);">
+                        $$i = P \times (N - 1) + 1$$
+                    </div>
+                    <ul style="text-align: left; font-size: 1.1rem; margin-top: 15px;">
+                        <li><strong>$N$:</strong> Cantidad de datos</li>
+                        <li><strong>$P$:</strong> Porcentaje deseado (decimal, Ej: $0.85$)</li>
+                    </ul>
+                    <p style="font-size: 0.9rem; color: #666; font-style: italic; margin-top: 15px;">Nota: Es el estándar moderno (Tipo 7) en la mayoría de librerías de análisis.</p>
+                </div>
+                
+                <!-- Tarjeta 2: Interpolación -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3 style="color: var(--green); margin-top: 0;">2. Fórmula de Interpolación</h3>
+                    <p style="font-size: 1.1rem; text-align: left; margin-bottom: 10px;">
+                        Si obtienes una posición decimal (Ej: $4.7$), tomas el valor de la posición entera (4) y le sumas el $70\%$ (el decimal $0.7$) de la diferencia hacia la posición 5.
+                    </p>
+                    <div class="math-eq" style="font-size: clamp(1rem, 1.8vw, 1.8rem);">
+                        $$Valor = x_{entero} + decimal \times (x_{siguiente} - x_{entero})$$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ejemplos Prácticos -->
+        <div class="slide">
+            <h1>Aplicando la Interpolación</h1>
+            <div style="background: #fff8e1; padding: 15px; border-radius: 10px; border-left: 5px solid #ffb300; text-align: center; margin-bottom: 25px;">
+                <p style="font-size: 1.4rem; margin: 0;">Conjunto ordenado ($N = 7$): <strong>$D = [12, 15, 19, 24, 30, 35, 42]$</strong></p>
+            </div>
+            
+            <div class="grid-layout">
+                <!-- Ejemplo 1 -->
+                <div class="matrix-card">
+                    <h3 style="color: var(--blue); margin-top: 0;">Ejemplo 1: Percentil 25 ($P = 0.25$)</h3>
+                    
+                    <p style="font-size: 1.2rem; margin: 10px 0 5px; text-align: left;"><strong>1. Posición:</strong></p>
+                    <div class="math-eq" style="font-size: 1.5rem; margin: 0;">$i = 0.25 \times (7 - 1) + 1 = 2.5$</div>
+                    <p style="font-size: 1rem; color: #666; text-align: left; margin-top: 5px;">Exactamente a la mitad entre la posición 2 ($15$) y la 3 ($19$).</p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                    
+                    <p style="font-size: 1.2rem; margin: 10px 0 5px; text-align: left;"><strong>2. Interpolación:</strong></p>
+                    <div class="math-eq" style="font-size: 1.5rem; margin: 0;">$$P_{25} = 15 + 0.5 \times (19 - 15)$$</div>
+                    <div class="math-eq" style="font-size: 2rem; color: var(--green); margin-top: 10px;">$$P_{25} = 17$$</div>
+                </div>
+                
+                <!-- Ejemplo 2 -->
+                <div class="matrix-card">
+                    <h3 style="color: var(--blue); margin-top: 0;">Ejemplo 2: Percentil 90 ($P = 0.90$)</h3>
+                    
+                    <p style="font-size: 1.2rem; margin: 10px 0 5px; text-align: left;"><strong>1. Posición:</strong></p>
+                    <div class="math-eq" style="font-size: 1.5rem; margin: 0;">$i = 0.90 \times (7 - 1) + 1 = 6.4$</div>
+                    <p style="font-size: 1rem; color: #666; text-align: left; margin-top: 5px;">El valor de la posición 6 ($35$) más el $40\%$ de la distancia a la 7 ($42$).</p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                    
+                    <p style="font-size: 1.2rem; margin: 10px 0 5px; text-align: left;"><strong>2. Interpolación:</strong></p>
+                    <div class="math-eq" style="font-size: 1.5rem; margin: 0;">$$P_{90} = 35 + 0.4 \times (42 - 35)$$</div>
+                    <div class="math-eq" style="font-size: 2rem; color: var(--green); margin-top: 10px;">$$P_{90} = 37.8$$</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Desarrollo Conceptual 2 (Cuartiles) -->
+        <div class="slide">
+            <h1>Definición 2: Cuartiles ($Q_k$)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p>Los <strong>Cuartiles</strong> dividen los datos ordenados en <strong>4 partes iguales</strong> (25% cada una).</p>
+                    </div>
+                    <ul>
+                        <li><strong>$Q_1$:</strong> Representa el 25% de los datos ($P_{25}$).</li>
+                        <li><strong>$Q_2$:</strong> Representa el 50% de los datos. ¡Es exactamente la Mediana! ($P_{50}$).</li>
+                        <li><strong>$Q_3$:</strong> Representa el 75% de los datos ($P_{75}$).</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; font-size: 1.5rem; background: #e8f5e9;">
+                        <strong>0%</strong> ---- $Q_1$ ---- $Q_2$ ---- $Q_3$ ---- <strong>100%</strong><br><br>
+                        <span style="color: var(--green); font-weight: bold;">(25%) &nbsp;&nbsp;&nbsp; (50%) &nbsp;&nbsp;&nbsp; (75%)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Desarrollo Conceptual 3 (Deciles) -->
+        <div class="slide">
+            <h1>Definición 3: Deciles ($D_k$)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #ff9800;">
+                        <p>Los <strong>Deciles</strong> dividen el conjunto de datos ordenados en <strong>10 partes iguales</strong> (10% cada una).</p>
+                    </div>
+                    <ul>
+                        <li>Van desde <strong>$D_1$</strong> (10%) hasta <strong>$D_9$</strong> (90%).</li>
+                        <li>Son equivalentes a los percentiles de 10 en 10.</li>
+                        <li>Ejemplo: El $D_8$ es exactamente igual al Percentil 80 ($P_{80}$).</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; font-size: 1.5rem; background: #fff3e0;">
+                        <strong>D1, D2, D3, D4, D5, D6, D7, D8, D9</strong><br><br>
+                        <span style="color: #f57c00; font-weight: bold;">Saltos del 10%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Actividad Guiada -->
+        <div class="slide">
+            <h1>Actividad Guiada: Buscando el 15% superior</h1>
+            <p style="font-size: 1.5rem;">Calculemos el <strong>$P_{85}$</strong> para nuestro conjunto de 20 notas.</p>
+            
+            <div class="grid-layout" style="margin-top: 20px;">
+                <div class="slide-intro">
+                    <h3 style="color: var(--blue); margin-top: 0;">Paso a Paso</h3>
+                    <ol style="font-size: 1.3rem; line-height: 1.8;">
+                        <li>Identificamos $n = 20$ y el percentil buscado ($85\%$).</li>
+                        <li>Calculamos la posición directa: $i = (20-1) \cdot 0.85 + 1$</li>
+                        <li>Obtenemos el índice: <strong>$i = 17.15$</strong></li>
+                        <li>Aplicamos la fórmula de interpolación para encontrar el percentil.</li>
+                        <li> $P_{85} = 96 + 0.15 \times (97 - 96)$</li>
+                        <li> $P_{85} = 96.15$</li>
+                    </ol>
+                </div>
+                <div class="matrix-card" style="border: 3px solid var(--green);">
+                    <p style="font-size: 1.4rem; color: #555; margin-bottom: 15px;">Notas (Posiciones 15 a 20):</p>
+                    <p style="font-size: 1.6rem; font-family: monospace;">
+                        [15] 92<br>
+                        [16] 94<br>
+                        <strong style="color: var(--green); font-size: 2.2rem;">[17] 96</strong><br>
+                        [18] 97<br>
+                        ...
+                    </p>
+                    <div style="margin-top: 20px; background: #e8f5e9; padding: 10px; border-radius: 8px; font-weight: bold; color: var(--green); font-size: 1.5rem;">
+                        El límite del 15% superior es sacar más de 96.15.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Cierre y Reflexión -->
+        <div class="slide">
+            <h1>Cierre y Reflexión</h1>
+            <div class="visual-container" style="height: 100%; justify-content: center;">
+                <div class="matrix-card" style="width: 90%; border: 4px solid #f0545b;">
+                    <h2 style="color: var(--blue); margin-top: 0;">El Veredicto Final</h2>
+                    <p style="font-size: 1.8rem; line-height: 1.6; margin-bottom: 30px;">
+                        Si el límite matemático para pertenecer al 15% superior era sacar <strong>96</strong>, y nuestro estudiante sacó <strong>85</strong>...
+                    </p>
+                    <div style="background: #f9f9f9; padding: 25px; border-radius: 12px; border-left: 6px solid #d32f2f; text-align: left;">
+                        <p style="font-size: 1.6rem; margin: 0;">
+                            <strong>¿En qué percentil real se encuentra?</strong>
+                        </p>
+                        <ul style="font-size: 1.4rem; margin-top: 15px;">
+                            <li>La nota 85 se encuentra en la <strong>posición 12</strong>.</li>
+                            <li>$ 12 = (20-1) \cdot P + 1 $</li>
+                            <li><strong>Respuesta:</strong> El estudiante se encuentra realmente en el <strong>Percentil 58</strong> (Supera al 58% de la clase, no al 85%).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de navegación[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

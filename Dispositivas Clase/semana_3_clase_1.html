@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidas de Tendencia Central y Sesgo</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 2.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .step-list li::before {
+            content: '✓';
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        svg {
+            max-height: 300px;
+            width: min(100%, 320px);
+            height: auto;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0 0 10px;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            text-align: center;
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 style="border: none; margin-bottom: 5px;">¡Gran Oportunidad de Empleo!</h1>
+            </div>
+            <div class="matrix-card" style="margin-top: 20px; padding: 50px;">
+                <p style="font-size: 2rem; color: var(--text-color);">En nuestra pequeña y exclusiva empresa de 10 empleados,</p>
+                <div style="font-size: clamp(3rem, 5vw, 5rem); font-weight: bold; color: var(--green); margin: 30px 0;">
+                    El salario promedio es de $3.42 Millones
+                </div>
+                <p style="font-size: 1.8rem; color: var(--blue); font-style: italic;">¡Únete a nuestro equipo!</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Exploración -->
+        <div class="slide">
+            <h1>La Realidad: Detrás del Anuncio</h1>
+            <div class="grid-layout">
+                <div class="slide-intro">
+                    <p style="font-weight: bold; color: var(--blue);">Nómina Real (10 empleados):</p>
+                    <div style="font-size: 1.8rem; line-height: 1.8; margin-top: 15px; text-align: center; background: white; padding: 15px; border-radius: 10px; color: #555;">
+                        2.0 &nbsp;|&nbsp; 2.2 &nbsp;|&nbsp; 1.8 &nbsp;|&nbsp; 2.5 &nbsp;|&nbsp; 2.1<br>
+                        2.3 &nbsp;|&nbsp; 2.0 &nbsp;|&nbsp; 1.9 &nbsp;|&nbsp; 2.4 &nbsp;|&nbsp; <strong style="color: #d32f2f;">15.0</strong>
+                    </div>
+                </div>
+                <div class="visual-container">
+                    <ul style="width: 100%;">
+                        <li>Si ustedes fueran a buscar trabajo ahí, ¿el anuncio de 3.42 millones les parece <strong>publicidad engañosa</strong>?</li>
+                        <li>¿Por qué el número $3.42$ no refleja lo que gana la mayoría?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Definición 1 (Media) -->
+        <div class="slide">
+            <h1>1. La Media (Promedio)</h1>
+            <div class="slide-intro">
+                <p>Es el punto de equilibrio o centro de gravedad de los datos. Se obtiene sumando todos los valores y dividiendo por la cantidad total.</p>
+            </div>
+            <div class="grid-layout" style="margin-top: 30px;">
+                <div class="matrix-card">
+                    <h3 style="color: var(--blue); margin-top: 0;">Media Poblacional ($\mu$)</h3>
+                    <div class="math-eq">$\mu = \frac{\sum_{i=1}^{N} x_i}{N}$</div>
+                    <p style="font-size: 1.2rem; color: #666;">Se utiliza cuando tenemos los datos de <strong>toda</strong> la población.</p>
+                </div>
+                <div class="matrix-card">
+                    <h3 style="color: var(--green); margin-top: 0;">Media Muestral ($\bar{x}$)</h3>
+                    <div class="math-eq">$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$</div>
+                    <p style="font-size: 1.2rem; color: #666;">Se utiliza cuando tenemos solo una <strong>muestra</strong> (un fragmento) de la población.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Definición 2 (Mediana) -->
+        <div class="slide">
+            <h1>2. La Mediana</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p>Es el <strong>valor central exacto</strong> cuando los datos están ordenados de menor a mayor.</p>
+                    </div>
+                    <ul>
+                        <li>Divide los datos en dos partes iguales.</li>
+                        <li>El 50% de los valores son menores o iguales a ella.</li>
+                        <li>El otro 50% son mayores o iguales.</li>
+                        <li><strong>Es resistente</strong> a valores extremos.</li>
+                    </ul>
+                </div>
+                <div class="visual-container matrix-card">
+                    <div style="font-size: 2rem; color: #777;">1.8 - 1.9 - 2.0 - 2.0 - <strong>[2.1 - 2.2]</strong> - 2.3 - 2.4 - 2.5 - 15.0</div>
+                    <hr style="margin: 20px 0; border: 1px solid #eee;">
+                    <div class="math-eq" style="color: var(--green);">Mediana = 2.15</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Definición 3 (Moda) -->
+        <div class="slide">
+            <h1>3. La Moda</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p>Es el valor (o categoría) que <strong>más se repite</strong> en nuestro conjunto de datos.</p>
+                    </div>
+                    <ul>
+                        <li>Es la medida más intuitiva.</li>
+                        <li>Puede haber más de una (bimodal o multimodal).</li>
+                        <li>Puede no existir (amodal) si ningún dato se repite.</li>
+                    </ul>
+                </div>
+                <div class="visual-container matrix-card">
+                    <div style="font-size: 1.8rem; line-height: 1.8;">
+                        <span style="color: #777;">1.8 | 1.9 | </span><span style="color: var(--blue); font-weight: bold; font-size: 2.2rem;">2.0</span><span style="color: #777;"> | </span><span style="color: var(--blue); font-weight: bold; font-size: 2.2rem;">2.0</span><span style="color: #777;"> | 2.1 | 2.2 | 2.3 | 2.4 | 2.5 | 15.0</span>
+                    </div>
+                    <hr style="margin: 20px 0; border: 1px solid #eee;">
+                    <div class="math-eq" style="color: var(--blue);">Moda = 2.0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Definición 4 (Sesgo y Valor Atípico) -->
+        <div class="slide">
+            <h1>4. Sesgo y Valores Atípicos (Outliers)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #d32f2f;">
+                        <p>Un <strong>Valor Atípico (Outlier)</strong> es una observación que se encuentra a una distancia anormal de los demás valores en una muestra.</p>
+                    </div>
+                    <ul>
+                        <li>En nuestro ejemplo, el salario de <strong>15.0</strong> es un outlier.</li>
+                        <li><strong>El Sesgo:</strong> Los outliers "tiran" o arrastran a la media hacia ellos, distorsionando la realidad del grupo.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Icono de Outlier -->
+                    <svg viewBox="0 0 100 100" stroke="var(--blue)" stroke-width="2" fill="none">
+                        <circle cx="20" cy="80" r="4" fill="var(--blue)"/>
+                        <circle cx="30" cy="75" r="4" fill="var(--blue)"/>
+                        <circle cx="25" cy="70" r="4" fill="var(--blue)"/>
+                        <circle cx="35" cy="85" r="4" fill="var(--blue)"/>
+                        <circle cx="40" cy="78" r="4" fill="var(--blue)"/>
+                        <!-- Outlier -->
+                        <circle cx="85" cy="20" r="6" fill="#d32f2f" stroke="#d32f2f"/>
+                        <path d="M 45 70 L 75 30" stroke="#d32f2f" stroke-dasharray="4" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Actividad Guiada -->
+        <div class="slide">
+            <h1>Actividad Guiada: Calculadora en mano</h1>
+            <div class="slide-intro">
+                <p>Vamos a comprobar matemáticamente el impacto del Outlier.</p>
+            </div>
+            <ul class="step-list">
+                <li><strong>Paso 1:</strong> Calculen la Media, Mediana y Moda de los 10 salarios originales.</li>
+                <li><strong>Paso 2:</strong> Eliminen el salario del jefe (15.0).</li>
+                <li><strong>Paso 3:</strong> Vuelvan a calcular la Media, Mediana y Moda para los 9 empleados restantes.</li>
+                <li><strong>Paso 4:</strong> Comparen los resultados. ¿Qué medida cambió drásticamente? ¿Qué medida se mantuvo casi igual?</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Aplicación -->
+        <div class="slide">
+            <div style="text-align: center; width: 100%;">
+                <h1 style="display: inline-block;">Aplicación Práctica</h1>
+            </div>
+            <div class="visual-container" style="height: 100%;">
+                <div class="matrix-card" style="width: 80%; border: 3px solid var(--green);">
+                    <h2 style="color: var(--blue); margin-top: 0;">El Veredicto</h2>
+                    <p style="font-size: 1.8rem; line-height: 1.6; margin-bottom: 30px;">
+                        Basado en lo que acaban de calcular, redacten <strong>en una sola línea</strong>:
+                    </p>
+                    <div style="background: #f4fbf4; padding: 20px; border-radius: 10px; font-size: 1.6rem; font-style: italic; color: #333;">
+                        "Por ética profesional y transparencia, la empresa debió publicar la ______________ en lugar de la media para representar los salarios."
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide: Análisis de la Realidad Nacional -->
+        <div class="slide">
+            <h1>Análisis de la Realidad Nacional</h1>
+            
+            <div class="grid-layout">
+                <!-- Lado Izquierdo: El Comunicado y Preguntas -->
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-style: italic; font-size: 1.4rem;">"El ingreso promedio mensual en nuestro país es de <strong>$4.8 millones</strong>. Esto demuestra que somos una economía de clase media sólida."</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>¿Les parece <strong>realista</strong> este promedio?</li>
+                        <li>¿Qué pasa si una <strong>pequeña élite</strong> gana mucho más?</li>
+                    </ul>
+                </div>
+                
+                <!-- Lado Derecho: Los Datos Reales -->
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; text-align: center;">
+                        <h3 style="color: var(--blue); margin-top: 0; margin-bottom: 15px;">Muestra Real (15 personas)</h3>
+                        <div style="font-size: 1.6rem; line-height: 1.8; color: #555; padding: 15px; background: #f9f9f9; border-radius: 10px; font-family: monospace;">
+                            1.2 | 1.4 | 1.5 | 1.6 | 1.7 <br>
+                            1.8 | 1.8 | 1.9 | 2.0 | 2.0 <br>
+                            2.1 | 2.2 | 2.3 | 
+                            <strong style="color: #d32f2f; font-size: 2.2rem;">25.0</strong> | 
+                            <strong style="color: #d32f2f; font-size: 2.2rem;">40.0</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pregunta Final de Reflexión -->
+            <div style="margin-top: 30px; background: #fff8e1; padding: 25px; border-radius: 12px; border-left: 6px solid #ffb300; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <p style="font-size: 1.7rem; margin: 0; font-weight: bold; color: var(--text-color);">
+                    ¿Qué medida usaría un político para hablar de riqueza y cuál usaría un economista crítico para hablar de desigualdad?
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Cierre y Reflexión -->
+        <div class="slide">
+            <h1>Cierre y Reflexión</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-color: #ffb74d;">
+                        <p style="font-weight: bold; color: #e65100; font-size: 1.8rem;">El Efecto Bill Gates</p>
+                    </div>
+                    <ul style="line-height: 1.6;">
+                        <li>Si Bill Gates entra por esa puerta en este momento y se sienta con nosotros...</li>
+                        <li>¿Qué le pasa al <strong>promedio</strong> de ingresos de las personas en este salón?</li>
+                        <li>¿Y qué le pasa a la <strong>mediana</strong> de ingresos del salón?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="5"></circle>
+                        <path d="M3 21v-2a7 7 0 0 1 14 0v2"></path>
+                        <path d="M21 15l-3-3-3 3"></path>
+                        <path d="M18 12v9"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control de diapositivas[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX > 50) {
+                prevSlide();
+            } else if (deltaX < -50) {
+                nextSlide();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>
