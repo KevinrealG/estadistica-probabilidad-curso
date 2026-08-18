@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Práctico Integrado e IntroStat App</title>
+    <!-- MathJax para renderizar notación matemática como Q1, Q2, Q3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>    
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: stretch;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura y Actividad Colaborativa -->
+        <div class="slide">
+            <h1>Interrogando Nuestros Propios Datos</h1>
+            
+            <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                <p style="font-style: italic; font-size: 1.6rem; margin: 0;">
+                    "Ya vimos cómo mienten los promedios y cómo se calculan las posiciones. <strong>Hoy vamos a interrogar sus propios datos.</strong>"
+                </p>
+            </div>
+
+            <div class="matrix-card" style="margin-top: 20px; border-top: 5px solid var(--green);">
+                <h2 style="color: var(--blue); margin-top: 0; font-size: 2.2rem;">Fase 1: Actividad Colaborativa (Manual)</h2>
+                <ul style="margin-top: 25px;">
+                    <li>Reúnanse con sus grupos de la semana pasada.</li>
+                    <li>Abran los datos numéricos que recolectaron mediante sus formularios (ej. gasto semanal).</li>
+                    <li><strong>El Reto:</strong> Calculen manualmente la Media, la Mediana y los tres cuartiles ($Q_1$, $Q_2$, $Q_3$).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: IntroStat App, Aplicación y Cierre -->
+        <div class="slide">
+            <h1>De la Calculadora al Software</h1>
+            
+            <div class="grid-layout">
+                <!-- Fase 2: Actividad Guiada -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.8rem;">Fase 2: Actividad Guiada</h3>
+                    <ul>
+                        <li>Abran la herramienta <strong>La calculadora</strong>.</li>
+                        <li>Ingresen los datos del <em>País Ficticio</em> (la muestra con sueldos de 25 y 40 millones).</li>
+                        <li>Generen un <strong>Diagrama de Caja</strong>.</li>
+                        <li style="font-style: italic; color: #555;">Visualicen cómo los valores atípicos se disparan en el gráfico.</li>
+                    </ul>
+                </div>
+                
+                <!-- Fase 3: Aplicación -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.8rem;">Fase 3: Aplicación Propia</h3>
+                    <ul>
+                        <li>Ingresen sus <strong>propios datos</strong> recolectados en IntroStat App.</li>
+                        <li>Verifiquen si el software coincide con sus cálculos manuales de $Q_1$, $Q_2$ y $Q_3$.</li>
+                        <li>Generen su propio <strong>Diagrama de Caja</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cierre y Reflexión -->
+            <div style="margin-top: 30px; background: #fff8e1; padding: 25px; border-radius: 12px; border-left: 6px solid #ffb300; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <p style="font-size: 1.8rem; margin: 0; font-weight: bold; color: var(--text-color); text-align: center;">Reflexión Final</p>
+                <p style="font-size: 1.6rem; margin-top: 15px; text-align: center; line-height: 1.5;">
+                    Al ver el diagrama de caja de sus propios datos, ¿encontraron algún compañero con un comportamiento atípico? <br><strong>¿Deberíamos eliminar ese dato de nuestro estudio?</strong>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control de diapositivas[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>
