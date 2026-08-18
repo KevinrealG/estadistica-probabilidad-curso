@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-download {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease;
+    }
+    .btn-download:hover {
+        background-color: #dca000;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 3: Limpieza de Datos en Power BI</h2>
+<p>Limpieza de datos, tablas de frecuencias bivariadas y representaciones gráficas utilizando herramientas digitales.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#material">Material de Trabajo</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#instrucciones">Instrucciones del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos para entregar</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias por desarrollar</h2>
+    <ul>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Calcular e interpretar medidas estadísticas (de tendencia central, dispersión, posición y asociación) para describir y analizar conjuntos de datos univariados y bivariados.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de aprendizaje</h2>
+    <ul>
+        <li>Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables en distintos contextos.</li>
+        <li>Analizo e interpreto datos univariados y bivariados mediante el uso de descriptores estadísticos, gráficos y modelos de regresión, para identificar patrones y tomar decisiones informadas.</li>
+        <li>Utilizo software especializado (Excel, Power BI, Statgraphics, Google Colab, Google Form y R) para resolver problemas estadísticos, comunicar resultados y sustentar decisiones con rigor y claridad.</li>
+    </ul>
+</section>
+
+<section id="material" class="section card">
+    <h2 class="section-title">Material de Trabajo</h2>
+    <p>Archivo base para la práctica: <strong>Inmuebles2.xlsx</strong></p>
+    <p><em>(El archivo contiene datos de inmuebles con múltiples variables cualitativas y cuantitativas para realizar limpieza y análisis.)</em></p>
+    <a href="./Inmuebles2.xlsx" download class="btn-download">
+        ⬇️ Descargar Inmuebles2.xlsx
+    </a>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en la práctica</h2>
+    <ul>
+        <li>Tablas de frecuencias para variables cualitativas Bivariadas.</li>
+        <li><strong>Práctica de laboratorios: Una pequeña limpieza de Datos en Power BI.</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Los estudiantes utilizarán el archivo <strong>Inmuebles2.xlsx</strong>, el cual ya se encuentra cargado en la plataforma SAVIO. A partir de este archivo deberán:</p>
+    <ul>
+        <li>Cargar los datos en <strong>Power BI</strong> desde Excel.</li>
+        <li>Realizar <strong>una limpieza básica de datos</strong>, siguiendo exactamente las instrucciones explicadas en el video de <strong>Semana 5</strong>.</li>
+        <li>Generar una tabla de frecuencias <strong>bivariada</strong> entre dos variables elegidas por el estudiante.</li>
+        <li>Exportar el resultado como archivo <strong>PDF</strong>.</li>
+    </ul>
+</section>
+
+<section id="instrucciones" class="section card">
+    <h2 class="section-title">Instrucciones del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1. Revisión del video guía</h3>
+    <p>En el aula de informática:</p>
+    <ol>
+        <li>Ingresar a la plataforma SAVIO, Semana 5.</li>
+        <li>Buscar el video con el título: <strong>“Laboratorio 3 – Limpieza de Datos en Power BI”</strong></li>
+        <li>Reproducir el video y seguir <strong>paso por paso</strong> el procedimiento mostrado.</li>
+    </ol>
+    
+    <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/HafwIWvwbd0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;">🔗 <strong>Enlace alternativo del video:</strong> <a href="https://www.youtube.com/watch?v=HafwIWvwbd0" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+    
+    <p><strong>El video incluye:</strong></p>
+    <ul>
+        <li>Cómo cargar el archivo</li>
+        <li>Cómo abrir Power Query</li>
+        <li>Cómo transformar y limpiar columnas</li>
+        <li>Cómo detectar errores</li>
+        <li>Cómo crear una tabla</li>
+        <li>Cómo exportar el informe</li>
+    </ul>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos de entrega</h2>
+    
+    <h3 style="color: var(--primary);">📌 Entregable 1 — Reproducción de la experiencia del laboratorio</h3>
+    <p>Debe incluir:</p>
+    <ul>
+        <li>Limpieza de datos aplicada al archivo <strong>Inmuebles2.xlsx</strong>.</li>
+        <li>Con los datos limpios debe generar por lo menos 3 gráficos o tablas en Power BI (Tabla de Frecuencia, Gráfico de Barras univariado, Gráfico de Barras Bivariado o Diagrama de Pastel).</li>
+        <li>Añadir una pequeña interpretación.</li>
+        <li>Exportación del informe de Power BI en formato <strong>PDF</strong>.</li>
+    </ul>
+    <p><strong>· Sube el archivo en el espacio creado por tu docente en SAVIO.</strong></p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Rúbrica de Evaluación</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Ítem a evaluar</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. Limpieza correcta de datos en Power Query (Inmuebles2.xlsx)</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td>2. Generación de al menos 3 gráficos/tablas pertinentes</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td>3. Calidad y coherencia de la interpretación de los datos</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>4. Exportación a PDF y entrega oportuna en SAVIO</td>
+                <td>20%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
