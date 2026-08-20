@@ -291,6 +291,75 @@
                 </div>
             </div>
         </div>
+        <!-- Slide: Metodología para el cálculo de un percentil -->
+        <div class="slide">
+            <h1 style="font-size: clamp(1.4rem, 2.5vw, 2.5rem);">Una metodología para realizar el cálculo de un percentil $P_k$:</h1>
+            
+            <div class="grid-layout" style="align-items: start; margin-top: 20px;">
+                <!-- Columna Izquierda: Pasos metodológicos -->
+                <div>
+                    <ol style="font-size: clamp(1rem, 1.4vw, 1.4rem); line-height: 1.6; padding-left: 20px; margin: 0;">
+                        <li style="margin-bottom: 20px;">
+                            Organice los datos de menor a mayor.
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            Calcule la ubicación del percentil de interés:
+                            <div class="math-eq" style="font-size: clamp(1.5rem, 2vw, 2.2rem); text-align: center; margin: 20px 0;">
+                                $$i = \left[ \frac{K(N-1)}{100} \right] + 1$$
+                            </div>
+                            <p style="font-size: 1.1rem; color: #555; margin-top: 5px;">
+                                <strong>$K$</strong> corresponde al porcentaje de interés relacionado. Por ejemplo si desea calcular el percentil 30, el valor de <strong>$K$</strong> sería 30.
+                            </p>
+                        </li>
+                        <li style="margin-bottom: 0;">
+                            Encuentre el dato ubicado en la posición parte entera del valor de $i$ y el dato ubicado en la posición siguiente. Esto es $X_{[i]}$ y $X_{[i]+1}$ respectivamente.
+                        </li>
+                    </ol>
+                </div>
+                
+                <!-- Columna Derecha: Observación destacada -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); background-color: #f6fbff; text-align: left; padding: 25px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.4rem;">Observación:</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 0; color: var(--text-color);">
+                        Si por ejemplo el valor de $i$ fuese <strong>3.41</strong>, note que este valor estaría compuesto por una parte entera que es <strong>3</strong> y una parte decimal que es <strong>0.41</strong>.<br><br>
+                        De esta forma y para este caso, $X_{[i]} = X_{(3)}$ correspondería al dato ubicado en la posición 3 y $X_{[i]+1} = X_{(3+1)} = X_{(4)}$ correspondería al dato ubicado en la posición 4.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Slide: Metodología para el cálculo de un percentil (Parte 2) -->
+        <div class="slide">
+            <h1 style="font-size: clamp(1.4rem, 2.5vw, 2.5rem);">Una metodología para realizar el cálculo de un percentil $P_k$ (Cont.):</h1>
+            
+            <div style="margin-top: 20px;">
+                <!-- Iniciamos la lista en el paso 4 -->
+                <ol start="4" style="font-size: clamp(1.2rem, 1.8vw, 1.8rem); line-height: 1.6; padding-left: 40px; margin: 0;">
+                    
+                    <!-- Paso 4 y Observación -->
+                    <li style="margin-bottom: 30px;">
+                        Defina y escriba como <strong>$d$</strong> la parte decimal del valor de $i$.
+                        
+                        <div class="slide-intro" style="margin-top: 15px; border-left: 6px solid var(--blue); padding: 20px;">
+                            <p style="font-size: 1.2rem; margin: 0; color: var(--text-color);">
+                                <strong>Observación:</strong> Si por ejemplo el valor de $i$ fuese <strong>3.41</strong>, note que este valor estaría compuesto por una parte entera que es <strong>3</strong> y una parte decimal que es <strong>0.41</strong>. De esta forma y para este caso, <strong>$d$</strong> sería igual a <strong>0.41</strong>.
+                            </p>
+                        </div>
+                    </li>
+                    
+                    <!-- Paso 5 y Fórmula Final -->
+                    <li style="margin-bottom: 20px;">
+                        Finalmente, calcule el valor del percentil de interés $P_k$ mediante la siguiente fórmula:
+                        
+                        <div class="matrix-card" style="margin-top: 20px; border-top: 5px solid var(--green); text-align: center; padding: 30px;">
+                            <div class="math-eq" style="font-size: clamp(1.8rem, 3vw, 3.5rem); margin: 0;">
+                                $$P_k = X_{[i]} + \left[ d \left( X_{[i]+1} - X_{[i]} \right) \right]$$
+                            </div>
+                        </div>
+                    </li>
+                    
+                </ol>
+            </div>
+        </div>
 
         <!-- Slide: Ejemplos Prácticos -->
         <div class="slide">
