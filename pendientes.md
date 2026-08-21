@@ -4,13 +4,17 @@ Bueno para los cursos de estadistica me queda pendiente:
     - Videos de la semana 3.
         1. Cálculo de Medidas de Tendencia Central  Guion, animaciones manim y audio de videos,
         2.  Video 2: Cálculo de Medidas de Posición. Guion, animaciones manim y audio de videos,
-        3. Construyendo Gráficos de Caja con app. Guion, animaciones manim y audio de videos,
+        3. Usando la app con numeros. Mejora en la App. Matrices e histogramas(como Julio)
+        3. Rehacer. 
+        3. Semana 4: Medidas de Dispersión. Guion, animaciones manim y audio de videos.
+        4. Power BI: Tabla de Frecuencia y Graficos de Barras y Pastel.
+        5. Video de Sabermetría.
     - Videos de la semana 4.
 2. revisión de los laboratorios semana 1 de los 4 cursos. y nota 
-    - Grupo 1.
+    - Grupo n, lab 2 y lab 3.
     - Grupo 2.
     - Grupo 3.
     - Grupo 4.
 3. Preparar la semana 3 de estadistica.
-    - Actualizar semana 2 y 3.
+    
     - Notebook basico colab

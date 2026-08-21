@@ -2,17 +2,13 @@ from manim import *
 import random
 import math
 
-# ============================================================
-# MEDIDAS DE TENDENCIA CENTRAL
-# Media - Mediana - Moda
-#
-# Video vertical 9:16
-# ============================================================
 
-config.pixel_width = 1080
-config.pixel_height = 1920
-config.frame_width = 9
-config.frame_height = 16
+config.pixel_width = 1920
+config.pixel_height = 1080
+config.frame_width = 14.222
+config.frame_height = 8
+
+
 
 # ============================================================
 # PALETA
@@ -103,9 +99,7 @@ class MedidasTendenciaCentral(Scene):
             line_spacing=0.8
         )
 
-        hook.move_to(
-            UP * 3.2
-        )
+        hook.to_edge(UP, buff=0.8)
 
         subtitulo = Text(
             "Una pregunta de estadística...",
@@ -201,8 +195,10 @@ class MedidasTendenciaCentral(Scene):
             weight=BOLD
         )
 
-        muestra.move_to(
-            UP * 5.0
+        muestra.next_to(
+            titulo,
+            DOWN,
+            buff=0.25
         )
 
         self.play(
@@ -314,20 +310,21 @@ class MedidasTendenciaCentral(Scene):
             weight=BOLD
         )
 
-        texto_moda.move_to(
-            DOWN * 3.1
-        )
-
         definicion_moda = Text(
             "El valor que aparece más veces",
             font_size=26,
             color=BLANCO
         )
 
-        definicion_moda.next_to(
+        VGroup(
             texto_moda,
+            definicion_moda
+        ).arrange(
             DOWN,
-            buff=0.25
+            buff=0.2
+        ).to_edge(
+            DOWN,
+            buff=0.4
         )
 
         self.play(
@@ -410,18 +407,10 @@ class MedidasTendenciaCentral(Scene):
             color=BLANCO
         )
 
-        mini_titulo.move_to(
-            RIGHT * 2.8 + DOWN * 3.0
-        )
-
         unimodal = Text(
             "Unimodal",
             font_size=20,
             color=AMARILLO
-        )
-
-        unimodal.move_to(
-            RIGHT * 2.8 + DOWN * 3.45
         )
 
         bimodal = Text(
@@ -430,18 +419,27 @@ class MedidasTendenciaCentral(Scene):
             color=AZUL
         )
 
-        bimodal.move_to(
-            RIGHT * 2.8 + DOWN * 3.85
-        )
-
         multimodal = Text(
             "Multimodal",
             font_size=20,
             color=MORADO
         )
 
-        multimodal.move_to(
-            RIGHT * 2.8 + DOWN * 4.25
+        VGroup(
+            mini_titulo,
+            unimodal,
+            bimodal,
+            multimodal
+        ).arrange(
+            DOWN,
+            buff=0.12,
+            aligned_edge=LEFT
+        ).to_edge(
+            RIGHT,
+            buff=0.7
+        ).to_edge(
+            DOWN,
+            buff=0.45
         )
 
         self.play(
@@ -486,9 +484,7 @@ class MedidasTendenciaCentral(Scene):
             color=BLANCO
         )
 
-        explicacion.move_to(
-            DOWN * 2.8
-        )
+        explicacion.to_edge(DOWN, buff=0.6)
 
         self.play(
             FadeIn(explicacion)
@@ -575,16 +571,13 @@ class MedidasTendenciaCentral(Scene):
         )
 
         # Fórmula visual
-        formula_mediana = Text(
-            "Mediana = (18 + 19) / 2 = 18.5",
+        formula_mediana = MathTex(
+            r"\text{Me} = \frac{18 + 19}{2} = 18.5",
             font_size=30,
-            color=VERDE,
-            weight=BOLD
+            color=VERDE
         )
 
-        formula_mediana.move_to(
-            DOWN * 4.2
-        )
+        formula_mediana.to_edge(DOWN, buff=0.95)
 
         self.play(
             Write(formula_mediana),
@@ -625,9 +618,7 @@ class MedidasTendenciaCentral(Scene):
             color=BLANCO
         )
 
-        explicacion_impar.move_to(
-            DOWN * 3.2
-        )
+        explicacion_impar.to_edge(DOWN, buff=0.65)
 
         self.play(
             FadeIn(explicacion_impar)
@@ -719,9 +710,7 @@ class MedidasTendenciaCentral(Scene):
             color=BLANCO
         )
 
-        explicacion_media.move_to(
-            DOWN * 2.7
-        )
+        explicacion_media.to_edge(DOWN, buff=0.6)
 
         self.play(
             FadeIn(explicacion_media)
@@ -743,16 +732,14 @@ class MedidasTendenciaCentral(Scene):
             )
 
         # Fórmula
-        formula_media = Text(
-            "Media: x̄ = Σxᵢ / n = 587 / 30 = 19.57",
-            font_size=28,
-            color=AZUL,
-            weight=BOLD
+        formula_media = MathTex(
+            r"\bar{x} = \frac{\sum x_i}{n}",
+            font_size=36,
+            color=AZUL
         )
+       
 
-        formula_media.move_to(
-            DOWN * 4.15
-        )
+        formula_media.to_edge(DOWN, buff=1.0)
 
         self.play(
             Write(formula_media),
@@ -760,8 +747,8 @@ class MedidasTendenciaCentral(Scene):
         )
 
         # Suma
-        suma_texto = Text(
-            "Suma de los datos: Σxᵢ = 587",
+        suma_texto = MathTex(
+            r"\sum x_i = 587",
             font_size=25,
             color=AMARILLO
         )
@@ -815,11 +802,11 @@ class MedidasTendenciaCentral(Scene):
             run_time=1
         )
 
-        etiqueta_media = Text(
-            "x̄ = 19.57",
+        etiqueta_media = MathTex(
+            r"\bar{x} = 19.57",
             font_size=31,
-            color=AZUL,
-            weight=BOLD
+            color=AZUL
+
         )
 
         etiqueta_media.next_to(
@@ -894,16 +881,14 @@ class MedidasTendenciaCentral(Scene):
             run_time=1.5
         )
 
-        etiqueta_extremos = Text(
-            "27   28   30",
+        etiqueta_extremos = MathTex(
+            r"27 & 28 & 30",
             font_size=31,
-            color=ROJO,
-            weight=BOLD
+            color=ROJO
+            
         )
 
-        etiqueta_extremos.move_to(
-            DOWN * 2.8
-        )
+        etiqueta_extremos.to_edge(DOWN, buff=0.9)
 
         self.play(
             FadeIn(etiqueta_extremos)
@@ -920,8 +905,8 @@ class MedidasTendenciaCentral(Scene):
             RIGHT * 0.7
         )
 
-        nueva_etiqueta = Text(
-            "La media se desplaza →",
+        nueva_etiqueta = MathTex(
+            r"\text{La media se desplaza } \rightarrow",
             font_size=27,
             color=ROJO
         )
@@ -951,8 +936,8 @@ class MedidasTendenciaCentral(Scene):
             dash_length=0.08
         )
 
-        etiqueta_mediana_fija = Text(
-            "Mediana = 18.5",
+        etiqueta_mediana_fija = MathTex(
+            r"\text{Mediana} = 18.5",
             font_size=25,
             color=VERDE
         )
@@ -969,15 +954,14 @@ class MedidasTendenciaCentral(Scene):
         )
 
         # Moda permanece
-        moda_fija = Text(
-            "Moda = 18",
+        moda_fija = MathTex(
+            r"\text{Mo} = 18",
             font_size=25,
             color=AMARILLO
         )
 
-        moda_fija.move_to(
-            LEFT * 2.5 + DOWN * 2.8
-        )
+        moda_fija.to_edge(DOWN, buff=0.9)
+        moda_fija.shift(LEFT * 2.5)
 
         self.play(
             FadeIn(moda_fija)
@@ -994,11 +978,11 @@ class MedidasTendenciaCentral(Scene):
             run_time=0.4
         )
 
-        mensaje = Text(
-            "¡Los extremos afectan la media!",
+        mensaje = MathTex(
+            r"\text{¡Los extremos afectan la media!}",
             font_size=34,
-            color=ROJO,
-            weight=BOLD
+            color=ROJO
+    
         )
 
         mensaje.to_edge(
