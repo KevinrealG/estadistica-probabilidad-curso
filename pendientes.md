@@ -3,10 +3,10 @@ Bueno para los cursos de estadistica me queda pendiente:
     - Actualizar las miniaturas, y las descripciones de los videos.
     - Videos de la semana 3.
         
-        2.  Video 2: Cálculo de Medidas de Posición. Guion, animaciones manim y audio de videos,
+       
         3. Usando la app con numeros. Mejora en la App. Matrices e histogramas(como Julio)
-        3. Rehacer. 
-        3. Semana 4: Medidas de Dispersión. Guion, animaciones manim y audio de videos.
+        3. Rehacer laborotorio 3 o 5
+    3. Semana 4: Medidas de Dispersión. Guion, animaciones manim y audio de videos.
         4. Power BI: Tabla de Frecuencia y Graficos de Barras y Pastel.
         5. Video de Sabermetría.
     - Videos de la semana 4.
