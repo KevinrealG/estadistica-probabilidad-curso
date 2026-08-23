@@ -188,11 +188,10 @@ class MedidasTendenciaCentral(Scene):
         )
 
         # Número de muestra
-        muestra = Text(
-            "n = 30",
+        muestra = MathTex(
+            r"n = 30",
             font_size=36,
-            color=AZUL,
-            weight=BOLD
+            color=AZUL
         )
 
         muestra.next_to(
@@ -380,8 +379,8 @@ class MedidasTendenciaCentral(Scene):
         self.wait(1)
 
         # Notación
-        notacion_moda = Text(
-            "Muestra: mₒ     |     Población: Mₒ",
+        notacion_moda = MathTex(
+            r"\text{Muestra: } m_o \quad | \quad \text{Población: } M_o",
             font_size=25,
             color=GRIS
         )
@@ -520,8 +519,8 @@ class MedidasTendenciaCentral(Scene):
         )
 
         # Etiquetas
-        pos15 = Text(
-            "15° dato",
+        pos15 = MathTex(
+            r"15^{\circ}\ \text{dato}",
             font_size=21,
             color=VERDE
         )
@@ -532,8 +531,8 @@ class MedidasTendenciaCentral(Scene):
             buff=0.15
         )
 
-        pos16 = Text(
-            "16° dato",
+        pos16 = MathTex(
+            r"16^{\circ}\ \text{dato}",
             font_size=21,
             color=VERDE
         )
@@ -658,11 +657,10 @@ class MedidasTendenciaCentral(Scene):
             run_time=1
         )
 
-        centro_18 = Text(
-            "Dato central: 18",
+        centro_18 = MathTex(
+            r"\text{Dato central: } 18",
             font_size=34,
-            color=VERDE,
-            weight=BOLD
+            color=VERDE
         )
 
         centro_18.to_edge(
@@ -882,7 +880,7 @@ class MedidasTendenciaCentral(Scene):
         )
 
         etiqueta_extremos = MathTex(
-            r"27 & 28 & 30",
+            r"27 \quad 28 \quad 30",
             font_size=31,
             color=ROJO
             

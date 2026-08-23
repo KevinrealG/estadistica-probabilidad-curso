@@ -2,7 +2,7 @@ Bueno para los cursos de estadistica me queda pendiente:
 1. Grabar videos
     - Actualizar las miniaturas, y las descripciones de los videos.
     - Videos de la semana 3.
-        1. Cálculo de Medidas de Tendencia Central  Guion, animaciones manim y audio de videos,
+        
         2.  Video 2: Cálculo de Medidas de Posición. Guion, animaciones manim y audio de videos,
         3. Usando la app con numeros. Mejora en la App. Matrices e histogramas(como Julio)
         3. Rehacer. 
