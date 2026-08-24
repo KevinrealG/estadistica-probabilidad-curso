@@ -2,8 +2,6 @@ Bueno para los cursos de estadistica me queda pendiente:
 1. Grabar videos
     - Actualizar las miniaturas, y las descripciones de los videos.
     - Videos de la semana 3.
-        
-       
         3. Usando la app con numeros. Mejora en la App. Matrices e histogramas(como Julio)
         3. Rehacer laborotorio 3 o 5
     3. Semana 4: Medidas de Dispersión. Guion, animaciones manim y audio de videos.

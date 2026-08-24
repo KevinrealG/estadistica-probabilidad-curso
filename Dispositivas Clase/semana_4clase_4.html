@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidas de Variabilidad y Dispersión</title>
+    <!-- MathJax para fórmulas matemáticas profesionales -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base heredados de la plantilla estándar */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 1.8vw, 2rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            text-align: center;
+        }
+        .math-eq {
+            font-size: clamp(1.2rem, 2.2vw, 2.5rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Controles y botones[cite: 2] */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+        <!-- Slide: El Reto de las Medidas de Dispersión -->
+        <div class="slide">
+            <h1>El Reto: ¿Mismo promedio, mismo curso?</h1>
+            <div class="grid-layout">
+                <!-- Columna Izquierda: Datos de los cursos -->
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-weight: bold; color: var(--blue);">Promedio idéntico: 3.5</p>
+                        <p style="margin-bottom: 5px;"><strong>Curso A:</strong> 3.4, 3.5, 3.6, 3.5, 3.4</p>
+                        <p style="margin: 0;"><strong>Curso B:</strong> 1.0, 5.0, 2.0, 4.8, 3.7</p>
+                    </div>
+                </div>
+                
+                <!-- Columna Derecha: El Reto / Pregunta -->
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; border-top: 5px solid var(--green); text-align: left; padding: 25px;">
+                        <h3 style="color: var(--green); margin-top: 0;">El Planteamiento</h3>
+                        <p style="font-size: 1.3rem; font-style: italic; color: var(--text-color); margin: 0; line-height: 1.5;">
+                            "Si ambos tienen exactamente el mismo promedio, <strong>¿son iguales para un profesor?</strong> ¿Cuál elegirían si fueran el director de carrera?"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <h1>El Engaño del Promedio</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p><strong>Situación:</strong> Dos grupos de estudiantes de ingeniería obtienen exactamente la misma nota media en sus exámenes parciales: <strong>75 puntos</strong>.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>¿Significa que ambos grupos tienen el mismo nivel académico?</li>
+                        <li>¿Qué nos dice el promedio y qué nos oculta sobre la estabilidad de los grupos?</li>
+                    </ul>
+                </div>
+                <div class="matrix-card">
+                    <h3 style="color: var(--blue); margin-top: 0;">Misma Tendencia, Distinta Realidad</h3>
+                    <p style="font-size: 1.2rem; color: #555;">Grupo A: Notas muy compactas (todos entre 70 y 80).</p>
+                    <p style="font-size: 1.2rem; color: #555;">Grupo B: Notas extremas (la mitad sacó 20 y la otra 130... idealmente 100).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: ¿Por qué medir la dispersión? -->
+        <div class="slide">
+            <h1>¿Por qué necesitamos la Dispersión?</h1>
+            <div class="slide-intro">
+                <p>Las medidas de tendencia central (media, mediana, moda) ubican el centro de los datos, pero <strong>no dicen nada sobre qué tan separados o unidos están los valores</strong> respecto a ese centro.</p>
+            </div>
+            <ul style="margin-top: 20px;">
+                <li><strong>Control de Calidad:</strong> En la industria, la alta variabilidad representa fallos o defectos en los procesos.</li>
+                <li><strong>Riesgo Financiero:</strong> Una inversión con rentabilidad promedio alta pero con enorme dispersión es altamente riesgosa.</li>
+                <li><strong>Confiabilidad:</strong> Un promedio solo es representativo si la dispersión es baja.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: El Rango -->
+        <div class="slide">
+            <h1>1. El Rango</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p>Es la medida de dispersión más simple. Representa la longitud o amplitud total del conjunto de datos.</p>
+                    </div>
+                    <ul>
+                        <li>Se calcula restando el valor menor al valor mayor.</li>
+                        <li><strong>Limitación grave:</strong> Solo toma en cuenta dos valores extremos, ignorando por completo el comportamiento del 100% de los datos intermedios.</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0;">Fórmula del Rango</h3>
+                    <div class="math-eq">$$R = X_{max} - X_{min}$$</div>
+                    <p style="font-size: 1.1rem; color: #666; margin-top: 15px;">Ejemplo: Si la nota más alta es 95 y la más baja es 40, el rango es $95 - 40 = 55$.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: La Varianza -->
+        <div class="slide">
+            <h1>2. La Varianza ($s^2$ y $\sigma^2$)</h1>
+            <div class="slide-intro">
+                <p>Mide qué tan dispersos están los datos <strong>en promedio con respecto a la media</strong>, elevando las diferencias al cuadrado para evitar que los valores negativos se cancelen con los positivos.</p>
+            </div>
+            <div class="grid-layout" style="margin-top: 10px;">
+                <div class="matrix-card">
+                    <h4 style="color: var(--blue); margin-top: 0;">Varianza Poblacional ($\sigma^2$)</h4>
+                    <div class="math-eq">$$\sigma^2 = \frac{\sum (x_i - \mu)^2}{N}$$</div>
+                    <p style="font-size: 0.95rem; color: #666;">Se divide entre $N$ (Total de elementos de la población).</p>
+                </div>
+                <div class="matrix-card">
+                    <h4 style="color: var(--green); margin-top: 0;">Varianza Muestral ($s^2$)</h4>
+                    <div class="math-eq">$$s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1}$$</div>
+                    <p style="font-size: 0.95rem; color: #666;">Se divide entre $n - 1$ (Grados de libertad para estimar la muestra).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Desviación Estándar -->
+        <div class="slide">
+            <h1>3. La Desviación Estándar ($s$ y $\sigma$)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p>Como la varianza eleva las unidades al cuadrado (ej. dólares cuadrados, notas cuadradas), la <strong>Desviación Estándar</strong> saca la raíz cuadrada para regresar a las unidades originales de los datos.</p>
+                    </div>
+                    <ul>
+                        <li>Es la medida de dispersión más utilizada en la ciencia y la analítica de datos.</li>
+                        <li>Indica cuánto se desvían, en promedio, los datos respecto a la media.</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3 style="color: var(--green); margin-top: 0;">Fórmulas</h3>
+                    <p style="font-size: 1.2rem;">Muestral:</p>
+                    <div class="math-eq">$$s = \sqrt{s^2}$$</div>
+                    <p style="font-size: 1.2rem; margin-top: 10px;">Poblacional:</p>
+                    <div class="math-eq">$$\sigma = \sqrt{\sigma^2}$$</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Coeficiente de Variación -->
+        <div class="slide">
+            <h1>4. El Coeficiente de Variación (CV)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #ff9800;">
+                        <p>¿Cómo comparar la dispersión de dos variables con unidades o escalas totalmente distintas? (Ej: Comparar el peso en kilos de elefantes vs. ratones).</p>
+                    </div>
+                    <ul>
+                        <li>El CV es una medida <strong>adimensional</strong> (porcentual).</li>
+                        <li>Mide la variabilidad relativa respecto a la media.</li>
+                        <li>Permite saber si un conjunto de datos es homogéneo ($CV < 30\%$) o heterogéneo.</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid #ff9800;">
+                    <h3 style="color: #f57c00; margin-top: 0;">Fórmula del Coeficiente</h3>
+                    <div class="math-eq">$$CV = \left( \frac{s}{\bar{x}} \right) \times 100\%$$</div>
+                    <p style="font-size: 1.1rem; color: #666; margin-top: 15px;">Desviación estándar dividida entre la media, expresada en porcentaje.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Actividad Práctica -->
+        <div class="slide">
+            <h1>Taller Rápido: Comparando Grupos</h1>
+            <div class="slide-intro">
+                <p>Calcula y analiza la variabilidad de los siguientes dos conjuntos de salarios (en millones):</p>
+            </div>
+            <div class="grid-layout" style="margin-top: 20px;">
+                <div class="matrix-card" style="background: #f4f5f7;">
+                    <h3 style="color: var(--blue);">Empresa A</h3>
+                    <p style="font-size: 1.4rem; font-family: monospace;">2.0, 2.1, 2.2, 2.0, 2.2</p>
+                    <p style="font-size: 1.1rem; color: #555;">Media = 2.1</p>
+                </div>
+                <div class="matrix-card" style="background: #eef8ff;">
+                    <h3 style="color: var(--green);">Empresa B</h3>
+                    <p style="font-size: 1.4rem; font-family: monospace;">0.5, 1.0, 2.1, 3.5, 3.4</p>
+                    <p style="font-size: 1.1rem; color: #555;">Media = 2.1</p>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--blue); margin-top: 20px;">
+                ¿Cuál empresa presenta mayor riesgo o desigualdad salarial a pesar de tener la misma media?
+            </p>
+        </div>
+
+        <!-- Slide 8: Cierre y Reflexión -->
+        <div class="slide">
+            <h1>Reflexión Final</h1>
+            <div class="visual-container" style="height: 100%; justify-content: center;">
+                <div class="matrix-card" style="width: 90%; border: 4px solid #f0545b; padding: 40px;">
+                    <h2 style="color: var(--blue); margin-top: 0;">La regla de oro analítica</h2>
+                    <p style="font-size: 1.8rem; line-height: 1.5; margin: 0;">
+                        "Nunca confíes ciegamente en un promedio. <br>
+                        <strong>El centro te dice dónde estás parado, pero la dispersión te dice qué tan seguro es el terreno.</strong>"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX > 50) {
+                prevSlide();
+            } else if (deltaX < -50) {
+                nextSlide();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Inicializar
+        showSlide(currentSlideIndex);
+
+        // Eventos táctiles[cite: 2]
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>
