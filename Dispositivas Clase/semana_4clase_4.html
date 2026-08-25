@@ -6,6 +6,17 @@
     <title>Medidas de Variabilidad y Dispersión</title>
     <!-- MathJax para fórmulas matemáticas profesionales -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /* Estilos base heredados de la plantilla estándar */
@@ -272,7 +283,7 @@
 
         <!-- Slide 4: La Varianza -->
         <div class="slide">
-            <h1>2. La Varianza ($s^2$ y $\sigma^2$)</h1>
+            <h1>2. La Varianza ( $s^2$ y $\sigma^2$ )</h1>
             <div class="slide-intro">
                 <p>Mide qué tan dispersos están los datos <strong>en promedio con respecto a la media</strong>, elevando las diferencias al cuadrado para evitar que los valores negativos se cancelen con los positivos.</p>
             </div>
