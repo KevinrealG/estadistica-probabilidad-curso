@@ -16,3 +16,4 @@ Bueno para los cursos de estadistica me queda pendiente:
     1. Estructuras
     2. Diapositivas
     3. Nuevo notebook Variables numericas y bivariado.
+    4. Guiones de Videos.
