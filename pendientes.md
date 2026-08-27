@@ -17,3 +17,4 @@ Bueno para los cursos de estadistica me queda pendiente:
     2. Diapositivas
     3. Nuevo notebook Variables numericas y bivariado.
     4. Guiones de Videos.
+    5. Actualizar Laboratorio 3, video de Power BI y explicación acerca de lo que es el proceso de Limpieza de Datos.

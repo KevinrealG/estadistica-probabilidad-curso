@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Caja y Valores Atípicos</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+     <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        /* Estilos base reutilizados */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2vw, 2.5rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: stretch;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme svg line, body.dark-theme svg rect {
+            stroke: #a0a0a0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: El Reto y la Exploración -->
+        <div class="slide">
+            <h1>El Misterio del Punto Aislado</h1>
+            
+            <div class="grid-layout">
+                <!-- Columna Izquierda: Planteamiento -->
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-size: 1.5rem; font-weight: bold; color: var(--blue); margin-bottom: 10px;">El Reto Visual</p>
+                        <p style="font-style: italic; font-size: 1.3rem;">"Al analizar un gráfico de sueldos o notas, notamos un punto que vive muy lejos de los demás..."</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>¿Es un error de digitación o un genio/afortunado que rompe la regla?</li>
+                        <li>¿Cómo decide la estadística si un dato es oficialmente un <strong>atípico (outlier)</strong>?</li>
+                    </ul>
+                </div>
+                
+                <!-- Columna Derecha: Gráfico en SVG -->
+                <div class="visual-container">
+                    <svg viewBox="0 0 320 150" style="width: 100%; max-width: 400px;">
+                        <!-- Eje base -->
+                        <line x1="10" y1="130" x2="310" y2="130" stroke-width="2" stroke="#aaa" stroke-dasharray="4"/>
+                        <!-- Bigote Izquierdo -->
+                        <line x1="40" y1="75" x2="90" y2="75" stroke-width="3" stroke="var(--blue)"/>
+                        <line x1="40" y1="60" x2="40" y2="90" stroke-width="3" stroke="var(--blue)"/>
+                        <!-- Caja (Q1 a Q3) -->
+                        <rect x="90" y="50" width="90" height="50" fill="#eef8ff" stroke="var(--blue)" stroke-width="3"/>
+                        <!-- Mediana (Q2) -->
+                        <line x1="130" y1="50" x2="130" y2="100" stroke-width="4" stroke="var(--green)"/>
+                        <!-- Bigote Derecho -->
+                        <line x1="180" y1="75" x2="220" y2="75" stroke-width="3" stroke="var(--blue)"/>
+                        <line x1="220" y1="60" x2="220" y2="90" stroke-width="3" stroke="var(--blue)"/>
+                        <!-- Outlier / Punto Aislado -->
+                        <circle cx="290" cy="75" r="7" fill="#d32f2f" stroke="none">
+                            <animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Exploración (Hipótesis) -->
+            <div style="margin-top: 30px; background: #fff8e1; padding: 25px; border-radius: 12px; border-left: 6px solid #ffb300;">
+                <p style="font-size: 1.4rem; margin: 0; font-weight: bold; color: var(--text-color);">Hipótesis para el salón:</p>
+                <p style="font-size: 1.3rem; margin-top: 10px;">Si dividimos los datos ordenados en 4 partes iguales (Cuartiles)... <strong>¿Qué porcentaje exacto de los datos "vive" dentro de la caja central?</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Desarrollo Conceptual -->
+        <div class="slide">
+            <h1>La Anatomía de la Caja (Boxplot)</h1>
+            
+            <div class="grid-layout">
+                <!-- Conceptos Básicos -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.6rem;">Los 5 Números Clave</h3>
+                    <ul style="font-size: 1.2rem; padding-left: 25px;">
+                        <li><strong>Mínimo:</strong> El valor más bajo (que no sea atípico).</li>
+                        <li><strong>$Q_1$:</strong> Cuartil 1 (Inicio de la caja, 25%).</li>
+                        <li><strong>$Q_2$ (Mediana):</strong> Línea central (50%).</li>
+                        <li><strong>$Q_3$:</strong> Cuartil 3 (Fin de la caja, 75%).</li>
+                        <li><strong>Máximo:</strong> El valor más alto (sin contar atípicos).</li>
+                    </ul>
+                </div>
+
+                <!-- Matemáticas y Límites -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: center;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.6rem;">Detectando Atípicos</h3>
+                    
+                    <p style="font-size: 1.1rem; text-align: left; margin-bottom: 5px;"><strong>1. Rango Intercuartílico (RIC):</strong> El tamaño de la caja.</p>
+                    <div class="math-eq" style="margin-top: 0; font-size: 1.8rem;">$$RIC = Q_3 - Q_1$$</div>
+                    
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                    
+                    <p style="font-size: 1.1rem; text-align: left; margin-bottom: 5px;"><strong>2. Límites de Control:</strong> Todo lo que caiga fuera de estas "vallas" es un <em>outlier</em>.</p>
+                    <div class="math-eq" style="font-size: 1.5rem; margin-top: 10px; color: #d32f2f;">$$Límite Inferior = Q_1 - (1.5 \times RIC)$$</div>
+                    <div class="math-eq" style="font-size: 1.5rem; margin-top: 10px; color: #d32f2f;">$$Límite Superior = Q_3 + (1.5 \times RIC)$$</div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide: Análisis de Consistencia y Asimetría -->
+        <div class="slide">
+            <h1>Leyendo la Caja: Consistencia y Sesgo</h1>
+            
+            <div class="grid-layout" style="align-items: start; margin-top: 20px;">
+                <!-- 1. Consistencia (50% central) -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.6rem;">1. El Corazón de los Datos (50% Central)</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        La caja en sí misma representa el <strong>Rango Intercuartílico (RIC)</strong>, es decir, donde se concentra el 50% central de tus datos.
+                    </p>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; color: #555;">
+                        <li><strong>Caja pequeña (estrecha):</strong> Los datos centrales son muy similares. Hay alta <strong>homogeneidad</strong> y consistencia.</li>
+                        <li><strong>Caja grande (ancha):</strong> Los datos varían mucho entre sí. Hay alta dispersión.</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Asimetría y Sesgo -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: left;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.6rem;">2. Sesgo y Asimetría</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        Observa la línea de la <strong>Mediana</strong> ($Q_2$) dentro de la caja para entender hacia dónde se inclinan los datos:
+                    </p>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; color: #555;">
+                        <li><strong>En el centro exacto:</strong> Distribución simétrica.</li>
+                        <li><strong>Cerca de $Q_1$ (abajo/izquierda):</strong> Sesgo positivo (asimetría hacia la derecha). La mayoría de los datos se concentran en valores bajos.</li>
+                        <li><strong>Cerca de $Q_3$ (arriba/derecha):</strong> Sesgo negativo (asimetría hacia la izquierda).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comparación y Valores Atípicos -->
+        <div class="slide">
+            <h1>Comparación de Grupos y Casos Especiales</h1>
+            
+            <div class="grid-layout" style="align-items: start; margin-top: 20px;">
+                <!-- 3. Comparación de Grupos -->
+                <div class="matrix-card" style="border-top: 5px solid #ff9800; text-align: left;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.6rem;">3. Comparando Grupos</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        Poner dos o más Boxplots lado a lado es la forma más rápida de encontrar diferencias:
+                    </p>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; color: #555;">
+                        <li>Compara las medianas para ver qué grupo tiene un <strong>desempeño general mayor o menor</strong>.</li>
+                        <li>Compara el tamaño de las cajas para ver qué grupo es <strong>más consistente u homogéneo</strong>.</li>
+                        <li>Observa si las cajas se solapan o están en rangos totalmente distintos.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Detección de Valores Atípicos -->
+                <div class="matrix-card" style="border-top: 5px solid #d32f2f; text-align: left;">
+                    <h3 style="color: #d32f2f; margin-top: 0; font-size: 1.6rem;">4. Detectando Valores Atípicos</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        Cualquier punto dibujado individualmente fuera de los "bigotes" es un valor atípico (<em>Outlier</em>). Al detectarlos debemos preguntarnos:
+                    </p>
+                    <div class="slide-intro" style="margin-top: 15px; border-left: 4px solid #d32f2f; padding: 15px; background: #fff5f5;">
+                        <ul style="font-size: 1.1rem; padding-left: 20px; margin: 0; color: #333;">
+                            <li>¿Es un <strong>error de medición</strong> o de digitación que debemos borrar?</li>
+                            <li>¿Es un <strong>fenómeno real</strong> que merece ser estudiado por separado (ej. un genio o una crisis)?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Actividad Guiada y Cierre Crítico -->
+        <div class="slide">
+            <h1>Laboratorio de Datos y Cierre</h1>
+            
+            <div class="grid-layout" style="align-items: stretch;">
+                <!-- Actividad Guiada -->
+                <div class="slide-intro" style="border-left: 6px solid var(--blue); display: flex; flex-direction: column;">
+                    <h3 style="color: var(--blue); margin-top: 0;">Actividad Guiada (15 min)</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;">En sus grupos, analicen el mini-conjunto de 12 datos que les entregaré:</p>
+                    <ol style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">
+                        <li>Calculen a mano $Q_1$, $Q_2$ y $Q_3$.</li>
+                        <li>Tracen el esquema básico del diagrama de caja en su cuaderno.</li>
+                        <li>Apliquen la fórmula del $RIC$ para identificar si algún compañero o dato es un valor atípico.</li>
+                    </ol>
+                </div>
+                
+                <!-- Aplicación Práctica -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="color: var(--green); margin-top: 0;">Verificación de Simetría</h3>
+                    <p style="font-size: 1.3rem; font-style: italic; line-height: 1.5;">
+                        "Si la línea de la mediana está exactamente en el centro de la caja y ambos bigotes tienen la misma longitud...<br><br>
+                        <strong>¿Qué podemos decir sobre la distribución de esos datos?</strong>"
+                    </p>
+                </div>
+            </div>
+            
+
+            <!-- Cierre y Reflexión -->
+            <div style="margin-top: 30px; padding: 25px; border-radius: 12px; border: 3px solid #f0545b; text-align: center; box-shadow: 0 5px 15px rgba(240, 84, 91, 0.08);">
+                <p style="font-size: 1.2rem; font-weight: bold; color: #f0545b; margin: 0 0 10px 0; text-transform: uppercase;">Pregunta de Salida</p>
+                <p style="font-size: 1.6rem; margin: 0; color: var(--text-color); font-weight: bold;">
+                    ¿Por qué el diagrama de caja es mucho más resistente y confiable ante valores extremos que la Media y la Desviación Estándar tradicionales?
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

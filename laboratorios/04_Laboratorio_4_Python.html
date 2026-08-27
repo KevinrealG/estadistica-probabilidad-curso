@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-download {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease;
+    }
+    .btn-download:hover {
+        background-color: #dca000;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 4: Análisis descriptivo Básico en Python</h2>
+<p>Análisis Exploratorio de Datos (EDA) utilizando Python en Google Colab para calcular medidas descriptivas y explorar relaciones entre variables.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#instrucciones">Instrucciones del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos de entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Calcular e interpretar medidas estadísticas (de tendencia central, dispersión, posición y asociación) para describir y analizar conjuntos de datos univariados y bivariados.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables en distintos contextos.</li>
+        <li>Analizo e interpreto datos univariados y bivariados mediante el uso de descriptores estadísticos, gráficos y modelos de regresión, para identificar patrones y tomar decisiones informadas.</li>
+        <li>Utilizo software especializado (Excel, Power BI, Statgraphics, Google Colab, Google Form y R) para resolver problemas estadísticos, comunicar resultados y sustentar decisiones con rigor y claridad.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas trabajadas en esta práctica</h2>
+    <ul>
+        <li><strong>Análisis Exploratorio de Datos (EDA) en Python usando Colab</strong></li>
+        <li><strong>Carga, limpieza y organización básica de datos</strong></li>
+        <li><strong>Generación de nuevas columnas mediante transformación de variables</strong></li>
+        <li><strong>Uso de librerías como Pandas, NumPy y Matplotlib</strong></li>
+        <li><strong>Resumen estadístico y visualización inicial para exploración</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Los estudiantes usarán los datos publicados en la plataforma SAVIO y, haciendo uso de <strong>Python en Google Colab</strong>, realizarán un <strong>Análisis Exploratorio de Datos (EDA)</strong> siguiendo paso a paso el procedimiento explicado en el video de la <strong>Semana 8</strong>.</p>
+    <p>El objetivo es comprender la estructura del dataset, calcular medidas descriptivas, explorar relaciones entre variables y agregar columnas derivadas que permitan enriquecer el análisis.</p>
+</section>
+
+<section id="instrucciones" class="section card">
+    <h2 class="section-title">Instrucciones del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1. Revisión del video guía</h3>
+    <p>En el aula de informática:</p>
+    <ol>
+        <li>Abrir el enlace del Notebook de Colab: <a href="https://colab.research.google.com/drive/1lFOpFwTXpJadxjVoCxPNQHa-uRrtEUTA?usp=sharing" target="_blank" style="color: var(--primary); font-weight: bold;">https://colab.research.google.com/</a></li>
+        <li></li>
+        <li>Abrir el video con el título: <strong>“Laboratorio  Estadística con Colab – Parte 1”</strong></li>
+    </ol>
+    
+    <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/watch?v=gzE8mgT2LGk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;">🔗 <strong>Enlace alternativo del video:</strong> <a href="https://youtu.be/gJYxFLS3v8E?si=xCE7hkiOLHyiFwwl" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+    
+    <div class="grid" style="margin-top: 1.5rem;">
+        <div>
+            <h4 style="color: var(--primary);">1. Organización de los datos en Colab</h4>
+            <ul>
+                <li>Identificación del tipo de variable (cuantitativa/cualitativa)</li>
+                <li>Crear un conjunto de datos univariado y Categorico</li>
+                <li>Tabla de Frecuencias</li>
+                <li>Gráficos simples para visualización</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    
+        <div>
+            <h4 style="color: var(--primary);">4. Creación de una nueva columna</h4>
+            <ul>
+                <li>Cálculo derivado</li>
+                <li>Transformación de datos</li>
+                <li>Verificación del cambio en el DataFrame</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    
+
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">📌 Entregable – Repetición autónoma del laboratorio</h3>
+    <p>El estudiante deberá:</p>
+    <ul>
+        <li>Analisis con la otra<strong>variable </strong></li>
+        <li>Repetir el proceso de análisis Descriptivo.</li>
+        <li>Presentar conclusiones relacionadas con las competencias y temáticas (agregar una celda del texto en el notebook para colocar las conclusiones.)</li>
+        <li>Exportar a <strong>PDF</strong>.</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">📤 Subida de archivos en SAVIO</h3>
+    <p>Debe entregar:</p>
+    <ul>
+        <li></li>
+        <li>PDF de la repetición autónoma (variables nuevas).</li>
+    </ul>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 1 – Insuficiente</th>
+                    <th>Nivel 2 – Aceptable</th>
+                    <th>Nivel 3 – Bueno</th>
+                    <th>Nivel 4 – Excelente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Carga y organización de datos en Colab</strong></td>
+                    <td>No logra importar los datos o no presenta evidencia clara.</td>
+                    <td>Importación incompleta o visualización limitada; poca claridad en la organización.</td>
+                    <td>Importa y visualiza los datos de forma adecuada, con leves omisiones no críticas.</td>
+                    <td>Importa los datos correctamente, visualiza las primeras filas, analiza tipos de variables y muestra organización impecable del DataFrame.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Código y desarrollo del Análisis Exploratorio (EDA)</strong></td>
+                    <td>No incluye el código o no funciona.</td>
+                    <td>El código presenta errores significativos o análisis incompleto.</td>
+                    <td>El código funciona con pequeñas omisiones o errores menores. La exploración es adecuada.</td>
+                    <td>El código está completo, funcional, bien organizado y utiliza correctamente Pandas/NumPy. Se incluye estadística descriptiva, transformaciones y verificaciones.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Visualizaciones generadas</strong></td>
+                    <td>No incluye visualizaciones o son incorrectas.</td>
+                    <td>Visualizaciones incompletas, básicas o sin etiquetas adecuadas.</td>
+                    <td>Gráficos correctos pero con detalles menores en forma o interpretación.</td>
+                    <td>Los gráficos son claros, pertinentes y bien etiquetados. Se incluyen distribuciones, resúmenes visuales y conclusiones derivadas.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Creación de una nueva columna y análisis adicional</strong></td>
+                    <td>No crea una nueva columna.</td>
+                    <td>Crea la columna con errores o sin justificación.</td>
+                    <td>Crea la columna, aunque con explicación mínima o poco análisis.</td>
+                    <td>Crea una columna nueva correctamente, explica su propósito y analiza su impacto en el DataFrame.</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Presentación y entrega (PDF guiado + PDF autónomo)</strong></td>
+                    <td>No entrega los documentos o la evidencia es insuficiente.</td>
+                    <td>Solo entrega uno de los PDFs o archivos incompletos.</td>
+                    <td>Entrega ambos PDFs con pequeños problemas de organización o formato.</td>
+                    <td>Entrega ambos PDFs completos, bien organizados, con código, gráficos y conclusiones relacionadas con competencias y temas del laboratorio.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Rúbrica: Storytelling Estadístico</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        td.text-left {
+            text-align: left;
+        }
+        .bonus-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-left: 5px solid #f39c12;
+            border-radius: 5px;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #2ecc71;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        label {
+            cursor: pointer;
+            display: block;
+            padding: 5px;
+        }
+        label:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Rúbrica de Evaluación: Storytelling Estadístico</h2>
+    <form id="rubricForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Excelente (100%)</th>
+                    <th>Competente (75%)</th>
+                    <th>En Desarrollo (50%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Criterio 1 -->
+                <tr>
+                    <td class="text-left"><strong>1. Recolección y Organización (20%)</strong><br><small>Muestra de 40+ y tablas precisas.</small></td>
+                    <td><label><input type="radio" name="crit1" value="20" onchange="calculate()"> 20 pts</label></td>
+                    <td><label><input type="radio" name="crit1" value="15" onchange="calculate()"> 15 pts</label></td>
+                    <td><label><input type="radio" name="crit1" value="10" onchange="calculate()"> 10 pts</label></td>
+                </tr>
+                <!-- Criterio 2 -->
+                <tr>
+                    <td class="text-left"><strong>2. Análisis e Interpretación Descriptiva (40%)</strong><br><small>Gráficos, preguntas, y métricas numéricas (tendencia/dispersión).</small></td>
+                    <td><label><input type="radio" name="crit2" value="40" onchange="calculate()"> 40 pts</label></td>
+                    <td><label><input type="radio" name="crit2" value="30" onchange="calculate()"> 30 pts</label></td>
+                    <td><label><input type="radio" name="crit2" value="20" onchange="calculate()"> 20 pts</label></td>
+                </tr>
+                <!-- Criterio 3 -->
+                <tr>
+                    <td class="text-left"><strong>3. Storytelling (40%)</strong><br><small>5 pasos lógicos respondiendo la pregunta inicial.</small></td>
+                    <td><label><input type="radio" name="crit3" value="40" onchange="calculate()"> 40 pts</label></td>
+                    <td><label><input type="radio" name="crit3" value="30" onchange="calculate()"> 30 pts</label></td>
+                    <td><label><input type="radio" name="crit3" value="20" onchange="calculate()"> 20 pts</label></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="bonus-section">
+            <strong>⭐ Ítem de Desempate (Puntos Extra por Socialización):</strong><br><br>
+            <label><input type="radio" name="bonus" value="0" onchange="calculate()" checked> Sin puntos extra (0 pts)</label>
+            <label><input type="radio" name="bonus" value="5" onchange="calculate()"> Buen intento de rol y presentación (+5 pts)</label>
+            <label><input type="radio" name="bonus" value="10" onchange="calculate()"> Innovación total, inmersión e impacto en audiencia (+10 pts)</label>
+        </div>
+    </form>
+
+<div class="result-box">
+        Nota Final: <span id="finalGrade">0.0</span> / 5.0 <br>
+        <small style="font-size: 14px; font-weight: normal;">(Puntaje: <span id="totalScore">0</span> / 100)</small>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        let total = 0;
+        
+        // Obtener valores seleccionados
+        const crit1 = document.querySelector('input[name="crit1"]:checked');
+        const crit2 = document.querySelector('input[name="crit2"]:checked');
+        const crit3 = document.querySelector('input[name="crit3"]:checked');
+        const bonus = document.querySelector('input[name="bonus"]:checked');
+
+        // Sumar si están definidos
+        if (crit1) total += parseInt(crit1.value);
+        if (crit2) total += parseInt(crit2.value);
+        if (crit3) total += parseInt(crit3.value);
+        if (bonus) total += parseInt(bonus.value);
+
+        // Calcular la nota sobre 5 (el Math.min asegura que no pase de 5.0 con los puntos extra)
+        let notaFinal = Math.min((total / 100) * 5, 5.0).toFixed(1);
+
+        // Actualizar el DOM
+        document.getElementById('totalScore').innerText = total;
+        document.getElementById('finalGrade').innerText = notaFinal;
+    }
+</script>
+
+</body>
+</html>

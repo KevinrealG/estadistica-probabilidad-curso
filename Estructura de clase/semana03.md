@@ -137,5 +137,133 @@ Actividades Independientes:
 
     
     
-     
+### Ejercicios en Casa:
+    ## 🟢 Ejercicio 1 — Percentiles en contexto real
+    
+    ### “¿Tengo derecho a la beca?”
+    
+    Una universidad otorga beca a estudiantes que estén en el **percentil 90 o superior** en una prueba de admisión.
+    
+    Las puntuaciones (sobre 100) de 18 estudiantes fueron:
+    
+    55
+    
+    60
+    
+    62
+    
+    65
+    
+    67
+    
+    70
+    
+    72
+    
+    75
+    
+    78
+    
+    80
+    
+    82
+    
+    85
+    
+    87
+    
+    90
+    
+    92
+    
+    94
+    
+    96
+    
+    98
+    
+    Un estudiante obtuvo **92 puntos**.
+    
+    ---
+    
+    ### 🔎 Actividades
+    
+    1. Calcular la posición del percentil 90.
+    2. Determinar el valor correspondiente al P90.
+    3. Verificar si el estudiante con 92 obtiene la beca.
+    4. Interpretar qué significa estar en el percentil 90.
+    
+    ---
+    
+    ### 💬 Discusión
+    
+    - ¿Percentil 90 significa tener 90 puntos?
+    - ¿Es lo mismo percentil que porcentaje?
+    - ¿Qué ocurre si el grupo fuera más grande?
+    
+    ---
+    
+    ---
+    
+    ## 🟢 Ejercicio 2 — Cuartiles y toma de decisiones
+    
+    ### “Clasificación por rendimiento académico”
+    
+    Un profesor quiere dividir el curso en 4 grupos según rendimiento.
+    
+    Notas finales:
+    
+    48
+    
+    52
+    
+    55
+    
+    60
+    
+    62
+    
+    65
+    
+    68
+    
+    70
+    
+    72
+    
+    74
+    
+    76
+    
+    78
+    
+    80
+    
+    82
+    
+    85
+    
+    88
+    
+    ---
+    
+    ### 🔎 Actividades
+    
+    1. Calcular Q1, Q2 y Q3.
+    2. Clasificar los estudiantes en:
+        - Bajo rendimiento
+        - Medio bajo
+        - Medio alto
+        - Alto rendimiento
+    3. Interpretar qué significa estar por encima de Q3.
+    4. Determinar qué porcentaje está por debajo de Q1.
+    
+    ---
+    
+    ### 💬 Discusión
+    
+    - ¿Es justo dividir estrictamente por cuartiles?
+    - ¿Qué pasa si las notas no están distribuidas uniformemente?
+    
+    ---     
     
