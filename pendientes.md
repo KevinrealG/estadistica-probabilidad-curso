@@ -1,6 +1,5 @@
 Bueno para los cursos de estadistica me queda pendiente:
 1. Grabar videos
-    - Actualizar las miniaturas, y las descripciones de los videos.  
     3. Semana 4: Medidas de Dispersión.  animaciones manim y audio de videos.
     4. Dibujar diagrama de box plot,
     5. Explicando como interpretar el diagrama de boxplot.

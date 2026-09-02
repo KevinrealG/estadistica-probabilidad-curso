@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formas de Distribución en Histogramas</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme svg line {
+            stroke: #a0a0a0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Distribución Normal -->
+        <div class="slide">
+            <h1>Distribución Normal</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p>Representa la clásica forma de <strong>Campana de Gauss</strong>, donde la mayoría de los datos se concentran en el centro de la distribución.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Es perfectamente <strong>simétrica</strong>: el lado izquierdo es un reflejo exacto del derecho.</li>
+                        <li>Las medidas de tendencia central (Media, Mediana y Moda) son idénticas y se ubican en el pico.</li>
+                        <li>Ejemplos comunes: Estatura humana, presión arterial, errores de medición.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="150" width="25" height="30" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="120" width="25" height="60" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="50" width="25" height="130" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="20" width="25" height="160" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="20" width="25" height="160" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="50" width="25" height="130" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="120" width="25" height="60" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="150" width="25" height="30" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Sesgada Positivamente -->
+        <div class="slide">
+            <h1>Sesgada Positivamente</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p>También conocida como asimetría a la derecha. Presenta una <strong>cola larga que se extiende hacia los valores mayores (positivos)</strong>.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>La gran masa de los datos se agrupa en los valores más bajos (a la izquierda).</li>
+                        <li>Los valores atípicos altos "arrastran" la media hacia la derecha.</li>
+                        <li><strong>Orden general:</strong> Moda < Mediana < Media.</li>
+                        <li>Ejemplo típico: Distribución de la riqueza o salarios en un país.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="20" width="25" height="160" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="40" width="25" height="140" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="60" width="25" height="120" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="100" width="25" height="80" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="120" width="25" height="60" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="155" width="25" height="25" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="165" width="25" height="15" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="173" width="25" height="7" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Sesgada Negativamente -->
+        <div class="slide">
+            <h1>Sesgada Negativamente</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #d32f2f;">
+                        <p>También conocida como asimetría a la izquierda. Su <strong>cola larga se extiende hacia los valores menores (negativos)</strong>.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>La mayor parte de los datos se agrupa en la zona de valores altos (a la derecha).</li>
+                        <li>Los pocos valores atípicos bajos reducen el promedio global.</li>
+                        <li><strong>Orden general:</strong> Media < Mediana < Moda.</li>
+                        <li>Ejemplo típico: Notas de un examen que resultó ser muy fácil para la clase.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="173" width="25" height="7" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="165" width="25" height="15" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="155" width="25" height="25" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="120" width="25" height="60" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="100" width="25" height="80" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="60" width="25" height="120" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="40" width="25" height="140" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="20" width="25" height="160" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Distribución Uniforme -->
+        <div class="slide">
+            <h1>Distribución Uniforme</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #ff9800;">
+                        <p>Ocurre cuando <strong>todos los intervalos tienen aproximadamente la misma frecuencia</strong> absoluta.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>No presenta picos claros ni modas dominantes (forma rectangular).</li>
+                        <li>Indica que la probabilidad de que un dato caiga en cualquier intervalo es constante.</li>
+                        <li>Ejemplo típico: Resultados al lanzar un dado perfecto miles de veces.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Distribución Bimodal Simétrica -->
+        <div class="slide">
+            <h1>Distribución Bimodal Simétrica</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #9c27b0;">
+                        <p>Presenta <strong>dos picos distintos</strong> de frecuencias altas separados por un valle central, siendo ambos picos de altura idéntica o muy similar.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Suele indicar que dentro del conjunto analizado existen <strong>dos grupos diferentes mezclados</strong>.</li>
+                        <li>Es perfectamente simétrica, por lo que la media se ubica justo en el valle central.</li>
+                        <li>Ejemplo típico: Tallas de zapatos en un grupo mixto de hombres y mujeres.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="160" width="25" height="20" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="30" width="25" height="150" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Distribución Bimodal Asimétrica -->
+        <div class="slide">
+            <h1>Distribución Bimodal Asimétrica</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #00acc1;">
+                        <p>También presenta <strong>dos picos</strong> (dos modas locales), pero uno es considerablemente <strong>más alto que el otro</strong>.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Indica la presencia de dos subpoblaciones donde una es mayoritaria y la otra minoritaria.</li>
+                        <li>Las medidas de tendencia central no brindan un resumen adecuado sin separar los datos.</li>
+                        <li>Ejemplo típico: Edades de los asistentes a un parque de atracciones (mayoría de niños y un grupo menor de adultos/padres).</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras -->
+                        <rect x="20" y="150" width="25" height="30" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="45" y="100" width="25" height="80" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="70" y="60" width="25" height="120" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="95" y="100" width="25" height="80" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="120" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="145" y="160" width="25" height="20" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="170" y="130" width="25" height="50" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="195" y="80" width="25" height="100" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="220" y="90" width="25" height="90" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="245" y="140" width="25" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- Slide: Distribución Multimodal -->
+        <div class="slide">
+            <h1>Distribución Multimodal</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #e91e63;">
+                        <p>Una distribución es <strong>multimodal</strong> cuando presenta <strong>tres o más picos o modas</strong> locales claras en su histograma.</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Indica la superposición o mezcla de tres o más subpoblaciones o grupos con características diferentes dentro del mismo conjunto de datos.</li>
+                        <li>Las medidas de tendencia central tradicionales pierden su capacidad representativa, ya que no existe un único centro dominante.</li>
+                        <li>Ejemplo típico: Edades de los visitantes en un centro recreativo donde coinciden niños, jóvenes y adultos mayores en proporciones similares.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Representación SVG Multimodal -->
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras con múltiples picos -->
+                        <rect x="20" y="150" width="22" height="30" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="42" y="90" width="22" height="90" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="64" y="140" width="22" height="40" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="86" y="160" width="22" height="20" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="108" y="70" width="22" height="110" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="130" y="130" width="22" height="50" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="152" y="160" width="22" height="20" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="174" y="100" width="22" height="80" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="196" y="50" width="22" height="130" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="218" y="110" width="22" height="70" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                        <rect x="240" y="150" width="22" height="30" fill="#fbc02d" stroke="#f9a825" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Distribución Leptocúrtica -->
+        <div class="slide">
+            <h1>Distribución Leptocúrtica</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #673ab7;">
+                        <p>Presenta un apuntamiento <strong>muy elevado y puntiagudo</strong> en el centro, acompañado de colas pesadas ($g_2 > 0$ o $K > 3$).</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Indica una concentración muy alta de los datos alrededor de la media, pero también una <strong>alta probabilidad de valores extremos</strong> en las colas.</li>
+                        <li>Los datos son sumamente consistentes en el día a día, pero vulnerables a eventos drásticos.</li>
+                        <li>Ejemplo típico: Rendimientos financieros de activos con alta volatilidad o eventos "Cisne Negro".</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Representación SVG Leptocúrtica -->
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras muy altas en el centro -->
+                        <rect x="20" y="170" width="25" height="10" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="45" y="160" width="25" height="20" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="70" y="130" width="25" height="50" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="95" y="80" width="25" height="100" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="120" y="15" width="25" height="165" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="145" y="15" width="25" height="165" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="170" y="80" width="25" height="100" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="195" y="130" width="25" height="50" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="220" y="160" width="25" height="20" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                        <rect x="245" y="170" width="25" height="10" fill="#9575cd" stroke="#5e35b1" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Distribución Platicúrtica -->
+        <div class="slide">
+            <h1>Distribución Platicúrtica</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #009688;">
+                        <p>Presenta una forma <strong>aplanada y de cima ancha</strong>, lo que denota una dispersión muy amplia y uniforme de los datos ($g_2 < 0$ o $K < 3$).</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Indica que los valores están repartidos de manera más homogénea a lo largo del rango, sin que ninguna zona central concentre abrumadoramente las frecuencias.</li>
+                        <li>Tiene colas muy ligeras, lo que significa menor probabilidad de encontrar valores atípicos extremos.</li>
+                        <li>Ejemplo típico: Resultados de un juego de azar con probabilidades totalmente lineales o continuas de extremo a extremo.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Representación SVG Platicúrtica -->
+                    <svg viewBox="0 0 300 200" style="width: 100%; max-width: 400px;">
+                        <line x1="10" y1="180" x2="290" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <line x1="10" y1="20" x2="10" y2="180" stroke="var(--text-color)" stroke-width="3"/>
+                        <!-- Barras aplanadas -->
+                        <rect x="20" y="100" width="25" height="80" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="45" y="90" width="25" height="90" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="70" y="85" width="25" height="95" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="95" y="80" width="25" height="100" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="120" y="75" width="25" height="105" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="145" y="75" width="25" height="105" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="170" y="80" width="25" height="100" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="195" y="85" width="25" height="95" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="220" y="90" width="25" height="90" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                        <rect x="245" y="100" width="25" height="80" fill="#80cbc4" stroke="#00897b" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

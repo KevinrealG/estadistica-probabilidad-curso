@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 19: El Caos Masivo</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: stretch;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <h1>El Reto: El Caos Masivo</h1>
+            <div class="grid-layout" style="align-items: center; height: 100%;">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p>Imagina que tenemos una base de datos con <strong>1,000 registros numéricos continuos</strong> (por ejemplo, salarios exactos con centavos).</p>
+                    </div>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid #d32f2f;">
+                    <h3 style="color: #d32f2f; margin-top: 0; font-size: 1.8rem;">El Problema</h3>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color);">
+                        Si hacemos una tabla de frecuencias tradicional como las de la semana 2, tendríamos casi 1,000 filas distintas.
+                    </p>
+                    <div style="background: #fff5f5; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <p style="font-style: italic; font-weight: bold; font-size: 1.3rem; margin: 0; color: #b71c1c;">
+                            ¿Cómo le presentamos esto a una junta directiva sin que se queden dormidos?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Exploración -->
+        <div class="slide">
+            <h1>Hipótesis: Agrupando el Caos</h1>
+            <div class="visual-container" style="height: 100%; flex-direction: column;">
+                <div class="matrix-card" style="width: 80%; border-top: 5px solid #ff9800; text-align: left;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.8rem;">Propuestas de Agrupación</h3>
+                    <p style="font-size: 1.4rem; color: var(--text-color);">¿Cómo agruparían ustedes estos 1,000 datos?</p>
+                    <ul style="font-size: 1.3rem; margin-top: 20px;">
+                        <li>¿Por rangos cerrados? (Ej. "De $1000 a $2000").</li>
+                        <li>¿Intervalos de $500?</li>
+                    </ul>
+                </div>
+                <div class="slide-intro" style="margin-top: 30px; width: 80%; text-align: center; border-left: 6px solid var(--green);">
+                    <p style="font-weight: bold; color: var(--green); font-size: 1.6rem;">La gran pregunta estadística:</p>
+                    <p style="font-size: 1.4rem; margin-top: 10px;">¿Cuántos grupos son muy pocos y cuántos son demasiados?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Desarrollo Conceptual 1 -->
+        <div class="slide">
+            <h1>Barras vs. Histogramas</h1>
+            <div class="grid-layout">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.6rem;">Gráfico de Barras</h3>
+                    <ul style="font-size: 1.2rem; padding-left: 20px;">
+                        <li>Se usa para variables <strong>categóricas</strong> o cualitativas.</li>
+                        <li>Las barras están <strong>separadas</strong> entre sí, indicando que no hay continuidad entre las categorías (Ej. Colores, Ciudades).</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: left;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.6rem;">Histograma</h3>
+                    <ul style="font-size: 1.2rem; padding-left: 20px;">
+                        <li>Se usa para variables <strong>numéricas continuas</strong> agrupadas en intervalos.</li>
+                        <li>Las barras están <strong>pegadas</strong>, mostrando la continuidad matemática de los datos a lo largo de un eje numérico.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Desarrollo Conceptual 2 -->
+        <div class="slide">
+            <h1>La Regla de Sturges</h1>
+            <div class="slide-intro">
+                <p>Es una regla matemática empírica para determinar el número ideal de intervalos (clases) al construir un histograma y agrupar datos.</p>
+            </div>
+            <div class="grid-layout" style="margin-top: 20px;">
+                <div class="matrix-card" style="text-align: center;">
+                    <h3 style="color: var(--blue); margin-top: 0;">1. Número de Intervalos ($k$)</h3>
+                    <div class="math-eq">$$k = 1 + 3.322 \log_{10}(n)$$</div>
+                    <p style="font-size: 1.1rem; color: #666; margin-top: 15px;">Donde $n$ es la cantidad total de datos.<br><em>Nota: El valor de $k$ debe redondearse al entero más cercano.</em></p>
+                </div>
+                <div class="matrix-card" style="text-align: center;">
+                    <h3 style="color: var(--green); margin-top: 0;">2. Amplitud del Intervalo ($A$)</h3>
+                    <div class="math-eq">$$A = \frac{Rango}{k}$$</div>
+                    <p style="font-size: 1.1rem; color: #666; margin-top: 15px;">Define el "ancho" numérico que tendrá cada barra en nuestro histograma.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Actividad Guiada -->
+        <div class="slide">
+            <h1>Actividad Guiada: Construcción</h1>
+            <div class="slide-intro" style="border-left: 6px solid #ffb300;">
+                <p><strong>Dinámica en Grupos de 3:</strong> Utilicen el set de 50 datos entregado por el profesor para realizar los siguientes cálculos paso a paso.</p>
+            </div>
+            <div class="matrix-card" style="margin-top: 20px; border: 2px dashed #ccc; text-align: left;">
+                <ol style="font-size: 1.4rem; line-height: 1.8; margin: 0; padding-left: 30px;">
+                    <li>Calcular el número óptimo de intervalos ($k$) usando Sturges.</li>
+                    <li>Calcular la amplitud ($A$) de clase.</li>
+                    <li>Construir los intervalos (Límite Inferior - Límite Superior).</li>
+                    <li>Realizar el conteo rápido de frecuencias para la <strong>primera clase</strong>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 6: Aplicación y Tarea -->
+        <div class="slide">
+            <h1>La Forma de los Datos</h1>
+            <p style="font-size: 1.4rem; margin-bottom: 25px; text-align: center;">La estadística no solo mide el centro y la dispersión, también mide la <strong>forma geométrica</strong> de la distribución.</p>
+            
+            <!-- Contenedor adaptativo para los 3 gráficos -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 100%;">
+                <div class="matrix-card" style="padding: 20px; display: flex; align-items: center; justify-content: center; height: 120px; background: #f9f9f9; border: 1px dashed #ccc;">
+                    <span style="color: #777; font-weight: bold;">[ Histograma Simétrico ]</span>
+                </div>
+                <div class="matrix-card" style="padding: 20px; display: flex; align-items: center; justify-content: center; height: 120px; background: #f9f9f9; border: 1px dashed #ccc;">
+                    <span style="color: #777; font-weight: bold;">[ Sesgado a la Derecha ]</span>
+                </div>
+                <div class="matrix-card" style="padding: 20px; display: flex; align-items: center; justify-content: center; height: 120px; background: #f9f9f9; border: 1px dashed #ccc;">
+                    <span style="color: #777; font-weight: bold;">[ Muy Puntiagudo ]</span>
+                </div>
+            </div>
+
+            <div class="matrix-card" style="margin-top: 30px; border-top: 5px solid #d32f2f; text-align: left;">
+                <h3 style="color: #d32f2f; margin-top: 0; font-size: 1.5rem;">Asignación de Investigación</h3>
+                <p style="font-size: 1.3rem; margin: 0; color: var(--text-color);">
+                    Para la próxima clase, deben investigar qué significan los conceptos de <strong>Kurtosis</strong> y <strong>Sesgo (Skewness)</strong>, y cómo se identifican visualmente en la forma de un histograma.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Cierre -->
+        <div class="slide">
+            <h1>Cierre y Consolidación</h1>
+            <div class="visual-container">
+                <div class="matrix-card" style="width: 80%; border-top: 5px solid var(--green); display: flex; flex-direction: column; align-items: center;">
+                    <h2 style="color: var(--green); margin-top: 0; font-size: 2rem;">Autoevaluación del Primer Corte</h2>
+                    <p style="font-size: 1.4rem; text-align: center; margin-bottom: 25px;">
+                        Es momento de evaluar nuestro proceso. Escanea el código QR o ingresa al enlace en Teams para completar el formulario.
+                    </p>
+                    
+                    <!-- Placeholder para QR -->
+                    <div style="width: 180px; height: 180px; background: #eee; border: 2px dashed #bbb; display: flex; align-items: center; justify-content: center; border-radius: 12px; margin-bottom: 20px;">
+                        <span style="color: #888; font-weight: bold;">[ Código QR Forms ]</span>
+                    </div>
+                    
+                    <p style="font-size: 1.2rem; color: #555; font-style: italic; text-align: center; margin: 0;">
+                        3 preguntas para valorar tu propio desempeño, participación y nivel de comprensión.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

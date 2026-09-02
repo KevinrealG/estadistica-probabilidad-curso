@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 20: La Forma de los Datos (Sesgo y Curtosis)</title>
+    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        /* Estilos base reutilizados[cite: 2] */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            flex-direction: column;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: stretch;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro[cite: 2] */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura / Conexión con la tarea -->
+        <div class="slide">
+            <h1>Más allá del Centro y la Dispersión</h1>
+            <div class="grid-layout" style="align-items: center; height: 100%;">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p><strong>El Reto de Investigación:</strong> En la clase anterior descubrimos que la estadística no solo mide dónde está el centro o qué tan separados están los datos, también mide su <strong>forma geométrica</strong>.</p>
+                    </div>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid #ff9800;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.8rem;">La Paradoja</h3>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color);">
+                        Dos conjuntos de datos pueden tener exactamente la misma <strong>Media</strong> y la misma <strong>Desviación Estándar</strong>, pero verse completamente distintos en un histograma.
+                    </p>
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <p style="font-style: italic; font-weight: bold; font-size: 1.3rem; margin: 0; color: #f57c00;">
+                            ¿Qué conceptos investigaron para explicar este fenómeno?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Sesgo (Skewness) -->
+        <div class="slide">
+            <h1>1. Sesgo (Skewness)</h1>
+            <p style="font-size: 1.4rem; margin-bottom: 25px; text-align: center;">Mide la <strong>asimetría</strong> de la distribución de los datos alrededor de su media.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%;">
+                <!-- Asimetría Negativa -->
+                <div class="matrix-card" style="border-top: 4px solid #d32f2f; padding: 20px;">
+                    <h3 style="color: #d32f2f; margin-top: 0;">Asimetría Negativa<br><span style="font-size: 1rem; font-weight: normal;">(Cola a la Izquierda)</span></h3>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; text-align: left;">
+                        <li>La cola larga apunta hacia los valores negativos o menores.</li>
+                        <li><strong>Orden:</strong> Media < Mediana < Moda</li>
+                        <li>Ej: Notas de un examen muy fácil.</li>
+                    </ul>
+                </div>
+                <!-- Simétrica -->
+                <div class="matrix-card" style="border-top: 4px solid var(--green); padding: 20px;">
+                    <h3 style="color: var(--green); margin-top: 0;">Simétrica<br><span style="font-size: 1rem; font-weight: normal;">(Distribución Normal)</span></h3>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; text-align: left;">
+                        <li>El lado izquierdo es un reflejo del derecho. Sesgo = 0.</li>
+                        <li><strong>Orden:</strong> Media = Mediana = Moda</li>
+                        <li>Ej: Estatura de adultos.</li>
+                    </ul>
+                </div>
+                <!-- Asimetría Positiva -->
+                <div class="matrix-card" style="border-top: 4px solid var(--blue); padding: 20px;">
+                    <h3 style="color: var(--blue); margin-top: 0;">Asimetría Positiva<br><span style="font-size: 1rem; font-weight: normal;">(Cola a la Derecha)</span></h3>
+                    <ul style="font-size: 1.1rem; padding-left: 20px; text-align: left;">
+                        <li>La cola larga apunta hacia los valores mayores.</li>
+                        <li><strong>Orden:</strong> Moda < Mediana < Media</li>
+                        <li>Ej: Distribución de la riqueza/salarios.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Curtosis -->
+        <div class="slide">
+            <h1>2. Curtosis (Kurtosis)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid #673ab7;">
+                        <p>Mide el "apuntamiento" de la curva o, más exactamente en la estadística moderna, <strong>el peso de las colas</strong> y la presencia de valores atípicos extremos.</p>
+                    </div>
+                </div>
+                <div class="matrix-card" style="text-align: left; border-left: 4px solid #673ab7;">
+                    <h3 style="margin-top: 0; color: #673ab7;">Los tres perfiles:</h3>
+                    <ul style="font-size: 1.2rem; margin-bottom: 0;">
+                        <li style="margin-bottom: 10px;"><strong>Leptocúrtica (K > 3):</strong> Muy puntiaguda en el centro, colas muy pesadas. Alta probabilidad de valores extremos.</li>
+                        <li style="margin-bottom: 10px;"><strong>Mesocúrtica (K = 3):</strong> Distribución normal estándar.</li>
+                        <li style="margin-bottom: 0;"><strong>Platicúrtica (K < 3):</strong> Aplanada, colas ligeras. Los datos están muy dispersos de forma uniforme.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Aplicación y Riesgo -->
+        <div class="slide">
+            <h1>¿Por qué importa la Forma?</h1>
+            <div class="grid-layout">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0;">Ejemplo en Riesgo Financiero</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        Si evalúas una inversión que tiene una distribución <strong>Leptocúrtica</strong> (colas gruesas), significa que aunque la mayoría de los días ganes el promedio, tienes un riesgo inusualmente alto de sufrir un colapso masivo ("Cisne Negro") en comparación con una distribución normal.
+                    </p>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: left;">
+                    <h3 style="color: var(--green); margin-top: 0;">Ejemplo en Políticas Públicas</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color);">
+                        Si el ingreso de un país tiene una fuerte <strong>Asimetría Positiva</strong> (cola a la derecha), diseñar políticas basadas en el "ingreso promedio (media)" afectará negativamente a la mayoría, ya que la mayor parte de la población percibe un ingreso mucho menor (Mediana/Moda).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Actividad Visual -->
+        <div class="slide">
+            <h1>Actividad: Diagnóstico Visual</h1>
+            <p style="font-size: 1.4rem; text-align: center; margin-bottom: 30px;">Identifiquen el tipo de <strong>Sesgo</strong> y el tipo de <strong>Curtosis</strong> en los histogramas que tienen en su taller.</p>
+            
+            <div class="visual-container">
+                <div class="matrix-card" style="width: 80%; border: 3px dashed #bbb; background: #fafafa; padding: 40px;">
+                    <h2 style="color: var(--blue); margin-top: 0; font-size: 2rem;">Mesa de Trabajo</h2>
+                    <ul style="font-size: 1.4rem; line-height: 1.8; text-align: left; margin: 0 auto; display: inline-block;">
+                        <li>1. Observen hacia dónde se alarga la cola (Sesgo).</li>
+                        <li>2. Ubiquen intuitivamente dónde estaría la Media vs. la Mediana.</li>
+                        <li>3. Observen la altura del pico central comparado con una campana normal (Curtosis).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación[cite: 2] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad[cite: 2] -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            let deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

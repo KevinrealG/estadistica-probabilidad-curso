@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Parcial 1 - Estadística y Probabilidad</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+     <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+<style>
+
+@page{
+    size: A4;
+    margin: 1cm;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.15;
+    margin-top: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.encabezado{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.logo{
+    height: 60px;
+}
+
+h2,h3{
+    margin: 0;
+}
+
+.info{
+    margin: 8px 0;
+}
+
+.instrucciones{
+    border: 1px solid black;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+p{
+    margin: 5px 0;
+    text-align: justify;
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td{
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+ol{
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+li{
+    margin-bottom: 8px;
+}
+
+.data-box {
+    background-color: #f4f4f4;
+    padding: 8px;
+    font-family: monospace;
+    font-size: 10pt;
+    word-break: break-all;
+    border: 1px dashed #666;
+    margin: 8px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="encabezado">
+
+    <!-- Reemplace la ruta por la ubicación real del logo o mantenga el texto institucional -->
+    <img src="logoutb.png" alt="Logo UTB" class="logo" onerror="this.style.display='none'">
+    <div>
+        <h2>Universidad Tecnológica de Bolívar</h2>
+        <h3>Dirección de Ciencias Básicas</h3>
+        <h3>Estadística y Probabilidad</h3>
+        <h3>Parcial - Corte 1</h3>
+    </div>
+
+</div>
+
+<div class="info">
+<strong>Nombre:</strong> ______________________________________
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<strong>Grupo:</strong> __________________
+</div>
+
+<div class="instrucciones">
+<strong>Instrucciones:</strong>
+Asuma el perfil de analista de datos del departamento de admisiones o consultoría institucional. Desarrolle cada punto mostrando claramente el procedimiento. Organice, describa y resuma los datos utilizando las herramientas de estadística descriptiva apropiadas (tablas, gráficos, medidas, interpretación). Justifique analíticamente cada respuesta.
+</div>
+
+<p>
+<strong>Parte 1: Análisis Cualitativo (Variable Categórica)</strong>
+</p>
+
+<p>
+El departamento de bienestar universitario de la UTB desea auditar el impacto de sus campañas de movilidad sostenible, registrando el Medio de Transporte principal utilizado por una muestra de <strong>30 estudiantes</strong> en la jornada matutina:
+</p>
+
+<div class="data-box">
+Bus, Moto, Transcaribe, A pie, Carro, Moto, Bus, Transcaribe, A pie, Moto, Bus, Bus, Carro, Moto, Transcaribe, Bus, Carro, Moto, Bus, Transcaribe, A pie, Bus, Moto, Carro, Transcaribe, Moto, Bus, A pie, Carro, Transcaribe
+</div>
+
+<p>
+Realice un análisis descriptivo riguroso que incluya:
+</p>
+
+<ol>
+    <li>
+        (1.1 puntos) Organice los datos en una tabla de frecuencias completa (frecuencia absoluta $f_i$, frecuencia relativa $f_{ir}$, y frecuencia relativa porcentual $f_{ir}\%$).
+    </li>
+   
+    <li>
+        Responda justificando con los datos de su tabla de frecuencias:
+        <ul>
+            <li>(0.3 puntos) ¿Cuál es el porcentaje acumulado que representan los dos medios de transporte más frecuentes combinados?</li>
+            <li>(0.3 puntos) Si la meta institucional exige que las opciones sostenibles (Bus, Transcaribe, A pie) superen estrictamente el 75% de preferencia, ¿se cumple la meta con esta muestra? </li>
+            <li>(0.3 puntos) ¿Qué categoría representa la moda de la distribución y cuál es su proporción exacta?</li>
+        </ul>
+    </li>
+</ol>
+
+<p>
+<strong>Parte 2: Análisis Cuantitativo </strong>
+</p>
+
+<p>
+Como parte de un estudio ergonómico y de salud ocupacional, se midió el NIVEL DE RUIDO DIARIO al que se exponen <strong>30 colaboradores</strong> de una planta industrial de la ciudad (medido en decibelios - dBA):
+</p>
+
+<div class="data-box">
+68, 72, 75, 70, 69, 74, 71, 73, 76, 72, 70, 71, 75, 69, 74, 77, 68, 73, 70, 72, 74, 71, 75, 69, 73, 72, 70, 76, 71, 74
+</div>
+
+<p>
+Realice un análisis descriptivo completo que incluya:
+</p>
+
+<ol>
+    <li>
+        (1.0 puntos) Organización y Resumen de los datos en tabla de frecuencias (frecuencia absoluta $f_i$, frecuencia relativa $f_{ir}$, frecuencia relativa porcentual $f_{ir}\%$, frecuencia acumulada $F_i$, frecuencia acumulada porcentual $F_{ir}\%$).
+    </li>
+    <li>
+        (1.0 puntos) Resuma en una tabla analítica los valores de: Medidas de tendencia central (Media $\bar{x}$, Mediana $Me$, Moda $Mo$), Medidas de posición (Cuartil $Q_1$ y $Q_3$) y Medidas de dispersión (Rango $R$, Varianza muestral $s^2$, Desviación estándar $s$ y Coeficiente de variación $CV$).
+    </li>
+    <li>
+        (0.5 puntos) Construya un esquema o representación del Gráfico de caja y bigotes (Boxplot), identificando los límites del Rango Intercuartílico ($RIC$) y la detección de posibles valores atípicos (outliers).
+    </li>
+    <li>
+        (0.5 puntos) Responda justificando analíticamente:
+        <ul>
+            <li>Respecto a la homogeneidad del conjunto, ¿el conjunto se considera homogéneo con respecto al  NIVEL DE RUIDO DIARIO (CV < 30%)? </li>
+            <li>Analizando la asimetría a partir de la relación entre la media ($\bar{x}$) y la mediana $me$, ¿cómo se comporta la distribución de los niveles de ruido en la planta? Esta sesgada a la derecha($\bar{x}$ > $me$) o a la izquierda($\bar{x}$ < $me$) o simétrica($\bar{x}$ = $me$).</li>
+        </ul>
+    </li>
+</ol>
+
+</body>
+</html>

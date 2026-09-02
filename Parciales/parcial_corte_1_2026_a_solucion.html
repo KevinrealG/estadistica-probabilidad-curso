@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Parcial 1 - Estadística y Probabilidad</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.9.0/plotly.min.js"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+
+<style>
+@page{
+    size: A4;
+    margin: 1cm;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.15;
+    margin-top: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.encabezado{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.logo{
+    height: 60px;
+}
+
+h2,h3{
+    margin: 0;
+}
+
+.info{
+    margin: 8px 0;
+}
+
+.instrucciones{
+    border: 1px solid black;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+p{
+    margin: 5px 0;
+    text-align: justify;
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td{
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+ol{
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+li{
+    margin-bottom: 8px;
+}
+
+.data-box {
+    background-color: #f4f4f4;
+    padding: 8px;
+    font-family: monospace;
+    font-size: 10pt;
+    word-break: break-all;
+    border: 1px dashed #666;
+    margin: 8px 0;
+}
+
+#boxplot {
+    width: 100%;
+    height: 250px;
+    margin: 10px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="encabezado">
+    <img src="logoutb.png" alt="Logo UTB" class="logo" onerror="this.style.display='none'">
+    <div>
+        <h2>Universidad Tecnológica de Bolívar</h2>
+        <h3>Dirección de Ciencias Básicas</h3>
+        <h3>Estadística y Probabilidad</h3>
+        <h3>Parcial - Corte 1</h3>
+    </div>
+</div>
+
+<div class="info">
+<strong>Nombre:</strong> ______________________________________
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<strong>Grupo:</strong> __________________
+</div>
+
+<div class="instrucciones">
+<strong>Instrucciones:</strong>
+Asuma el perfil de analista de datos del departamento de admisiones o consultoría institucional. Desarrolle cada punto mostrando claramente el procedimiento. Organice, describa y resuma los datos utilizando las herramientas de estadística descriptiva apropiadas (tablas, gráficos, medidas, interpretación). Justifique analíticamente cada respuesta.
+</div>
+
+<p>
+<strong>Parte 1: Análisis Cualitativo (Variable Categórica)</strong>
+</p>
+
+<p>
+El departamento de bienestar universitario de la UTB desea auditar el impacto de sus campañas de movilidad sostenible, registrando el Medio de Transporte principal utilizado por una muestra de <strong>30 estudiantes</strong> en la jornada matutina:
+</p>
+
+<div class="data-box">
+Bus, Moto, Transcaribe, A pie, Carro, Moto, Bus, Transcaribe, A pie, Moto, Bus, Bus, Carro, Moto, Transcaribe, Bus, Carro, Moto, Bus, Transcaribe, A pie, Bus, Moto, Carro, Transcaribe, Moto, Bus, A pie, Carro, Transcaribe
+</div>
+
+<p>
+Realice un análisis descriptivo riguroso que incluya:
+</p>
+
+<ol>
+    <li>
+        (1.1 puntos) Organice los datos en una tabla de frecuencias completa (frecuencia absoluta $f_i$, frecuencia relativa $f_{ir}$, y frecuencia relativa porcentual $f_{ir}\%$).
+    </li>
+    <table>
+        <thead>
+            <tr>
+                <th>Medio de Transporte</th>
+                <th>Frecuencia Absoluta ($f_i$)</th>
+                <th>Frecuencia Relativa ($f_{ir}$)</th>
+                <th>Frecuencia Relativa Porcentual ($f_{ir}\%$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bus</td>
+                <td>8</td>
+                <td>0.267</td>
+                <td>26.7%</td>
+            </tr>
+            <tr>
+                <td>Moto</td>
+                <td>7</td>
+                <td>0.200</td>
+                <td>23.3%</td>
+            </tr>
+            <tr>
+                <td>Transcaribe</td>
+                <td>6</td>
+                <td>0.200</td>
+                <td>20.0%</td>
+            </tr>
+            <tr>
+                <td>A pie</td>
+                <td>4</td>
+                <td>0.167</td>
+                <td>13.3%</td>
+            </tr>
+            <tr>
+                <td>Carro</td>
+                <td>5</td>
+                <td>0.167</td>
+                <td>16.7%</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>30</strong></td>
+                <td><strong>1.000</strong></td>
+                <td><strong>100%</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <li>
+        Responda justificando con los datos de su tabla de frecuencias:
+        <ul>
+            <li>(0.3 puntos) ¿Cuál es el porcentaje acumulado que representan los dos medios de transporte más frecuentes combinados? R/50% BUS y MOTO</li>
+            <li>(0.3 puntos) Si la meta institucional exige que las opciones sostenibles (Bus, Transcaribe, A pie) superen estrictamente el 75% de preferencia, ¿se cumple la meta con esta muestra? R/No, no se cumple la meta. Es el 60%</li>
+            <li>(0.3 puntos) ¿Qué categoría representa la moda de la distribución y cuál es su proporción exacta? R/Bus, con una proporción del 26.7%</li>
+        </ul>
+    </li>
+</ol>
+
+<p>
+<strong>Parte 2: Análisis Cuantitativo </strong>
+</p>
+
+<p>
+Como parte de un estudio ergonómico y de salud ocupacional, se midió el NIVEL DE RUIDO DIARIO al que se exponen <strong>30 colaboradores</strong> de una planta industrial de la ciudad (medido en decibelios - dBA):
+</p>
+
+<div class="data-box">
+68, 72, 75, 70, 69, 74, 71, 73, 76, 72, 70, 71, 75, 69, 74, 77, 68, 73, 70, 72, 74, 71, 75, 69, 73, 72, 70, 76, 71, 74
+</div>
+
+<p>
+Realice un análisis descriptivo completo que incluya:
+</p>
+
+<ol>
+    <li>
+        (1.0 puntos) Organización y Resumen de los datos en tabla de frecuencias.
+    </li>
+    <table>
+        <thead>
+            <tr>
+                <th>Nivel de Ruido (dBA)</th>
+                <th>Frecuencia Absoluta ($f_i$)</th>
+                <th>Frecuencia Relativa ($f_{ir}$)</th>
+                <th>Frecuencia Relativa Porcentual ($f_{ir}\%$)</th>
+                <th>Frecuencia Acumulada ($F_i$)</th>
+                <th>Frecuencia Acumulada Porcentual ($F_{ir}\%$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>68</td><td>2</td><td>0.067</td><td>6.7%</td><td>2</td><td>6.7%</td></tr>
+            <tr><td>69</td><td>3</td><td>0.100</td><td>10.0%</td><td>5</td><td>16.7%</td></tr>
+            <tr><td>70</td><td>4</td><td>0.133</td><td>13.3%</td><td>9</td><td>30.0%</td></tr>
+            <tr><td>71</td><td>4</td><td>0.133</td><td>13.3%</td><td>13</td><td>43.3%</td></tr>
+            <tr><td>72</td><td>4</td><td>0.133</td><td>13.3%</td><td>17</td><td>56.7%</td></tr>
+            <tr><td>73</td><td>3</td><td>0.100</td><td>10.0%</td><td>20</td><td>66.7%</td></tr>
+            <tr><td>74</td><td>4</td><td>0.133</td><td>13.3%</td><td>24</td><td>80.0%</td></tr>
+            <tr><td>75</td><td>3</td><td>0.100</td><td>10.0%</td><td>27</td><td>90.0%</td></tr>
+            <tr><td>76</td><td>2</td><td>0.067</td><td>6.7%</td><td>29</td><td>96.7%</td></tr>
+            <tr><td>77</td><td>1</td><td>0.033</td><td>3.3%</td><td>30</td><td>100.0%</td></tr>
+        </tbody>
+    </table>
+
+    <li>
+        (1.0 puntos) Resuma en una tabla analítica los valores de las medidas estadísticas.
+    </li>
+    <table>
+        <thead>
+            <tr>
+                <th>Medida</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Media ($\bar{x}$)</td><td>72.13</td></tr>
+            <tr><td>Mediana ($Me$)</td><td>72.0</td></tr>
+            <tr><td>Moda ($Mo$)</td><td>70, 71, 72, 74 (Multimodal)</td></tr>
+            <tr><td>Cuartil 1 ($Q_1$)</td><td>70.0</td></tr>
+            <tr><td>Cuartil 3 ($Q_3$)</td><td>74.0</td></tr>
+            <tr><td>Rango ($R$)</td><td>9.0</td></tr>
+            <tr><td>Varianza muestral ($s^2$)</td><td>6.8</td></tr>
+            <tr><td>Desviación estándar ($s$)</td><td>2.61</td></tr>
+            <tr><td>Coeficiente de variación ($CV$)</td><td>3.63%</td></tr>
+        </tbody>
+    </table>
+
+    <li>
+        (0.5 puntos) Construya un esquema o representación del Gráfico de caja y bigotes (Boxplot).
+    </li>
+    <div id="boxplot"></div>
+
+    <li>
+        (0.5 puntos) Responda justificando analíticamente:
+        <ul>
+            <li>Respecto a la homogeneidad del conjunto, ¿el conjunto se considera homogéneo? R/Es homogéneo</li>
+            <li>Analizando la asimetría a partir de la relación entre la media y la mediana... R/Está sesgada a la derecha</li>
+        </ul>
+    </li>
+</ol>
+
+</body>
+<script>
+    const data = [68, 72, 75, 70, 69, 74, 71, 73, 76, 72, 70, 71, 75, 69, 74, 77, 68, 73, 70, 72, 74, 71, 75, 69, 73, 72, 70, 76, 71, 74];
+    const boxData = [{ x: data, type: 'box', name: 'Muestra', marker: { color: '#4a54e1' } }];
+    const layout = { title: 'Diagrama de Caja (Boxplot)', xaxis: { title: 'Valores (X)' }, margin: { t: 40, b: 40, l: 40, r: 40 } };
+    const config = { responsive: true };
+    
+    Plotly.newPlot('boxplot', boxData, layout, config);
+</script>
+</html>
