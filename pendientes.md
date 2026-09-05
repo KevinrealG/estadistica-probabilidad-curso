@@ -1,6 +1,6 @@
 Bueno para los cursos de estadistica me queda pendiente:
 1. Grabar videos
-    3. Semana 4: Medidas de Dispersión.  animaciones manim y audio de videos.
+    3. 
     4. Dibujar diagrama de box plot,
     5. Explicando como interpretar el diagrama de boxplot.
     5. Video de Sabermetría.   
@@ -9,9 +9,7 @@ Bueno para los cursos de estadistica me queda pendiente:
     - Grupo 2.
     - Grupo 3.
     - Grupo 4.
-3. Preparar la semana 3 de estadistica.
-    4. Actualizar savio
-4. Preparar la semana 4 de estadistica
+4. Preparar la semana  de estadistica
     1. Estructuras
     2. Diapositivas
     3. Nuevo notebook Variables numericas y bivariado.
