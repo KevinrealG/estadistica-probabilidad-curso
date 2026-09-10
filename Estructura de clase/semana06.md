@@ -1,600 +1,256 @@
-- Explicación con datos Agrupados dinámica
-    
-    ---
-    
-    # Actividad: **El Mercado de Datos**
-    
-    ⏱ Duración: **25–30 minutos**
-    
-    👥 25 estudiantes
-    
-    🎯 Objetivo: comprender **distribución, media, mediana, variabilidad, histogramas y boxplot**
-    
-    ---
-    
-    # 1. Historia (gancho – 1 minuto)
-    
-    Diles:
-    
-    > Hoy vamos a simular un **mercado real**.
-    > 
-    
-    Imaginen que todos ustedes son **freelancers que venden una hora de tutoría en estadística**.
-    
-    Cada uno debe decidir:
-    
-    **¿Cuánto cobraría por una hora de tutoría?**
-    
-    Pero el mercado tiene una regla:
-    
-    > Debe ser un valor entre **5 y 50 dólares**.
-    > 
-    
-    Esto crea **variabilidad natural**.
-    
-    ---
-    
-    # 2. Generar los datos (3 minutos)
-    
-    Cada estudiante escribe en un papel:
-    
-    💰 **Precio de su tutoría**
-    
-    Ejemplos:
-    
-    8
-    
-    12
-    
-    15
-    
-    20
-    
-    25
-    
-    40
-    
-    Recoge los valores en el tablero.
-    
-    Obtendrás **25 datos reales generados por la clase**.
-    
-    ---
-    
-    # 3. Primera observación (2 minutos)
-    
-    Preguntas al grupo:
-    
-    > Mirando estos números… ¿qué pueden decir del mercado?
-    > 
-    
-    Posibles respuestas:
-    
-    - hay precios muy diferentes
-    - algunos muy altos
-    - otros baratos
-    
-    Aquí introduces:
-    
-    **distribución de datos**
-    
-    ---
-    
-    # 4. Construcción rápida del histograma (5 minutos)
-    
-    Creas intervalos:
-    
-    Intervalo
-    
-    ---
-    
-    5–10
-    
-    ---
-    
-    10–15
-    
-    ---
-    
-    15–20
-    
-    ---
-    
-    20–30
-    
-    ---
-    
-    30–40
-    
-    ---
-    
-    40–50
-    
-    ---
-    
-    Ahora haces algo poderoso:
-    
-    Cada estudiante **se para en el intervalo correspondiente a su precio**.
-    
-    En **30 segundos aparece un histograma humano**.
-    
-    ---
-    
-    # 5. Discusión (5 minutos)
-    
-    Preguntas:
-    
-    ### 1️⃣ ¿Dónde está la mayor concentración de precios?
-    
-    Aquí aparece la **moda visual**.
-    
-    ---
-    
-    ### 2️⃣ ¿Qué representa el precio típico del mercado?
-    
-    Introduces:
-    
-    - **media**
-    - **mediana**
-    
-    ---
-    
-    ### 3️⃣ ¿Hay precios extremos?
-    
-    Ejemplo:
-    
-    - alguien dice **50**
-    
-    Hablas de **outliers**.
-    
-    ---
-    
-    # 6. Construcción del boxplot (8 minutos)
-    
-    Ahora haces algo que sorprende mucho.
-    
-    Pides a los estudiantes **ordenarse de menor a mayor precio** en una fila.
-    
-    La fila representa **la distribución ordenada**.
-    
-    Luego marcas:
-    
-    - mínimo
-    - Q1
-    - mediana
-    - Q3
-    - máximo
-    
-    Literalmente **construyes el boxplot humano**.
-    
-    Ejemplo visual:
-    
-    ```
-    min   Q1   mediana   Q3   max
-     |----|-----|-------|----|
-    ```
-    
-    ---
-    
-    # 7. Pregunta tipo ciencia de datos
-    
-    Ahora dices:
-    
-    > Si una empresa quiere contratar tutores, ¿qué precio debería pagar?
-    > 
-    
-    Discusión:
-    
-    - media
-    - mediana
-    - mercado
-    
-    ---
-    
-    # 8. Insight final
-    
-    Explicas:
-    
-    Esto mismo hacen empresas como:
-    
-    - Uber
-    - Airbnb
-    - Amazon
-    
-    Analizan **distribuciones de precios** para tomar decisiones.
-    
-    ---
-    
-    # Qué conceptos aprendieron sin darse cuenta
-    
-    ✔ distribución de datos
-    
-    ✔ frecuencia
-    
-    ✔ histograma
-    
-    ✔ media
-    
-    ✔ mediana
-    
-    ✔ cuartiles
-    
-    ✔ boxplot
-    
-    ✔ variabilidad
-    
-    ✔ outliers
-    
-    ---
-    
-    # Por qué esta actividad es poderosa
-    
-    Porque:
-    
-    - los datos **no vienen de un libro**
-    - **ellos generan la distribución**
-    - el histograma **aparece en el salón**
-    - el boxplot **se construye con personas**
-    
-    ---
-    
-    # Tip avanzado (muy bueno)
-    
-    Al final pregunta:
-    
-    > ¿Qué pasaría si llega alguien que cobra **200 dólares**?
-    > 
-    
-    Aquí introduces:
-    
-    - outliers
-    - sesgo
-    - robustez de la mediana
-    
-    ---
-    
-    Si quieres, puedo también darte **una actividad todavía más impresionante llamada**:
-    
-    🔥 **"La conspiración de la media"**
-    
-    donde los estudiantes descubren **por qué la media puede mentir**, algo que genera discusiones increíbles en clase.
-    
-- ejercicio
-    
-    
-    ---
-    
-    # 📊 Dataset de 30 precios de alojamientos Airbnb en Cartagena (en USD)
-    
-    | Nº | Precio |  |
-    | --- | --- | --- |
-    | 1 | 45 |  |
-    | 2 | 52 |  |
-    | 3 | 55 |  |
-    | 4 | 60 |  |
-    | 5 | 65 |  |
-    | 6 | 68 |  |
-    | 7 | 70 |  |
-    | 8 | 72 |  |
-    | 9 | 75 |  |
-    | 10 | 80 |  |
-    | 11 | 85 |  |
-    | 12 | 90 |  |
-    | 13 | 95 |  |
-    | 14 | 100 |  |
-    | 15 | 105 |  |
-    | 16 | 110 |  |
-    | 17 | 120 |  |
-    | 18 | 125 |  |
-    | 19 | 130 |  |
-    | 20 | 140 |  |
-    | 21 | 150 |  |
-    | 22 | 160 |  |
-    | 23 | 170 |  |
-    | 24 | 180 |  |
-    | 25 | 200 |  |
-    | 26 | 210 |  |
-    | 27 | 230 |  |
-    | 28 | 250 |  |
-    | 29 | 310 |  |
-    | 30 | 480 |  |
-    
-    ---
-    
-- Taller en grupo
-    
-    Aquí tienes una **estructura clara para la primera entrega del proyecto**, alineada con lo que verán en el módulo y pensada para que los estudiantes **avancen gradualmente hacia el análisis completo**.
-    
-    ---
-    
-    # Proyecto del Módulo: Análisis de Datos con Herramientas Digitales
-    
-    ## Contexto
-    
-    El objetivo de este proyecto es que los estudiantes **apliquen conceptos de estadística descriptiva y análisis de datos** utilizando **conjuntos de datos reales** provenientes de repositorios abiertos.
-    
-    Cada grupo deberá seleccionar un dataset y desarrollar un **análisis exploratorio utilizando herramientas digitales** como:
-    
-    - Excel
-    - Power BI
-    - Python (Colab, Jupyter)
-    - R
-    - Tableau
-    - Google Sheets
-    
-    Repositorios recomendados:
-    
-    - Kaggle
-    - Datos Abiertos Colombia
-    - Data.gov
-    - World Bank Data
-    
-    ---
-    
-    # Entregas del Proyecto
-    
-    El proyecto tendrá **dos entregas**.
-    
-    ## Entrega 1 (Exploración inicial del dataset)
-    
-    Esta entrega busca que el grupo **comprenda el dataset y realice un análisis exploratorio básico**.
-    
-    ### 1. Selección del dataset
-    
-    El grupo debe seleccionar un dataset que cumpla con:
-    
-    - mínimo **200 observaciones**
-    - mínimo **5 variables**
-    - al menos **2 variables numéricas**
-    - al menos **1 variable categórica**
-    
-    Debe incluir:
-    
-    - nombre del dataset
-    - fuente (link)
-    - breve descripción del contexto del dataset
-    
-    ---
-    
-    ### 2. Descripción del dataset
-    
-    Responder:
-    
-    - ¿Qué fenómeno describe el dataset?
-    - ¿Qué representa cada observación?
-    - ¿Qué representa cada variable?
-    
-    Presentar una **tabla de variables**:
-    
-    | Variable | Tipo | Descripción |
-    | --- | --- | --- |
-    | edad | numérica | edad de la persona |
-    | ingreso | numérica | ingreso mensual |
-    | género | categórica | masculino/femenino |
-    
-    ---
-    
-    ### 3. Limpieza básica de datos
-    
-    Identificar:
-    
-    - valores faltantes
-    - valores atípicos evidentes
-    - errores de registro (si existen)
-    
-    Explicar **cómo se manejaron**.
-    
-    ---
-    
-    ### 4. Análisis Univariado
-    
-    Para **variables numéricas**:
-    
-    Calcular:
-    
-    - media
-    - mediana
-    - desviación estándar
-    - mínimo
-    - máximo
-    
-    Incluir gráficos como:
-    
-    - histograma
-    - boxplot
-    
-    Para **variables categóricas**:
-    
-    - tabla de frecuencia
-    - gráfico de barras o pastel
-    
-    ---
-    
-    ### 5. Preguntas iniciales de investigación
-    
-    El grupo debe proponer **3 preguntas que podrían explorarse con el dataset**.
-    
-    Ejemplos:
-    
-    - ¿Existe relación entre ingreso y nivel educativo?
-    - ¿Qué variables están asociadas con mayor gasto?
-    - ¿Qué patrones aparecen en la distribución de edades?
-    
-    ---
-    
-    # Formato de la entrega
-    
-    Documento de **4 a 6 páginas** que incluya:
-    
-    1. Introducción
-    2. Descripción del dataset
-    3. Tabla de variables
-    4. Limpieza de datos
-    5. Análisis univariado
-    6. Preguntas de investigación
-    
-    ---
-    
-    # Entrega 2 (análisis completo)
-    
-    En la segunda entrega deberán desarrollar:
-    
-    ### Análisis bivariado
-    
-    - tablas cruzadas
-    - scatter plots
-    - comparaciones de grupos
-    
-    ### Análisis multivariado
-    
-    - análisis de múltiples variables simultáneamente
-    
-    ### Correlación
-    
-    - matriz de correlación
-    - interpretación
-    
-    ### Regresión
-    
-    - modelo simple o múltiple
-    - interpretación de coeficientes
-    
-    ---
-    
-    # Criterios de evaluación (primera entrega)
-    
-    | Criterio | Peso |
-    | --- | --- |
-    | Selección adecuada del dataset | 20% |
-    | Descripción y comprensión del dataset | 20% |
-    | Análisis univariado | 30% |
-    | Visualizaciones | 20% |
-    | Claridad y presentación | 10% |
-    
-    ---
-    
-    # Recomendación para los estudiantes
-    
-    Seleccionar datasets sobre temas que les interesen, por ejemplo:
-    
-    - deportes
-    - economía
-    - educación
-    - salud
-    - transporte
-    - medio ambiente
-    
-    ---
-    
-    Si quieres, también puedo darte:
-    
-    - **10 datasets muy buenos de Kaggle para estudiantes de estadística** (probados en clase).
-    - **una rúbrica más robusta tipo universidad (mucho mejor para evaluar)**.
-    - **una plantilla de informe que los estudiantes solo tengan que llenar**.
-    
-    ### 3. Limpieza básica de datos
-    
-    Identificar:
-    
-    - valores faltantes
-    - valores atípicos evidentes
-    - errores de registro (si existen)
-    
-    Explicar **cómo se manejaron**.
-    
-    ---
-    
-    ### 4. Análisis Univariado
-    
-    Para **variables numéricas**:
-    
-    Calcular:
-    
-    - media
-    - mediana
-    - desviación estándar
-    - mínimo
-    - máximo
-    
-    Incluir gráficos como:
-    
-    - histograma
-    - boxplot
-    
-    Para **variables categóricas**:
-    
-    - tabla de frecuencia
-    - gráfico de barras o pastel
-    
-    ---
-    
-    ### 5. Preguntas iniciales de investigación
-    
-    El grupo debe proponer **3 preguntas que podrían explorarse con el dataset**.
-    
-    Ejemplos:
-    
-    - ¿Existe relación entre ingreso y nivel educativo?
-    - ¿Qué variables están asociadas con mayor gasto?
-    - ¿Qué patrones aparecen en la distribución de edades?
-    
-    ---
-    
-    # Formato de la entrega
-    
-    Documento de **4 a 6 páginas** que incluya:
-    
-    1. Introducción
-    2. Descripción del dataset
-    3. Tabla de variables
-    4. Limpieza de datos
-    5. Análisis univariado
-    6. Preguntas de investigación
-    
-    ---
-    
-    # Entrega 2 (análisis completo)
-    
-    En la segunda entrega deberán desarrollar:
-    
-    ### Análisis bivariado
-    
-    - tablas cruzadas
-    - scatter plots
-    - comparaciones de grupos
-    
-    ### Análisis multivariado
-    
-    - análisis de múltiples variables simultáneamente
-    
-    ### Correlación
-    
-    - matriz de correlación
-    - interpretación
-    
-    ### Regresión
-    
-    - modelo simple o múltiple
-    - interpretación de coeficientes
-    
-    ---
-    
-    # Criterios de evaluación (primera entrega)
-    
-    | Criterio | Peso |
-    | --- | --- |
-    | Selección adecuada del dataset | 20% |
-    | Descripción y comprensión del dataset | 20% |
-    | Análisis univariado | 30% |
-    | Visualizaciones | 20% |
-    | Claridad y presentación | 10% |
-- quiz repaso
-    
-    Estadística Descriptiva Univariada : Rellenar formulario
-    
-    https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUM0VFSkE5WkQ5SkZWWlRaWUdHUUZTWVFJMi4u
-    
-- quiz datos agrupados
-    
-    https://forms.cloud.microsoft/Pages/DesignPageV2.aspx?origin=NeoPortalPage&lang=es&subpage=design&collectionid=7m9bsq7hh8389j7lte&id=UJ5k6tInGEOcuS_P_hb9Qd-Io4btELhJiiN7iCSipwlUQThIRlFWRkdJNUwwQlFYSkVWN0RYTjNNNi4u
-    
-- calificar parciales
+### 📋 Información General del Eje (Bivariado: Relaciones y Dependencia)
+
+* **Curso:** Estadística y Probabilidad (CBAS-E01A).
+
+
+* **Duración:** 4 sesiones de 50 minutos cada una, modalidad presencial.
+* **Temática:** Análisis bivariado preliminar (Cualitativa vs. Cuantitativa), Diagramas de dispersión y Covarianza.
+
+---
+
+### 📊 Clase N°1: Análisis Bivariado (Cualitativa vs. Cuantitativa)
+```python
+import pandas as pd
+import io
+
+data = """CURSO	EXAMEN1
+ESTADÍSTICA Y PROBABILIDAD	3.4
+ESTADÍSTICA Y PROBABILIDAD	4.3
+ESTADÍSTICA Y PROBABILIDAD	1.5
+ESTADÍSTICA Y PROBABILIDAD	2.3
+ESTADÍSTICA Y PROBABILIDAD	3.5
+ESTADÍSTICA Y PROBABILIDAD	4.3
+ESTADÍSTICA Y PROBABILIDAD	3.6
+ESTADÍSTICA Y PROBABILIDAD	3.5
+ESTADÍSTICA Y PROBABILIDAD	3.2
+ESTADÍSTICA Y PROBABILIDAD	3.3
+ESTADÍSTICA Y PROBABILIDAD	2.9
+ESTADÍSTICA Y PROBABILIDAD	4.1
+ESTADÍSTICA Y PROBABILIDAD	3.0
+ESTADÍSTICA Y PROBABILIDAD	4.1
+ESTADÍSTICA Y PROBABILIDAD	3.3
+ESTADÍSTICA Y PROBABILIDAD	4.2
+ESTADÍSTICA Y PROBABILIDAD	3.8
+ESTADÍSTICA Y PROBABILIDAD	2.5
+ESTADÍSTICA Y PROBABILIDAD	4.1
+ESTADÍSTICA Y PROBABILIDAD	4.1
+ESTADÍSTICA Y PROBABILIDAD	1.8
+ESTADÍSTICA Y PROBABILIDAD	5.0
+ESTADÍSTICA Y PROBABILIDAD	3.2
+ESTADÍSTICA Y PROBABILIDAD	3.9
+ESTADÍSTICA Y PROBABILIDAD	2.4
+ESTADÍSTICA Y PROBABILIDAD	2.9
+ESTADÍSTICA Y PROBABILIDAD	4.0
+ESTADÍSTICA Y PROBABILIDAD	3.7
+ESTADÍSTICA Y PROBABILIDAD	3.7
+ESTADÍSTICA Y PROBABILIDAD	3.7
+ESTADÍSTICA Y PROBABILIDAD	3.8
+ESTADÍSTICA Y PROBABILIDAD	2.6
+ESTADÍSTICA Y PROBABILIDAD	2.7
+ESTADÍSTICA Y PROBABILIDAD	2.0
+ESTADÍSTICA Y PROBABILIDAD	3.5
+ESTADÍSTICA Y PROBABILIDAD	3.1
+ESTADÍSTICA Y PROBABILIDAD	4.7
+ESTADÍSTICA Y PROBABILIDAD	2.7
+ESTADÍSTICA Y PROBABILIDAD	4.3
+ESTADÍSTICA Y PROBABILIDAD	4.3
+ESTADÍSTICA INFERENCIAL	1.5
+ESTADÍSTICA INFERENCIAL	3.7
+ESTADÍSTICA INFERENCIAL	5.0
+ESTADÍSTICA INFERENCIAL	5.0
+ESTADÍSTICA INFERENCIAL	2.0
+ESTADÍSTICA INFERENCIAL	3.8
+ESTADÍSTICA INFERENCIAL	4.7
+ESTADÍSTICA INFERENCIAL	3.6
+ESTADÍSTICA INFERENCIAL	2.1
+ESTADÍSTICA INFERENCIAL	5.0
+ESTADÍSTICA INFERENCIAL	2.3
+ESTADÍSTICA INFERENCIAL	5.0
+ESTADÍSTICA INFERENCIAL	2.6
+ESTADÍSTICA INFERENCIAL	3.6
+ESTADÍSTICA INFERENCIAL	4.0
+ESTADÍSTICA INFERENCIAL	4.2
+ESTADÍSTICA INFERENCIAL	2.5
+ESTADÍSTICA INFERENCIAL	4.3
+ESTADÍSTICA INFERENCIAL	2.5
+ESTADISTICA II	2.4
+ESTADISTICA II	2.7
+ESTADISTICA II	3.3
+ESTADISTICA II	4.4
+ESTADISTICA II	2.5
+ESTADISTICA II	3.1
+ESTADISTICA II	2.9
+ESTADISTICA II	1.5
+ESTADISTICA II	2.9
+ESTADISTICA II	1.5
+ESTADÍSTICA I	3.3
+ESTADÍSTICA I	1.6
+ESTADÍSTICA I	2.3
+ESTADÍSTICA I	2.1
+ESTADÍSTICA I	3.4
+ESTADÍSTICA I	2.0
+ESTADÍSTICA I	2.7
+ESTADÍSTICA I	3.5
+ESTADÍSTICA I	2.3
+ESTADÍSTICA I	2.6
+ESTADÍSTICA I	2.5
+ESTADÍSTICA I	2.3
+ESTADÍSTICA I	2.9
+ESTADÍSTICA I	2.8
+ESTADÍSTICA I	4.3
+ESTADÍSTICA I	3.9
+ESTADÍSTICA I	2.0
+ESTADÍSTICA I	3.8
+ESTADÍSTICA I	1.2
+ESTADÍSTICA I	3.2"""
+
+df = pd.read_csv(io.StringIO(data), sep='\t')
+summary = df.groupby('CURSO')['EXAMEN1'].agg(['count', 'mean', 'median', 'min', 'max', 'std']).round(2)
+print(summary)
+
+
+```
+
+```text
+                            count  mean  median  min  max   std
+CURSO                                                          
+ESTADISTICA II                 10  2.72    2.80  1.5  4.4  0.85
+ESTADÍSTICA I                  20  2.74    2.65  1.2  4.3  0.80
+ESTADÍSTICA INFERENCIAL        19  3.55    3.70  1.5  5.0  1.16
+ESTADÍSTICA Y PROBABILIDAD     40  3.42    3.50  1.5  5.0  0.80
+
+
+```
+
+Aquí tienes el diseño instruccional detallado para la primera sesión del análisis bivariado, estructurado rigurosamente bajo la metodología de aprendizaje activo.
+
+He procesado previamente tu conjunto de datos para garantizar que los tiempos de la actividad en clase sean exactos. Los resultados reales (que tus estudiantes descubrirán) son:
+
+* **Estadística Inferencial:** Media 3.55 (Alta dispersión, $s = 1.16$)
+* **Estadística y Probabilidad:** Media 3.42 (Baja dispersión, $s = 0.80$)
+* **Estadística I:** Media 2.74 ($s = 0.80$)
+* **Estadística II:** Media 2.72 ($s = 0.85$)
+
+---
+
+### 📋 Información General
+
+* **Tema:** Análisis Bivariado (Variable Cualitativa vs. Variable Cuantitativa).
+* **Curso:** Estadística y Probabilidad.
+* **Competencia:** Comparar el comportamiento y distribución de una variable cuantitativa segmentada por categorías para identificar diferencias estructurales.
+* **Duración:** 50 minutos.
+* **Modalidad:** Presencial (Aula tradicional o Aula de Informática).
+* **Software sugerido:** Excel o Python (Pandas).
+
+---
+
+### ⏱️ Estructura de la Sesión (50 Minutos)
+
+**1. Apertura (7 min) - *El Marcador del Rendimiento***
+
+* **Reto Inicial:** Inicia la sesión proyectando un tablero de puntuación vacío. Plantea el siguiente escenario gerencial: *"La universidad va a otorgar becas a los mejores estudiantes para un semillero de investigación avanzada. Si tuvieran que elegir un solo curso como 'cantera' de talentos, ¿a cuál de los cuatro cursos de estadística irían a reclutar?"*.
+* **Preguntas Detonantes:**
+1. ¿Es estadísticamente justo comparar un 3.5 obtenido en 'Estadística I' con un 3.5 en 'Estadística Inferencial'?
+2. ¿El éxito en un examen depende netamente de la preparación individual o existe un "efecto de curso"?
+
+
+
+**2. Exploración (5 min) - *Hipótesis Estudiantil***
+
+* Muestra brevemente en pantalla la imagen **image_d1aba5.png** para que los estudiantes se enfrenten visualmente a los datos crudos.
+* Pide que, a simple vista y sin hacer cálculos, voten a mano alzada cuál curso creen que tuvo el desempeño más alto y cuál el más crítico. Registra la hipótesis ganadora en el tablero.
+
+**3. Desarrollo Conceptual (8 min) - *Teoría Mínima***
+
+* **Concepto Core:** Explica la **Segmentación de Datos** (Data Slicing). Define cómo una variable cualitativa (el nombre del curso) actúa como un filtro o "molde" que nos permite agrupar y analizar una variable cuantitativa (la nota del examen).
+* **Pregunta de Verificación:** *"Si en un proyecto de grado queremos evaluar si el salario de los egresados depende de su género, ¿cuál variable es la que segmenta y cuál es la que se mide?"*
+
+**4. Actividad Guiada y Colaborativa (15 min) - *Desmintiendo la Intuición***
+
+* Divide el salón en cuatro grandes grupos. Asigna a cada grupo un curso específico del set de datos.
+* **La Misión:** Utilizando Excel (filtros y función `PROMEDIO` / `DESVEST.M`) o un script rápido de Python con la función `groupby()`, cada equipo debe calcular la **Media** y la **Desviación Estándar** de su curso asignado.
+* Pide a un representante de cada equipo que pase al frente y anote sus resultados en el "Marcador" vacío de la pizarra.
+
+**5. Aplicación (7 min) - *El Análisis del Cuarto Bate***
+
+* Con los resultados reales revelados, lanza un nuevo reto interpretativo.
+* **El dilema:** *"Noten que 'Estadística Inferencial' tiene el promedio más alto (3.55), pero también el rendimiento más errático y caótico de todos ($s = 1.16$, notas desde 1.5 hasta 5.0). Por otro lado, 'Estadística y Probabilidad' es sumamente constante (media 3.42, $s = 0.80$)."*
+* **Discusión:** *"Como directores de programa, ¿qué escenario les preocupa más: un curso de promedios altos pero caótico (Inferencial), o un curso de promedios bajos pero donde todos rinden exactamente igual (Estadística I)?"*
+
+**6. Cierre y Reflexión (5 min) - *Metacognición***
+
+* **Pregunta de reflexión proyectada antes de salir:** *"Si un analista perezoso solo hubiera calculado el promedio global de los 89 estudiantes juntos (que es de 3.24), ¿qué patrón crítico de esta universidad nos habría ocultado?"*
+
+**7. Actividad Final de Consolidación (3 min) - *Ticket de Salida***
+
+* Para evaluar el aprendizaje de la sesión, solicita que escriban en un papel (o mediante un formulario corto en Teams) lo siguiente:
+* *Redacta una conclusión de máximo 2 líneas explicando si tu intuición inicial al ver los datos crudos coincidió con la realidad matemática descubierta hoy.*
+
+* **1. Información General:**
+* **Objetivo:** Comparar el comportamiento de una variable numérica a través de diferentes categorías (ej. Salario vs. Género o Programa Académico).
+
+
+* **2. Estructura de la Sesión (50 min):**
+* **Apertura (8 min):** Proyectar dos grupos de datos de notas de la UTB divididos por facultad. Pregunta: *"¿Tienen el mismo rendimiento académico todas las ingenierías por igual o hay diferencias estructurales?"*.
+* **Exploración (7 min):** Discusión en parejas sobre cómo comparar visualmente dos distribuciones numéricas separadas por categorías.
+* **Desarrollo Conceptual (10 min):** Introducción al cruce de variables (Cualitativa + Cuantitativa). Uso de estadísticos condicionados por grupo (Media y Mediana por categoría).
+* **Actividad Guiada (15 min):** En hojas de cálculo o calculadora, agrupan un subconjunto de datos para hallar la media de una variable numérica filtrada por categoría.
+* **Aplicación (5 min):** Plantear una hipótesis de negocio (ej. *"¿El estrato socioeconómico afecta el promedio acumulado?"*).
+* **Cierre y Consolidación (5 min):** Pregunta de salida digital (Form): *"¿Por qué comparar solo la media global de la universidad oculta las diferencias reales entre facultades?"*.
+
+
+
+---
+
+### 📈 Clase N°2: Diagramas de Dispersión (Dos Variables Cuantitativas)
+
+* **1. Información General:**
+* **Objetivo:** Visualizar y determinar gráficamente la relación o tendencia entre dos variables cuantitativas continuas.
+
+
+* **2. Estructura de la Sesión (50 min):**
+* **Apertura (8 min):** Mostrar un gráfico de Estatura vs. Peso sin línea de tendencia. Pregunta: *"Si una persona es más alta, ¿pesa necesariamente más? ¿Cómo podemos ver esa pareja de datos en un plano cartesiano?"*.
+* **Exploración (7 min):** Trazar puntos en la pizarra de forma intuitiva a partir de 5 pares de datos dictados por el salón.
+* **Desarrollo Conceptual (10 min):** Anatomía del Diagrama de Dispersión (Eje X, Eje Y, pares ordenados $(x_i, y_i)$). Tipos de asociación: lineal positiva, lineal negativa y nula.
+* **Actividad Guiada (15 min):** Construcción manual rápida de un diagrama de dispersión en papel milimetrado o Excel usando 15 registros de la base de datos UTB (ej. Horas de estudio vs. Calificación).
+* **Aplicación (5 min):** Analizar si existe un clúster o patrón atípico visual en el gráfico.
+* **Cierre y Consolidación (5 min):** Miniquiz (3 preguntas de opción múltiple en pantalla): Identificar el tipo de correlación visual a partir de imágenes de scatter plots.
+
+
+
+---
+
+### 📉 Clase N°3: Covarianza (Midiendo la Variación Conjunta)
+
+* **1. Información General:**
+* **Objetivo:** Calcular e interpretar analíticamente la covarianza para determinar si dos variables crecen o decrecen juntas.
+
+
+* **2. Estructura de la Sesión (50 min):**
+* **Apertura (8 min):** Retomar el gráfico de dispersión anterior. *"Vimos que los puntos suben juntos, pero ¿cómo le ponemos un número a esa 'fuerza' de compañía?"*.
+* **Exploración (7 min):** Analizar el producto de las desviaciones respecto a la media $(x_i - \bar{x})(y_i - \bar{y})$ en cuadrantes del plano cartesiano.
+* **Desarrollo Conceptual (10 min):** Fórmula de la Covarianza muestral ($S_{xy}$). Significado de su signo: Positivo (crecen juntas), Negativo (inversas), Cero (independencia lineal aparente). Limitación de la escala.
+* **Actividad Guiada (15 min):** Resolución en parejas de una tabla guiada de 5 pares de datos para calcular paso a paso la covarianza.
+* **Aplicación (5 min):** Discutir por qué la covarianza por sí sola es difícil de interpretar sin conocer las unidades de medida originales de las variables.
+* **Cierre y Consolidación (5 min):** Pregunta de reflexión escrita: *"Si cambiamos la unidad de medida de los salarios de millones a pesos, ¿qué le ocurre al valor numérico de la covarianza?"*.
+
+
+
+---
+
+### 🧪 Clase N°4: Laboratorio 5 - Análisis Bivariado Inicial y Retroalimentación
+
+* **1. Información General:**
+* **Objetivo:** Ejecutar la fase de análisis bivariado preliminar (Scatter plots y Covarianza) utilizando software especializado y recibir retroalimentación del proceso formativo previo.
+
+
+* **2. Estructura de la Sesión (50 min):**
+* **Apertura (5 min):** Entrega de notas / retroalimentación general de los aciertos y errores comunes del primer bloque de evaluaciones de corte.
+* **Exploración y Configuración (5 min):** Apertura de herramientas digitales (Excel, Google Colab o Statgraphics) con el dataset institucional.
+* **Actividad Práctica / Laboratorio (30 min):**
+1. Generar diagramas de dispersión cruzando dos variables cuantitativas de la base UTB.
+2. Calcular la covarianza mediante funciones de software (`COVARIANCE.S` en Excel o `df.cov()` en Python).
+3. Redactar dos conclusiones descriptivas sobre la relación hallada.
+
+
+* **Cierre y Consolidación (10 min):** Subida del entregable corto a MS Teams y cierre motivacional del inicio del segundo bloque temático.
