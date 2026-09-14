@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Línea de Tiempo - Estadística</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .timeline { list-style: none; padding: 0; border-left: 3px solid #0056b3; margin-left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 20px; padding-left: 25px; }
+        .timeline-item::before { content: ""; position: absolute; left: -11px; top: 5px; width: 15px; height: 15px; background-color: #0056b3; border-radius: 50%; border: 2px solid white; }
+        .timeline-title { font-weight: bold; color: #333; font-size: 1.1em; cursor: pointer; }
+        .timeline-title:hover { color: #0056b3; }
+        .timeline-content { display: none; margin-top: 10px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #0056b3; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h2>Etapas de un Estudio Estadístico</h2>
+
+    <ul class="timeline">
+        <li class="timeline-item">
+            <div class="timeline-title" onclick="toggleContent(this.parentElement)">1. Planteamiento del problema</div>
+            <div class="timeline-content">
+                Consiste en definir el objetivo de la investigación y precisar el universo o población.
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-title" onclick="toggleContent(this.parentElement)">2. Diseño de Experimentos / Recogida de información</div>
+            <div class="timeline-content">
+                Planificar la recolección de los datos necesarios y suficientes. Consiste en recolectar los datos relacionados al problema de investigación.
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-title" onclick="toggleContent(this.parentElement)">3. Estadística Descriptiva (Análisis)</div>
+            <div class="timeline-content">
+                Organizar y resumir los datos disponibles para extraer la información relevante.
+                
+                <!-- Sub-línea de tiempo para Estadística Descriptiva -->
+                <ul class="timeline" style="margin-top: 15px;">
+                    <li class="timeline-item">
+                        <div class="timeline-title" onclick="toggleContent(this.parentElement)">3.1. Recolección y organización</div>
+                        <div class="timeline-content">Estructuración de datos en tablas de frecuencia.</div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-title" onclick="toggleContent(this.parentElement)">3.2. Análisis</div>
+                        <div class="timeline-content">
+                            
+                            <!-- Sub-línea para Tipos de Análisis -->
+                            <ul class="timeline" style="margin-top: 15px;">
+                                <li class="timeline-item">
+                                    <div class="timeline-title" onclick="toggleContent(this.parentElement)">3.2.1. Univariado</div>
+                                    <div class="timeline-content">
+                                        
+                                        <!-- Sub-línea para Tipos Univariados -->
+                                        <ul class="timeline" style="margin-top: 15px;">
+                                            <li class="timeline-item">
+                                                <div class="timeline-title" onclick="toggleContent(this.parentElement)">Categórica</div>
+                                                <div class="timeline-content">Conteo de frecuencias, moda, gráficos de barras o pastel.</div>
+                                            </li>
+                                            <li class="timeline-item">
+                                                <div class="timeline-title" onclick="toggleContent(this.parentElement)">Numérica</div>
+                                                <div class="timeline-content">Medidas de tendencia central, dispersión, histogramas, boxplots.</div>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <div class="timeline-title" onclick="toggleContent(this.parentElement)">3.2.2. Bivariado</div>
+                                    <div class="timeline-content">Relación y comportamiento conjunto de dos variables (ej. diagramas de dispersión, correlación).</div>
+                                </li>
+                                <li class="timeline-item">
+                                    <div class="timeline-title" onclick="toggleContent(this.parentElement)">3.2.3. Multivariado</div>
+                                    <div class="timeline-content">Análisis simultáneo de tres o más variables.</div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-title" onclick="toggleContent(this.parentElement)">4. Probabilidad e Inferencia Estadística</div>
+            <div class="timeline-content">
+                Realizar inferencias (hipótesis) aplicables a todos los elementos de la población, basadas en una muestra, y medir en términos de probabilidad. Consiste en suponer un modelo para toda la población para obtener conclusiones generales.
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-title" onclick="toggleContent(this.parentElement)">5. Diagnóstico (Deducción de leyes)</div>
+            <div class="timeline-content">
+                Verificar la validez de los supuestos del modelo que nos han permitido interpretar los datos. Deducir las leyes que rigen esos fenómenos.
+            </div>
+        </li>
+    </ul>
+
+    <script>
+        function toggleContent(itemElement) {
+            // Encuentra el contenedor de contenido que es hijo directo del elemento clickeado
+            // Esto evita que se abran o cierren niveles padres al interactuar con subniveles
+            let content = Array.from(itemElement.children).find(el => el.classList.contains('timeline-content'));
+            
+            if (content) {
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Dispersión y Asociación Bivariada</title>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 1.8vw, 2rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            text-align: center;
+        }
+
+        /* --- Estilos de interactividad y tema oscuro --- */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme svg line {
+            stroke: #a0a0a0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: El Dilema de las Dos Variables -->
+        <div class="slide">
+            <h1>El Dilema de las Dos Variables</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p><strong>El Reto Visual:</strong> Analizamos datos reales de la comunidad UTB evaluando simultáneamente características numéricas continuas (Ej: Estatura vs. Peso).</p>
+                    </div>
+                    <ul style="margin-top: 20px;">
+                        <li>Si una persona es más alta, ¿pesa necesariamente más?</li>
+                        <li>¿Cómo podemos representar a 50 personas evaluando dos variables en un mismo plano?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Gráfico SVG limpio (Estatura vs Peso sin líneas) -->
+                    <svg viewBox="0 0 250 200" style="width: 100%; max-width: 320px;">
+                        <line x1="20" y1="180" x2="230" y2="180" stroke="var(--text-color)" stroke-width="2"/>
+                        <line x1="20" y1="20" x2="20" y2="180" stroke="var(--text-color)" stroke-width="2"/>
+                        <text x="220" y="195" font-size="12" fill="var(--text-color)">Estatura (X)</text>
+                        <text x="5" y="15" font-size="12" fill="var(--text-color)">Peso (Y)</text>
+                        <!-- Nube de puntos simulada -->
+                        <circle cx="45" cy="150" r="5" fill="var(--blue)"/>
+                        <circle cx="60" cy="130" r="5" fill="var(--blue)"/>
+                        <circle cx="75" cy="140" r="5" fill="var(--blue)"/>
+                        <circle cx="90" cy="110" r="5" fill="var(--blue)"/>
+                        <circle cx="110" cy="95" r="5" fill="var(--blue)"/>
+                        <circle cx="125" cy="100" r="5" fill="var(--blue)"/>
+                        <circle cx="145" cy="75" r="5" fill="var(--blue)"/>
+                        <circle cx="160" cy="65" r="5" fill="var(--blue)"/>
+                        <circle cx="185" cy="45" r="5" fill="var(--blue)"/>
+                        <circle cx="205" cy="35" r="5" fill="var(--blue)"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Anatomía del Diagrama de Dispersión -->
+        <div class="slide">
+            <h1>Anatomía del Diagrama de Dispersión</h1>
+            <p style="font-size: 1.2rem; margin-top: 0; color: #555;">Representación gráfica de pares ordenados $(x_i, y_i)$ en un sistema de coordenadas.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; margin-top: 15px;">
+                <!-- Asociación Positiva -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); padding: 20px;">
+                    <h3 style="color: var(--green); margin-top: 0;">Lineal Positiva</h3>
+                    <p style="font-size: 1.1rem; color: #555; margin-bottom: 5px;">Cuando $X$ aumenta, $Y$ también aumenta.</p>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 70px;">
+                        <line x1="10" y1="90" x2="140" y2="90" stroke="#ccc"/>
+                        <line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="30" cy="75" r="3" fill="var(--green)"/><circle cx="50" cy="65" r="3" fill="var(--green)"/><circle cx="70" cy="50" r="3" fill="var(--green)"/><circle cx="90" cy="40" r="3" fill="var(--green)"/><circle cx="110" cy="25" r="3" fill="var(--green)"/>
+                    </svg>
+                </div>
+                <!-- Asociación Negativa -->
+                <div class="matrix-card" style="border-top: 5px solid #d32f2f; padding: 20px;">
+                    <h3 style="color: #d32f2f; margin-top: 0;">Lineal Negativa</h3>
+                    <p style="font-size: 1.1rem; color: #555; margin-bottom: 5px;">Cuando $X$ aumenta, $Y$ disminuye.</p>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 70px;">
+                        <line x1="10" y1="90" x2="140" y2="90" stroke="#ccc"/>
+                        <line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="30" cy="25" r="3" fill="#d32f2f"/><circle cx="50" cy="35" r="3" fill="#d32f2f"/><circle cx="70" cy="55" r="3" fill="#d32f2f"/><circle cx="90" cy="65" r="3" fill="#d32f2f"/><circle cx="110" cy="80" r="3" fill="#d32f2f"/>
+                    </svg>
+                </div>
+                <!-- Asociación Nula -->
+                <div class="matrix-card" style="border-top: 5px solid #ff9800; padding: 20px;">
+                    <h3 style="color: #f57c00; margin-top: 0;">Nula o Inexistente</h3>
+                    <p style="font-size: 1.1rem; color: #555; margin-bottom: 5px;">Sin patrón o tendencia aparente.</p>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 70px;">
+                        <line x1="10" y1="90" x2="140" y2="90" stroke="#ccc"/>
+                        <line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="30" cy="50" r="3" fill="#ff9800"/><circle cx="50" cy="30" r="3" fill="#ff9800"/><circle cx="70" cy="70" r="3" fill="#ff9800"/><circle cx="90" cy="40" r="3" fill="#ff9800"/><circle cx="110" cy="60" r="3" fill="#ff9800"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Manos a los Datos -->
+        <div class="slide">
+            <h1>¡Manos a los Datos! (Reto 15)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-weight: bold; color: var(--blue);">Laboratorio en Parejas (15 min)</p>
+                        <p>Abran la base de datos institucional de la UTB en Excel o Google Colab desde MS Teams.</p>
+                    </div>
+                    <ul style="margin-top: 15px;">
+                        <li>Seleccionen <strong>15 registros</strong> de dos variables cuantitativas continuas (ej. Estatura en el Eje X y Peso en el Eje Y).</li>
+                        <li>Construyan rápidamente el <strong>Scatter Plot</strong> y observen el comportamiento de la nube de puntos.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; border-top: 5px solid var(--green); padding: 30px;">
+                        <h3 style="color: var(--green); margin-top: 0;">Análisis de Anomalías</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color); margin: 0;">
+                            ¿Existe algún punto aislado (<strong>outlier bivariado</strong>) que se separe por completo del comportamiento de la masa principal de datos?<br><br>
+                            <em>¿Qué podría significar ese caso en la realidad institucional?</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Miniquiz de Cierre -->
+        <div class="slide">
+            <h1>Miniquiz de Cierre</h1>
+            <p style="font-size: 1.3rem; text-align: center; margin-bottom: 20px; color: #555;">Clasifique visualmente la tendencia que muestra cada nube de puntos:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                <!-- Gráfico A -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.2rem;">Gráfico A</h3>
+                    <svg viewBox="0 0 120 100" style="width: 100%; height: 90px;">
+                        <line x1="10" y1="90" x2="110" y2="90" stroke="#ccc"/><line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="25" cy="80" r="3" fill="var(--blue)"/><circle cx="45" cy="65" r="3" fill="var(--blue)"/><circle cx="65" cy="45" r="3" fill="var(--blue)"/><circle cx="85" cy="30" r="3" fill="var(--blue)"/>
+                    </svg>
+                    <p style="font-size: 0.95rem; font-weight: bold; margin: 10px 0 0; color: #666;">¿Positiva, Negativa o Nula?</p>
+                </div>
+                <!-- Gráfico B -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.2rem;">Gráfico B</h3>
+                    <svg viewBox="0 0 120 100" style="width: 100%; height: 90px;">
+                        <line x1="10" y1="90" x2="110" y2="90" stroke="#ccc"/><line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="25" cy="50" r="3" fill="var(--blue)"/><circle cx="45" cy="45" r="3" fill="var(--blue)"/><circle cx="65" cy="55" r="3" fill="var(--blue)"/><circle cx="85" cy="48" r="3" fill="var(--blue)"/>
+                    </svg>
+                    <p style="font-size: 0.95rem; font-weight: bold; margin: 10px 0 0; color: #666;">¿Positiva, Negativa o Nula?</p>
+                </div>
+                <!-- Gráfico C -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.2rem;">Gráfico C</h3>
+                    <svg viewBox="0 0 120 100" style="width: 100%; height: 90px;">
+                        <line x1="10" y1="90" x2="110" y2="90" stroke="#ccc"/><line x1="10" y1="10" x2="10" y2="90" stroke="#ccc"/>
+                        <circle cx="25" cy="20" r="3" fill="var(--blue)"/><circle cx="45" cy="35" r="3" fill="var(--blue)"/><circle cx="65" cy="60" r="3" fill="var(--blue)"/><circle cx="85" cy="80" r="3" fill="var(--blue)"/>
+                    </svg>
+                    <p style="font-size: 0.95rem; font-weight: bold; margin: 10px 0 0; color: #666;">¿Positiva, Negativa o Nula?</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX > 50) {
+                prevSlide();
+            } else if (deltaX < -50) {
+                nextSlide();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Inicializar
+        showSlide(currentSlideIndex);
+
+        // Eventos táctiles
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>
