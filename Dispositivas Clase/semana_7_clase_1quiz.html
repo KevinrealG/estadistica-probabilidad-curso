@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Dispersión y Asociación Bivariada</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 1.8vw, 2rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            text-align: center;
+        }
+
+        /* --- Estilos de interactividad y tema oscuro --- */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme svg line {
+            stroke: #a0a0a0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide: Mini-Quiz de Consolidación Interactivo -->
+        <div class="slide" style="padding: clamp(20px, 3vw, 40px);">
+            <div style="width: 100%; margin-bottom: 15px; text-align: center;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 0.95rem; text-transform: uppercase;">Evaluación Formativa de Salida</p>
+                <h1 style="border-bottom: 3px solid var(--green); padding-bottom: 8px; margin: 5px 0 10px 0; font-size: clamp(1.3rem, 2.2vw, 2rem);">Mini-Quiz Digital de Consolidación</h1>
+            </div>
+
+            <!-- Contenedor general del Quiz -->
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-height: 65vh; overflow-y: auto; padding-right: 5px;">
+                
+                <!-- Pregunta 1 -->
+                <div class="matrix-card" style="padding: 15px 20px; text-align: left;" id="q1-container">
+                    <p style="color: var(--text-color); font-weight: bold; font-size: 1.05rem; margin-top: 0; text-align: left;">
+                        1. Si al aumentar la variable $X$, la variable $Y$ disminuye de forma sistemática siguiendo una tendencia de línea recta, la correlación es:
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <button onclick="evaluarRespuesta(1, 'a', false)" id="q1-a" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">a) Positiva</button>
+                        <button onclick="evaluarRespuesta(1, 'b', false)" id="q1-b" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">b) Nula</button>
+                        <button onclick="evaluarRespuesta(1, 'c', true)" id="q1-c" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">c) Negativa</button>
+                        <button onclick="evaluarRespuesta(1, 'd', false)" id="q1-d" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">d) Exponencial</button>
+                    </div>
+                    <div id="feedback-1" style="margin-top: 10px; font-size: 0.9rem; display: none; padding: 8px; border-radius: 6px;"></div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="matrix-card" style="padding: 15px 20px; text-align: left;" id="q2-container">
+                    <p style="color: var(--text-color); font-weight: bold; font-size: 1.05rem; margin-top: 0; text-align: left;">
+                        2. Un coeficiente de correlación visual con puntos altamente dispersos y sin una dirección clara indica una asociación de tipo:
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <button onclick="evaluarRespuesta(2, 'a', false)" id="q2-a" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">a) Fuerte</button>
+                        <button onclick="evaluarRespuesta(2, 'b', true)" id="q2-b" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">b) Nula / Inexistente</button>
+                        <button onclick="evaluarRespuesta(2, 'c', false)" id="q2-c" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">c) Perfecta</button>
+                        <button onclick="evaluarRespuesta(2, 'd', false)" id="q2-d" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">d) Determinista</button>
+                    </div>
+                    <div id="feedback-2" style="margin-top: 10px; font-size: 0.9rem; display: none; padding: 8px; border-radius: 6px;"></div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="matrix-card" style="padding: 15px 20px; text-align: left;" id="q3-container">
+                    <p style="color: var(--text-color); font-weight: bold; font-size: 1.05rem; margin-top: 0; text-align: left;">
+                        3. ¿Cuál es el principal riesgo de analizar una relación bivariada observando únicamente un resumen numérico sin revisar el diagrama de dispersión?
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px;">
+                        <button onclick="evaluarRespuesta(3, 'a', false)" id="q3-a" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">a) Gastar mucha memoria en el computador.</button>
+                        <button onclick="evaluarRespuesta(3, 'b', true)" id="q3-b" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">b) Ignorar patrones no lineales, curvas o valores atípicos (outliers) que distorsionan la realidad.</button>
+                        <button onclick="evaluarRespuesta(3, 'c', false)" id="q3-c" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">c) Que las variables cambien de nombre automáticamente.</button>
+                        <button onclick="evaluarRespuesta(3, 'd', false)" id="q3-d" style="font-size: 0.9rem; padding: 8px 12px; text-align: left; border-radius: 8px;">d) No hay ningún riesgo estadístico.</button>
+                    </div>
+                    <div id="feedback-3" style="margin-top: 10px; font-size: 0.9rem; display: none; padding: 8px; border-radius: 6px;"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX > 50) {
+                prevSlide();
+            } else if (deltaX < -50) {
+                nextSlide();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Inicializar
+        showSlide(currentSlideIndex);
+
+        // Eventos táctiles
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+        function evaluarRespuesta(numPregunta, opcionElegida, esCorrecta) {
+        // Obtenemos las opciones de esa pregunta (asumiendo max 4 opciones a, b, c, d)
+        const letras = ['a', 'b', 'c', 'd'];
+        letras.forEach(letra => {
+            const btn = document.getElementById(`q${numPregunta}-${letra}`);
+            if (btn) {
+                btn.style.backgroundColor = "";
+                btn.style.color = "";
+                btn.disabled = true; // Bloquea los botones tras elegir
+            }
+        });
+
+        // Marcamos el botón seleccionado
+        const btnSeleccionado = document.getElementById(`q${numPregunta}-${opcionElegida}`);
+        const feedbackDiv = document.getElementById(`feedback-${numPregunta}`);
+        feedbackDiv.style.display = "block";
+
+        if (esCorrecta) {
+            if (btnSeleccionado) {
+                btnSeleccionado.style.backgroundColor = "var(--green)";
+                btnSeleccionado.style.color = "white";
+            }
+            feedbackDiv.style.backgroundColor = "#e8f5e9";
+            feedbackDiv.style.color = "#2e7d32";
+            feedbackDiv.innerHTML = "<strong>¡Correcto!</strong> Has identificado la respuesta adecuada.";
+        } else {
+            if (btnSeleccionado) {
+                btnSeleccionado.style.backgroundColor = "#d32f2f";
+                btnSeleccionado.style.color = "white";
+            }
+            feedbackDiv.style.backgroundColor = "#ffebee";
+            feedbackDiv.style.color = "#c62828";
+            feedbackDiv.innerHTML = "<strong>Incorrecto.</strong> Revisa los conceptos analizados en clase.";
+        }
+    }
+    </script>
+</body>
+</html>

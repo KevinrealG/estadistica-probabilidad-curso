@@ -211,7 +211,15 @@ He procesado previamente tu conjunto de datos para garantizar que los tiempos de
 * **2. Estructura de la Sesión (50 min):**
 * **Apertura (8 min):** Mostrar un gráfico de Estatura vs. Peso sin línea de tendencia. Pregunta: *"Si una persona es más alta, ¿pesa necesariamente más? ¿Cómo podemos ver esa pareja de datos en un plano cartesiano?"*.
 * **Exploración (7 min):** Trazar puntos en la pizarra de forma intuitiva a partir de 5 pares de datos dictados por el salón.
-* **Desarrollo Conceptual (10 min):** Anatomía del Diagrama de Dispersión (Eje X, Eje Y, pares ordenados $(x_i, y_i)$). Tipos de asociación: lineal positiva, lineal negativa y nula.
+* **Desarrollo Conceptual (10 min):** Anatomía del Diagrama de Dispersión (Eje X, Eje Y, pares ordenados $(x_i, y_i)$).
+Diagrama de puntos dispersos
+Podemos trazar un diagrama de puntos dispersos localizando un punto por cada par de dos
+variables que representan una observación del conjunto de datos. El diagrama de puntos dispersos
+es una representación de los datos, que comprende lo siguiente:
+1) El rango de cada variable.
+2) La pauta de valores existente dentro del rango.
+3) Una sugerencia sobre la posible relación entre las dos variables.
+4) Una indicación de los casos atípicos (puntos extremos).
 * **Actividad Guiada (15 min):** Construcción manual rápida de un diagrama de dispersión en papel milimetrado o Excel usando 15 registros de la base de datos UTB (ej. Horas de estudio vs. Calificación).
 * **Aplicación (5 min):** Analizar si existe un clúster o patrón atípico visual en el gráfico.
 * **Cierre y Consolidación (5 min):** Miniquiz (3 preguntas de opción múltiple en pantalla): Identificar el tipo de correlación visual a partir de imágenes de scatter plots.
