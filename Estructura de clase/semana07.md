@@ -37,6 +37,15 @@ Como **Academic Class Designer AI**, y asumiendo la duración estándar de **50 
 #### d) Desarrollo Conceptual (10 min)
 
 * **Teoría mínima:** Definición de correlación lineal (fuerza, dirección y forma). Diferencia entre dependencia determinista y asociación estadística.
+#### Ejemplos: 
+1. Si, conforme x aumenta, existe un aumento general en el
+valor de y, entonces r será positivo en valor. 
+2. Por ejemplo, un valor positivo de r se espera-
+ría para la edad y la estatura de los niños, porque, conforme los niños tienen más edad, se
+vuelven más altos. 
+3. Además, considera la edad, x y el valor de reventa, y, de un automóvil.
+Conforme el automóvil envejece, su valor de reventa disminuye. Dado que, conforme x
+aumenta, y disminuye, la relación resulta en un valor negativo de r.
 * **Pregunta de verificación:** *"Si los puntos forman un círculo perfecto sin inclinación, ¿la correlación es cero o es alta?"*.
 
 #### e) Actividad Guiada y Colaborativa (15 min)

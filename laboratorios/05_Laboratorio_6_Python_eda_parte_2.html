@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 6. Análisis Exploratorio de Datos con Python en Colab</h2>
+<p>Gráficos de Variables cuantitativas Parte 2</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#instrucciones">Instrucciones del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos de entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Calcular e interpretar medidas estadísticas (de tendencia central, dispersión, posición y asociación) para describir y analizar conjuntos de datos univariados y bivariados.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables.</li>
+        <li>Analizo e interpreto datos univariados y bivariados mediante descriptores estadísticos, gráficos y modelos de regresión.</li>
+        <li>Utilizo software especializado como Google Colab para resolver problemas estadísticos y sustentar resultados con rigor.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas desarrolladas en esta práctica</h2>
+    <ul>
+        <li><strong>Análisis Exploratorio de Datos (EDA) para variables cuantitativas en Python–Colab</strong></li>
+        <li><strong>Construcción e interpretación de histogramas</strong></li>
+        <li><strong>Diagramas de caja (boxplots) – univariados y bivariados</strong></li>
+        <li><strong>Coeficiente de variación (CV)</strong></li>
+        <li><strong>Intervalos de confianza para la media</strong></li>
+        <li><strong>Práctica guiada: Gráficos de Variables Cuantitativas – Parte 2</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Los estudiantes utilizarán los datos cargados en SAVIO y, trabajando en <strong>Python–Colab</strong>, realizarán un análisis exploratorio centrado en <strong>gráficos de variables cuantitativas</strong>.</p>
+    <p>Siguiendo las instrucciones del video de <strong>Semana 6</strong>, deberán:</p>
+    <ul>
+        <li>Construir histogramas.</li>
+        <li>Elaborar diagramas de caja univariados y bivariados.</li>
+        <li>Calcular el coeficiente de variación.</li>
+        <li>Determinar el intervalo de confianza para la media.</li>
+        <li>Interpretar las representaciones gráficas.</li>
+    </ul>
+</section>
+
+<section id="instrucciones" class="section card">
+    <h2 class="section-title">Instrucciones del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1. Revisión del video guía</h3>
+    <p>En el Aula de Informática:</p>
+    <ol>
+        <li>Ingresar a SAVIO → Semana 7.</li>
+        <li>Abrir el video titulado: <strong>Laboratorio 6 Parte 2 – Gráficos de Variables Cuantitativas</strong></li>
+    </ol>
+    
+    <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/bnh9d5JQgLQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;">🔗 <strong>Enlace alternativo del video:</strong> <a href="https://www.youtube.com/watch?v=bnh9d5JQgLQ" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+    
+    <p>El video desarrolla:</p>
+    
+    <div class="grid" style="margin-top: 1.5rem;">
+        <div>
+            <h4 style="color: var(--primary);">1. Organización de los datos en Colab</h4>
+            <ul>
+                <li>Importación</li>
+                <li>Inspección</li>
+                <li>Selección de variables cuantitativas</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--primary);">2. Diagramas de caja</h4>
+            <ul>
+                <li>Boxplot univariado</li>
+                <li>Boxplot bivariado (variable explicativa vs cuantitativa)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="grid" style="margin-top: 1rem;">
+        <div>
+            <h4 style="color: var(--primary);">3. Exploración gráfica</h4>
+            <ul>
+                <li>Histogramas</li>
+                <li>Distribuciones</li>
+                <li>Identificación de outliers</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--primary);">4. Medidas complementarias</h4>
+            <ul>
+                <li><strong>Coeficiente de variación (CV)</strong></li>
+                <li><strong>Intervalo de confianza para la media</strong> (usando fórmulas y Python)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    
+    <h3 style="color: var(--primary);">📌 Entregable 1 – Evidencia del laboratorio guiado</h3>
+    <p>Debe incluir:</p>
+    <ul>
+        <li>Carga y visualización inicial de los datos</li>
+        <li>Histogramas y diagramas de caja (<strong>con títulos adecuados</strong>)</li>
+        <li>Cálculo del coeficiente de variación</li>
+        <li>Completa el Notebook.</li>
+        <li>PDF exportado desde Colab con todo el proceso</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">📌 Entregable 2 – Repetición autónoma del laboratorio</h3>
+    <p>El estudiante deberá:</p>
+    <ul>
+        <li>Crea una variable numérica, añadela al dataframe</li>
+        <li>Repetir el análisis gráfico con la nueva variable (boxplots con sexo, estrato y curso)</li>
+        <li>Calcular descriptores, incluido coeficiente de variación</li>
+        <li>Escribir conclusiones relacionando resultados y temáticas</li>
+        <li>Exportar un segundo <strong>PDF</strong></li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">📤 Subida final en SAVIO</h3>
+    <p>Debe entregar:</p>
+    <ul>
+        <li>PDF del laboratorio guiado</li>
+        <li>PDF de la repetición autónoma</li>
+    </ul>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Laboratorio 6</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 1 – Insuficiente</th>
+                    <th>Nivel 2 – Aceptable</th>
+                    <th>Nivel 3 – Bueno</th>
+                    <th>Nivel 4 – Excelente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Carga y organización de los datos</strong></td>
+                    <td>No logra importar los datos o no los muestra.</td>
+                    <td>Importación incompleta o sin organización clara.</td>
+                    <td>Importa y visualiza los datos, con mínimas omisiones.</td>
+                    <td>Importa y visualiza los datos correctamente; organiza y describe la estructura del DataFrame con claridad.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Gráficos: histogramas y diagramas de caja (univariados y bivariados)</strong></td>
+                    <td>No presenta gráficos o están incorrectos.</td>
+                    <td>Gráficos incompletos, sin títulos adecuados o con errores visibles.</td>
+                    <td>Gráficos correctos pero con detalles menores o interpretación limitada.</td>
+                    <td>Gráficos completos, bien etiquetados, interpretados adecuadamente; incluye boxplots y histogramas.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Cálculo del CV</strong></td>
+                    <td>No realiza los cálculos.</td>
+                    <td>Cálculos incompletos o con errores importantes.</td>
+                    <td>Cálculos correctos, aunque con mínima explicación.</td>
+                    <td>Realiza ambos cálculos correctamente, explica el procedimiento y analiza los resultados.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Repetición autónoma con nuevas variables</strong></td>
+                    <td>No realiza la repetición autónoma o usa variables incorrectas.</td>
+                    <td>Repetición parcial o sin análisis claro.</td>
+                    <td>Repite la mayoría del proceso con pocas fallas.</td>
+                    <td>Repite el proceso completo: gráficos, CV, intervalo, interpretación y buena organización.</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Presentación y entrega en PDF</strong></td>
+                    <td>No entrega los archivos o están vacíos/erróneos.</td>
+                    <td>Entrega incompleta (solo un PDF o evidencia pobre).</td>
+                    <td>Entrega ambos PDFs con pequeños problemas de formato.</td>
+                    <td>Entrega ambos PDFs completos, ordenados, con conclusiones relacionadas con competencias y temáticas.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

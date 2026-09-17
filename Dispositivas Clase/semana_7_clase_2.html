@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2: Covarianza y Coeficiente r de Pearson</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <!-- MathJax para fórmulas matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base reutilizados del documento original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            font-size: clamp(1rem, 1.8vw, 1.8rem);
+            margin-bottom: 15px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: stretch;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: El Engaño de las Unidades -->
+         <!-- Slide 1: Covarianza Poblacional -->
+        <div class="slide">
+            <h1>Covarianza</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p>La <strong>covarianza (Cov)</strong> es una medida de la relación lineal entre dos variables.</p>
+                    </div>
+                    <ul style="font-size: 1.1rem; padding-left: 20px;">
+                        <li>Un valor <strong>positivo</strong> indica una relación lineal directa o creciente.</li>
+                        <li>Un valor <strong>negativo</strong> indica una relación lineal decreciente.</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: center; padding: 25px;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.3rem;">Covarianza Poblacional</h3>
+                    <div class="math-eq" style="font-size: 1.6rem; margin: 20px 0;">
+                        $$\text{Cov}(x, y) = \sigma_{xy} = \frac{\sum_{i=1}^{N} (x_i - \mu_x)(y_i - \mu_y)}{N}$$
+                    </div>
+                    <p style="font-size: 0.95rem; color: #555; text-align: left; margin-top: 15px;">
+                        Donde $x_i$ e $y_i$ son los valores observados, $\mu_x$ y $\mu_y$ son las medias poblacionales y $N$ es el tamaño de la población.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Covarianza Muestral -->
+        <div class="slide">
+            <h1>Covarianza Muestral</h1>
+            <div class="visual-container" style="flex-direction: column; width: 100%;">
+                <div class="matrix-card" style="width: 85%; border-top: 5px solid #ff9800; text-align: center; padding: 30px;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.5rem;">Fórmula Muestral</h3>
+                    <div class="math-eq" style="font-size: 1.8rem; margin: 25px 0;">
+                        $$\text{Cov}(x, y) = s_{xy} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n - 1}$$
+                    </div>
+                    <div style="background: #fff8e1; border-radius: 8px; padding: 15px; text-align: left; margin-top: 20px; border-left: 4px solid #ffb300;">
+                        <p style="font-size: 1.1rem; margin: 0; color: var(--text-color);">
+                            Donde $x_i$ e $y_i$ son los valores observados, $\bar{x}$ e $\bar{y}$ son las medias muestrales y $n$ es el tamaño de la muestra.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Ejemplo 3.13 -->
+        <div class="slide">
+            <h1>EJEMPLO 3.13</h1>
+            <h2 style="font-size: 1.3rem; color: #555; margin-top: -10px; margin-bottom: 20px;">Planta manufacturera (covarianza y coeficiente de correlación)</h2>
+            
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p style="font-size: 1rem; line-height: 1.5;">
+                            <strong>Rising Hills Manufacturing Inc.</strong> desea estudiar la relación entre el número de trabajadores, $X$, y el número de mesas, $Y$, producidas en su planta de Redwood Falls.
+                        </p>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--text-color); margin-bottom: 15px;">
+                        Ha tomado una muestra aleatoria de 10 horas de producción. Se han obtenido las siguientes combinaciones $(x, y)$ de puntos. Calcule la covarianza y el coeficiente de correlación.
+                    </p>
+                </div>
+                
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); padding: 20px; text-align: center;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.2rem;">Datos (x, y)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; font-family: 'Cambria Math', serif; font-size: 1.2rem; color: var(--text-color); margin-top: 15px;">
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(12, 20)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(30, 60)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(15, 27)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(24, 50)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(14, 21)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(18, 30)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(28, 61)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(26, 54)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(19, 32)</div>
+                        <div style="background: #f4f6f9; padding: 10px; border-radius: 6px;">(27, 57)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <h1>El Engaño de las Unidades</h1>
+            <div class="slide-intro" style="border-left: 6px solid var(--blue); margin-bottom: 25px;">
+                <p><strong>El Reto:</strong> Observa estos dos diagramas que muestran exactamente la misma tendencia subyacente. <br><em>Si cambiamos las unidades de medida, ¿cambia la realidad del fenómeno físico?</em></p>
+            </div>
+            
+            <div class="grid-layout">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: center; padding: 15px;">
+                    <h3 style="color: var(--blue); margin-top: 0;">Metros vs. Kilogramos</h3>
+                    <svg viewBox="0 0 200 150" style="width: 100%; height: 120px;">
+                        <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="2"/>
+                        <line x1="20" y1="20" x2="20" y2="130" stroke="var(--text-color)" stroke-width="2"/>
+                        <!-- Puntos -->
+                        <circle cx="40" cy="110" r="4" fill="var(--blue)"/><circle cx="70" cy="90" r="4" fill="var(--blue)"/><circle cx="100" cy="70" r="4" fill="var(--blue)"/><circle cx="130" cy="50" r="4" fill="var(--blue)"/><circle cx="160" cy="30" r="4" fill="var(--blue)"/>
+                        <!-- Etiquetas -->
+                        <text x="140" y="145" font-size="10" fill="var(--text-color)">Estatura (m)</text>
+                        <text x="0" y="15" font-size="10" fill="var(--text-color)">Peso (kg)</text>
+                    </svg>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: center; padding: 15px;">
+                    <h3 style="color: var(--green); margin-top: 0;">Centímetros vs. Gramos</h3>
+                    <svg viewBox="0 0 200 150" style="width: 100%; height: 120px;">
+                        <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="2"/>
+                        <line x1="20" y1="20" x2="20" y2="130" stroke="var(--text-color)" stroke-width="2"/>
+                        <!-- Puntos idénticos -->
+                        <circle cx="40" cy="110" r="4" fill="var(--green)"/><circle cx="70" cy="90" r="4" fill="var(--green)"/><circle cx="100" cy="70" r="4" fill="var(--green)"/><circle cx="130" cy="50" r="4" fill="var(--green)"/><circle cx="160" cy="30" r="4" fill="var(--green)"/>
+                        <!-- Etiquetas diferentes -->
+                        <text x="140" y="145" font-size="10" fill="var(--text-color)">Estatura (cm)</text>
+                        <text x="0" y="15" font-size="10" fill="var(--text-color)">Peso (g)</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: De la Covarianza a Pearson -->
+        <div class="slide">
+            <h1>De la Covarianza a Pearson</h1>
+            <div class="grid-layout">
+                <div class="matrix-card" style="border-top: 5px solid #ff9800; text-align: left;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.5rem;">La Debilidad de la Covarianza</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-color);">Promedio de productos cruzados de las desviaciones:</p>
+                    <div class="math-eq" style="font-size: 1.8rem;">$$S_{xy} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n - 1}$$</div>
+                    <ul style="font-size: 1rem; margin-top: 15px;">
+                        <li><strong>Problema:</strong> Sus unidades son el producto de $X$ e $Y$.</li>
+                        <li>Cambia astronómicamente al cambiar la escala, lo que impide comparar distintas relaciones.</li>
+                    </ul>
+                </div>
+                
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.5rem;">El Puente: Estandarización</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-color);">Para resolverlo, dividimos la covarianza entre el producto de las desviaciones estándar de ambas variables:</p>
+                    <div style="background: #eef8ff; border-radius: 8px; padding: 15px; text-align: center; margin-top: 20px;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: var(--blue);">Covarianza ($S_{xy}$)</span><br>
+                        <hr style="border: 0; border-top: 1px solid var(--blue); margin: 5px 0;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: var(--blue);">Desviación Est. ($s_x \cdot s_y$)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Anatomía del Coeficiente r -->
+        <div class="slide">
+            <h1>Anatomía del Coeficiente $r$</h1>
+            <div class="slide-intro" style="text-align: center;">
+                <p>El <strong>Coeficiente de Correlación de Pearson ($r$)</strong> es adimensional y siempre está acotado: $-1 \le r \le 1$.</p>
+            </div>
+            
+            <div class="visual-container" style="flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto;">
+                <div class="math-eq" style="margin-bottom: 40px;">
+                    $$r = \frac{S_{xy}}{s_x \cdot s_y}$$
+                </div>
+                
+                <!-- Escala Visual SVG -->
+                <svg viewBox="0 0 800 120" style="width: 100%; height: auto; overflow: visible;">
+                    <!-- Eje central -->
+                    <line x1="50" y1="50" x2="750" y2="50" stroke="var(--text-color)" stroke-width="4"/>
+                    
+                    <!-- Marcas principales -->
+                    <line x1="50" y1="40" x2="50" y2="60" stroke="var(--text-color)" stroke-width="4"/>
+                    <line x1="400" y1="35" x2="400" y2="65" stroke="var(--text-color)" stroke-width="4"/>
+                    <line x1="750" y1="40" x2="750" y2="60" stroke="var(--text-color)" stroke-width="4"/>
+                    
+                    <!-- Textos numéricos -->
+                    <text x="50" y="85" font-size="20" font-weight="bold" fill="#d32f2f" text-anchor="middle">-1</text>
+                    <text x="400" y="90" font-size="20" font-weight="bold" fill="var(--text-color)" text-anchor="middle">0</text>
+                    <text x="750" y="85" font-size="20" font-weight="bold" fill="var(--green)" text-anchor="middle">1</text>
+                    
+                    <!-- Textos descriptivos -->
+                    <text x="50" y="25" font-size="16" fill="#d32f2f" text-anchor="middle">Fuerte Negativa</text>
+                    <text x="400" y="20" font-size="16" fill="var(--text-color)" text-anchor="middle">Nula / Inexistente</text>
+                    <text x="750" y="25" font-size="16" fill="var(--green)" text-anchor="middle">Fuerte Positiva</text>
+                    
+                    <!-- Flechas direccionales -->
+                    <polygon points="50,50 65,42 65,58" fill="#d32f2f"/>
+                    <polygon points="750,50 735,42 735,58" fill="var(--green)"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Slide 4: Laboratorio en Parejas -->
+        <div class="slide">
+            <h1>Laboratorio en Parejas (15 Datos)</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p><strong>Reto:</strong> Utilizando Excel, Google Colab o Bachué Data Toolbox, calculen la covarianza y el coeficiente $r$ de Pearson para el siguiente conjunto institucional.</p>
+                    </div>
+                    <ul style="font-size: 1.1rem; padding-left: 20px;">
+                        <li>1. Ingresen los 15 pares ordenados.</li>
+                        <li>2. Generen el diagrama de dispersión.</li>
+                        <li>3. Verifiquen si el gráfico visual coincide con la magnitud del valor numérico $r$ obtenido.</li>
+                    </ul>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: center;">
+                        <tr style="background-color: var(--blue); color: white;">
+                            <th style="padding: 8px;">Est (X) cm</th>
+                            <th style="padding: 8px;">Peso (Y) kg</th>
+                            <th style="padding: 8px;">Est (X) cm</th>
+                            <th style="padding: 8px;">Peso (Y) kg</th>
+                        </tr>
+                        <tr><td>165</td><td>60</td><td>177</td><td>78</td></tr>
+                        <tr style="background-color: #f9f9f9;"><td>170</td><td>68</td><td>160</td><td>57</td></tr>
+                        <tr><td>158</td><td>55</td><td>183</td><td>85</td></tr>
+                        <tr style="background-color: #f9f9f9;"><td>175</td><td>75</td><td>166</td><td>62</td></tr>
+                        <tr><td>180</td><td>82</td><td>174</td><td>73</td></tr>
+                        <tr style="background-color: #f9f9f9;"><td>162</td><td>58</td><td>169</td><td>66</td></tr>
+                        <tr><td>168</td><td>64</td><td>178</td><td>80</td></tr>
+                        <tr style="background-color: #f9f9f9;"><td>172</td><td>70</td><td>-</td><td>-</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Caso Crítico -->
+        <div class="slide">
+            <h1>Caso Crítico: El Analista y el 0.12</h1>
+            <div class="visual-container" style="flex-direction: column;">
+                <div class="matrix-card" style="width: 85%; border: 3px dashed #d32f2f; background-color: #fffafb; padding: 30px; text-align: center;">
+                    <p style="font-size: 1.4rem; font-style: italic; color: var(--text-color); margin: 0; line-height: 1.5;">
+                        "Un analista junior presenta un reporte financiero y afirma emocionado: 
+                        <strong style="color: #d32f2f;">¡Tenemos una fuerte relación porque el software dio un número positivo, $r = 0.12$!</strong>"
+                    </p>
+                </div>
+                
+                <div class="slide-intro" style="margin-top: 30px; width: 85%; border-left: 6px solid var(--blue); padding: 25px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.4rem;">Pregunta de Debate en Comité:</h3>
+                    <p style="font-size: 1.2rem; color: var(--text-color);">Como expertos en estadística, ¿cómo le responderían técnicamente al analista sobre su interpretación errónea de este valor?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cierre y Metacognición -->
+        <div class="slide">
+            <h1>Cierre y Reflexión Final</h1>
+            <div class="grid-layout" style="align-items: center; height: 100%;">
+                <div class="matrix-card" style="border-top: 5px solid #7b1fa2; padding: 35px; text-align: center;">
+                    <h2 style="color: #7b1fa2; margin-top: 0; font-size: 1.6rem;">Metacognición</h2>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color); margin: 20px 0;">
+                        "Si el gráfico de dispersión nos muestra claramente hacia dónde se mueven los puntos...<br><br>
+                        <strong>¿Qué información exacta nos aporta el signo y la magnitud de $r$ que el gráfico visual no nos entrega con precisión?</strong>"
+                    </p>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p style="font-weight: bold; color: var(--green); font-size: 1.2rem; margin-bottom: 5px;">Ticket de Salida</p>
+                        <p style="font-size: 1.1rem;">Cada pareja debe subir una captura de pantalla de su gráfico generado junto con el valor exacto de $r$ al canal correspondiente de MS Teams.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script de control e interactividad -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>
