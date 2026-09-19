@@ -1,7 +1,7 @@
 Bueno para los cursos de estadistica me queda pendiente:
 1. Grabar videos
     5. Explicando como interpretar el diagrama de boxplot.
-
+d
 4. Preparar la semana  de estadistica
     1. Estructuras
     2. Diapositivas
