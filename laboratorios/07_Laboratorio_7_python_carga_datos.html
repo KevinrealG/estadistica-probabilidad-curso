@@ -1,0 +1,230 @@
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio: Carga de Datos en Google Colab</h2>
+<p>Importación de archivos CSV, Excel y conexión con Kaggle para análisis de datos.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#instrucciones">Instrucciones del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos de entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>[Texto pendiente: Por favor, indica las competencias específicas de este laboratorio]</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas desarrolladas en esta práctica</h2>
+    <ul>
+        <li><strong>Conexión de Google Colab con Google Drive</strong></li>
+        <li><strong>Carga de archivos locales (CSV y Excel) usando Pandas</strong></li>
+        <li><strong>Configuración de la API de Kaggle para descarga directa de Datasets</strong></li>
+        <li><strong>Análisis exploratorio breve (head, info, describe)</strong></li>
+    </ul>
+</section>
+
+<section id="instrucciones" class="section card">
+    <h2 class="section-title">Instrucciones del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">1. Carga de datos desde un archivo CSV</h3>
+    <p>Para cargar un archivo CSV local o desde tu Google Drive, utilizamos la librería Pandas:</p>
+    <div class="code-block">
+<pre>import pandas as pd
+
+# Cargar el archivo CSV
+df_csv = pd.read_csv('ruta_del_archivo.csv')
+
+# Análisis breve
+df_csv.head()
+df_csv.info()</pre>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">2. Carga de datos desde un archivo Excel</h3>
+    <p>La lectura de archivos Excel requiere especificar el nombre de la hoja si el documento tiene varias:</p>
+    <div class="code-block">
+<pre># Cargar el archivo Excel
+df_excel = pd.read_excel('ruta_del_archivo.xlsx', sheet_name='Hoja1')
+
+# Resumen estadístico básico
+df_excel.describe()</pre>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Carga de datos usando la API de Kaggle</h3>
+    <p>Para descargar datasets directamente desde Kaggle, primero debes subir tu archivo <code>kaggle.json</code> (token de API) a Colab:</p>
+    <div class="code-block">
+<pre># Subir el archivo kaggle.json
+from google.colab import files
+files.upload()
+
+# Crear el directorio y configurar permisos
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+
+# Descargar y descomprimir el dataset
+!kaggle datasets download -d nombre-del-usuario/nombre-del-dataset
+!unzip nombre-del-dataset.zip</pre>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos de entrega</h2>
+    <ul>
+        <li>[Texto pendiente: Indica los entregables, por ejemplo, PDF exportado de Colab]</li>
+    </ul>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 1 – Insuficiente</th>
+                    <th>Nivel 4 – Excelente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Carga de datos CSV/Excel</strong></td>
+                    <td>No logra importar los datos.</td>
+                    <td>Importa los datos correctamente y muestra las primeras filas.</td>
+                </tr>
+                <tr>
+                    <td><strong>Conexión con Kaggle</strong></td>
+                    <td>No configura la API.</td>
+                    <td>Descarga el dataset directamente desde Kaggle y lo lee en un DataFrame.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

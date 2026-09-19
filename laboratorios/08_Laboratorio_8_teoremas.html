@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 13. Los dos teoremas límite más importantes en probabilidad y estadística</h2>
+<p>Exploración de la Ley de los Grandes Números (LGN) y el Teorema del Límite Central (TLC) mediante simulación computacional en Python.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#instrucciones">Instrucciones del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos de entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Modelar situaciones aleatorias aplicando conceptos de probabilidad, técnicas de conteo, eventos compuestos y teoremas fundamentales en contextos reales.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Aplico principios y modelos probabilísticos en la evaluación de fenómenos aleatorios, utilizando herramientas de conteo, reglas de probabilidad y distribuciones discretas y continuas.</li>
+        <li>Utilizo software especializado (Excel, Power BI, Statgraphics, Google Colab, R y Python) para resolver problemas estadísticos, comunicar resultados y sustentar decisiones con rigor académico.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas desarrolladas en esta práctica</h2>
+    <ul>
+        <li><strong>Ley de los Grandes Números (LGN)</strong> – Ejemplos en Python</li>
+        <li><strong>Teorema del Límite Central (TLC)</strong> – Simulación computacional</li>
+        <li><strong>Simulaciones de variables aleatorias discretas (como el lanzamiento de un dado p = 1/6)</strong></li>
+        <li><strong>Distribuciones de medias muestrales</strong></li>
+        <li><strong>Práctica guiada: Comprensión computacional de ambos teoremas límite</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <p>Usando los archivos disponibles en la plataforma SAVIO, los estudiantes trabajarán en Python para:</p>
+    <ul>
+        <li>Explorar la <strong>Ley de los Grandes Números (LGN)</strong> mediante simulaciones repetidas.</li>
+        <li>Aplicar el <strong>Teorema del Límite Central (TLC)</strong> para observar cómo la distribución de las medias muestrales se aproxima a una distribución normal.</li>
+        <li>Replicar los ejemplos del video y luego realizar un ejercicio independiente con dos variables distintas, demostrando comprensión del comportamiento probabilístico.</li>
+    </ul>
+</section>
+
+<section id="instrucciones" class="section card">
+    <h2 class="section-title">Instrucciones del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1. Revisión del video guía</h3>
+    <p>En el Aula de Informática:</p>
+    <ol>
+        <li>Ingresar a SAVIO → Semana 14.</li>
+        <li>Abrir notebook: <a href="https://colab.research.google.com/drive/1hiBCv366mOrjc-YFsz2pli00SMvepvZp?usp=sharing" target="_blank" style="color: var(--primary);">Enlace a Google Colab</a></li>
+        <li>Abrir el video titulado: <strong>“Laboratorio 13. Los dos teoremas límite más importantes en probabilidad y estadística”</strong></li>
+    </ol>
+    
+    <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/xKKcLJhzIyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;">🔗 <strong>Enlace alternativo del video:</strong> <a href="https://www.youtube.com/watch?v=xKKcLJhzIyI" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+    
+    <p>El video presenta:</p>
+    
+    <div class="grid" style="margin-top: 1.5rem;">
+        <div>
+            <h4 style="color: var(--primary);">1. Organización de los datos para trabajar en Python</h4>
+            <ul>
+                <li>Carga del dataset</li>
+                <li>Configuración básica en Colab</li>
+                <li>Importación de librerías necesarias: NumPy, Matplotlib, Pandas</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--primary);">2. Ley de los Grandes Números (LGN)</h4>
+            <ul>
+                <li>Repetición de un experimento aleatorio muchas veces</li>
+                <li>Convergencia de la proporción observada hacia el valor teórico</li>
+                <li>Ejemplo aplicado: <strong>lanzamiento de un dado (p = 1/6)</strong></li>
+                <li>Gráficos del comportamiento de la frecuencia relativa</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="grid" style="margin-top: 1rem;">
+        <div>
+            <h4 style="color: var(--primary);">3. Teorema del Límite Central (TLC)</h4>
+            <ul>
+                <li>Muestras repetidas de tamaño n</li>
+                <li>Cálculo de la media muestral</li>
+                <li>Construcción del histograma de medias</li>
+                <li>Observación del acercamiento a una distribución normal</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--primary);">4. Interpretación</h4>
+            <ul>
+                <li>Relación entre simulación y teoría</li>
+                <li>Aplicaciones prácticas y reflexiones</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    
+    <h3 style="color: var(--primary);">📌 Entregable 1 – Evidencia del laboratorio guiado</h3>
+    <p>Debe incluir:</p>
+    <ul>
+        <li>Código completo de las simulaciones en Python</li>
+        <li>Resultados gráficos de la LGN</li>
+        <li>Simulaciones del TLC con histogramas</li>
+        <li>Interpretación de los resultados</li>
+        <li>PDF exportado desde Colab</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">📤 Subida final en SAVIO</h3>
+    <p>Debe entregar:</p>
+    <ul>
+        <li>PDF del laboratorio guiado</li>
+    </ul>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Laboratorio 13 (4 niveles – 4 criterios)</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 4 – Excelente</th>
+                    <th>Nivel 3 – Bueno</th>
+                    <th>Nivel 2 – Aceptable</th>
+                    <th>Nivel 1 – Insuficiente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Carga y organización del código en Python</strong></td>
+                    <td>Código completo, ordenado, sin errores; usa librerías adecuadas y muestra correcta organización del notebook.</td>
+                    <td>Código funcional, con pequeños errores o desorden leve.</td>
+                    <td>Código incompleto o con errores significativos.</td>
+                    <td>No presenta código o no funciona.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Simulación de la LGN</strong></td>
+                    <td>Realiza simulación correcta; gráficos claros y bien titulados; interpretación precisa del comportamiento de frecuencias relativas.</td>
+                    <td>Simulación adecuada; interpretación breve.</td>
+                    <td>Simulación incompleta o interpretación superficial.</td>
+                    <td>No realiza simulación o está incorrecta.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Simulación del TLC (medias muestrales)</strong></td>
+                    <td>Muestras generadas correctamente, histograma adecuado, explicación clara del acercamiento a la normalidad.</td>
+                    <td>Simulación correcta con pequeños errores en gráficos o análisis.</td>
+                    <td>Ejercicio incompleto o interpretación pobre.</td>
+                    <td>No realiza la simulación del TLC.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Presentación y entrega en PDF</strong></td>
+                    <td>Entrega PDFs completos, claros, bien organizados y con conclusiones vinculadas a competencias y temáticas.</td>
+                    <td>Entrega PDFs, con detalles menores de organización.</td>
+                    <td>Entrega incompleta</td>
+                    <td>No entrega los archivos solicitados.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

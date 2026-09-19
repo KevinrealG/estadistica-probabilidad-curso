@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista General - 16 Semanas</title>
+  <style>
+    :root{
+      --azul-oscuro:#324960;
+      --azul-claro:#eaf2ff;
+      --texto:#243447;
+      --borde:#d8dde5;
+      --blanco:#ffffff;
+      --gris:#f5f6f8;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--gris);
+      margin: 30px;
+      color: var(--texto);
+    }
+
+    h1{
+      text-align:center;
+      color: var(--azul-oscuro);
+      margin-bottom: 20px;
+      font-size: 2.2rem;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--blanco);
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    th{
+      background: var(--azul-oscuro);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    td{
+      border: 1px solid var(--borde);
+      padding: 15px;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even){
+      background: #fafafa;
+    }
+
+    .semana{
+      width: 90px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--azul-oscuro);
+    }
+
+    .horas{
+      width: 90px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .temas{ width: 28%; }
+    .actividades{ width: 32%; }
+    .recursos{ width: 40%; }
+
+    ul{
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+
+    li{
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+
+    .titulo{
+      font-weight: bold;
+      color: #2f4f6f;
+      margin-bottom: 8px;
+    }
+
+    .linea{
+      border-bottom: 1px dashed #cfd8dc;
+      min-height: 26px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+    }
+
+    .link-semana {
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+      color: #1d5ea8;
+      text-decoration: none;
+    }
+
+    .link-semana:hover {
+      text-decoration: underline;
+    }
+
+    a{
+      color: #1d5ea8;
+      text-decoration: none;
+    }
+
+    a:hover{
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px){
+      body{ margin: 15px; }
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr { margin-bottom: 15px; border: 1px solid var(--borde); }
+      td {
+        width: 100% !important;
+        display: block;
+        border: none;
+        border-bottom: 1px solid var(--borde);
+      }
+      .semana{ text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Vista General de la Asignatura - 16 Semanas</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>SEMANA</th>
+        <th>HORAS</th>
+        <th>TEMAS A DESARROLLAR</th>
+        <th>EJERCICIOS / ACTIVIDADES</th>
+        <th>LECTURAS / RECURSOS</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td class="semana">1</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Introducción al curso</li>
+            <li>Estadística descriptiva</li>
+            <li>Tipos de variables</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_1.html" target="_blank">Abrir semana 1</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Presentación del curso</li>
+            <li>Recolección de datos</li>
+            <li>Actividad inicial</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Conceptos básicos</li>
+            <li>Material de apoyo</li>
+            <li>Guía de trabajo</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">2</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Tablas de frecuencia</li>
+            <li>Gráficos estadísticos</li>
+            <li>Distribuciones</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_2.html" target="_blank">Abrir semana 2</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Construcción de tablas</li>
+            <li>Diagrama de barras</li>
+            <li>Ejercicios prácticos</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Videos de frecuencia y gráficos</li>
+            <li>Ejemplos de datos</li>
+            <li>Plantillas</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">3</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Medidas de tendencia central</li>
+            <li>Media, mediana y moda</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_3.html" target="_blank">Abrir semana 3</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Cálculo manual</li>
+            <li>Interpretación</li>
+            <li>Aplicación en datos reales</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Guías de cálculo</li>
+            <li>Ejercicios resueltos</li>
+            <li>Calculadora estadística</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">4</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Medidas de dispersión</li>
+            <li>Rango, varianza y desviación estándar</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_4.html" target="_blank">Abrir semana 4</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Análisis de variabilidad</li>
+            <li>Comparación de grupos</li>
+            <li>Ejercicios de aplicación</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Videos de dispersión</li>
+            <li>Ejemplos en Excel</li>
+            <li>Base de datos</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">5</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Medidas de posición</li>
+            <li>Cuartiles, percentiles y boxplot</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_5.html" target="_blank">Abrir semana 5</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Construcción de cajas</li>
+            <li>Interpretación de datos</li>
+            <li>Evaluación corta</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Material de percentiles</li>
+            <li>Diagramas de caja</li>
+            <li>Guía de ejercicios</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">6</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Probabilidad básica</li>
+            <li>Espacios muestrales y eventos</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_6.html" target="_blank">Abrir semana 6</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Definición axiomática</li>
+            <li>Reglas de la probabilidad</li>
+            <li>Ejercicios</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Videos introductorios</li>
+            <li>Apuntes de probabilidad</li>
+            <li>Ejercicios guiados</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">7</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Distribuciones discretas</li>
+            <li>Binomial y Poisson</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_7.html" target="_blank">Abrir semana 7</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Modelos de conteo</li>
+            <li>Ejercicios de aplicación</li>
+            <li>Práctica en laboratorio</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Tablas de distribución</li>
+            <li>Simulaciones</li>
+            <li>Guía de práctica</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">8</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Distribución normal</li>
+            <li>Teorema central del límite</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_8.html" target="_blank">Abrir semana 8</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Z-score</li>
+            <li>Probabilidades normales</li>
+            <li>Ejercicios analíticos</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Tablas normales</li>
+            <li>Videos explicativos</li>
+            <li>Ejemplos de aplicación</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">9</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Inferencia estadística</li>
+            <li>Estimadores y muestreo</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_9.html" target="_blank">Abrir semana 9</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Población y muestra</li>
+            <li>Errores muestrales</li>
+            <li>Ejercicios</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Apuntes de muestreo</li>
+            <li>Notas de inferencia</li>
+            <li>Ejemplos contextuales</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">10</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Intervalos de confianza</li>
+            <li>Pruebas de hipótesis</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_10.html" target="_blank">Abrir semana 10</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Construcción de intervalos</li>
+            <li>Hipótesis nula y alternativa</li>
+            <li>Ejercicios</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Videos de inferencia</li>
+            <li>Ejercicios guiados</li>
+            <li>Plantillas de cálculo</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">11</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Probabilidad condicional</li>
+            <li>Teorema de Bayes</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_11.html" target="_blank">Abrir semana 11</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Condición de eventos</li>
+            <li>Aplicaciones de Bayes</li>
+            <li>Problemas prácticos</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Videos del teorema</li>
+            <li>Diagramas de árbol</li>
+            <li>Guía de ejercicios</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">12</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Correlación</li>
+            <li>Regresión lineal simple</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_12.html" target="_blank">Abrir semana 12</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Dispersión</li>
+            <li>Interpretación del coeficiente</li>
+            <li>Predicción</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Gráficos de dispersión</li>
+            <li>Ejercicios de regresión</li>
+            <li>Software estadístico</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">13</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Bondad de ajuste</li>
+            <li>R² y análisis de residuos</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_13.html" target="_blank">Abrir semana 13</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Interpretación del modelo</li>
+            <li>Evaluación de ajuste</li>
+            <li>Indicadores de calidad</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Material de regresión</li>
+            <li>Ejemplos reales</li>
+            <li>Guía de aplicación</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">14</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Comparación de grupos</li>
+            <li>Pruebas paramétricas</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_14.html" target="_blank">Abrir semana 14</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Pruebas de medias</li>
+            <li>Casos cualitativo y cuantitativo</li>
+            <li>Ejercicios</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Notas de pruebas</li>
+            <li>Ejemplos de comparación</li>
+            <li>Videos de apoyo</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">15</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Proyecto integrador</li>
+            <li>Presentación de resultados</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_15.html" target="_blank">Abrir semana 15</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Preparación de datos</li>
+            <li>Redacción de hallazgos</li>
+            <li>Revisión final</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Rúbrica del proyecto</li>
+            <li>Guía de storytelling</li>
+            <li>Plantilla de presentación</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="semana">16</td>
+        <td class="horas">3 h</td>
+        <td class="temas">
+          <div class="titulo">Unidad / Tema</div>
+          <ul>
+            <li>Evaluación final</li>
+            <li>Cierre del curso</li>
+            <li>Reflexión y síntesis</li>
+          </ul>
+          <a class="link-semana" href="vista_savio_semana_16.html" target="_blank">Abrir semana 16</a>
+        </td>
+        <td class="actividades">
+          <div class="titulo">Clases</div>
+          <ul>
+            <li>Evaluación integradora</li>
+            <li>Cierre de semestre</li>
+            <li>Retroalimentación final</li>
+          </ul>
+        </td>
+        <td class="recursos">
+          <ul>
+            <li>Resumen general</li>
+            <li>Apuntes finales</li>
+            <li>Material de repaso</li>
+          </ul>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</body>
+</html>
