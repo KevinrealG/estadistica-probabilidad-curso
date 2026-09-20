@@ -98,6 +98,120 @@
         overflow-x: auto;
         margin-top: 1rem;
     }
+     .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+     :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 </style>
 </head>
 <body>
@@ -107,7 +221,7 @@
     <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
 </div>
 <span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
-<h1>Guía de Laboratorios</h1>
+<h1>Guía de Laboratorio 7: Carga de Datos en Google Colab</h1>
 <h2>Laboratorio: Carga de Datos en Google Colab</h2>
 <p>Importación de archivos CSV, Excel y conexión con Kaggle para análisis de datos.</p>
 </div>
@@ -129,8 +243,9 @@
 <section id="competencias" class="section card">
     <h2 class="section-title">Competencias Por Desarrollar</h2>
     <ul>
-        <li>[Texto pendiente: Por favor, indica las competencias específicas de este laboratorio]</li>
-        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios.</li>
+        <li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Calcular e interpretar medidas estadísticas (de tendencia central, dispersión, posición y asociación) para describir y analizar conjuntos de datos univariados y bivariados.</li>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
     </ul>
 </section>
 
@@ -146,8 +261,20 @@
 
 <section id="instrucciones" class="section card">
     <h2 class="section-title">Instrucciones del Laboratorio</h2>
-    
+    <p>En este laboratorio, aprenderás a cargar datos desde diferentes fuentes en Google Colab, incluyendo archivos CSV, Excel y datasets de Kaggle. Asegúrate de seguir los pasos cuidadosamente y documentar tu proceso.</p>
+    <p>Recuerda que es importante tener una cuenta de Google y acceso a Google Colab para completar este laboratorio. Además, necesitarás una cuenta en Kaggle para descargar datasets directamente desde la plataforma.</p>
+    <p>Antes de comenzar, asegúrate de tener instaladas las librerías necesarias, como Pandas y Kagglehub. Puedes instalarlas usando pip si no las tienes:</p>
+    <p> Usa la plantilla de Google Colab:</p>
+    <a href="https://colab.research.google.com/drive/1vS9VrHbD9tc9pWrmAt3X_pAcbmV9Ll6f?usp=sharing" target="_blank" class="btn-download">
+        Abrir Plantilla en Google Colab
+    </a>
     <h3 style="color: var(--primary);">1. Carga de datos desde un archivo CSV</h3>
+     <a href="./datos_laboratorio.xlsx" download class="btn-download">
+        ⬇️ Descargar Base de Datos 1
+    </a>
+    <a href="./estudiantes (1).csv" download class="btn-download">
+        ⬇️ Descargar Base de Datos 2
+    </a>
     <p>Para cargar un archivo CSV local o desde tu Google Drive, utilizamos la librería Pandas:</p>
     <div class="code-block">
 <pre>import pandas as pd
@@ -169,29 +296,68 @@ df_excel = pd.read_excel('ruta_del_archivo.xlsx', sheet_name='Hoja1')
 # Resumen estadístico básico
 df_excel.describe()</pre>
     </div>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Carga de datos desde Google Drive</h3>
+    <p>Para acceder a archivos almacenados en Google Drive, primero montamos el drive en Colab y montamos los archivos a drive en su carpeta correspondiente:</p>
+    <div class="code-block">
+<pre>from google.colab import drive
+# Montar Google Drive
+drive.mount('/content/drive')
+# Cargar archivo desde Google Drive
+df_drive = pd.read_csv('/content/drive/MyDrive/ruta_del_archivo.csv')
+# Análisis exploratorio
+df_drive.head()
+</pre>
+    </div>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Carga de datos usando la API de Kaggle</h3>
-    <p>Para descargar datasets directamente desde Kaggle, primero debes subir tu archivo <code>kaggle.json</code> (token de API) a Colab:</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">4. Carga de datos usando la API de Kaggle</h3>
+    <p>Para descargar datasets directamente desde Kaggle(link: <a href="https://www.kaggle.com/datasets/danielsowah123/retail-sales-dataset" target="_blank">Link al dataset</a>), primero debes tener cuenta en <a href="https://www.kaggle.com/" target="_blank">Kaggle</a>:</p>
     <div class="code-block">
 <pre># Subir el archivo kaggle.json
-from google.colab import files
-files.upload()
+# Install dependencies as needed:
+# pip install kagglehub[pandas-datasets]
+import kagglehub
+from kagglehub import KaggleDatasetAdapter
 
-# Crear el directorio y configurar permisos
-!mkdir -p ~/.kaggle
-!cp kaggle.json ~/.kaggle/
-!chmod 600 ~/.kaggle/kaggle.json
+# Set the path to the file you'd like to load
+file_path = ""
 
-# Descargar y descomprimir el dataset
-!kaggle datasets download -d nombre-del-usuario/nombre-del-dataset
-!unzip nombre-del-dataset.zip</pre>
+# Load the latest version
+df = kagglehub.load_dataset(
+  KaggleDatasetAdapter.PANDAS,
+  "danielsowah123/retail-sales-dataset",
+  file_path,
+  # Provide any additional arguments like 
+  # sql_query or pandas_kwargs. See the 
+  # documenation for more information:
+  # https://github.com/Kaggle/kagglehub/blob/main/README.md#kaggledatasetadapterpandas
+)
+
+print("First 5 records:", df.head())</pre>
+    </div>
+    Video tutorial: <a href="https://www.youtube.com/watch?v=VVi4cMx_V6Q" target="_blank">Carga de datos desde Kaggle en Google Colab</a>
+    <!-- Espacio para embeber video de YouTube -->
+      <!-- Espacio para embeber video de YouTube -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/bnh9d5JQgLQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p style="margin-top: 1rem;">🔗 <strong>Enlace alternativo del video:</strong> <a href="https://www.youtube.com/watch?v=bnh9d5JQgLQ" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+    
+     <div class="video-container">
+        <iframe src="https://www.youtube.com/watch?v=VVi4cMx_V6Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 </section>
 
 <section id="entregables" class="section card">
     <h2 class="section-title">Compromisos de entrega</h2>
     <ul>
-        <li>[Texto pendiente: Indica los entregables, por ejemplo, PDF exportado de Colab]</li>
+        <li>1. En colab, Cargar datos desde un archivo CSV</li>
+        <li>2. Tambien, Cargar datos desde un archivo Excel</li>
+        <li>3. Ademas, Cargar datos desde Kaggle y Drive</li>
+        <li>4. Finalmente, Realizar un gráfico de los datos cargados</li>
+        <li>5. Entregar el notebook de Google Colab con los resultados y análisis en PDF</li>
+
     </ul>
 </section>
 
@@ -203,6 +369,9 @@ files.upload()
                 <tr>
                     <th>Criterio</th>
                     <th>Nivel 1 – Insuficiente</th>
+                    <th>Nivel 2 – Aceptable</th>
+                    <th>Nivel 3 – Bueno</th>
+
                     <th>Nivel 4 – Excelente</th>
                 </tr>
             </thead>
@@ -211,12 +380,31 @@ files.upload()
                     <td><strong>Carga de datos CSV/Excel</strong></td>
                     <td>No logra importar los datos.</td>
                     <td>Importa los datos correctamente y muestra las primeras filas.</td>
+                    <td>Importa los datos y realiza un análisis exploratorio básico (head, info, describe).</td>
+                    <td>Importa los datos, realiza un análisis exploratorio completo y documenta el proceso con comentarios claros.</td>
+
                 </tr>
                 <tr>
                     <td><strong>Conexión con Kaggle</strong></td>
                     <td>No configura la API.</td>
                     <td>Descarga el dataset directamente desde Kaggle y lo lee en un DataFrame.</td>
+                    <td>Descarga el dataset, lo lee en un DataFrame y realiza un análisis exploratorio básico.</td>
+                    <td>Descarga el dataset, lo lee en un DataFrame, realiza un análisis exploratorio completo y documenta el proceso con comentarios claros.</td>
+
                 </tr>
+                <tr>
+                    <td><strong>Conexión con Google Drive</strong></td>
+                    <td>No logra montar Google Drive.</td>
+                    <td>Monta Google Drive y accede a los archivos correctamente.</td>
+                    <td>Monta Google Drive, accede a los archivos y realiza un análisis exploratorio básico.</td>
+                    <td>Monta Google Drive, accede a los archivos, realiza un análisis exploratorio completo y documenta el proceso con comentarios claros.</td>
+                </tr>
+                <tr>
+                    <td><strong>Visualización de datos</strong></td>
+                    <td>No genera ninguna visualización.</td>
+                    <td>Genera una visualización básica de los datos.</td>
+                    <td>Genera visualizaciones claras y relevantes de los datos.</td>
+                    <td>Genera visualizaciones claras, relevantes y estéticamente agradables, con interpretación de los resultados.</td>
             </tbody>
         </table>
     </div>
