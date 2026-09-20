@@ -1,1 +1,414 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4: Predicción y Regresión Lineal</title>
+    <!-- Integración de MathJax para las fórmulas matemáticas -->    <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Estilos base de la plantilla original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 2.5rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+
+        .slide.active { display: flex; }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: El Reto de la Predicción -->
+        <div class="slide">
+            <h1>El Reto de la Predicción</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p>Hemos calculado que la correlación entre las flexiones y las abdominales es fuerte ($r = 0.84$). Existe una clara tendencia lineal.</p>
+                    </div>
+                    <div style="background-color: #fff9c4; border-left: 6px solid #fbc02d; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                        <h3 style="margin-top: 0; color: #f57f17; font-size: 1.4rem;">Pregunta Central:</h3>
+                        <p style="font-size: 1.2rem; margin-bottom: 0; color: #333;"><strong>"Si un nuevo estudiante logra hacer exactamente 28 flexiones, ¿cuántas abdominales predecimos que hará?"</strong></p>
+                    </div>
+                </div>
+                
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; border-top: 5px solid var(--blue);">
+                        <svg viewBox="0 0 250 200" style="width: 100%; max-width: 350px;">
+                            <!-- Ejes -->
+                            <line x1="30" y1="170" x2="230" y2="170" stroke="var(--text-color)" stroke-width="2"/>
+                            <line x1="30" y1="20" x2="30" y2="170" stroke="var(--text-color)" stroke-width="2"/>
+                            <text x="130" y="195" font-size="10" fill="var(--text-color)">Flexiones (x)</text>
+                            <text x="5" y="15" font-size="10" fill="var(--text-color)">Abdominales (y)</text>
+                            
+                            <!-- Nube de puntos -->
+                            <circle cx="50" cy="140" r="3" fill="#666"/><circle cx="70" cy="110" r="3" fill="#666"/><circle cx="90" cy="130" r="3" fill="#666"/><circle cx="110" cy="90" r="3" fill="#666"/><circle cx="140" cy="80" r="3" fill="#666"/><circle cx="160" cy="70" r="3" fill="#666"/><circle cx="180" cy="50" r="3" fill="#666"/><circle cx="210" cy="40" r="3" fill="#666"/>
+                            
+                            <!-- Línea de Regresión -->
+                            <line x1="30" y1="160" x2="220" y2="35" stroke="var(--blue)" stroke-width="2"/>
+                            
+                            <!-- Punto de predicción x=28 -->
+                            <line x1="125" y1="170" x2="125" y2="98" stroke="#d32f2f" stroke-dasharray="4" stroke-width="1.5"/>
+                            <line x1="125" y1="98" x2="30" y2="98" stroke="#d32f2f" stroke-dasharray="4" stroke-width="1.5"/>
+                            <circle cx="125" cy="98" r="5" fill="#d32f2f"/>
+                            
+                            <!-- Etiquetas de valor -->
+                            <text x="120" y="185" font-size="10" fill="#d32f2f" font-weight="bold">x=28</text>
+                            <text x="5" y="102" font-size="10" fill="#d32f2f" font-weight="bold">y=?</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Correlación != Regresión -->
+        <div class="slide">
+            <h1>Correlación $\neq$ Regresión</h1>
+            <p style="font-size: 1.2rem; text-align: center; margin-bottom: 30px;">Aunque van de la mano, responden a preguntas analíticas completamente distintas.</p>
+            
+            <div class="grid-layout" style="align-items: stretch;">
+                <div class="matrix-card" style="border-top: 5px solid var(--green); text-align: center; padding: 40px 20px;">
+                    <h2 style="color: var(--green); font-size: 2rem; margin-top: 0;">Correlación</h2>
+                    <div style="font-size: 4rem; margin: 10px 0;">🤝</div>
+                    <h3 style="font-size: 1.3rem; color: var(--text-color);">Mide la Fuerza</h3>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.5;">Responde a la pregunta: <em>¿Qué tan juntos y sincronizados están los datos?</em><br><br>Nos da un único número (ej. $r = 0.84$).</p>
+                </div>
+                
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: center; padding: 40px 20px;">
+                    <h2 style="color: var(--blue); font-size: 2rem; margin-top: 0;">Regresión</h2>
+                    <div style="font-size: 4rem; margin: 10px 0;">🗺️</div>
+                    <h3 style="font-size: 1.3rem; color: var(--text-color);">Crea el Mapa Matemático</h3>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.5;">Responde a la pregunta: <em>¿Cómo puedo usar $x$ para adivinar el valor de $y$?</em><br><br>Nos da una ecuación predictiva.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: El Menú de Modelos -->
+        <div class="slide">
+            <h1>El Menú de Modelos</h1>
+            <div class="grid-layout" style="align-items: stretch;">
+                <!-- Modelo Lineal -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); align-items: center; text-align: center;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.4rem;">Patrón Lineal</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 120px; margin: 15px 0;">
+                        <line x1="10" y1="90" x2="140" y2="10" stroke="var(--blue)" stroke-width="2"/>
+                        <circle cx="25" cy="75" r="3" fill="var(--text-color)"/><circle cx="50" cy="65" r="3" fill="var(--text-color)"/><circle cx="75" cy="45" r="3" fill="var(--text-color)"/><circle cx="100" cy="40" r="3" fill="var(--text-color)"/><circle cx="125" cy="20" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <p style="font-size: 1rem; color: #666;">La tasa de cambio es constante.</p>
+                    <div class="math-eq" style="font-size: 1.6rem; margin-top: 10px; width: 100%; background: #f0f4f8; padding: 10px; border-radius: 8px;">
+                        $$ \hat{y} = b_0 + b_1x $$
+                    </div>
+                </div>
+
+                <!-- Modelo Cuadrático -->
+                <div class="matrix-card" style="border-top: 5px solid #ff9800; align-items: center; text-align: center;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.4rem;">Patrón Cuadrático (Curvilíneo)</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 120px; margin: 15px 0;">
+                        <path d="M 10 90 Q 75 -20 140 90" fill="none" stroke="#f57c00" stroke-width="2"/>
+                        <circle cx="20" cy="75" r="3" fill="var(--text-color)"/><circle cx="45" cy="35" r="3" fill="var(--text-color)"/><circle cx="75" cy="18" r="3" fill="var(--text-color)"/><circle cx="105" cy="35" r="3" fill="var(--text-color)"/><circle cx="130" cy="75" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <p style="font-size: 1rem; color: #666;">Describe aceleración o retornos decrecientes.</p>
+                    <div class="math-eq" style="font-size: 1.6rem; margin-top: 10px; width: 100%; background: #fff3e0; padding: 10px; border-radius: 8px; color: #f57c00;">
+                        $$ \hat{y} = a + bx + cx^2 $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Laboratorio: La Línea de Tendencia -->
+        <div class="slide">
+            <h1>Laboratorio: La Línea de Tendencia</h1>
+            <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                <p>Abramos nuestra herramienta de software (Excel, Colab o Bachué Data Toolbox) y transformemos nuestros datos en un oráculo matemático.</p>
+            </div>
+            
+            <div class="matrix-card" style="border-left: 5px solid var(--blue); padding: 30px;">
+                <ol style="font-size: 1.3rem; line-height: 1.8; color: var(--text-color); margin: 0; padding-left: 20px;">
+                    <li><strong>Graficar:</strong> Seleccionar ambas columnas e insertar un <em>Diagrama de Dispersión</em>.</li>
+                    <li><strong>Modelar:</strong> Hacer clic derecho sobre los puntos y seleccionar <em>"Agregar Línea de Tendencia"</em> (Lineal).</li>
+                    <li><strong>Extraer Ecuación:</strong> Marcar la casilla <em>"Presentar ecuación en el gráfico"</em> para obtener $\hat{y}$.</li>
+                    <li><strong>Predecir:</strong> Tomar la ecuación generada, sustituir la $x$ por el valor deseado (ej. 28) y calcular el resultado proyectado de $\hat{y}$.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 5: Aplicación: Frenado de Emergencia -->
+        <div class="slide">
+            <h1>Aplicación: Frenado de Emergencia</h1>
+            <div class="grid-layout" style="align-items: center;">
+                <div class="matrix-card" style="border: 3px dashed #d32f2f; background-color: #fffafb; padding: 30px;">
+                    <h3 style="color: #d32f2f; margin-top: 0; font-size: 1.3rem;">El Caso:</h3>
+                    <p style="font-size: 1.15rem; color: var(--text-color); line-height: 1.5; margin-bottom: 0;">
+                        Un equipo de ingeniería automotriz recolecta datos sobre la <strong>rapidez de un vehículo ($x$)</strong> y la <strong>distancia requerida para frenar por completo ($y$)</strong>. Han calculado su ecuación de regresión lineal.
+                    </p>
+                </div>
+                
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue); padding: 25px;">
+                        <h3 style="color: var(--blue); margin-top: 0; font-size: 1.3rem;">Reto de Debate</h3>
+                        <p style="font-size: 1.1rem; color: var(--text-color); line-height: 1.6;">
+                            Al utilizar la ecuación para predecir la distancia de frenado de un auto que va a 120 km/h... <br><br>
+                            <strong>¿El valor predicho de $\hat{y}$ será matemáticamente <em>exacto</em> en la vida real, o solo <em>razonablemente cercano</em>? ¿Por qué?</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Metacognición y Cierre -->
+        <div class="slide">
+            <h1>Metacognición y Cierre</h1>
+            <div class="grid-layout" style="align-items: stretch; height: 100%;">
+                <div class="matrix-card" style="border-top: 5px solid #7b1fa2; padding: 35px; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="color: #7b1fa2; margin-top: 0; font-size: 1.5rem;">Pensamiento Crítico</h2>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color); margin: 15px 0;">
+                        "Si el diagrama de dispersión original es un caos absoluto y el coeficiente de correlación es muy cercano a cero ($r \approx 0$)...<br><br>
+                        <strong>¿Sirve de algo utilizar nuestra ecuación matemática de regresión lineal para tomar decisiones corporativas?</strong>"
+                    </p>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px; justify-content: center;">
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p style="font-weight: bold; color: var(--green); font-size: 1.3rem; margin-bottom: 5px;">Ticket de Salida</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0;">Ingresa a MS Teams y resuelve el ejercicio de predicción final para registrar tu asistencia de hoy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <!-- Script base del documento original -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

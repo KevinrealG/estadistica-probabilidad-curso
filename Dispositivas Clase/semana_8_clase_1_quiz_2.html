@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Correlación y Causalidad</title>
+     <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables y base de tu plantilla original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Estructura de la diapositiva y contenedor */
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px;
+            box-sizing: border-box;
+        }
+        .slide {
+            width: min(92vw, 1000px);
+            height: calc(100vh - 100px);
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: clamp(20px, 4vw, 40px);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Encabezado del Quiz */
+        .quiz-header {
+            text-align: center;
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        .quiz-header h1 {
+            color: var(--blue);
+            margin: 0 0 10px 0;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        }
+        .quiz-header p {
+            margin: 0;
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* Contenedor de preguntas con Scroll */
+        .quiz-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .quiz-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .quiz-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        /* Tarjetas de preguntas basadas en tu .matrix-card */
+        .matrix-card {
+            background: #f9fcff;
+            border: 1px solid #dcefff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 91, 150, 0.05);
+        }
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .option-btn {
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            text-align: left;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--blue);
+            background-color: #f0f8ff;
+            transform: translateX(5px);
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
+        /* Caja de retroalimentación */
+        .feedback {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+            font-size: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Controles y Tema Oscuro */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .controls button {
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        .controls button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+            --card-bg: #1e1e1e;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme .option-btn {
+            background-color: #333;
+            border-color: #555;
+            color: #eee;
+        }
+        body.dark-theme .option-btn:hover:not(:disabled) {
+            background-color: #444;
+            border-color: var(--blue);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        body.dark-theme .controls button { background-color: #333; }
+        body.dark-theme .quiz-header p { color: #aaa; }
+    </style>
+</head>
+<body>
+
+    <div class="slides-container">
+        <div class="slide">
+            
+            <div class="quiz-header">
+                <h1>Correlación y Causalidad en Estadística Bivariada</h1>
+                <p>Evaluación Formativa | 7 Preguntas (70 Puntos)</p>
+            </div>
+
+            <div class="quiz-container">
+                
+                <!-- Pregunta 1 -->
+                <div class="matrix-card" id="q1">
+                    <p class="question-title">1. ¿Cuál es la diferencia principal entre correlación y causalidad? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">Ambas significan lo mismo</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q1')">Correlación no implica causalidad</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">Correlación siempre implica causalidad</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="matrix-card" id="q2">
+                    <p class="question-title">2. Identifica la variable independiente en el siguiente ejemplo: "El consumo de agua aumenta cuando la temperatura sube en Monterrey." (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">Ciudad</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q2')">Temperatura</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">Consumo de agua</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="matrix-card" id="q3">
+                    <p class="question-title">3. ¿Cuál es la variable dependiente en el ejemplo anterior? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q3')">Temperatura</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q3')">Consumo de agua</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q3')">Ciudad</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="matrix-card" id="q4">
+                    <p class="question-title">4. ¿Cuál de las siguientes situaciones representa una relación causal? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q4')">El ejercicio regular reduce el riesgo de enfermedades cardíacas.</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q4')">El consumo de helado y los casos de insolación aumentan en verano.</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q4')">El número de películas vistas y el consumo de palomitas están relacionados.</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="matrix-card" id="q5">
+                    <p class="question-title">5. ¿Qué tipo de relación existe entre la cantidad de lluvia y el nivel de los ríos en una ciudad? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q5')">Correlación y causalidad</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q5')">Solo correlación</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q5')">No hay relación</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="matrix-card" id="q6">
+                    <p class="question-title">6. ¿Cuál es el error común al interpretar correlación como causalidad? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q6')">Confundir relación con causa</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q6')">Usar ejemplos locales</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q6')">No identificar variables</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="matrix-card" id="q7" style="margin-bottom: 20px;">
+                    <p class="question-title">7. ¿Qué método se utiliza para identificar si existe una relación entre dos variables? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q7')">Análisis univariado</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false, 'q7')">Análisis multivariado</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true, 'q7')">Análisis bivariado</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Controles de tema heredados de tu plantilla base -->
+    <div class="controls">
+        <button onclick="document.body.classList.toggle('dark-theme')">🌓 Cambiar Tema</button>
+    </div>
+
+    <!-- Script de Evaluación Lógica -->
+    <script>
+        function checkAnswer(buttonElement, isCorrect, questionId) {
+            // Seleccionar el contenedor de la pregunta específica
+            const questionContainer = document.getElementById(questionId);
+            const allButtons = questionContainer.querySelectorAll('.option-btn');
+            const feedbackDiv = questionContainer.querySelector('.feedback');
+            const isDarkTheme = document.body.classList.contains('dark-theme');
+
+            // Deshabilitar botones para un solo intento
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.color = isDarkTheme ? "#aaa" : "#555";
+            });
+
+            // Mostrar el cuadro de retroalimentación
+            feedbackDiv.style.display = "block";
+
+            if (isCorrect) {
+                // Estilos para respuesta correcta (Verde)
+                buttonElement.style.backgroundColor = "var(--green)";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "var(--green)";
+                
+                feedbackDiv.style.backgroundColor = isDarkTheme ? "rgba(76, 175, 80, 0.2)" : "#e8f5e9";
+                feedbackDiv.style.color = isDarkTheme ? "#81c784" : "#2e7d32";
+                feedbackDiv.innerHTML = "✅ ¡Correcto! Excelente análisis.";
+            } else {
+                // Estilos para respuesta incorrecta (Rojo)
+                buttonElement.style.backgroundColor = "#d32f2f";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "#d32f2f";
+                
+                feedbackDiv.style.backgroundColor = isDarkTheme ? "rgba(211, 47, 47, 0.2)" : "#ffebee";
+                feedbackDiv.style.color = isDarkTheme ? "#e57373" : "#c62828";
+                feedbackDiv.innerHTML = "❌ Respuesta incorrecta. Revisa el concepto.";
+                
+                // Resaltar suavemente la respuesta que era correcta
+                allButtons.forEach(btn => {
+                    if(btn.getAttribute("onclick").includes("true")) {
+                        btn.style.border = "2px solid var(--green)";
+                        btn.style.backgroundColor = isDarkTheme ? "rgba(76, 175, 80, 0.1)" : "#f1f8e9";
+                        btn.style.color = isDarkTheme ? "#e0e0e0" : "var(--text-color)";
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

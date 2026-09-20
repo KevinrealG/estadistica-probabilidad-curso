@@ -1,1 +1,555 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clases 2 y 3: Regresión y Predicción</title>
+    <!-- MathJax para fórmulas matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Estilos heredados del documento base */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .math-eq {
+            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 15px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+
+        .slide.active { display: flex; }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- ============================================== -->
+        <!-- CLASE 2: MÍNIMOS CUADRADOS                     -->
+        <!-- ============================================== -->
+        
+        <!-- Slide 1: Torneo de las Rectas -->
+        <div class="slide">
+            <h1 style="font-size: 2rem; border-bottom: 2px solid #ccc; color: #777;">Clase N°2</h1>
+            <h1>El Torneo de las Rectas</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="border-left: 6px solid var(--blue);">
+                        <p>Si le pedimos a 30 personas que dibujen una línea recta a través de una nube de puntos, tendremos 30 rectas diferentes.</p>
+                    </div>
+                    <ul>
+                        <li>¿Cómo sabe la matemática cuál es la "ganadora"?</li>
+                        <li>¿Por qué algunas rectas parecen ajustar bien, pero matemáticamente fallan?</li>
+                        <li>Analicemos las distancias verticales (errores) entre los puntos y nuestra recta candidata.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 300px;">
+                            <!-- Puntos -->
+                            <circle cx="30" cy="120" r="4" fill="var(--text-color)"/>
+                            <circle cx="70" cy="90" r="4" fill="var(--text-color)"/>
+                            <circle cx="110" cy="100" r="4" fill="var(--text-color)"/>
+                            <circle cx="150" cy="50" r="4" fill="var(--text-color)"/>
+                            <circle cx="180" cy="30" r="4" fill="var(--text-color)"/>
+                            <!-- Recta Mala 1 -->
+                            <line x1="10" y1="140" x2="190" y2="80" stroke="#f44336" stroke-width="2" stroke-dasharray="4"/>
+                            <!-- Recta Mala 2 -->
+                            <line x1="10" y1="60" x2="190" y2="20" stroke="#ff9800" stroke-width="2" stroke-dasharray="4"/>
+                            <!-- Recta Ganadora -->
+                            <line x1="10" y1="130" x2="190" y2="20" stroke="var(--blue)" stroke-width="3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: El Problema del Cero -->
+        <div class="slide">
+            <h1>El Problema del Cero</h1>
+            <div class="grid-layout">
+                <div>
+                    <p style="font-size: 1.3rem; line-height: 1.6;">Si trazamos una recta perfectamente al medio, la distancia del punto superior es <strong style="color:var(--green)">+5</strong> y del inferior es <strong style="color:#d32f2f">-5</strong>.</p>
+                    <ul>
+                        <li>La suma de estos errores es: <strong>+5 + (-5) = 0</strong>.</li>
+                        <li>¡Parece un ajuste perfecto!</li>
+                        <li><strong>El Reto:</strong> Una recta horizontal lejísimos también sumaría cero si es simétrica. ¿Qué truco matemático evita que los signos se cancelen?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="width: 100%; border-top: 5px solid #d32f2f;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 250px;">
+                            <!-- Recta -->
+                            <line x1="20" y1="75" x2="180" y2="75" stroke="var(--blue)" stroke-width="4"/>
+                            <!-- Punto Superior -->
+                            <circle cx="100" cy="25" r="5" fill="var(--green)"/>
+                            <line x1="100" y1="25" x2="100" y2="75" stroke="var(--green)" stroke-width="2" stroke-dasharray="4"/>
+                            <text x="110" y="55" font-size="14" fill="var(--green)" font-weight="bold">+5</text>
+                            <!-- Punto Inferior -->
+                            <circle cx="140" cy="125" r="5" fill="#d32f2f"/>
+                            <line x1="140" y1="125" x2="140" y2="75" stroke="#d32f2f" stroke-width="2" stroke-dasharray="4"/>
+                            <text x="150" y="105" font-size="14" fill="#d32f2f" font-weight="bold">-5</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Mínimos Cuadrados -->
+        <div class="slide">
+            <h1 style="border-bottom: 3px solid #ff9800;">El Criterio de Mínimos Cuadrados</h1>
+            <div class="slide-intro" style="text-align: center;">
+                <p style="font-weight: bold; font-size: 1.4rem;">La recta de mejor ajuste es aquella que minimiza la suma de los cuadrados de las distancias: $\Sigma(y - \hat{y})^2$</p>
+            </div>
+            <div class="grid-layout" style="align-items: stretch; margin-top: 20px;">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3>1. La Pendiente ($b_1$)</h3>
+                    <p style="color: var(--text-color);">Reciclamos las sumas de cuadrados (SS) de la clase de correlación:</p>
+                    <div class="math-eq">
+                        $$ b_1 = \frac{SS(xy)}{SS(x)} $$
+                    </div>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3>2. El Intercepto ($b_0$)</h3>
+                    <p style="color: var(--text-color);">El punto de anclaje de nuestra recta:</p>
+                    <div class="math-eq">
+                        $$ b_0 = \frac{\Sigma y - (b_1 \cdot \Sigma x)}{n} $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Laboratorio Analítico -->
+        <div class="slide">
+            <h1>Laboratorio: El Motor de Excel al Descubierto</h1>
+            <div class="matrix-card" style="border-left: 6px solid var(--blue); padding: 30px; text-align: left;">
+                <h3 style="color: var(--blue); margin-top: 0;">Misión en Parejas:</h3>
+                <ol style="font-size: 1.3rem; line-height: 1.8; color: var(--text-color); margin: 0; padding-left: 20px;">
+                    <li>Tomen los valores <strong>pre-calculados</strong> de las sumas de cuadrados del ejercicio anterior.</li>
+                    <li>Apliquen las ecuaciones para calcular $b_1$ y $b_0$ <strong>manualmente</strong>.</li>
+                    <li>Abran <strong>Excel</strong> y grafiquen los 5 puntos de datos.</li>
+                    <li>Inserten la <em>Línea de Tendencia</em> lineal y marquen "Presentar ecuación en el gráfico".</li>
+                    <li><strong>¡Veredicto!</strong> ¿Coincide el software exactamente con su cálculo algebraico?</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 5: El Impacto Financiero (Visual Only) -->
+        <div class="slide" style="padding: 0; display: none; align-items: center; justify-content: center; background-color: #263238;">
+            <!-- Visual puro: Almacén sobre-stockeado -->
+            <svg viewBox="0 0 800 600" style="width: 100%; height: 100%; max-height: 80vh;">
+                <!-- Fondo -->
+                <rect width="800" height="600" fill="#263238"/>
+                <rect x="0" y="450" width="800" height="150" fill="#37474F"/>
+                <!-- Estanterías -->
+                <line x1="100" y1="100" x2="100" y2="450" stroke="#546E7A" stroke-width="15"/>
+                <line x1="400" y1="100" x2="400" y2="450" stroke="#546E7A" stroke-width="15"/>
+                <line x1="700" y1="100" x2="700" y2="450" stroke="#546E7A" stroke-width="15"/>
+                <line x1="50" y1="150" x2="750" y2="150" stroke="#546E7A" stroke-width="10"/>
+                <line x1="50" y1="250" x2="750" y2="250" stroke="#546E7A" stroke-width="10"/>
+                <line x1="50" y1="350" x2="750" y2="350" stroke="#546E7A" stroke-width="10"/>
+                <!-- Cajas amontonadas (Exceso de inventario) -->
+                <!-- Estante 1 -->
+                <rect x="120" y="100" width="60" height="50" fill="#FFB74D" stroke="#E65100" stroke-width="2"/>
+                <rect x="190" y="100" width="60" height="50" fill="#FFB74D" stroke="#E65100" stroke-width="2"/>
+                <rect x="260" y="100" width="60" height="50" fill="#FFB74D" stroke="#E65100" stroke-width="2"/>
+                <rect x="330" y="100" width="60" height="50" fill="#FFB74D" stroke="#E65100" stroke-width="2"/>
+                <!-- Pilas desbordando -->
+                <rect x="420" y="300" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <rect x="440" y="250" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <rect x="410" y="200" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <rect x="450" y="150" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <rect x="420" y="100" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <rect x="430" y="50" width="80" height="50" fill="#EF5350" stroke="#B71C1C" stroke-width="3"/>
+                <!-- Símbolo de pérdida -->
+                <text x="580" y="250" font-size="80" fill="#F44336" font-weight="bold" font-family="sans-serif">-$</text>
+            </svg>
+        </div>
+
+        <!-- Slide 6: Metacognición 1 -->
+        <div class="slide">
+            <h1>Metacognición y Cierre</h1>
+            <div class="grid-layout" style="align-items: stretch; height: 100%;">
+                <div class="matrix-card" style="border-top: 5px solid #7b1fa2; padding: 35px; justify-content: center;">
+                    <h2 style="color: #7b1fa2; margin-top: 0;">Reflexión Crítica</h2>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color); margin: 15px 0;">
+                        "Al usar el criterio de elevar al cuadrado, un error grande (fallar por 10) se convierte en 100, mientras que dos errores pequeños (fallar por 5 y 5) suman apenas 50.<br><br>
+                        <strong>¿Por qué en ingeniería o negocios castigamos mucho más a un solo error gigantesco que a varios errores pequeños?</strong>"
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 20px; justify-content: center;">
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p style="font-weight: bold; color: var(--green); font-size: 1.3rem;">Ticket de Salida</p>
+                        <p style="font-size: 1.1rem;">Escribe en el formulario digital la interpretación práctica de tu pendiente $b_1$ calculada hoy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- CLASE 3: RESTRICCIONES DE PREDICCIÓN           -->
+        <!-- ============================================== -->
+
+        <!-- Slide 7: El Reto del Absurdo Matemático -->
+        <div class="slide">
+            <h1 style="font-size: 2rem; border-bottom: 2px solid #ccc; color: #777;">Clase N°3</h1>
+            <h1>El Bebé de -186 Libras</h1>
+            <div class="grid-layout">
+                <div>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">Tenemos una ecuación calculada a partir de estaturas y pesos de mujeres universitarias:</p>
+                    <div class="math-eq" style="background: #f0f4f8; padding: 15px; border-radius: 8px;">
+                        $$ \hat{y} = -186.5 + 4.71x $$
+                    </div>
+                    <ul>
+                        <li>Si $x = 66$ pulgadas ➔ Peso = 124 libras.</li>
+                        <li><strong>Pero...</strong> si analizamos a un bebé recién nacido que mide casi 0 pulgadas, la matemática predice un peso de <strong>-186.5 libras</strong>.</li>
+                        <li>¿Es la ecuación matemática una ley universal irrompible?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div style="font-size: 8rem; text-align: center;">👶❓</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Las 3 Reglas de Oro -->
+        <div class="slide">
+            <h1 style="text-align: center; border-bottom: none; width: 100%;">Las 3 Reglas de Oro de la Predicción</h1>
+            
+            <div style="display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                <!-- Regla 1 -->
+                <div class="matrix-card" style="flex: 1; min-width: 250px; border-top: 5px solid var(--blue);">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">👥</div>
+                    <h3 style="color: var(--blue); margin-top: 0;">Límite Poblacional</h3>
+                    <p style="color: var(--text-color); font-size: 1.1rem; line-height: 1.5;">La ecuación solo es válida para la población de la que se extrajo la muestra. No cruces peras con manzanas.</p>
+                </div>
+                
+                <!-- Regla 2 -->
+                <div class="matrix-card" style="flex: 1; min-width: 250px; border-top: 5px solid #d32f2f;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">📏</div>
+                    <h3 style="color: #d32f2f; margin-top: 0;">Dominio Muestral</h3>
+                    <p style="color: var(--text-color); font-size: 1.1rem; line-height: 1.5;">Solo es seguro predecir dentro del rango de los datos recolectados (interpolación). Salirse es peligroso.</p>
+                </div>
+                
+                <!-- Regla 3 -->
+                <div class="matrix-card" style="flex: 1; min-width: 250px; border-top: 5px solid #ff9800;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">⏳</div>
+                    <h3 style="color: #f57c00; margin-top: 0;">Límite Temporal</h3>
+                    <p style="color: var(--text-color); font-size: 1.1rem; line-height: 1.5;">Las poblaciones cambian con el tiempo. Un modelo excelente en 2019 puede ser inútil en 2026.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: El Precipicio de la Extrapolación -->
+        <div class="slide">
+            <h1>El Precipicio de la Extrapolación</h1>
+            <div class="slide-intro" style="text-align: center;">
+                <p>Predecir valores muy por fuera del rango original de la variable $X$ se llama <strong>Extrapolación</strong>.</p>
+            </div>
+            <div class="visual-container">
+                <svg viewBox="0 0 600 250" style="width: 100%; max-width: 700px;">
+                    <!-- Ejes -->
+                    <line x1="50" y1="200" x2="550" y2="200" stroke="var(--text-color)" stroke-width="2"/>
+                    <line x1="50" y1="50" x2="50" y2="200" stroke="var(--text-color)" stroke-width="2"/>
+                    
+                    <!-- Zona Segura (Interpolación) -->
+                    <rect x="100" y="50" width="150" height="150" fill="rgba(76, 175, 80, 0.1)"/>
+                    <text x="120" y="230" font-size="14" fill="var(--green)" font-weight="bold">Zona Segura (Datos)</text>
+                    
+                    <!-- Puntos de datos -->
+                    <circle cx="120" cy="160" r="4" fill="var(--text-color)"/>
+                    <circle cx="150" cy="140" r="4" fill="var(--text-color)"/>
+                    <circle cx="180" cy="150" r="4" fill="var(--text-color)"/>
+                    <circle cx="210" cy="120" r="4" fill="var(--text-color)"/>
+                    <circle cx="240" cy="100" r="4" fill="var(--text-color)"/>
+                    
+                    <!-- Recta Base -->
+                    <line x1="100" y1="170" x2="250" y2="95" stroke="var(--blue)" stroke-width="4"/>
+                    
+                    <!-- Recta Extrapolada (Peligro) -->
+                    <line x1="250" y1="95" x2="500" y2="-30" stroke="#d32f2f" stroke-width="3" stroke-dasharray="6"/>
+                    
+                    <!-- Zona Peligrosa (Extrapolación) -->
+                    <rect x="250" y="50" width="300" height="150" fill="rgba(211, 47, 47, 0.05)"/>
+                    <text x="320" y="230" font-size="14" fill="#d32f2f" font-weight="bold">Abismo de la Extrapolación</text>
+                    <text x="380" y="100" font-size="30">⚠️</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Slide 10: El Tribunal de los Datos -->
+        <div class="slide">
+            <h1 style="border-bottom: 3px solid var(--blue);">El Tribunal de los Datos</h1>
+            <div class="grid-layout">
+                <div class="matrix-card" style="border-left: 6px solid #ff9800; text-align: left; padding: 30px;">
+                    <h2 style="color: #f57c00; margin-top: 0;">Misión de Auditoría</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-color);">Se les entregarán 3 "Reportes de Consultoría" con inversiones millonarias basadas en regresiones lineales.</p>
+                    <ul style="font-size: 1.1rem;">
+                        <li><strong>Revisen:</strong> Cada reporte viola flagrantemente una de las 3 Reglas de Oro.</li>
+                        <li><strong>Acción:</strong> Escriban su veredicto justificando qué restricción fue violada.</li>
+                    </ul>
+                </div>
+                <div class="visual-container" style="flex-direction: column;">
+                    <div style="font-size: 6rem; color: #333; font-weight: bold; font-family: monospace; background: #e0e0e0; padding: 20px 40px; border-radius: 15px; border: 4px solid #999;">
+                        15:00
+                    </div>
+                    <p style="font-size: 1.2rem; color: var(--blue); font-weight: bold;">Trabajo en equipos de 4</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Veredictos -->
+        <div class="slide">
+            <h1 style="text-align: center; border: none;">Veredictos de Auditoría</h1>
+            <div class="grid-layout" style="margin-top: 30px;">
+                <div class="matrix-card" style="border: 4px solid var(--green); background: #f1f8e9;">
+                    <h2 style="color: var(--green); font-size: 2.5rem; margin: 0;">APROBADO</h2>
+                    <p style="font-size: 1.2rem; color: #333; margin-top: 15px;">Modelo aplicado dentro de su dominio muestral, a la población correcta, en el marco de tiempo relevante.</p>
+                </div>
+                <div class="matrix-card" style="border: 4px solid #d32f2f; background: #ffebee;">
+                    <h2 style="color: #d32f2f; font-size: 2.5rem; margin: 0;">RECHAZADO</h2>
+                    <p style="font-size: 1.2rem; color: #333; margin-top: 15px;">Invalidez por Extrapolación, cambio de nicho poblacional o uso de datos caducos. ¡Peligro financiero!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Metacognición Final -->
+        <div class="slide">
+            <h1>Metacognición y Cierre</h1>
+            <div class="grid-layout" style="align-items: stretch; height: 100%;">
+                <div class="matrix-card" style="border-top: 5px solid #1565c0; padding: 35px; justify-content: center;">
+                    <h2 style="color: #1565c0; margin-top: 0;">El Rol del Ingeniero</h2>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color); margin: 15px 0;">
+                        "Los lenguajes de programación en Python o R <strong>siempre</strong> nos escupirán un número cuando metamos un dato en la fórmula.<br><br>
+                        <strong>¿Qué habilidad es más valiosa para un profesional de datos: saber programar el cálculo de la recta, o saber cuándo NO usarla?</strong>"
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 20px; justify-content: center;">
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p style="font-weight: bold; color: var(--green); font-size: 1.3rem;">Ticket de Salida</p>
+                        <p style="font-size: 1.1rem;">Resuelve el Mini-Quiz rápido (3 preguntas V/F) para registrar tu asistencia de esta clase.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            // Add a slight display override for slide 5 since it uses flex/center visually
+            if (currentSlideIndex === 4) { // 0-indexed, slide 5 is index 4
+                slides[currentSlideIndex].style.display = 'flex';
+                slides[currentSlideIndex].classList.add('active');
+            } else {
+                slides.forEach(s => s.style.display = ''); // reset inline display
+                slides[currentSlideIndex].classList.add('active');
+            }
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

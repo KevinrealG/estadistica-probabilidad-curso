@@ -1,1 +1,442 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Regresión Lineal en Estadística Descriptiva</title>
+    <!-- MathJax para fórmulas matemáticas -->
+        <!-- MathJax para renderizar fórmulas matemáticas -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slide {
+            width: min(96vw, 1000px);
+            height: calc(100vh - 40px);
+            margin: 20px 0;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .quiz-header {
+            text-align: center;
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        .quiz-header h1 {
+            color: var(--blue);
+            margin: 0 0 10px 0;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        }
+        .quiz-header p {
+            margin: 0;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Contenedor escroleable de preguntas */
+        .quiz-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        /* Estilizar la barra de scroll */
+        .quiz-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .quiz-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .matrix-card {
+            background: #f9fcff;
+            border: 1px solid #dcefff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 91, 150, 0.05);
+        }
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--blue);
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        .question-desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .option-btn {
+            padding: 12px 15px;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--blue);
+            background-color: #f0f8ff;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+            --card-bg: #1e1e1e;
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme .option-btn {
+            background-color: #333;
+            border-color: #555;
+            color: #eee;
+        }
+        body.dark-theme .option-btn:hover:not(:disabled) {
+            background-color: #444;
+            border-color: var(--blue);
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .theme-btn {
+            padding: 8px 15px;
+            border-radius: 999px;
+            border: 2px solid var(--blue);
+            background: transparent;
+            color: var(--blue);
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <div class="controls">
+            <button class="theme-btn" onclick="document.body.classList.toggle('dark-theme')">🌓 Modo Oscuro</button>
+        </div>
+
+        <div class="quiz-header">
+            <h1>Regresión Lineal en Estadística Descriptiva</h1>
+            <p>Evaluación Formativa (133 Puntos) | Tiempo estimado: 20 minutos</p>
+        </div>
+
+        <div class="quiz-container">
+            
+            <!-- Q1 -->
+            <div class="matrix-card" id="q1">
+                <p class="question-title">1. ¿Cuál es el propósito principal de aplicar regresión lineal simple en estadística descriptiva? (10 pts)</p>
+                <p class="question-desc">Elige la opción que mejor describe el objetivo de la regresión lineal simple.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">Determinar la moda de una variable</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q1')">Predecir el valor de una variable a partir de otra</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">Calcular la media de los datos</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">Identificar la dispersión de los datos</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="matrix-card" id="q2">
+                <p class="question-title">2. En el contexto de regresión lineal simple, ¿qué variable se predice a partir de la otra? (10 pts)</p>
+                <p class="question-desc">Selecciona la variable dependiente.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">$\beta_0$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q2')">$Y$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">$X$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">$\epsilon$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="matrix-card" id="q3">
+                <p class="question-title">3. En un modelo de regresión lineal simple, ¿qué variable se utiliza como predictor? (8 pts)</p>
+                <p class="question-desc">Selecciona la variable independiente.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q3')">$X$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q3')">$\beta_0$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q3')">$Y$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q3')">$\epsilon$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="matrix-card" id="q4">
+                <p class="question-title">4. Selecciona el modelo matemático correcto de la regresión lineal simple con el componente de error aleatorio. (10 pts)</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q4')">$Y = \beta_0 + \beta_1X + \epsilon$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q4')">$Y = \beta_0 + \beta_1X$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q4')">$Y = \beta_1 + \beta_0X + \epsilon$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q4')">$Y = \epsilon + \beta_0X$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="matrix-card" id="q5">
+                <p class="question-title">5. ¿Cuál es el nombre del valor estimado por la ecuación de regresión lineal simple? (7 pts)</p>
+                <p class="question-desc">Selecciona la opción que corresponde al valor predicho.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q5')">Error residual</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q5')">Valor observado</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q5')">Pendiente</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q5')">Valor estimado ($\hat{Y}$)</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="matrix-card" id="q6">
+                <p class="question-title">6. ¿Cuál es el significado del intercepto ($\beta_0$) en el modelo de regresión lineal simple? (8 pts)</p>
+                <p class="question-desc">Elige la opción que mejor describe el papel del intercepto.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q6')">Es el valor de Y cuando X es cero</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q6')">Es el error aleatorio del modelo</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q6')">Es la pendiente de la recta de regresión</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q6')">Es el promedio de X</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="matrix-card" id="q7">
+                <p class="question-title">7. ¿Cuál es el significado de la pendiente ($\beta_1$) en el modelo de regresión lineal simple? (8 pts)</p>
+                <p class="question-desc">Elige la opción que mejor describe la interpretación de $\beta_1$.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q7')">Indica cuánto cambia Y por cada unidad que aumenta X</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q7')">Representa el valor de Y cuando X es cero</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q7')">Mide la dispersión de los datos</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q7')">Es el error aleatorio del modelo</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q8 -->
+            <div class="matrix-card" id="q8">
+                <p class="question-title">8. ¿Cuál es la fórmula para estimar la pendiente ($\beta_1$) usando mínimos cuadrados? (10 pts)</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q8')">$\beta_1 = \frac{SS(xy)}{SS(x)}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q8')">$\beta_1 = \frac{SS(x)}{SS(y)}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q8')">$\beta_1 = \frac{SS(xy)}{SS(y)}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q8')">$\beta_1 = \bar{Y} - \beta_0\bar{X}$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q9 -->
+            <div class="matrix-card" id="q9">
+                <p class="question-title">9. ¿Cuál es la fórmula para estimar el intercepto ($\beta_0$) usando mínimos cuadrados? (10 pts)</p>
+                <p class="question-desc">Selecciona la opción correcta.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q9')">$\beta_0 = \bar{Y} - \beta_1\bar{X}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q9')">$\beta_0 = \bar{X} - \beta_1\bar{Y}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q9')">$\beta_0 = \frac{\Sigma Y_i}{n}$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q9')">$\beta_0 = \frac{\Sigma X_i}{n}$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q10 -->
+            <div class="matrix-card" id="q10">
+                <p class="question-title">10. ¿Qué mide la covarianza entre dos variables? (7 pts)</p>
+                <p class="question-desc">Elige la opción que mejor describe el significado de la covarianza.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q10')">La relación conjunta entre dos variables</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q10')">La dispersión individual de cada variable</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q10')">La suma de los valores</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q10')">La diferencia entre medias</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q11 -->
+            <div class="matrix-card" id="q11">
+                <p class="question-title">11. ¿Cuál es el coeficiente de correlación de Pearson? (10 pts)</p>
+                <p class="question-desc">Selecciona la opción correcta.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q11')">$r$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q11')">$\beta_1$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q11')">$\epsilon$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q11')">$\bar{Y}$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q12 -->
+            <div class="matrix-card" id="q12">
+                <p class="question-title">12. ¿Cuál es el dominio del coeficiente de correlación de Pearson (r)? (8 pts)</p>
+                <p class="question-desc">Selecciona el rango correcto.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q12')">$-1 \le r \le 1$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q12')">$0 \le r \le 1$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q12')">$-\infty < r < \infty$</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q12')">$r \ge 0$</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q13 -->
+            <div class="matrix-card" id="q13">
+                <p class="question-title">13. ¿Por qué el coeficiente de correlación de Pearson (r) se considera adimensional? (7 pts)</p>
+                <p class="question-desc">Selecciona la opción que mejor explica la razón de su adimensionalidad.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q13')">Porque representa una distancia entre variables</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q13')">Porque mide la dispersión de los datos</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q13')">Porque no tiene unidades asociadas a su valor</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q13')">Porque depende de la escala de las variables</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q14 -->
+            <div class="matrix-card" id="q14">
+                <p class="question-title">14. Observa la siguiente imagen de dispersión. ¿Existe correlación entre las variables y es lineal? (10 pts)</p>
+                <!-- Gráfico representativo para la pregunta -->
+                <div style="text-align: center; margin: 15px 0;">
+                    <svg viewBox="0 0 150 100" style="width: 100%; max-width: 200px; border-left: 2px solid var(--text-color); border-bottom: 2px solid var(--text-color); background: #f0f0f0;">
+                        <circle cx="20" cy="80" r="2.5" fill="var(--blue)"/><circle cx="40" cy="70" r="2.5" fill="var(--blue)"/><circle cx="60" cy="50" r="2.5" fill="var(--blue)"/><circle cx="80" cy="45" r="2.5" fill="var(--blue)"/><circle cx="100" cy="25" r="2.5" fill="var(--blue)"/><circle cx="120" cy="15" r="2.5" fill="var(--blue)"/><circle cx="30" cy="75" r="2.5" fill="var(--blue)"/><circle cx="70" cy="60" r="2.5" fill="var(--blue)"/><circle cx="110" cy="30" r="2.5" fill="var(--blue)"/>
+                    </svg>
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q14')">Sí, existe correlación lineal positiva.</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q14')">No hay correlación.</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q14')">Existe correlación, pero no es lineal.</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q14')">La correlación es negativa.</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <!-- Q15 -->
+            <div class="matrix-card" id="q15" style="margin-bottom: 30px;">
+                <p class="question-title">15. ¿Qué representa el coeficiente de determinación ($r^2$) en la regresión lineal simple? (10 pts)</p>
+                <p class="question-desc">Selecciona la opción correcta.</p>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'q15')">El porcentaje de la variación de Y explicada por la regresión</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q15')">La pendiente de la recta de regresión</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q15')">El error aleatorio</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'q15')">El promedio de X</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script de Evaluación -->
+    <script>
+        function checkAnswer(buttonElement, isCorrect, questionId) {
+            // Obtener el contenedor de la pregunta específica
+            const questionContainer = document.getElementById(questionId);
+            const allButtons = questionContainer.querySelectorAll('.option-btn');
+            const feedbackDiv = questionContainer.querySelector('.feedback');
+
+            // Deshabilitar todos los botones de esta pregunta
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.color = "#333";
+            });
+
+            // Mostrar retroalimentación
+            feedbackDiv.style.display = "block";
+
+            if (isCorrect) {
+                buttonElement.style.backgroundColor = "var(--green)";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "var(--green)";
+                
+                feedbackDiv.style.backgroundColor = "#e8f5e9";
+                feedbackDiv.style.color = "#2e7d32";
+                feedbackDiv.innerHTML = "✅ ¡Correcto! Excelente respuesta.";
+            } else {
+                buttonElement.style.backgroundColor = "#d32f2f";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "#d32f2f";
+                
+                feedbackDiv.style.backgroundColor = "#ffebee";
+                feedbackDiv.style.color = "#c62828";
+                feedbackDiv.innerHTML = "❌ Incorrecto. Revisa el concepto estudiado.";
+                
+                // Resaltar opcionalmente la respuesta correcta buscando la función con "true"
+                allButtons.forEach(btn => {
+                    if(btn.getAttribute("onclick").includes("true")) {
+                        btn.style.border = "2px solid var(--green)";
+                        btn.style.backgroundColor = "#e8f5e9";
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

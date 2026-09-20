@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Regresión Lineal en Psicología</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables base de la plantilla original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-color: #dcefff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Contenedor principal */
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+        .slide {
+            width: min(94vw, 1000px);
+            height: calc(100vh - 80px);
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: clamp(20px, 4vw, 40px);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Encabezado */
+        .quiz-header {
+            text-align: center;
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        .quiz-header h1 {
+            color: var(--blue);
+            margin: 0 0 10px 0;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+        }
+        .quiz-header p {
+            margin: 0;
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Contenedor escroleable */
+        .quiz-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .quiz-container::-webkit-scrollbar { width: 8px; }
+        .quiz-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        /* Tarjetas de preguntas */
+        .matrix-card {
+            background: #f9fcff;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 91, 150, 0.05);
+        }
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* Tabla de Datos */
+        .data-table {
+            width: 100%;
+            max-width: 500px;
+            border-collapse: collapse;
+            margin: 0 auto 20px auto;
+            background: white;
+            text-align: center;
+        }
+        .data-table th {
+            background: var(--blue);
+            color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .data-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Inputs y Botones */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .option-btn {
+            padding: 12px 18px;
+            font-size: 1.05rem;
+            text-align: left;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--blue);
+            background-color: #f0f8ff;
+        }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+
+        .text-input, .textarea-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            background: white;
+            color: var(--text-color);
+        }
+        .text-input:focus, .textarea-input:focus {
+            border-color: var(--blue);
+            outline: none;
+        }
+        .textarea-input { resize: vertical; min-height: 80px; }
+        
+        .action-btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1rem;
+        }
+        .action-btn:hover { background: #004575; }
+        .action-btn:disabled { background: #999; cursor: not-allowed; }
+
+        /* Input de Archivo Personalizado */
+        .file-upload-wrapper {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: white;
+            margin-bottom: 10px;
+        }
+
+        /* Cajas de Feedback */
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+            font-size: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .feedback.success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid var(--green); }
+        .feedback.error { background-color: #ffebee; color: #c62828; border: 1px solid #d32f2f; }
+        .feedback.info { background-color: #e3f2fd; color: #1565c0; border: 1px solid var(--blue); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modo Oscuro */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .theme-btn {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 2px solid var(--green);
+            background: white;
+            color: var(--blue);
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+        }
+        body.dark-theme .matrix-card { background: #242424; }
+        body.dark-theme .data-table td, body.dark-theme .data-table th { border-color: #444; }
+        body.dark-theme .data-table th { background: #003b60; }
+        body.dark-theme .data-table { background: #1e1e1e; }
+        body.dark-theme .option-btn { background: #333; border-color: #555; color: white; }
+        body.dark-theme .option-btn:hover:not(:disabled) { background: #444; border-color: var(--blue); }
+        body.dark-theme .text-input, body.dark-theme .textarea-input { background: #333; border-color: #555; }
+        body.dark-theme .file-upload-wrapper { background: #333; border-color: #555; }
+        body.dark-theme .theme-btn { background: #333; }
+        body.dark-theme .feedback.success { background: rgba(76, 175, 80, 0.2); }
+        body.dark-theme .feedback.error { background: rgba(211, 47, 47, 0.2); }
+        body.dark-theme .feedback.info { background: rgba(33, 150, 243, 0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="slides-container">
+        <div class="slide">
+            
+            <div class="quiz-header">
+                <h1>Regresión Lineal: Horas de sueño y Nivel de estrés</h1>
+                <p>Laboratorio Práctico (130 Puntos) | Estudio de caso con 6 participantes</p>
+                <p style="font-size: 0.9rem; margin-top: 5px;"><em>Instrucciones: Completa el modelo estadístico paso a paso. Se aceptan decimales con punto o coma.</em></p>
+            </div>
+
+            <div class="quiz-container">
+                
+                <!-- Q1: Texto Abierto y Tabla -->
+                <div class="matrix-card" id="q1">
+                    <p class="question-title">1. Observa la siguiente tabla de datos y plantea una hipótesis de investigación: (Multi Line Text)</p>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Participante</th>
+                                <th>Horas de sueño (X)</th>
+                                <th>Nivel de estrés (Y)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>6</td><td>80</td></tr>
+                            <tr><td>2</td><td>7</td><td>70</td></tr>
+                            <tr><td>3</td><td>5</td><td>90</td></tr>
+                            <tr><td>4</td><td>8</td><td>60</td></tr>
+                            <tr><td>5</td><td>6</td><td>85</td></tr>
+                            <tr><td>6</td><td>7</td><td>75</td></tr>
+                        </tbody>
+                    </table>
+
+                    <textarea id="ans1" class="textarea-input" placeholder="Escribe tu hipótesis aquí (Ej. A mayor cantidad de horas de sueño...)"></textarea>
+                    <button class="action-btn" onclick="submitOpenText('q1', 'ans1')">Guardar Hipótesis</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q2: Opción Múltiple -->
+                <div class="matrix-card" id="q2">
+                    <p class="question-title">2. ¿Cuál es la variable dependiente (Y) en este estudio? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkChoice(this, true, 'q2')">Nivel de estrés</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q2')">Participante</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q2')">Horas de sueño</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q3: Opción Múltiple -->
+                <div class="matrix-card" id="q3">
+                    <p class="question-title">3. ¿Cuál es la variable independiente (X) en este estudio? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkChoice(this, true, 'q3')">Horas de sueño</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q3')">Nivel de estrés</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q3')">Participante</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q4: Opción Múltiple -->
+                <div class="matrix-card" id="q4">
+                    <p class="question-title">4. ¿Cuál es el primer paso para construir un modelo de regresión lineal? (10 pts)</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkChoice(this, true, 'q4')">Seleccionar las variables</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q4')">Calcular la pendiente</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q4')">Obtener la covarianza</button>
+                        <button class="option-btn" onclick="checkChoice(this, false, 'q4')">Determinar el intercepto</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q5: Campo Numérico -->
+                <div class="matrix-card" id="q5">
+                    <p class="question-title">5. Calcula la varianza de las horas de sueño (X). (15 pts)</p>
+                    <p style="font-size: 0.9rem; margin-top: -10px; color: #666;">Expresa el resultado en decimal, máximo 2 decimales.</p>
+                    <input type="text" id="ans5" class="text-input" placeholder="Ej: 1.1">
+                    <button class="action-btn" onclick="checkNumeric('q5', 'ans5', ['1,1', '1.1', '0,91', '0.91', '0,92', '0.92'])">Validar Cálculo</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q6: Campo Numérico -->
+                <div class="matrix-card" id="q6">
+                    <p class="question-title">6. Calcula la covarianza entre horas de sueño y nivel de estrés. (15 pts)</p>
+                    <p style="font-size: 0.9rem; margin-top: -10px; color: #666;">Expresa el resultado en decimal, máximo 2 decimales.</p>
+                    <input type="text" id="ans6" class="text-input" placeholder="Ej: -9.16">
+                    <button class="action-btn" onclick="checkNumeric('q6', 'ans6', ['-9,17', '-9.17', '-9,16', '-9.16'])">Validar Cálculo</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q7: Campo Numérico -->
+                <div class="matrix-card" id="q7">
+                    <p class="question-title">7. Calcula la pendiente (β₁) de la recta de regresión. (15 pts)</p>
+                    <input type="text" id="ans7" class="text-input" placeholder="Ingresa el valor">
+                    <button class="action-btn" onclick="checkNumeric('q7', 'ans7', ['-0,09', '-0.09', '-10', '- 10'])">Validar Pendiente</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q8: Campo Numérico -->
+                <div class="matrix-card" id="q8">
+                    <p class="question-title">8. Calcula el intercepto (β₀) de la recta de regresión. (15 pts)</p>
+                    <input type="text" id="ans8" class="text-input" placeholder="Ingresa el valor">
+                    <button class="action-btn" onclick="checkNumeric('q8', 'ans8', ['13,72', '13.72', '13,73', '13.73', '141,67', '141.67'])">Validar Intercepto</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q9: Campo Numérico -->
+                <div class="matrix-card" id="q9">
+                    <p class="question-title">9. ¿Cuál es el valor estimado de nivel de estrés para una persona que duerme 6 horas? (20 pts)</p>
+                    <p style="font-size: 0.9rem; margin-top: -10px; color: #666;">Calcula $\hat{Y}$ cuando $X = 6$.</p>
+                    <input type="text" id="ans9" class="text-input" placeholder="Ingresa el valor predictivo">
+                    <button class="action-btn" onclick="checkNumeric('q9', 'ans9', ['13,16', '13.16', '81,67', '81.67'])">Validar Predicción</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Q10: Subida de Archivo -->
+                <div class="matrix-card" id="q10" style="margin-bottom: 20px;">
+                    <p class="question-title">10. Evidencia (20 pts)</p>
+                    <p style="font-size: 0.9rem; margin-top: -10px; color: #666;">Sube tu archivo de Excel o captura con el procedimiento.</p>
+                    
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="ans10" style="margin-bottom: 15px; width: 100%; color: var(--text-color);" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,image/*,video/*,audio/*">
+                        <button class="action-btn" onclick="submitFile('q10', 'ans10')">Subir Evidencia</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de Tema -->
+    <div class="controls">
+        <button class="theme-btn" onclick="document.body.classList.toggle('dark-theme')">🌓 Modo Oscuro</button>
+    </div>
+
+    <!-- Motores Lógicos -->
+    <script>
+        // 1. Motor para Opción Múltiple
+        function checkChoice(buttonElement, isCorrect, questionId) {
+            const container = document.getElementById(questionId);
+            const buttons = container.querySelectorAll('.option-btn');
+            const feedback = container.querySelector('.feedback');
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.color = document.body.classList.contains('dark-theme') ? "#aaa" : "#666";
+            });
+
+            feedback.style.display = "block";
+
+            if (isCorrect) {
+                buttonElement.style.backgroundColor = "var(--green)";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "var(--green)";
+                feedback.className = "feedback success";
+                feedback.innerHTML = "✅ ¡Correcto!";
+            } else {
+                buttonElement.style.backgroundColor = "#d32f2f";
+                buttonElement.style.color = "white";
+                buttonElement.style.borderColor = "#d32f2f";
+                feedback.className = "feedback error";
+                feedback.innerHTML = "❌ Respuesta incorrecta.";
+                
+                // Resalta la correcta
+                buttons.forEach(btn => {
+                    if(btn.getAttribute("onclick").includes("true")) {
+                        btn.style.border = "2px solid var(--green)";
+                    }
+                });
+            }
+        }
+
+        // 2. Motor para Validar Entradas Numéricas Exactas
+        function checkNumeric(questionId, inputId, validAnswersArray) {
+            const container = document.getElementById(questionId);
+            const inputField = document.getElementById(inputId);
+            const btn = container.querySelector('.action-btn');
+            const feedback = container.querySelector('.feedback');
+            
+            // Capturar valor y remover espacios extra
+            const userValue = inputField.value.trim().replace(/\s/g, ''); 
+
+            if (userValue === "") {
+                alert("Por favor, ingresa un valor antes de validar.");
+                return;
+            }
+
+            // Normalizar el input del usuario (convertir coma a punto para comparar más fácil si es necesario, 
+            // aunque validAnswersArray ya trae las combinaciones literales brindadas por ti).
+            const isCorrect = validAnswersArray.some(validAns => validAns.replace(/\s/g, '') === userValue);
+
+            inputField.disabled = true;
+            btn.disabled = true;
+            feedback.style.display = "block";
+
+            if (isCorrect) {
+                feedback.className = "feedback success";
+                feedback.innerHTML = `✅ ¡Cálculo correcto! (${userValue})`;
+            } else {
+                feedback.className = "feedback error";
+                feedback.innerHTML = `❌ Valor incorrecto. Valores esperados: ${validAnswersArray.join(" o ")}`;
+            }
+        }
+
+        // 3. Motor para Guardar Texto Abierto (Simulación)
+        function submitOpenText(questionId, inputId) {
+            const inputField = document.getElementById(inputId);
+            const container = document.getElementById(questionId);
+            const btn = container.querySelector('.action-btn');
+            const feedback = container.querySelector('.feedback');
+
+            if (inputField.value.trim() === "") {
+                alert("Escribe una hipótesis válida.");
+                return;
+            }
+
+            inputField.disabled = true;
+            btn.disabled = true;
+            feedback.style.display = "block";
+            feedback.className = "feedback info";
+            feedback.innerHTML = "💾 Hipótesis registrada en el sistema de investigación.";
+        }
+
+        // 4. Motor para Subida de Archivos (Simulación)
+        function submitFile(questionId, inputId) {
+            const fileInput = document.getElementById(inputId);
+            const container = document.getElementById(questionId);
+            const btn = container.querySelector('.action-btn');
+            const feedback = container.querySelector('.feedback');
+
+            if (fileInput.files.length === 0) {
+                alert("Por favor, selecciona un archivo (PDF, Excel, Imagen) primero.");
+                return;
+            }
+
+            const fileName = fileInput.files[0].name;
+
+            fileInput.disabled = true;
+            btn.disabled = true;
+            btn.innerHTML = "Subiendo...";
+
+            // Simular tiempo de carga
+            setTimeout(() => {
+                btn.innerHTML = "Archivo Subido";
+                feedback.style.display = "block";
+                feedback.className = "feedback success";
+                feedback.innerHTML = `📁 Documento "<b>${fileName}</b>" adjuntado exitosamente como evidencia.`;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
