@@ -208,6 +208,72 @@
     <div class="slides-container">
 
         <!-- Slide 1: El Reto de la Predicción -->
+           <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">Planteamiento del Problema</p>
+                <h1 style="border-bottom: 3px solid var(--green); padding-bottom: 10px; margin: 5px 0 15px 0; font-size: clamp(1.4rem, 2.5vw, 2.2rem);">Caso: Acondicionamiento Físico</h1>
+            </div>
+
+            <!-- Contexto y Pares Ordenados -->
+            <div class="slide-intro" style="border-left: 6px solid var(--blue); margin-bottom: 25px;">
+                <p style="font-size: 1.1rem; line-height: 1.5; color: var(--text-color);">
+                    En el curso de acondicionamiento físico del Sr. Chamberlain, se tomaron varios valores de condición física. La siguiente muestra es el número de flexiones de brazos y abdominales realizados por 10 estudiantes seleccionados al azar:
+                </p>
+                <!-- Cuadrícula para los pares ordenados -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; font-family: 'Cambria Math', serif; font-size: 1.25rem; margin-top: 20px; text-align: center; color: var(--blue);">
+                    <span>(27, 30)</span>
+                    <span>(22, 26)</span>
+                    <span>(15, 25)</span>
+                    <span>(35, 42)</span>
+                    <span>(30, 38)</span>
+                    <span>(52, 40)</span>
+                    <span>(35, 32)</span>
+                    <span>(55, 54)</span>
+                    <span>(40, 50)</span>
+                    <span>(40, 43)</span>
+                </div>
+            </div>
+
+            <!-- Tabla de Datos -->
+            <div class="matrix-card" style="border-top: 5px solid var(--blue); grid-column: 1 / -1; padding: 25px; text-align: center; background-color: #f0f4f8;">
+                <h3 style="color: #1a365d; margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
+                    TABLA 3.10 Datos para flexiones y abdominales [TA03-10]
+                </h3>
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; font-size: 1rem; text-align: center; min-width: 650px;">
+                    <thead>
+                        <tr style="background-color: #1a365d; color: white;">
+                            <th style="padding: 12px; text-align: left; font-weight: bold;">Estudiante</th>
+                            <th style="padding: 12px;">1</th>
+                            <th style="padding: 12px;">2</th>
+                            <th style="padding: 12px;">3</th>
+                            <th style="padding: 12px;">4</th>
+                            <th style="padding: 12px;">5</th>
+                            <th style="padding: 12px;">6</th>
+                            <th style="padding: 12px;">7</th>
+                            <th style="padding: 12px;">8</th>
+                            <th style="padding: 12px;">9</th>
+                            <th style="padding: 12px;">10</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f0f4f8; border-bottom: 2px solid white;">
+                            <td style="padding: 12px; text-align: left; color: var(--text-color);">Flexiones, $x$</td>
+                            <td>27</td><td>22</td><td>15</td><td>35</td><td>30</td><td>52</td><td>35</td><td>55</td><td>40</td><td>40</td>
+                        </tr>
+                        <tr style="background-color: #e2e8f0;">
+                            <td style="padding: 12px; text-align: left; color: var(--text-color);">Abdominales, $y$</td>
+                            <td>30</td><td>26</td><td>25</td><td>42</td><td>38</td><td>40</td><td>32</td><td>54</td><td>50</td><td>43</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 15px; font-style: italic;">
+                    * La tabla muestra estos datos muestrales para representar posteriormente un diagrama de dispersión de los datos.
+                </p>
+            </div>
+        </div>
+        
+
+         
         <div class="slide">
             <h1>El Reto de la Predicción</h1>
             <div class="grid-layout">
@@ -301,6 +367,146 @@
                         $$ \hat{y} = a + bx + cx^2 $$
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Slide 1: El Menú de Modelos (Actualizada con 4 modelos) -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">Ecuaciones de Predicción</p>
+                <h1 style="border-bottom: 3px solid var(--green); padding-bottom: 10px; margin: 5px 0 20px 0; font-size: clamp(1.4rem, 2.5vw, 2.2rem);">El Menú de Modelos</h1>
+            </div>
+
+            <!-- Cuadrícula de 4 modelos -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; width: 100%; align-items: stretch;">
+                
+                <!-- Modelo Lineal -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+                    <h3 style="color: var(--blue); margin-top: 0; font-size: 1.2rem;">Lineal (línea recta)</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 80px; margin: 10px 0;">
+                        <line x1="10" y1="90" x2="140" y2="10" stroke="var(--blue)" stroke-width="2"/>
+                        <circle cx="25" cy="75" r="3" fill="var(--text-color)"/><circle cx="50" cy="65" r="3" fill="var(--text-color)"/><circle cx="75" cy="45" r="3" fill="var(--text-color)"/><circle cx="100" cy="40" r="3" fill="var(--text-color)"/><circle cx="125" cy="20" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <div class="math-eq" style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin-top: auto; width: 100%; background: #f0f4f8; padding: 10px; border-radius: 8px;">
+                        $$ \hat{y} = b_0 + b_1x $$
+                    </div>
+                </div>
+
+                <!-- Modelo Cuadrático -->
+                <div class="matrix-card" style="border-top: 5px solid #ff9800; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+                    <h3 style="color: #f57c00; margin-top: 0; font-size: 1.2rem;">Cuadrático</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 80px; margin: 10px 0;">
+                        <path d="M 10 90 Q 75 -20 140 90" fill="none" stroke="#f57c00" stroke-width="2"/>
+                        <circle cx="20" cy="75" r="3" fill="var(--text-color)"/><circle cx="45" cy="35" r="3" fill="var(--text-color)"/><circle cx="75" cy="18" r="3" fill="var(--text-color)"/><circle cx="105" cy="35" r="3" fill="var(--text-color)"/><circle cx="130" cy="75" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <div class="math-eq" style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin-top: auto; width: 100%; background: #fff3e0; padding: 10px; border-radius: 8px; color: #f57c00;">
+                        $$ \hat{y} = a + bx + cx^2 $$
+                    </div>
+                </div>
+
+                <!-- Modelo Exponencial -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.2rem;">Exponencial</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 80px; margin: 10px 0;">
+                        <path d="M 10 95 Q 100 90 140 10" fill="none" stroke="var(--green)" stroke-width="2"/>
+                        <circle cx="20" cy="90" r="3" fill="var(--text-color)"/><circle cx="60" cy="80" r="3" fill="var(--text-color)"/><circle cx="90" cy="65" r="3" fill="var(--text-color)"/><circle cx="120" cy="35" r="3" fill="var(--text-color)"/><circle cx="135" cy="15" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <div class="math-eq" style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin-top: auto; width: 100%; background: #e8f5e9; padding: 10px; border-radius: 8px; color: var(--green);">
+                        $$ \hat{y} = a(b^x) $$
+                    </div>
+                </div>
+
+                <!-- Modelo Logarítmico -->
+                <div class="matrix-card" style="border-top: 5px solid #9c27b0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+                    <h3 style="color: #9c27b0; margin-top: 0; font-size: 1.2rem;">Logarítmico</h3>
+                    <svg viewBox="0 0 150 100" style="width: 100%; height: 80px; margin: 10px 0;">
+                        <path d="M 10 90 Q 30 20 140 15" fill="none" stroke="#9c27b0" stroke-width="2"/>
+                        <circle cx="15" cy="70" r="3" fill="var(--text-color)"/><circle cx="25" cy="40" r="3" fill="var(--text-color)"/><circle cx="50" cy="25" r="3" fill="var(--text-color)"/><circle cx="90" cy="18" r="3" fill="var(--text-color)"/><circle cx="130" cy="15" r="3" fill="var(--text-color)"/>
+                    </svg>
+                    <div class="math-eq" style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin-top: auto; width: 100%; background: #f3e5f5; padding: 10px; border-radius: 8px; color: #9c27b0;">
+                        $$ \hat{y} = a \log_b x $$
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Slide 2: Galería de Regresiones Gráficas -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">Representación Visual</p>
+                <h1 style="border-bottom: 3px solid var(--green); padding-bottom: 10px; margin: 5px 0 20px 0; font-size: clamp(1.4rem, 2.5vw, 2.2rem);">Comportamiento Gráfico de los Modelos</h1>
+            </div>
+
+            <!-- Cuadrícula de Gráficas en el plano cartesiano -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; align-items: stretch;">
+                
+                <!-- Figura 3.17 -->
+                <div class="matrix-card" style="padding: 20px; display: flex; flex-direction: column;">
+                    <h3 style="color: var(--blue); font-size: 1.1rem; margin-top: 0; text-align: left;"><strong style="color: var(--text-color);">FIGURA 3.17</strong><br>Regresión lineal con pendiente positiva</h3>
+                    <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; margin-top: 15px;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 220px;">
+                            <!-- Ejes -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="180,127 185,130 180,133" fill="var(--text-color)"/>
+                            <line x1="20" y1="130" x2="20" y2="20" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="17,20 20,15 23,20" fill="var(--text-color)"/>
+                            <text x="175" y="145" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">x</text><text x="5" y="25" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">y</text>
+                            <!-- Nube de puntos ascendente -->
+                            <circle cx="35" cy="115" r="2" fill="var(--blue)"/><circle cx="45" cy="100" r="2" fill="var(--blue)"/><circle cx="55" cy="110" r="2" fill="var(--blue)"/><circle cx="55" cy="85" r="2" fill="var(--blue)"/><circle cx="65" cy="95" r="2" fill="var(--blue)"/><circle cx="75" cy="70" r="2" fill="var(--blue)"/><circle cx="85" cy="80" r="2" fill="var(--blue)"/><circle cx="95" cy="95" r="2" fill="var(--blue)"/><circle cx="105" cy="65" r="2" fill="var(--blue)"/><circle cx="115" cy="50" r="2" fill="var(--blue)"/><circle cx="125" cy="75" r="2" fill="var(--blue)"/><circle cx="135" cy="40" r="2" fill="var(--blue)"/><circle cx="145" cy="60" r="2" fill="var(--blue)"/><circle cx="155" cy="45" r="2" fill="var(--blue)"/>
+                            <!-- Recta -->
+                            <line x1="20" y1="120" x2="165" y2="35" stroke="#1565c0" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Figura 3.18 -->
+                <div class="matrix-card" style="padding: 20px; display: flex; flex-direction: column;">
+                    <h3 style="color: var(--blue); font-size: 1.1rem; margin-top: 0; text-align: left;"><strong style="color: var(--text-color);">FIGURA 3.18</strong><br>Regresión lineal con pendiente negativa</h3>
+                    <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; margin-top: 15px;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 220px;">
+                            <!-- Ejes -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="180,127 185,130 180,133" fill="var(--text-color)"/>
+                            <line x1="20" y1="130" x2="20" y2="20" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="17,20 20,15 23,20" fill="var(--text-color)"/>
+                            <text x="175" y="145" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">x</text><text x="5" y="25" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">y</text>
+                            <!-- Nube de puntos descendente -->
+                            <circle cx="35" cy="40" r="2" fill="var(--blue)"/><circle cx="45" cy="60" r="2" fill="var(--blue)"/><circle cx="55" cy="45" r="2" fill="var(--blue)"/><circle cx="55" cy="75" r="2" fill="var(--blue)"/><circle cx="65" cy="55" r="2" fill="var(--blue)"/><circle cx="75" cy="90" r="2" fill="var(--blue)"/><circle cx="85" cy="70" r="2" fill="var(--blue)"/><circle cx="95" cy="55" r="2" fill="var(--blue)"/><circle cx="105" cy="85" r="2" fill="var(--blue)"/><circle cx="115" cy="100" r="2" fill="var(--blue)"/><circle cx="125" cy="75" r="2" fill="var(--blue)"/><circle cx="135" cy="110" r="2" fill="var(--blue)"/><circle cx="145" cy="90" r="2" fill="var(--blue)"/><circle cx="155" cy="115" r="2" fill="var(--blue)"/>
+                            <!-- Recta -->
+                            <line x1="20" y1="35" x2="175" y2="125" stroke="#1565c0" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Figura 3.19 -->
+                <div class="matrix-card" style="padding: 20px; display: flex; flex-direction: column;">
+                    <h3 style="color: var(--blue); font-size: 1.1rem; margin-top: 0; text-align: left;"><strong style="color: var(--text-color);">FIGURA 3.19</strong><br>Regresión curvilínea (cuadrática)</h3>
+                    <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; margin-top: 15px;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 220px;">
+                            <!-- Ejes -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="180,127 185,130 180,133" fill="var(--text-color)"/>
+                            <line x1="20" y1="130" x2="20" y2="20" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="17,20 20,15 23,20" fill="var(--text-color)"/>
+                            <text x="175" y="145" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">x</text><text x="5" y="25" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">y</text>
+                            <!-- Nube de puntos curva -->
+                            <circle cx="35" cy="85" r="2" fill="var(--blue)"/><circle cx="45" cy="100" r="2" fill="var(--blue)"/><circle cx="60" cy="110" r="2" fill="var(--blue)"/><circle cx="75" cy="115" r="2" fill="var(--blue)"/><circle cx="95" cy="112" r="2" fill="var(--blue)"/><circle cx="110" cy="105" r="2" fill="var(--blue)"/><circle cx="125" cy="90" r="2" fill="var(--blue)"/><circle cx="140" cy="60" r="2" fill="var(--blue)"/><circle cx="150" cy="40" r="2" fill="var(--blue)"/>
+                            <!-- Recta Curva Punteada -->
+                            <path d="M 30 85 Q 85 140 155 35" fill="none" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,4"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Figura 3.20 -->
+                <div class="matrix-card" style="padding: 20px; display: flex; flex-direction: column;">
+                    <h3 style="color: var(--blue); font-size: 1.1rem; margin-top: 0; text-align: left;"><strong style="color: var(--text-color);">FIGURA 3.20</strong><br>No relacionada</h3>
+                    <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; margin-top: 15px;">
+                        <svg viewBox="0 0 200 150" style="width: 100%; max-width: 220px;">
+                            <!-- Ejes -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="180,127 185,130 180,133" fill="var(--text-color)"/>
+                            <line x1="20" y1="130" x2="20" y2="20" stroke="var(--text-color)" stroke-width="1.5"/><polygon points="17,20 20,15 23,20" fill="var(--text-color)"/>
+                            <text x="175" y="145" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">x</text><text x="5" y="25" font-family="sans-serif" font-size="10" font-style="italic" fill="var(--text-color)">y</text>
+                            <!-- Nube de puntos aleatoria -->
+                            <circle cx="50" cy="60" r="2" fill="var(--blue)"/><circle cx="65" cy="85" r="2" fill="var(--blue)"/><circle cx="45" cy="100" r="2" fill="var(--blue)"/><circle cx="80" cy="50" r="2" fill="var(--blue)"/><circle cx="95" cy="90" r="2" fill="var(--blue)"/><circle cx="110" cy="65" r="2" fill="var(--blue)"/><circle cx="125" cy="105" r="2" fill="var(--blue)"/><circle cx="140" cy="75" r="2" fill="var(--blue)"/><circle cx="150" cy="50" r="2" fill="var(--blue)"/><circle cx="70" cy="115" r="2" fill="var(--blue)"/><circle cx="100" cy="110" r="2" fill="var(--blue)"/><circle cx="130" cy="45" r="2" fill="var(--blue)"/><circle cx="60" cy="45" r="2" fill="var(--blue)"/><circle cx="90" cy="70" r="2" fill="var(--blue)"/><circle cx="115" cy="85" r="2" fill="var(--blue)"/>
+                        </svg>
+                    </div>
+                </div>
+
             </div>
         </div>
 

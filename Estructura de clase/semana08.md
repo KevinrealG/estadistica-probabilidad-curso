@@ -217,6 +217,101 @@ Como **Academic Class Designer AI**, he estructurado las sesiones 2 y 3 de esta 
 * **Dinámica:** En grupos de 4. Se les entregan 3 "Reportes de Consultoría" que utilizan modelos de regresión lineal para justificar inversiones millonarias.
 * **Misión:** Actuar como auditores de datos. Cada reporte viola una de las tres restricciones clave (ej. predecir el precio de una casa de 1000 $m^2$ usando datos de apartamentos de 40 a 90 $m^2$). Los grupos deben emitir un veredicto de "Aprobado" o "Rechazado", justificando técnica y lógicamente la restricción violada.
 
+Actividad Guiada y Colaborativa (15 min)
+El Tribunal de los Datos
+
+Dinámica: Equipos de 4 estudiantes.
+
+Misión: Actúen como auditores de datos. Cada grupo recibe un reporte de consultoría que utiliza un modelo de regresión lineal para justificar una decisión importante. Analicen el caso y emitan un veredicto de:
+
+✅ Aprobado (el uso del modelo es válido)
+
+❌ Rechazado (el uso del modelo es incorrecto)
+
+Además, deben identificar cuál restricción se viola:
+
+Límite poblacional
+Límite del dominio (extrapolación)
+Límite temporal
+
+y justificar técnicamente su decisión.
+
+Caso 1. El Centro Comercial Fantasma
+
+Una empresa analizó la relación entre el número de visitantes y las ventas en un centro comercial ubicado en Cartagena.
+
+Los datos utilizados provienen únicamente de sábados y domingos del primer semestre de 2026.
+
+La empresa desarrolló una recta de regresión y concluyó:
+
+"Podemos utilizar este modelo para predecir las ventas de cualquier día de la semana durante todo el año."
+
+Preguntas
+¿Aprueba o rechaza el reporte?
+¿Qué restricción se está violando?
+¿Por qué el modelo podría producir predicciones erróneas?
+¿Qué información adicional debería recolectarse?
+Caso 2. La Mega Mansión
+
+Una inmobiliaria construyó un modelo para predecir el precio de viviendas.
+
+Los datos utilizados corresponden a apartamentos entre 45 m² y 90 m².
+
+Posteriormente, la empresa utilizó la ecuación para estimar el precio de una mansión de 1.200 m².
+
+La estimación fue presentada a un inversionista como una predicción confiable.
+
+Preguntas
+¿Aprueba o rechaza el reporte?
+¿Qué restricción se está incumpliendo?
+¿Qué significa extrapolar en este contexto?
+¿Por qué la predicción puede ser poco confiable?
+Caso 3. El Negocio del Helado
+
+Una empresa estudió las ventas de helados durante los meses de diciembre, enero y febrero.
+
+A partir de esos datos creó una ecuación lineal entre temperatura y ventas.
+
+Posteriormente utilizó la ecuación para estimar las ventas de julio, agosto y septiembre.
+
+Preguntas
+¿Aprueba o rechaza el reporte?
+¿Qué restricción está siendo violada?
+¿Qué factores podrían cambiar entre temporadas?
+¿Qué datos adicionales serían necesarios para mejorar el modelo?
+Caso 4. El Gimnasio Universitario
+
+Un gimnasio construyó una regresión entre horas de entrenamiento y fuerza muscular utilizando únicamente estudiantes universitarios entre 18 y 25 años.
+
+El administrador decidió usar el modelo para predecir el desempeño de adultos mayores entre 60 y 75 años.
+
+Preguntas
+¿Aprueba o rechaza el reporte?
+¿Qué restricción se incumple?
+¿Por qué la población utilizada es diferente?
+¿Qué problemas puede generar esta decisión?
+Caso 5. La Empresa de Paraguas
+
+Una empresa analizó las ventas de paraguas utilizando datos recolectados entre octubre y marzo.
+
+Después utilizó la recta de regresión para proyectar las ventas en agosto y justificar una inversión millonaria en inventario.
+
+Preguntas
+¿Aprueba o rechaza el reporte?
+¿Qué restricción se está violando?
+¿Por qué las condiciones del mercado pueden ser distintas en agosto?
+¿Qué recomendación haría como auditor de datos?
+Entregable del grupo
+
+Cada equipo deberá presentar:
+
+Veredicto (Aprobado o Rechazado).
+Restricción identificada.
+Justificación técnica (máximo 3 argumentos).
+Recomendación para corregir el estudio.
+
+Puntaje adicional: si el equipo identifica más de una limitación potencial en el mismo caso y la argumenta correctamente.
+
 #### f) Aplicación (5 min) - *Desastres Reales por Extrapolación*
 
 * **Relato de caso real:** Mencionar brevemente cómo la extrapolación fuera del dominio en modelos de riesgo financiero contribuyó a crisis económicas (asumir que la tendencia de los precios de las viviendas crecería linealmente para siempre sin importar los límites del dominio).
