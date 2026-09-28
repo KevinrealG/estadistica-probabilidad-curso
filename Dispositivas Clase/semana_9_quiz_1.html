@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Autoevaluable: Operaciones con Conjuntos</title>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: start;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide {
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body.dark-theme .matrix-card {
+            background: #242424;
+            border-color: #444;
+        }
+        body.dark-theme .slide-intro {
+            background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%);
+            border-color: #2c4a68;
+        }
+        body.dark-theme input {
+            background: #333;
+            color: white;
+            border-color: #555 !important;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        body.dark-theme button {
+            background-color: #333;
+            border-color: var(--blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide: Quiz de Conjuntos -->
+        <div class="slide active">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">Práctica Activa</p>
+                <h1>Operaciones con Conjuntos</h1>
+            </div>
+
+            <!-- Definición de Eventos -->
+            <div class="slide-intro" style="border-left: 5px solid var(--blue); margin-bottom: 25px;">
+                <p style="font-weight: bold; color: var(--blue); margin-bottom: 10px;">📌 Eventos definidos:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 1.1rem; font-family: monospace;">
+                    <span><strong>E:</strong> {Los estudiantes prefieren Español}</span>
+                    <span><strong>C:</strong> {Los estudiantes prefieren Chino}</span>
+                    <span><strong>I:</strong> {Los estudiantes prefieren Inglés}</span>
+                </div>
+            </div>
+
+            <div class="grid-layout" style="align-items: start;">
+                
+                <!-- Columna Izquierda: Diagrama de Venn SVG -->
+                <div class="matrix-card" style="display: flex; justify-content: center; align-items: center; padding: 20px; background: white;">
+                    <svg viewBox="0 0 320 320" style="width: 100%; max-width: 300px; font-family: sans-serif;">
+                        <!-- Universo -->
+                        <rect x="10" y="10" width="300" height="300" fill="none" stroke="var(--text-color)" stroke-width="2"/>
+                        
+                        <!-- Círculos -->
+                        <circle cx="120" cy="120" r="80" fill="none" stroke="#1565c0" stroke-width="2.5"/> <!-- Español -->
+                        <circle cx="200" cy="120" r="80" fill="none" stroke="#c62828" stroke-width="2.5"/> <!-- Chino -->
+                        <circle cx="160" cy="190" r="80" fill="none" stroke="#2e7d32" stroke-width="2.5"/> <!-- Inglés -->
+                        
+                        <!-- Etiquetas de los conjuntos -->
+                        <text x="35" y="45" font-size="16" fill="#1565c0" font-weight="bold">Español</text>
+                        <text x="225" y="45" font-size="16" fill="#c62828" font-weight="bold">Chino</text>
+                        <text x="135" y="295" font-size="16" fill="#2e7d32" font-weight="bold">Inglés</text>
+                        
+                        <!-- Valores del diagrama -->
+                        <text x="85" y="115" font-size="18" fill="var(--text-color)">7</text>
+                        <text x="225" y="115" font-size="18" fill="var(--text-color)">2</text>
+                        <text x="150" y="240" font-size="18" fill="var(--text-color)">35</text>
+                        <text x="155" y="100" font-size="18" fill="var(--text-color)">3</text>
+                        <text x="105" y="170" font-size="18" fill="var(--text-color)">33</text>
+                        <text x="195" y="170" font-size="18" fill="var(--text-color)">13</text>
+                        <text x="155" y="155" font-size="18" fill="var(--text-color)" font-weight="bold">8</text>
+                        <text x="30" y="270" font-size="18" fill="var(--text-color)">4</text>
+                    </svg>
+                </div>
+
+                <!-- Columna Derecha: Quiz Autoevaluable -->
+                <div class="matrix-card" style="border-top: 5px solid var(--green); padding: 25px;">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.3rem;">📝 Ejercicio en clase</h3>
+                    <p style="font-size: 1.05rem; color: var(--text-color); margin-bottom: 20px;">Completa las siguientes operaciones usando el diagrama de Venn:</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-family: 'Cambria Math', serif; font-size: 1.2rem;">
+                        
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">a) n(Ω) =</span>
+                            <input type="number" id="ans_a" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_a" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">b) n(E ∩ C) =</span>
+                            <input type="number" id="ans_b" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_b" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">c) n(I ∩ C) =</span>
+                            <input type="number" id="ans_c" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_c" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">d) n(I ∩ E) =</span>
+                            <input type="number" id="ans_d" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_d" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">e) n(I ∩ C ∩ E) =</span>
+                            <input type="number" id="ans_e" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_e" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 140px;">f) n(<span style="text-decoration: overline;">I</span> ∩ <span style="text-decoration: overline;">C</span> ∩ E) =</span>
+                            <input type="number" id="ans_f" style="width: 70px; padding: 6px; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px;">
+                            <span id="fb_f" style="font-size: 1.2rem; min-width: 25px;"></span>
+                        </div>
+
+                    </div>
+
+                    <button onclick="evaluarQuiz()" style="margin-top: 25px; width: 100%; background: var(--green); color: white; border-color: var(--green);">Evaluar Respuestas</button>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        // Lógica de evaluación del Quiz
+        function evaluarQuiz() {
+            const respuestas = {
+                'a': 105,
+                'b': 11,
+                'c': 21,
+                'd': 41,
+                'e': 8,
+                'f': 7
+            };
+
+            let puntaje = 0;
+
+            for (let key in respuestas) {
+                let inputElement = document.getElementById('ans_' + key);
+                let feedbackElement = document.getElementById('fb_' + key);
+                let valorIngresado = parseInt(inputElement.value);
+
+                if (isNaN(valorIngresado)) {
+                    feedbackElement.innerHTML = '⚠️';
+                } else if (valorIngresado === respuestas[key]) {
+                    feedbackElement.innerHTML = '✅';
+                    inputElement.style.borderColor = 'var(--green)';
+                    puntaje++;
+                } else {
+                    feedbackElement.innerHTML = '❌';
+                    inputElement.style.borderColor = '#c62828';
+                }
+            }
+
+            if(puntaje === 6) {
+                setTimeout(() => alert("¡Excelente trabajo! Has resuelto correctamente todas las operaciones del diagrama de Venn."), 300);
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+</body>
+</html>

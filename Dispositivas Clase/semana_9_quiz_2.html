@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Autoevaluable: Operaciones con Eventos</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 50px) clamp(20px, 4vw, 60px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            width: 100%;
+            align-items: start;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 14px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+            margin-bottom: 20px;
+        }
+        input, select {
+            padding: 6px 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover {
+            background-color: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Ejercicio 3.8 Preferencias de Helado -->
+        <div class="slide">
+            <div>
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 0.9rem; text-transform: uppercase;">Práctica Activa</p>
+                <h1>3.8. Preferencias de Helado</h1>
+            </div>
+
+            <div class="slide-intro">
+                <p style="margin: 0; font-size: 0.95rem; line-height: 1.4;">
+                    <strong>Enunciado:</strong> Encuesta a 100 personas. 60 prefieren chocolate ($Ch$), 50 prefieren vainilla ($V$), 30 prefieren ambos ($Ch \cap V$). Fuera: 20 personas (ninguno).
+                </p>
+            </div>
+
+            <div class="grid-layout">
+                <div class="matrix-card" style="display: flex; justify-content: center; align-items: center; background: #fafafa;">
+                    <!-- Diagrama SVG simplificado -->
+                    <svg viewBox="0 0 280 180" style="width: 100%; max-width: 260px;">
+                        <rect x="5" y="5" width="270" height="170" fill="none" stroke="#333" stroke-width="2"/>
+                        <circle cx="105" cy="90" r="55" fill="#ff8a80" fill-opacity="0.5" stroke="#c62828" stroke-width="2"/>
+                        <circle cx="175" cy="90" r="55" fill="#80cbc4" fill-opacity="0.5" stroke="#00796b" stroke-width="2"/>
+                        <text x="75" y="95" font-size="14" font-weight="bold">30</text>
+                        <text x="140" y="95" font-size="14" font-weight="bold">30</text>
+                        <text x="195" y="95" font-size="14" font-weight="bold">20</text>
+                        <text x="220" y="155" font-size="12">Fuera: 20</text>
+                    </svg>
+                </div>
+
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">📝 Autoevaluación</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-size: 1rem;">
+                        <div>
+                            <label>a) n(Ch ∪ V) = </label>
+                            <input type="number" id="h_a" style="width: 70px;">
+                            <span id="f_ha"></span>
+                        </div>
+                        <div>
+                            <label>b) n(Ch - V) = </label>
+                            <input type="number" id="h_b" style="width: 70px;">
+                            <span id="f_hb"></span>
+                        </div>
+                        <div>
+                            <label>c) n(Chᶜ) = </label>
+                            <input type="number" id="h_c" style="width: 70px;">
+                            <span id="f_hc"></span>
+                        </div>
+                    </div>
+
+                    <button onclick="evaluarHelado()" style="margin-top: 20px; width: 100%;">Verificar Helado</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Ejercicio 3.9 Fallas en Componentes -->
+        <div class="slide">
+            <div>
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 0.9rem; text-transform: uppercase;">Práctica Activa</p>
+                <h1>3.9. Fallas en Componentes</h1>
+            </div>
+
+            <div class="slide-intro">
+                <p style="margin: 0; font-size: 0.95rem;">
+                    <strong>Enunciado:</strong> Sistema electrónico con tres componentes ($A, B, C$). Definidos: $E_A, E_B, E_C$. Selecciona la expresión correcta para cada evento:
+                </p>
+            </div>
+
+            <div class="matrix-card" style="border-top: 5px solid var(--blue); display: flex; flex-direction: column; gap: 15px; font-size: 0.95rem;">
+                <div>
+                    <p style="margin: 0 0 5px; font-weight: bold;">a) Al menos un componente falla:</p>
+                    <select id="f_a" style="width: 100%;">
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="correct">E_A ∪ E_B ∪ E_C</option>
+                        <option value="wrong1">E_A ∩ E_B ∩ E_C</option>
+                        <option value="wrong2">E_Aᶜ ∩ E_Bᶜ ∩ E_Cᶜ</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p style="margin: 0 0 5px; font-weight: bold;">b) Solo el componente A falla:</p>
+                    <select id="f_b" style="width: 100%;">
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="wrong1">E_A ∪ E_B ∪ E_C</option>
+                        <option value="correct">E_A ∩ E_Bᶜ ∩ E_Cᶜ</option>
+                        <option value="wrong2">E_A ∩ E_B ∩ E_C</option>
+                    </select>
+                </div>
+
+                <div>
+                    <p style="margin: 0 0 5px; font-weight: bold;">c) Los tres componentes fallan:</p>
+                    <select id="f_c" style="width: 100%;">
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="wrong1">E_A ∪ E_B ∪ E_C</option>
+                        <option value="correct">E_A ∩ E_B ∩ E_C</option>
+                        <option value="wrong2">E_Aᶜ ∩ E_Bᶜ ∩ E_Cᶜ</option>
+                    </select>
+                </div>
+
+                <button onclick="evaluarFallas()" style="width: 100%;">Verificar Fallas</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlideIndex = 0;
+
+        function showSlide(index) {
+            slides.forEach(s => s.style.display = 'none');
+            currentSlideIndex = (index >= slides.length) ? 0 : (index < 0 ? slides.length - 1 : index);
+            slides[currentSlideIndex].style.display = 'flex';
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        showSlide(currentSlideIndex);
+
+        function evaluarHelado() {
+            const resp = { 'a': 80, 'b': 30, 'c': 40 };
+            document.getElementById('f_ha').innerHTML = parseInt(document.getElementById('h_a').value) === resp.a ? '✅' : '❌';
+            document.getElementById('f_hb').innerHTML = parseInt(document.getElementById('h_b').value) === resp.b ? '✅' : '❌';
+            document.getElementById('f_hc').innerHTML = parseInt(document.getElementById('h_c').value) === resp.c ? '✅' : '❌';
+        }
+
+        function evaluarFallas() {
+            alert(
+                document.getElementById('f_a').value === 'correct' &&
+                document.getElementById('f_b').value === 'correct' &&
+                document.getElementById('f_c').value === 'correct'
+                ? "¡Excelente! Todas las expresiones de conjuntos son correctas." : "Hay algunos errores. Revisa las definiciones de unión, intersección y complemento."
+            );
+        }
+    </script>
+</body>
+</html>

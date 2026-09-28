@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de la Probabilidad</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        /* ESTILOS ORIGINALES DE LA PLANTILLA */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            font-size: clamp(1rem, 1.8vw, 1.6rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: start;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p { margin: 0; font-size: clamp(1.1rem, 1.5vw, 1.3rem); line-height: 1.5; }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+
+        .slide.active { display: flex; }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30,30,30,0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: 0.1 Introducción -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">0.1 · Introducción</p>
+                <h1>La Teoría de la Probabilidad</h1>
+            </div>
+            <div class="slide-intro">
+                <p>Rama de las matemáticas que estudia los fenómenos aleatorios. Su desarrollo ha sido impulsado por la necesidad de comprender y modelar situaciones inciertas, desde juegos de azar hasta fenómenos naturales y sociales.</p>
+            </div>
+            <div class="grid-layout" style="margin-top: 20px;">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0;">🎲 Probabilidad</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.5;">Modela el azar <strong>a priori</strong>. Conocemos las reglas del sistema y predecimos matemáticamente los resultados posibles.</p>
+                </div>
+                <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                    <h3 style="color: var(--green); margin-top: 0;">📊 Estadística</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.5;">Trabaja <strong>a posteriori</strong>. Observamos datos empíricos e inferimos las reglas y comportamientos del sistema.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #666;">💡 Ambas son dos caras de la misma moneda del conocimiento científico.</p>
+        </div>
+
+        <!-- Slide 2: Personajes Clave (Línea del tiempo / Grid) -->
+        <div class="slide">
+            <h1 style="font-size: 2.2rem;">Arquitectos del Azar</h1>
+            <p style="font-size: 1.1rem; margin-top: -10px; margin-bottom: 20px; color: #666;">Sus aportes transformaron la incertidumbre en una ciencia fundamental.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%;">
+                
+                <!-- Tarjeta 1 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Gerolamo Cardano</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1501-1576</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Primer análisis sistemático de juegos de azar (Liber de Ludo Aleae).</div>
+                </div>
+                
+                <!-- Tarjeta 2 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Pascal & Fermat</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1654</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Correspondencia que fundó la teoría. Resolvieron el "problema de los puntos".</div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Jacob Bernoulli</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1655-1705</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Demostró la Ley de los Grandes Números (Ars Conjectandi).</div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Thomas Bayes</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1701-1761</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Teorema de Bayes. Base de la inferencia matemática moderna.</div>
+                </div>
+
+                <!-- Tarjeta 5 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Pierre-Simon Laplace</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1749-1827</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Demostró el Teorema Central del Límite.</div>
+                </div>
+
+                <!-- Tarjeta 6 -->
+                <div class="matrix-card" style="padding: 15px;">
+                    <div style="font-weight: bold; color: var(--blue);">Andréi Kolmogórov</div>
+                    <div style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">1903-1987</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">Axiomatización moderna (1933). Formalizó la probabilidad.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 0.2 Orígenes -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">0.2 · Siglo XVII</p>
+                <h1>Orígenes en los Juegos de Azar</h1>
+            </div>
+            <div class="grid-layout">
+                <div>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">Aunque los juegos de azar existen desde la antigüedad, el análisis matemático del azar comenzó formalmente en el siglo XVII.</p>
+                    <ul>
+                        <li><strong>1654:</strong> Pierre de Fermat y Blaise Pascal intercambian correspondencia clave.</li>
+                        <li><strong>Reto central:</strong> El <em>"problema de los puntos"</em> (cómo dividir apuestas de un juego interrumpido justamente).</li>
+                        <li><strong>Impacto:</strong> Sientan las bases de la matemática probabilística.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div style="font-size: 8rem; text-align: center;">🎲</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: 0.3 Siglos XVII y XVIII -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">0.3 · Evolución</p>
+                <h1>Avances en los Siglos XVII y XVIII</h1>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+                <div class="matrix-card" style="border-left: 5px solid var(--blue); display: flex; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem;">📊</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; color: var(--blue);">Jacob Bernoulli (1713)</h3>
+                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.4;">Publicó <em>Ars Conjectandi</em>. Introdujo la <strong>Ley de los Grandes Números</strong>: la frecuencia relativa converge a la teórica con más ensayos.</p>
+                    </div>
+                </div>
+
+                <div class="matrix-card" style="border-left: 5px solid var(--green); display: flex; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem;">📈</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; color: var(--green);">Abraham de Moivre (1718)</h3>
+                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.4;">En <em>The Doctrine of Chances</em>, introdujo la <strong>distribución normal</strong> como aproximación a la binomial (Teorema Central del Límite).</p>
+                    </div>
+                </div>
+
+                <div class="matrix-card" style="border-left: 5px solid #ff9800; display: flex; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem;">🔄</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; color: #f57c00;">Thomas Bayes (1763)</h3>
+                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.4;">Desarrolló el <strong>Teorema de Bayes</strong>, permitiendo actualizar probabilidades ante nueva evidencia (Estadística Bayesiana).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: 0.4 Formalización -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">0.4 · Siglo XX</p>
+                <h1>Formalización Axiomática</h1>
+            </div>
+            
+            <div class="slide-intro">
+                <p>En 1933, <strong>Andréi Kolmogórov</strong> publicó <em>Fundamentos de la Teoría de la Probabilidad</em>, estableciendo una axiomatización rigurosa basada en la teoría de conjuntos y la medida matemática.</p>
+            </div>
+
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                
+                <div class="matrix-card" style="flex: 1; min-width: 200px; text-align: center; border-top: 5px solid var(--blue);">
+                    <div style="background: var(--blue); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; margin: 0 auto 15px;">1</div>
+                    <h3 style="margin-top: 0;">No negatividad</h3>
+                    <div style="font-family: 'Cambria Math', serif; font-size: 1.4rem; color: var(--blue); font-weight: bold;">P(A) ≥ 0</div>
+                </div>
+
+                <div class="matrix-card" style="flex: 1; min-width: 200px; text-align: center; border-top: 5px solid var(--green);">
+                    <div style="background: var(--green); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; margin: 0 auto 15px;">2</div>
+                    <h3 style="margin-top: 0;">Normalización</h3>
+                    <div style="font-family: 'Cambria Math', serif; font-size: 1.4rem; color: var(--green); font-weight: bold;">P(Ω) = 1</div>
+                </div>
+
+                <div class="matrix-card" style="flex: 1; min-width: 200px; text-align: center; border-top: 5px solid #ff9800;">
+                    <div style="background: #f57c00; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; margin: 0 auto 15px;">3</div>
+                    <h3 style="margin-top: 0;">Aditividad</h3>
+                    <div style="font-family: 'Cambria Math', serif; font-size: 1.4rem; color: #f57c00; font-weight: bold;">P(∪Aᵢ) = ΣP(Aᵢ)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: 0.5 Aplicaciones Modernas -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">0.5 · Actualidad</p>
+                <h1>Aplicaciones Modernas</h1>
+            </div>
+            <p style="font-size: 1.2rem;">Hoy en día, la teoría de la probabilidad es el núcleo de múltiples disciplinas tecnológicas y de negocios:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; margin-top: 20px;">
+                
+                <div class="matrix-card" style="text-align: left;">
+                    <h3 style="color: var(--blue); margin-top: 0; display: flex; align-items: center; gap: 10px;"><span>📊</span> Estadística</h3>
+                    <p style="margin: 0; color: #666; font-size: 1.05rem;">Inferencia empírica y pruebas de hipótesis poblacional.</p>
+                </div>
+                
+                <div class="matrix-card" style="text-align: left;">
+                    <h3 style="color: var(--green); margin-top: 0; display: flex; align-items: center; gap: 10px;"><span>💰</span> Finanzas</h3>
+                    <p style="margin: 0; color: #666; font-size: 1.05rem;">Análisis de riesgos bursátiles y valoración de derivados complejos.</p>
+                </div>
+                
+                <div class="matrix-card" style="text-align: left;">
+                    <h3 style="color: #ff9800; margin-top: 0; display: flex; align-items: center; gap: 10px;"><span>⚙️</span> Ingeniería</h3>
+                    <p style="margin: 0; color: #666; font-size: 1.05rem;">Confiabilidad de sistemas y análisis predictivo en teoría de colas.</p>
+                </div>
+                
+                <div class="matrix-card" style="text-align: left;">
+                    <h3 style="color: #9c27b0; margin-top: 0; display: flex; align-items: center; gap: 10px;"><span>🧠</span> Inteligencia Artificial</h3>
+                    <p style="margin: 0; color: #666; font-size: 1.05rem;">Redes bayesianas, Machine Learning y modelos de lenguaje.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Slide 7: Resumen -->
+        <div class="slide">
+            <h1>Tabla Resumen Histórica</h1>
+            
+            <div style="width: 100%; overflow-x: auto; border-radius: 12px; border: 1px solid #dcefff;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 1.1rem; min-width: 600px;">
+                    <thead>
+                        <tr style="background-color: var(--blue); color: white;">
+                            <th style="padding: 15px; border-bottom: 2px solid #004575;">Año</th>
+                            <th style="padding: 15px; border-bottom: 2px solid #004575;">Matemático</th>
+                            <th style="padding: 15px; border-bottom: 2px solid #004575;">Aporte Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: transparent;">
+                        <tr><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1654</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Pascal y Fermat</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Fundamentos de la probabilidad</td></tr>
+                        <tr style="background-color: rgba(0, 91, 150, 0.03);"><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1663</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Cardano</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Regla de casos favorables/posibles</td></tr>
+                        <tr><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1713</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Jacob Bernoulli</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Ley de los Grandes Números</td></tr>
+                        <tr style="background-color: rgba(0, 91, 150, 0.03);"><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1718</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">De Moivre</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Distribución normal</td></tr>
+                        <tr><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1763</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Thomas Bayes</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Teorema de Bayes</td></tr>
+                        <tr style="background-color: rgba(0, 91, 150, 0.03);"><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1812</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Laplace</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Teorema Central del Límite</td></tr>
+                        <tr><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1837</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Poisson</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Distribución de Poisson</td></tr>
+                        <tr style="background-color: rgba(0, 91, 150, 0.03);"><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">1933</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Kolmogórov</td><td style="padding: 12px 15px; border-bottom: 1px solid #dcefff;">Axiomatización moderna</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p style="background: #e8f5e9; color: #2e7d32; border-left: 5px solid var(--green); padding: 15px; border-radius: 8px; margin-top: 25px; font-weight: bold;">
+                💡 La probabilidad evolucionó desde los juegos de azar hasta convertirse en una ciencia axiomática fundamental para la IA y la Ciencia de Datos.
+            </p>
+        </div>
+
+    </div>
+    
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

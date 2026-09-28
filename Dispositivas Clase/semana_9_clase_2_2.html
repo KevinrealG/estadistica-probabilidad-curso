@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <title>Clase 2: El Espacio Muestral</title>
+    <!-- MathJax para notación matemática -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Variables base y tipografía */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Contenedores de diapositivas */
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        
+        /* Tipografía y elementos de lista */
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul, ol { padding-left: 0; }
+        ul li {
+            list-style: none;
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 35px;
+            line-height: 1.5;
+        }
+        ul li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        ol li {
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            margin-bottom: 15px;
+            margin-left: 30px;
+            line-height: 1.5;
+        }
+        
+        /* Componentes UI */
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0 0 10px;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        .info-pill {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        .info-pill:hover {
+            transform: translateY(-2px);
+            background: #388e3c;
+        }
+        .math-eq {
+            font-size: clamp(1.2rem, 2vw, 2rem);
+            color: var(--blue);
+            margin: 15px 0;
+            background: #f4f6f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+        body.dark-theme .math-eq { background: #1a2a3a; }
+
+        .slide.active { display: flex; }
+        
+        /* Controles */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 25px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: General Info -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Clase N°2</p>
+                <h1>El Espacio Muestral (Ω)</h1>
+            </div>
+            <div class="grid-layout">
+                <div>
+                    <div class="matrix-card" style="border-left: 5px solid var(--blue);">
+                        <h3 style="color: var(--blue); margin-top: 0;">Objetivo</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.6;">Construir formalmente el espacio muestral de diferentes experimentos aleatorios mediante técnicas de conteo básico y representación de conjuntos.</p>
+                    </div>
+                    <div class="matrix-card" style="border-left: 5px solid var(--green); margin-top: 20px;">
+                        <h3 style="color: var(--green); margin-top: 0;">Recursos</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.6;">Pizarra, proyector y simuladores visuales interactivos.</p>
+                    </div>
+                </div>
+                <div class="visual-container">
+                    <div style="font-size: 8rem;">🌌</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Apertura -->
+        <div class="slide">
+            <h1>El Reto de las Posibilidades</h1>
+            <div class="slide-intro" style="border-left: 5px solid #ff9800;">
+                <p><strong>Lluvia de ideas:</strong> Estructuremos juntos el concepto de "totalidad".</p>
+            </div>
+            <ul>
+                <li>Si lanzamos un dado convencional de 6 caras, ¿cuáles son <strong>TODOS</strong> los resultados posibles que el universo nos puede entregar?</li>
+                <li>¿Qué pasa si lanzamos <strong>DOS</strong> dados al mismo tiempo? ¿El espacio de resultados se duplica o crece de otra forma?</li>
+                <li>¿Cómo le explicarías a un extraterrestre qué es el <em>"universo de lo posible"</em> en un juego?</li>
+            </ul>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://kevinrealg.github.io/calculadora-distribuciones/probabilidades" target="_blank" class="info-pill">Abrir Simulador Interactivo</a>
+            </div>
+        </div>
+
+        <!-- Slide 3: Exploración -->
+        <div class="slide">
+            <h1 style="border-bottom-color: var(--blue);">El Árbol Mental</h1>
+            <div class="matrix-card" style="margin-top: 30px; text-align: center; padding: 50px 30px; border-top: 6px solid var(--blue);">
+                <div style="font-size: 4rem; margin-bottom: 20px;">🪙 🪙 🪙</div>
+                <h2 style="color: var(--text-color); font-size: 1.8rem; margin-bottom: 30px;">Lanzamiento de Tres Monedas Consecutivas</h2>
+                <p style="font-size: 1.4rem; line-height: 1.6;">Intenta listar mentalmente <strong>todas las combinaciones posibles</strong> (Cara o Sello).</p>
+                <p style="font-size: 1.2rem; color: #666; margin-top: 20px; font-style: italic;">¿Qué método intuitivo usaste para no confundirte o repetir resultados?</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Teoría Mínima -->
+        <div class="slide">
+            <h1>Desarrollo Conceptual</h1>
+            <div class="grid-layout" style="align-items: start;">
+                <div>
+                    <h3 style="color: var(--blue); font-size: 1.4rem;">1. Definición Formal</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">El <strong>Espacio Muestral ($\Omega$)</strong> es el conjunto de todos los resultados posibles de un experimento aleatorio.</p>
+                    
+                    <h3 style="color: var(--blue); font-size: 1.4rem; margin-top: 30px;">2. Representación</h3>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Uso de llaves $\{ \}$ para notación de conjuntos.</li>
+                        <li>Diagramas de árbol.</li>
+                        <li>Tablas de doble entrada (ej. producto cartesiano).</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="matrix-card" style="border-top: 5px solid var(--green);">
+                        <h4 style="margin-top: 0; color: var(--green);">Ejemplo: Dos Dados</h4>
+                        <div class="math-eq">
+                            $$ \Omega = 6 \times 6 = 36 \text{ resultados} $$
+                        </div>
+                    </div>
+                    <div class="slide-intro" style="margin-top: 20px; border-left: 4px solid #ff9800;">
+                        <p style="font-weight: bold; margin-bottom: 5px;">Pregunta rápida:</p>
+                        <p style="font-size: 1rem;">Si extraemos una carta de una baraja estándar de 52 cartas, ¿cuántos elementos tiene exactamente $\Omega$?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Actividad Guiada -->
+        <div class="slide">
+            <h1>Construyendo Universos</h1>
+            <p style="font-size: 1.3rem; margin-bottom: 30px;"><strong>Trabajo en Parejas:</strong> Construyan en papel o tablet el espacio muestral $\Omega$ para los siguientes 3 retos.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="matrix-card" style="border-left: 5px solid var(--blue);">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">👨‍👩‍👧‍👦</div>
+                    <h3 style="margin-top: 0; color: var(--blue);">Reto 1</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.5;">Una familia decide tener 3 hijos. Registren el orden de género (Varón/Mujer).</p>
+                </div>
+                <div class="matrix-card" style="border-left: 5px solid var(--green);">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🪙🎲</div>
+                    <h3 style="margin-top: 0; color: var(--green);">Reto 2</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.5;">Lanzar una moneda y un dado convencional de manera simultánea.</p>
+                </div>
+                <div class="matrix-card" style="border-left: 5px solid #ff9800;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🔴🔵</div>
+                    <h3 style="margin-top: 0; color: #ff9800;">Reto 3</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.5;">Extraer dos bolas de una urna que contiene 3 rojas y 2 azules <strong>sin reemplazo</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Aplicación -->
+        <div class="slide">
+            <h1>Logística y Control de Calidad</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p><strong>Escenario Industrial:</strong></p>
+                        <p>Una línea de producción inspecciona lotes de 3 smartphones consecutivos.</p>
+                    </div>
+                    <p style="font-size: 1.3rem; line-height: 1.6;">Define el espacio muestral completo donde cada artículo inspeccionado puede ser clasificado únicamente como:</p>
+                    <ul style="font-weight: bold;">
+                        <li>Defectuoso ($D$)</li>
+                        <li>Bueno ($B$)</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div style="font-size: 7rem;">📱📱📱</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Cierre -->
+        <div class="slide">
+            <h1 style="border-bottom-color: #7b1fa2;">Metacognición y Reflexión</h1>
+            <div class="matrix-card" style="margin-top: 40px; padding: 50px; text-align: center; border-top: 8px solid #7b1fa2; border-radius: 20px;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">🧠</div>
+                <p style="font-size: 1.6rem; line-height: 1.6; color: var(--text-color); font-style: italic;">
+                    "¿Por qué definir mal o de forma incompleta el <strong>espacio muestral</strong> arruina cualquier cálculo de probabilidad posterior?"
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

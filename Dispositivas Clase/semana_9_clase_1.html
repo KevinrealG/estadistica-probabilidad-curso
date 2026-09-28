@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Probabilidad y Azar</title>
+    <!-- MathJax para fórmulas matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Variables base de la plantilla original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            font-size: clamp(1rem, 2vw, 1.6rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p { margin: 0 0 10px; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.5; }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+        
+        .slide.active { display: flex; }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30,30,30,0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; border-radius: 16px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Clase N°1</p>
+                <h1>El Reto del Casino</h1>
+            </div>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p style="font-weight: bold; color: var(--blue);">Reflexionemos:</p>
+                        <p>¿Es el mundo un mecanismo de relojería perfecto o está gobernado por el caos?</p>
+                    </div>
+                    <ul>
+                        <li>Si lanzamos una moneda, ¿podemos saber con física exacta cómo caerá antes de tocar el suelo?</li>
+                        <li>¿Por qué los casinos siempre ganan a largo plazo si el juego es de "azar" puro?</li>
+                        <li>¿Qué diferencia hay entre calcular el tiempo de una caída libre y predecir quién ganará las elecciones?</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <!-- Icono SVG de Azar (Dado) -->
+                    <svg viewBox="0 0 100 100" style="width: 100%; max-width: 250px;">
+                        <rect x="20" y="20" width="60" height="60" rx="10" fill="none" stroke="var(--blue)" stroke-width="4"/>
+                        <circle cx="35" cy="35" r="5" fill="var(--green)"/>
+                        <circle cx="65" cy="65" r="5" fill="var(--green)"/>
+                        <circle cx="35" cy="65" r="5" fill="var(--green)"/>
+                        <circle cx="65" cy="35" r="5" fill="var(--green)"/>
+                        <circle cx="50" cy="50" r="5" fill="var(--green)"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Exploración -->
+        <div class="slide">
+            <h1 style="border-bottom-color: var(--blue);">Hipótesis Estudiantil</h1>
+            <div class="matrix-card" style="margin-top: 20px; padding: 40px; text-align: center; border-top: 6px solid var(--green);">
+                <h2 style="color: var(--blue); font-size: 2rem; margin-top: 0;">Misión en Parejas (3 min)</h2>
+                <p style="font-size: 1.3rem; line-height: 1.6; color: var(--text-color);">Escriban en un papel dos eventos de su vida diaria:</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                    <div style="flex: 1; min-width: 250px; background: #f0f8ff; padding: 20px; border-radius: 12px; border: 2px dashed var(--blue);">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎯</div>
+                        <p style="font-weight: bold; font-size: 1.2rem; margin: 0; color: var(--blue);">Evento 1</p>
+                        <p style="margin-top: 10px;">Uno que crean poder predecir al 100% de certeza.</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; background: #fff3e0; padding: 20px; border-radius: 12px; border: 2px dashed #ff9800;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">❓</div>
+                        <p style="font-weight: bold; font-size: 1.2rem; margin: 0; color: #f57c00;">Evento 2</p>
+                        <p style="margin-top: 10px;">Uno que jamás puedan predecir con certeza.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Cápsula Histórica -->
+        <div class="slide">
+            <h1>El Nacimiento de la Probabilidad</h1>
+            <div class="grid-layout">
+                <div>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">La probabilidad nació en el siglo XVII como respuesta a los problemas de los apostadores.</p>
+                    <ul>
+                        <li><strong>El problema de los puntos:</strong> ¿Cómo repartir el dinero de una apuesta si el juego se interrumpe antes de terminar?</li>
+                        <li><strong>Los protagonistas:</strong> Blaise Pascal y Pierre de Fermat resolvieron esto mediante correspondencia, sentando las bases matemáticas del azar.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div class="matrix-card" style="text-align: center; border-left: 5px solid var(--blue);">
+                        <div style="font-size: 4rem;">✉️</div>
+                        <h3 style="color: var(--blue); margin-bottom: 5px;">Pascal & Fermat</h3>
+                        <p style="font-size: 1.1rem; color: #666; margin-top: 0;">París, 1654</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Teoría Mínima -->
+        <div class="slide">
+            <h1 style="text-align: center; width: 100%; border: none;">La Gran Bifurcación</h1>
+            
+            <div class="grid-layout" style="align-items: stretch; margin-top: 20px;">
+                <!-- Determinístico -->
+                <div class="matrix-card" style="border-top: 6px solid var(--blue); display: flex; flex-direction: column;">
+                    <h2 style="color: var(--blue); text-align: center; margin-top: 0;">Fenómeno Determinístico</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.5; flex-grow: 1;">Bajo las mismas condiciones iniciales, produce <strong>siempre el mismo resultado</strong>.</p>
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px;">
+                        <span style="font-family: 'Cambria Math', serif; font-size: 2rem; color: var(--blue);">$$ F = m \cdot a $$</span>
+                    </div>
+                </div>
+
+                <!-- Aleatorio -->
+                <div class="matrix-card" style="border-top: 6px solid var(--green); display: flex; flex-direction: column;">
+                    <h2 style="color: var(--green); text-align: center; margin-top: 0;">Fenómeno Aleatorio</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.5; flex-grow: 1;">Proceso cuyo resultado <strong>no se puede predecir</strong> con certeza antes de ocurrir, aunque se repita bajo idénticas condiciones.</p>
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px;">
+                        <span style="font-size: 2rem;">🎲 🪙 🃏</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-intro" style="margin-top: 25px; border-left: 5px solid #ff9800;">
+                <p style="text-align: center; font-weight: bold; margin: 0;">Reflexión exprés: "Si prendo el interruptor de la luz, ¿es un proceso aleatorio o determinístico? ¿Por qué?"</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Actividad Guiada -->
+        <div class="slide">
+            <h1>El Clasificador de Sucesos</h1>
+            <div class="matrix-card" style="border-left: 6px solid var(--blue); padding: 30px;">
+                <h3 style="color: var(--blue); margin-top: 0; font-size: 1.5rem;">Misión en Equipos (3 personas)</h3>
+                <p style="font-size: 1.2rem; color: var(--text-color);">Clasifiquen la siguiente lista de fenómenos en su matriz (Determinístico vs. Aleatorio):</p>
+                <ol style="font-size: 1.2rem; line-height: 1.6; color: var(--text-color); margin-bottom: 20px;">
+                    <li>Tasa de cambio del dólar para el día de mañana.</li>
+                    <li>Dilatación de un metal al exponerlo al calor.</li>
+                    <li>El resultado de un penalti en el fútbol.</li>
+                    <li>La rotación de la Tierra alrededor del Sol.</li>
+                    <li>El tiempo exacto de viaje al trabajo en hora pico.</li>
+                </ol>
+                <div style="background: #fff3e0; padding: 15px; border-radius: 8px; border: 1px dashed #ff9800;">
+                    <strong>Reto Extra:</strong> Para los eventos aleatorios, justifiquen cuál es la "variable oculta" o el factor que genera la incertidumbre.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Aplicación -->
+        <div class="slide">
+            <h1>El Ingeniero frente al Azar</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p><strong>Contexto de Ingeniería Civil:</strong></p>
+                        <p>Un ingeniero diseña un puente. Las leyes de la física estructural (gravedad, tensión) son completamente determinísticas.</p>
+                    </div>
+                    <ul>
+                        <li>Sin embargo, debe usar <strong>modelos probabilísticos</strong> en su diseño.</li>
+                        <li>¿Por qué debe calcular las cargas de los vientos máximos o la posibilidad de un sismo usando probabilidad?</li>
+                        <li><strong>Conclusión:</strong> El mundo físico es determinista, pero el entorno natural nos obliga a gestionar la incertidumbre.</li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <svg viewBox="0 0 100 100" style="width: 100%; max-width: 250px;">
+                        <!-- Puente SVG -->
+                        <path d="M10,80 Q50,20 90,80" fill="none" stroke="var(--blue)" stroke-width="4"/>
+                        <line x1="10" y1="80" x2="90" y2="80" stroke="var(--text-color)" stroke-width="6"/>
+                        <!-- Pilares -->
+                        <line x1="25" y1="80" x2="25" y2="100" stroke="var(--text-color)" stroke-width="4"/>
+                        <line x1="75" y1="80" x2="75" y2="100" stroke="var(--text-color)" stroke-width="4"/>
+                        <!-- Viento (Azar) -->
+                        <path d="M10,40 Q30,20 50,40 T90,40" fill="none" stroke="var(--green)" stroke-width="2" stroke-dasharray="4"/>
+                        <path d="M20,60 Q40,40 60,60 T100,60" fill="none" stroke="var(--green)" stroke-width="2" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Cierre -->
+        <div class="slide">
+            <h1 style="border-bottom: 3px solid #7b1fa2;">Metacognición y Cierre</h1>
+            <div class="grid-layout" style="align-items: stretch;">
+                <div class="matrix-card" style="border-top: 5px solid #7b1fa2; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="color: #7b1fa2; margin-top: 0; text-align: center;">Reflexión Final</h2>
+                    <p style="font-size: 1.4rem; line-height: 1.5; color: var(--text-color); text-align: center; font-style: italic;">
+                        "Si la ciencia clásica siempre buscaba leyes exactas y determinísticas (fórmulas perfectas)...<br><br>
+                        ¿Por qué el ser humano tuvo la necesidad de inventar la matemática de la probabilidad?"
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 20px; justify-content: center;">
+                    <div class="slide-intro" style="border-left: 6px solid var(--green);">
+                        <p style="font-weight: bold; color: var(--green); font-size: 1.3rem;">Ticket de Salida 🎟️</p>
+                        <p style="font-size: 1.1rem;">Abre el enlace enviado a sus móviles (Forms).</p>
+                        <ul style="font-size: 1.1rem; margin-top: 10px;">
+                            <li style="margin-bottom: 5px;">2 preguntas rápidas.</li>
+                            <li>Discrimina entre experimentos aleatorios y determinísticos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

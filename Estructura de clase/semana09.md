@@ -1,32 +1,211 @@
-- Explicación Interactiva de Probabilidades
+### 📋 Información General del Eje (Semana 9)
+
+* **Curso:** Estadística y Probabilidad (Pregrado UTB).
+* **Competencia:** Comprender los fundamentos axiomáticos, conceptuales y espaciales de la probabilidad para modelar situaciones de incertidumbre en contextos reales.
+* **Modalidad:** Presencial (Aula tradicional, con uso opcional de dispositivos móviles para simulaciones web).
+* **Duración:** 3 sesiones de **50 minutos** cada una.
+
+---
+
+### ⏳ Clase N°1: Breve Historia de la Probabilidad y Fenómenos Aleatorios vs. Determinísticos (50 min)
+
+#### a) Información General
+
+* **Objetivo:** Distinguir conceptualmente entre un proceso determinístico y un experimento aleatorio a través de la historia y el análisis de la incertidumbre.
+* **Recursos:** Proyector, diapositivas, enlaces interactivos de referencia (*Maestro Seferino / RPubs*).
+
+#### b) Apertura (8 min) - *El Reto del Casino*
+
+* **Preguntas motivadoras:**
+1. *"Si lanzamos una moneda al aire, ¿podemos saber con física exacta si caerá cara o sello antes de que toque el suelo?"*
+https://kevinrealg.github.io/calculadora-distribuciones/probabilidades
+2. *"¿Por qué los casinos siempre ganan a largo plazo si el juego es 'azar' puro?"*
+3. *"¿Qué diferencia hay entre calcular la gravedad de una caída y predecir quién ganará las elecciones?"*
+
+
+* **Dinámica:** Breve debate socrático sobre la ilusión de controlar el azar.
+
+#### c) Exploración (7 min) - *Hipótesis Estudiantil*
+
+* Pide a los estudiantes que escriban en un papel un evento de su vida diaria que crean que **pueden predecir al 100%** (determinístico) y uno que **no puedan predecir jamás con certeza** (aleatorio). Comparten en parejas.
+
+#### d) Desarrollo Conceptual (10 min) - *Teoría Mínima*
+https://www.youtube.com/watch?v=eUVWxvEK7TM&t=36s
+* **Cápsula Histórica (Storytelling):** Cómo la probabilidad nació en el siglo XVII de la mano de Blaise Pascal y Pierre de Fermat resolviendo un problema de apuestas (el problema de los puntos).
+* **La Gran Bifurcación:**
+* *Fenómeno Determinístico:* Bajo las mismas condiciones, produce siempre el mismo resultado (ej. $F = ma$).
+* *Fenómeno Aleatorio:* Proceso cuyo resultado no se puede predecir con certeza antes de ocurrir, aunque se repita bajo idénticas condiciones.
+
+
+* **Pregunta de verificación:** *"Si prendo el interruptor de la luz, ¿es un proceso aleatorio o determinístico? ¿Por qué?"*
+
+#### e) Actividad Guiada y Colaborativa (15 min) - *El Clasificador de Sucesos*
+https://wayground.com/activity/admin/quiz/6aba867dd2154f9b6fcd9cf2
+
+* En equipos de 3, los estudiantes reciben una lista de 10 fenómenos del mundo real (ej. *tasa de cambio del dólar mañana, dilatación de un metal al calentarlo, resultado de un penalti, rotación de la Tierra*).
+* Deben clasificarlos en una matriz de "Determinístico vs. Aleatorio" y justificar la variable oculta que genera la incertidumbre en los aleatorios.
+
+#### f) Aplicación (5 min) - *El Ingeniero frente al Azar*
+
+* *Escenario:* Un ingeniero civil diseña un puente. Las leyes físicas son determinísticas, pero ¿por qué debe usar modelos probabilísticos para calcular las cargas de vientos máximos o sismos?
+
+#### g) Cierre y Reflexión (3 min) - *Metacognición*
+
+* **Pregunta de salida:** *"¿Por qué el ser humano necesitó inventar la matemática de la probabilidad si la ciencia clásica siempre buscaba leyes exactas y determinísticas?"* 
+
+#### h) Actividad Final de Consolidación (2 min) - *Ticket de Salida*
+
+* Mini-quiz rápido (Forms en móviles) de 2 preguntas discriminando entre experimentos aleatorios y determinísticos.
+
+---
+
+### 🌐 Clase N°2: El Espacio Muestral ($\Omega$) (50 min)
+
+#### a) Información General
+
+* **Objetivo:** Construir formalmente el espacio muestral de diferentes experimentos aleatorios mediante técnicas de conteo básico y representación de conjuntos.
+* **Recursos:** Pizarra, proyector y simuladores visuales interactivos.
+
+#### b) Apertura (8 min) - *El Reto de las Posibilidades*
+
+* **Preguntas motivadoras:**
+1. *"Si lanzamos un dado convencional de 6 caras, ¿cuáles son TODOS los resultados posibles que el universo nos puede entregar?"*
+2. *"¿Qué pasa si lanzamos DOS dados al mismo tiempo? ¿El espacio de resultados se duplica o crece de otra forma?"*
+3. *"¿Cómo le explicarías a un extraterrestre qué es el 'universo de lo posible' en un juego?"*
+https://kevinrealg.github.io/calculadora-distribuciones/probabilidades 
+
+* **Dinámica:** Lluvia de ideas rápida en la pizarra estructurando el concepto de totalidad.
+
+#### c) Exploración (7 min) - *El Árbol Mental*
+
+* Pide al salón que intente listar mentalmente todas las combinaciones posibles al lanzar **tres monedas consecutivas** (Cara o Sello). Observa el nivel de confusión o de orden que emplean de manera intuitiva.
+
+#### d) Desarrollo Conceptual (10 min) - *Teoría Mínima*
+
+* **Definición Formal:** El **Espacio Muestral ($\Omega$)** es el conjunto de todos los resultados posibles de un experimento aleatorio.
+* **Representación en Conjuntos:** Uso de llaves $\{\}$, diagramas de árbol y tablas de doble entrada para experimentos compuestos (ej. producto cartesiano de dos dados: $\Omega = 6 \times 6 = 36$ resultados).
+* **Pregunta de verificación:** *"Si una carta se extrae de una baraja estándar de 52 cartas, ¿cuidadosa y exactamente cuántos elementos tiene $\Omega$?"*
+
+#### e) Actividad Guiada y Colaborativa (15 min) - *Construyendo Universos*
+
+* En parejas, los estudiantes resuelven tres retos de construcción de espacios muestrales en papel o tablet:
+1. El experimento de una familia que decide tener 3 hijos (registrando el orden de género: Varón/Mujer).
+2. Lanzar una moneda y un dado de manera simultánea.
+3. Extraer dos bolas de una urna que contiene 3 bolas rojas y 2 azules *sin reemplazo*.
+
+
+
+#### f) Aplicación (5 min) - *Logística y Control de Calidad*
+
+* *Escenario:* Una línea de producción inspecciona lotes de 3 smartphones. Definir el espacio muestral donde cada artículo puede salir Defectuoso ($D$) o Bueno ($B$).
+
+#### g) Cierre y Reflexión (3 min) - *Metacognición*
+
+* **Pregunta de salida:** *"¿Por qué definir mal o de forma incompleta el espacio muestral arruina cualquier cálculo de probabilidad posterior?"*
+
+#### h) Actividad Final de Consolidación (2 min) - *Ticket de Consolidación*
+
+* Registro de la cardinalidad de los espacios muestrales trabajados en el taller grupal.
+
+---
+
+### 🎯 Clase N°3: Eventos, Sucesos y Axiomas de Kolmogórov (50 min)
+
+#### b) Apertura (8 min) - *El Reto del Lanzamiento Dual*
+
+* **Dinámica:** Pide a los estudiantes sacar dos monedas de 1000 COP (o usar una moneda física lanzada dos veces de forma individual).
+* **Preguntas motivadoras:**
+1. *"Si lanzamos dos monedas al aire, ¿cuál es el espacio muestral exacto ($\Omega$) de este experimento?"*
+2. *"Si defino el suceso 'obtener al menos una cara', ¿estamos tomando todos los resultados de $\Omega$ o solo un subconjunto?"*
+3. *"¿Qué pasa si queremos analizar simultáneamente dos sucesos distintos, como que salga cara en la primera Y sello en la segunda?"*
+
+
+
+#### c) Exploración (7 min) - *Simulación Rápida (100 Lanzamientos)*
+
+* **Dinámica:** En parejas, simulan rápidamente lanzamientos mentales o físicos breves. Anotan intuitivamente qué pasaría si unimos los resultados de dos condiciones distintas. Se recogen 2 hipótesis de cómo combinarían los resultados de dos sucesos.
+
+#### d) Desarrollo Conceptual (10 min) - *Teoría Mínima Estructurada*
+
+* **3.1. Eventos:** Definir formalmente que un evento es un subconjunto del espacio muestral ($\Omega$) que representa un conjunto de posibles resultados de un experimento aleatorio.
+* **3.3. Tipos de Eventos:**
+* *Simple (Elemental):* Contiene un solo resultado.
+* *Compuesto:* Más de un resultado.
+* *Seguro ($\Omega$) e Imposible ($\emptyset$).*
+* *Mutuamente Excluyentes (Disjuntos):* $A \cap B = \emptyset$ (si ocurre uno, el otro no puede ocurrir).
+
+
+* **3.4. Operaciones con Eventos y 3.5. Diagramas de Venn:** Explicación gráfica en la pizarra usando rectángulos ($\Omega$) y círculos:
+1. *Unión ($A \cup B$):* Ocurre $A$, o $B$, o ambos.
+2. *Intersección ($A \cap B$):* Ocurren ambos al mismo tiempo.
+3. *Complemento ($A^c$):* Ocurre todo lo que está fuera de $A$.
+4. *Diferencia ($A - B$):* Ocurre $A$ pero no $B$ ($A \cap B^c$).
+
+
+* **Pregunta de verificación rápida:** *"Si dos eventos son mutuamente excluyentes, ¿su intersección gráfica se cruza o está completamente separada?"* (Esperada: Separada, no tienen elementos en común).
+
+#### e) Actividad Guiada y Colaborativa (15 min) - *El Taller de Venn y Operaciones*
+
+* **Dinámica:** En equipos de 3 personas, se entrega un problema estructurado:
+* *Escenario:* Un grupo de 50 estudiantes de la UTB se divide según su preferencia por herramientas de software: 30 usan Python ($A$), 25 usan Excel ($B$), y 10 usan ambos.
+* **Misión:**
+1. Representar la situación en un Diagrama de Venn.
+2. Calcular formalmente mediante operaciones de conjuntos cuántos estudiantes usan solo Python ($A - B$), cuántos usan al menos una herramienta ($A \cup B$), y cuántos no usan ninguna ($(\text{Total})^^c$).
+
+https://kevinrealg.github.io/estadistica-probabilidad-curso/Dispositivas%20Clase/semana_9_quiz_2.html 
+
+
+
+#### f) Aplicación (5 min) - *Sistemas de Seguridad Informática*
+
+* **Planteamiento del escenario:** *"En una red de servidores, el evento $A$ es que falle el servidor primario y el evento $B$ es que falle el respaldo energético. Para que haya un colapso total de la compañía, debe ocurrir la **intersección** de ambos fallos ($A \cap B$)."*
+* **Reto analítico:** ¿Por qué para los ingenieros de sistemas es vital diseñar arquitecturas donde $A$ y $B$ sean eventos mutuamente excluyentes o independientes?
+
+#### g) Cierre y Reflexión (3 min) - *Metacognición*
+
+* **Pregunta Metacognitiva de Cierre:** *"Visualmente, ¿qué diferencia analítica existe entre calcular la probabilidad de una **Unión** ($A \cup B$) y una **Intersección** ($A \cap B$) en un diagrama de Venn?"* (Prohibido cerrar con "¿Alguna pregunta?").
+
+#### h) Actividad Final de Consolidación (2 min) - *Ticket de Salida*
+
+* Mini-quiz digital rápido (vía Forms en dispositivos móviles) de 3 preguntas de opción múltiple identificando regiones sombreadas en Diagramas de Venn según las operaciones de eventos.
+
+---
+
+### 🖥️ Estructura de las Diapositivas (Máximo 6 Slides)
+
+| Slide | Título de la Diapositiva | Contenido Visual y Elementos Clave |
+| --- | --- | --- |
+| **1** | **El Reto de las Dos Monedas** | • **Visual:** Imagen de dos monedas de 1000 COP.<br>
+
+<br>• **Pregunta central:** *"Si lanzamos dos monedas, ¿cómo agrupamos los resultados que nos interesan?"*. |
+| **2** | **De Espacios a Eventos** | • **Concepto clave:** Definición de Evento como subconjunto de $\Omega$.<br>
+
+<br>• **Tipos de Eventos:** Simple, Compuesto, Seguro, Imposible y Mutuamente Excluyentes. |
+| **3** | **Anatomía de los Diagramas de Venn** | • **Visual:** Rectángulo de $\Omega$ con círculos internos.<br>
+
+<br>• **Concepto:** Visualización espacial de las regiones de probabilidad. |
+| **4** | **Operaciones con Eventos** | • **Esquemas gráficos:**<br>
+
+<br>  - Unión ($A \cup B$): Todo lo sombreado.<br>
+
+<br>  - Intersección ($A \cap B$): El centro compartido.<br>
+
+<br>  - Complemento ($A^c$): Lo de afuera.<br>
+
+<br>  - Diferencia ($A - B$). |
+| **5** | **Taller Grupal: El Caso del Software** | • **Instrucciones:** Resolver el diagrama de Venn para 50 estudiantes usando Python y Excel.<br>
+
+<br>• **Reto:** Hallar uniones, intersecciones y diferencias. |
+| **6** | **Cierre y Metacognición** | • **Pregunta final en grande:** *"¿Qué diferencia analítica hay entre la Unión y la Intersección en un diagrama de Venn?"*.<br>
+
+<br>• **Call to action:** Responder el Ticket de Salida en Forms. |
+
+
+
+
     
-    https://rpubs.com/jseferino/1015330
-    
-    https://maestro-seferino.netlify.app/#probabilidad-clasica
-    
-    ---
-    
-    Perfecto, vamos a rediseñar toda la clase con una estructura **tipo indagación (pregunta → construcción → definición → aplicación)**, que es mucho más potente pedagógicamente 🔥
-    
-    ---
-    
-    # 🎯 **CLASE (50 min) – Método Socrático + Storytelling**
-    
-    ## Tema: Probabilidad, Experimentos y Espacio Muestral
-    
-    ---
-    
-    ## 🧠 **Estructura base de TODA la clase**
-    
-    Cada bloque sigue este patrón:
-    
-    1. ❓ Pregunta detonante
-    2. 💬 Discusión breve
-    3. 🧩 Ejemplo concreto
-    4. 📌 Definición formal
-    5. ⚡ Mini aplicación
-    
-    ---
+
+
     
     # ⏱️ **1. Hook inicial (0–5 min)**
     
