@@ -30,8 +30,32 @@ textarea{
 width:100%;
 height:60px;
 }
-input{
+input[type="text"]{
 width:100%;
+box-sizing:border-box;
+}
+.puntaje{
+width:5em;
+padding:6px;
+}
+[contenteditable="true"]:focus{
+outline:2px solid #1976d2;
+background:#fffde7;
+}
+.ayuda{
+color:#444;
+font-size:14px;
+}
+.resultado{
+font-weight:bold;
+}
+@media print{
+input,textarea{
+border:0;
+}
+.ayuda{
+display:none;
+}
 }
 </style>
 </head>
@@ -39,10 +63,12 @@ width:100%;
 
 <h1>Rúbrica de Evaluación - Presentación Final</h1>
 
-<p><strong>Estudiante(s):</strong> ________________________________________</p>
-<p><strong>Artista/Banda/Género:</strong> ________________________________</p>
-<p><strong>Docente:</strong> _____________________________________________</p>
-<p><strong>Fecha:</strong> _______________________________________________</p>
+<p><strong>Estudiante(s):</strong> <input type="text" aria-label="Estudiante(s)"></p>
+<p><strong>Artista/Banda/Género:</strong> <input type="text" aria-label="Artista, banda o género"></p>
+<p><strong>Docente:</strong> <input type="text" aria-label="Docente"></p>
+<p><strong>Fecha:</strong> <input type="text" aria-label="Fecha"></p>
+
+<p class="ayuda">Puedes editar los criterios y descriptores haciendo clic sobre ellos. Asigna un puntaje de 1 a 5 en cada criterio para calcular el resultado.</p>
 
 <table>
 
@@ -57,53 +83,53 @@ width:100%;
 </tr>
 
 <tr>
-<td><strong>1. Calidad de los datos y organización</strong></td>
-<td>Muestra completa, datos precisos, organizados y verificables.</td>
-<td>Muestra completa con errores mínimos.</td>
-<td>Datos suficientes pero con inconsistencias menores.</td>
-<td>Datos incompletos o poco organizados.</td>
-<td>Información insuficiente o incorrecta.</td>
-<td></td>
+<td contenteditable="true"><strong>1. Calidad de los datos y organización</strong></td>
+<td contenteditable="true">Muestra completa, datos precisos, organizados y verificables.</td>
+<td contenteditable="true">Muestra completa con errores mínimos.</td>
+<td contenteditable="true">Datos suficientes pero con inconsistencias menores.</td>
+<td contenteditable="true">Datos incompletos o poco organizados.</td>
+<td contenteditable="true">Información insuficiente o incorrecta.</td>
+<td><input class="puntaje" type="number" min="1" max="5" step="1" inputmode="numeric" aria-label="Puntaje de calidad de los datos y organización"></td>
 </tr>
 
 <tr>
-<td><strong>2. Aplicación de conceptos estadísticos</strong></td>
-<td>Calcula e interpreta correctamente covarianza, correlación, regresión y R².</td>
-<td>Pequeños errores de interpretación.</td>
-<td>Calcula correctamente pero interpreta parcialmente.</td>
-<td>Presenta varios errores conceptuales.</td>
-<td>No demuestra comprensión estadística.</td>
-<td></td>
+<td contenteditable="true"><strong>2. Aplicación de conceptos estadísticos</strong></td>
+<td contenteditable="true">Calcula e interpreta correctamente covarianza, correlación, regresión y R².</td>
+<td contenteditable="true">Pequeños errores de interpretación.</td>
+<td contenteditable="true">Calcula correctamente pero interpreta parcialmente.</td>
+<td contenteditable="true">Presenta varios errores conceptuales.</td>
+<td contenteditable="true">No demuestra comprensión estadística.</td>
+<td><input class="puntaje" type="number" min="1" max="5" step="1" inputmode="numeric" aria-label="Puntaje de aplicación de conceptos estadísticos"></td>
 </tr>
 
 <tr>
-<td><strong>3. Análisis y argumentación</strong></td>
-<td>Conclusiones profundas y sustentadas en evidencia cuantitativa.</td>
-<td>Conclusiones coherentes con respaldo estadístico.</td>
-<td>Conclusiones generales con evidencia limitada.</td>
-<td>Análisis superficial.</td>
-<td>Sin análisis o con conclusiones incorrectas.</td>
-<td></td>
+<td contenteditable="true"><strong>3. Análisis y argumentación</strong></td>
+<td contenteditable="true">Conclusiones profundas y sustentadas en evidencia cuantitativa.</td>
+<td contenteditable="true">Conclusiones coherentes con respaldo estadístico.</td>
+<td contenteditable="true">Conclusiones generales con evidencia limitada.</td>
+<td contenteditable="true">Análisis superficial.</td>
+<td contenteditable="true">Sin análisis o con conclusiones incorrectas.</td>
+<td><input class="puntaje" type="number" min="1" max="5" step="1" inputmode="numeric" aria-label="Puntaje de análisis y argumentación"></td>
 </tr>
 
 <tr>
-<td><strong>4. Storytelling y creatividad</strong></td>
-<td>Narrativa original, cautivadora y perfectamente integrada al análisis.</td>
-<td>Presentación creativa y organizada.</td>
-<td>Presentación adecuada.</td>
-<td>Creatividad limitada.</td>
-<td>Presentación poco atractiva o desorganizada.</td>
-<td></td>
+<td contenteditable="true"><strong>4. Storytelling y creatividad</strong></td>
+<td contenteditable="true">Narrativa original, cautivadora y perfectamente integrada al análisis.</td>
+<td contenteditable="true">Presentación creativa y organizada.</td>
+<td contenteditable="true">Presentación adecuada.</td>
+<td contenteditable="true">Creatividad limitada.</td>
+<td contenteditable="true">Presentación poco atractiva o desorganizada.</td>
+<td><input class="puntaje" type="number" min="1" max="5" step="1" inputmode="numeric" aria-label="Puntaje de storytelling y creatividad"></td>
 </tr>
 
 <tr>
-<td><strong>5. Comunicación visual y oral</strong></td>
-<td>Excelente dominio del tema, gráficos claros y comunicación profesional.</td>
-<td>Comunicación clara y gráficos adecuados.</td>
-<td>Comunicación comprensible.</td>
-<td>Dificultades de explicación o visualización.</td>
-<td>Comunicación deficiente.</td>
-<td></td>
+<td contenteditable="true"><strong>5. Comunicación visual y oral</strong></td>
+<td contenteditable="true">Excelente dominio del tema, gráficos claros y comunicación profesional.</td>
+<td contenteditable="true">Comunicación clara y gráficos adecuados.</td>
+<td contenteditable="true">Comunicación comprensible.</td>
+<td contenteditable="true">Dificultades de explicación o visualización.</td>
+<td contenteditable="true">Comunicación deficiente.</td>
+<td><input class="puntaje" type="number" min="1" max="5" step="1" inputmode="numeric" aria-label="Puntaje de comunicación visual y oral"></td>
 </tr>
 
 </table>
@@ -115,20 +141,74 @@ width:100%;
 <h2>Resultado Final</h2>
 
 <p>
-Puntaje Total: ______________________ / 25
+Puntaje Total: <span class="resultado" id="puntaje-total">--</span> / 25
+</p>
+<p>
+Nota: <span class="resultado" id="nota-final">--</span> / 5
+</p>
+<p>
+Nivel Global: <span class="resultado" id="nivel-global">--</span>
+</p>
+<p>
+Fortalezas: <input type="text" aria-label="Fortalezas">
+</p>
+<p>
+Aspectos por mejorar: <input type="text" aria-label="Aspectos por mejorar">
 </p>
 
-<p>
-Nivel Global: __________________________________________
-</p>
+<p class="ayuda" id="estado-calculo" aria-live="polite">Completa los cinco puntajes para ver la nota final.</p>
 
-<p>
-Fortalezas: ____________________________________________
-</p>
+<script>
+const puntajes = Array.from(document.querySelectorAll(".puntaje"));
+const puntajeTotal = document.getElementById("puntaje-total");
+const notaFinal = document.getElementById("nota-final");
+const nivelGlobal = document.getElementById("nivel-global");
+const estadoCalculo = document.getElementById("estado-calculo");
 
-<p>
-Aspectos por mejorar: ___________________________________
-</p>
+function calcularNota() {
+  const valores = puntajes.map((campo) => campo.value === "" ? null : Number(campo.value));
+  const hayPuntajeInvalido = valores.some((valor) => valor !== null && (!Number.isInteger(valor) || valor < 1 || valor > 5));
+
+  if (hayPuntajeInvalido) {
+    puntajeTotal.textContent = "--";
+    notaFinal.textContent = "--";
+    nivelGlobal.textContent = "--";
+    estadoCalculo.textContent = "Cada puntaje debe ser un número entero entre 1 y 5.";
+    return;
+  }
+
+  if (valores.some((valor) => valor === null)) {
+    puntajeTotal.textContent = "--";
+    notaFinal.textContent = "--";
+    nivelGlobal.textContent = "--";
+    estadoCalculo.textContent = "Completa los cinco puntajes para ver la nota final.";
+    return;
+  }
+
+  const total = valores.reduce((suma, valor) => suma + valor, 0);
+  const nota = total / 5;
+  let nivel;
+
+  if (nota >= 4.5) {
+    nivel = "Nivel 5 - Excelente";
+  } else if (nota >= 3.5) {
+    nivel = "Nivel 4 - Sobresaliente";
+  } else if (nota >= 2.5) {
+    nivel = "Nivel 3 - Aceptable";
+  } else if (nota >= 1.5) {
+    nivel = "Nivel 2 - Básico";
+  } else {
+    nivel = "Nivel 1 - Insuficiente";
+  }
+
+  puntajeTotal.textContent = String(total);
+  notaFinal.textContent = nota.toFixed(1);
+  nivelGlobal.textContent = nivel;
+  estadoCalculo.textContent = "Nota calculada automáticamente.";
+}
+
+puntajes.forEach((campo) => campo.addEventListener("input", calcularNota));
+</script>
 
 </body>
 </html>

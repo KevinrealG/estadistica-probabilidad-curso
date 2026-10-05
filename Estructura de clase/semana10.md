@@ -1,155 +1,37 @@
-- Parcial
-    
-    ¡Listo, profe! Aquí tienes el ejercicio **planteado formalmente como un parcial**, con **los datos desordenados** para evitar que los estudiantes identifiquen el patrón de inmediato. Está pensado para **una hora** y con un enfoque claro en **regresión lineal**.
-    
-    ---
-    
-    # 📝 PARCIAL
-    
-    ## Estadística / Matemáticas Aplicadas
-    
-    ### Tema: Regresión lineal simple
-    
-    **Tiempo:** 60 minutos
-    
-    **Valor total:** 90 puntos
-    
-    **Instrucciones:**
-    
-    - Responda todas las preguntas.
-    - Muestre los procedimientos y cálculos realizados.
-    - Use calculadora básica.
-    - Justifique sus respuestas cuando se le solicite.
-    
-    ---
-    
-    ## 📊 Contexto del problema
-    
-    Un investigador en biología marina desea analizar la relación entre la **edad de un pez (en años)** y su **longitud promedio (en centímetros)**.
-    
-    Para ello, se recolectaron los siguientes datos en diferentes ejemplares.
-    
-    > ⚠️ Los datos **no están ordenados**.
-    > 
-    
-    ---
-    
-    ## 📋 Tabla de datos
-    
-    | Edad del pez (años) | Longitud promedio (cm) |
-    | --- | --- |
-    | 6 | 40 |
-    | 2 | 18 |
-    | 9 | 48 |
-    | 4 | 31 |
-    | 1 | 12 |
-    | 8 | 46 |
-    | 5 | 36 |
-    | 10 | 50 |
-    | 3 | 25 |
-    | 7 | 43 |
-    
-    ---
-    
-    ## ❓ Preguntas
-    
-    ### **1. (10 pts)**
-    
-    Define el tipo de relación que parece existir entre la edad del pez (X) y su longitud promedio (Y):
-    
-    ¿Es una relación **positiva, negativa o nula**?
-    
-    Para justificar tu respuesta:
-    
-    - Organiza los datos si lo consideras necesario.
-    - Realiza un **diagrama de dispersión**.
-    
-    ---
-    
-    ### **2. (25 pts)**
-    
-    Construye la **recta de regresión lineal** que modela la relación entre la edad del pez y su longitud promedio.
-    
-    Debes:
-    
-    - Calcular la media de X y de Y.
-    - Calcular la pendiente y la intersección.
-    - Mostrar claramente todos los procedimientos utilizados.
-    
-    ---
-    
-    ### **3. (15 pts)**
-    
-    Escribe el **modelo matemático de la regresión lineal** obtenido, indicando claramente cuál es la variable independiente y cuál la dependiente.
-    
-    ---
-    
-    ### **4. (20 pts)**
-    
-    Explica el **significado de la pendiente** en el contexto del problema.
-    
-    ¿Qué información proporciona sobre el crecimiento del pez a lo largo del tiempo?
-    
-    ---
-    
-    ### **5. (20 pts)**
-    
-    Utiliza el modelo de regresión obtenido para **predecir la longitud promedio de un pez con 6 años de edad**.
-    
-    ¿Consideras razonable la predicción realizada? Explica brevemente tu respuesta.
-    
-    ---
-    
-    ## ✅ Distribución del puntaje
-    
-    | Criterio | Puntaje |
-    | --- | --- |
-    | Identificación del tipo de relación y gráfico | 10 |
-    | Cálculo de la regresión (procedimiento) | 25 |
-    | Modelo matemático | 15 |
-    | Interpretación de la pendiente | 20 |
-    | Predicción e interpretación | 20 |
-    | **Total** | **90 pts** |
-    
-    ---
-    
-    Si quieres, en el siguiente mensaje puedo:
-    
-    - ✅ Entregarte **la solución completa paso a paso**
-    - ✅ Ajustar el parcial a **Excel o Python**
-    - ✅ Subir el nivel de dificultad (errores, ruido en datos)
-    - ✅ Convertirlo en **parcial tipo universidad o ICFES**
-    - ✅ Crear la **rúbrica detallada para calificación rápida**
-    
-    Dime cómo lo vas a aplicar y lo pulimos aún más 💪📊🐟
-    
-    ### **Contexto**
-    
-    Una empresa registra la relación entre **gasto en publicidad (X, en miles de pesos)** y **ventas mensuales (Y, en millones de pesos)**.
-    
-    | Publicidad (X) | Ventas (Y) |
-    | --- | --- |
-    | 1 | 10 |
-    | 2 | 13 |
-    | 3 | 15 |
-    | 4 | 18 |
-    | 5 | 21 |
-    
-    ---
-    
-    ### **Preguntas**
-    
-    **1.** Define el tipo de relación que parece existir entre X e Y (positiva, negativa o nula).
-    
-    **2.** Construye la recta de regresión lineal (muestra cálculos).
-    
-    **3.** Escribe el modelo matemático obtenido.
-    
-    **4.** Explica el significado de la pendiente en el contexto del problema.
-    
-    **5.** Predice las ventas si el gasto en publicidad es de 6 millones.
-    
-    **6.** Menciona una limitación del modelo de regresión lineal en este caso.
-    
-- Exposición
-- Explicación Probabilidad condicional
+# 📝 PARCIAL
+
+## Preguntas:
+1. Obten el coeficiente de correlación Lineal del conjunto de datos.
+2. obten la covarianza.
+3. Obten la ecuación de la recta que mejor se ajusta.
+4. Dime e interpreta el coeficiente de determinación. 
+5. Compara los boxplots. Y explica la relación entre las variables. 
+6. Obten la Descripción Estadistica de cada variable.
+
+## Laboratorio.
+1. Identifica en la Tabla en Savio tu terna de Variables Asignadas. Y haz los siguientes puntos en Colab.
+2. Descarga los datos desde Savio y Leelos en Colab.
+2. A la Variable Categorica construye una gráfica de barra o circular o una tabla de Frecuencia.
+3. A cada Variable númerica hazle una descripción numerica estadistica.
+4. Combina la variable categorica con cada variable numerica y haz un grafico para cada par.
+5. Haz un analisis de Correlación con las variables numericas.
+5. A partir de las variables asignadas haz un resumen descriptivo del conjunto de datos.
+ Laboratorio (Examen de Laboratorio - 1 Hoja)
+Instrucciones: Ubique en la tabla publicada en Savio la terna de variables que le fue asignada (una variable categórica y dos variables numéricas). Desarrolle todos los puntos en Google Colab y entregue un único informe con los resultados, visualizaciones e interpretaciones solicitadas.
+
+Identificación de variables: Determine en la tabla de Savio la terna de variables asignada para su trabajo.
+Carga de datos: Obtenga el conjunto de datos desde Savio e impórtelo correctamente en Google Colab.
+Análisis de la variable categórica: Realice uno de los siguientes procedimientos:
+Gráfico de barras.
+Gráfico circular (pastel).
+Tabla de frecuencias.
+Análisis descriptivo de las variables numéricas: Para cada variable numérica asignada, calcule e interprete las principales estadísticas descriptivas, tales como:
+Media.
+Mediana.
+Desviación estándar.
+Valor mínimo y valor máximo.
+Cuartiles.
+Relación entre variables: Relacione la variable categórica con cada una de las variables numéricas y genere una representación gráfica adecuada para analizar su comportamiento. Debe presentar una visualización para cada par de variables e incluir una breve interpretación.
+Estudio de asociación: Evalúe la correlación entre las variables numéricas asignadas. Incluya el coeficiente de correlación y una visualización apropiada para sustentar su análisis.
+Síntesis de resultados: Elabore una caracterización general de la información analizada a partir de las variables asignadas, destacando los hallazgos más relevantes obtenidos en los puntos anteriores.
+Entrega: El informe debe ser claro, organizado y contener tanto los resultados obtenidos como sus respectivas interpretaciones.
