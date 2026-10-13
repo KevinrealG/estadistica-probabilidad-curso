@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concepciones de Probabilidad</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos base heredados */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.8rem, 3.5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            line-height: 1.6;
+        }
+
+        .math-eq {
+            font-size: clamp(1.5rem, 2.8vw, 3.5rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 25px 0;
+            text-align: center;
+            background-color: #f8fbff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px dashed var(--blue);
+        }
+
+        /* Nueva clase para organizar elementos clave en cuadrícula */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        .concept-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-top: 4px solid var(--green);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 91, 150, 0.05);
+        }
+        .concept-card h3 {
+            color: var(--blue);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .concept-card p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+        .number-badge {
+            background-color: var(--blue);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .slide-intro { background: #1a2a3a; border-color: #2c4a68; }
+        body.dark-theme .concept-card { background: #242424; border-color: #333; }
+        body.dark-theme .math-eq { background-color: #1a2a3a; border-color: var(--blue); }
+
+        .slide.active { display: flex; }
+
+        /* Controles de navegación */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; border-radius: 16px; }
+            h1 { text-align: center; border-bottom-width: 3px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Portada -->
+        <div class="slide active" style="justify-content: center; align-items: center; text-align: center;">
+            <h1 style="border: none; padding: 0; font-size: clamp(2.5rem, 5vw, 5rem);">Concepciones de Probabilidad</h1>
+            <p style="font-size: clamp(1.3rem, 2vw, 1.8rem); color: #555; max-width: 800px;">Fundamentos teóricos: Enfoque Clásico y Enfoque Geométrico.</p>
+        </div>
+
+        <!-- Slide 2: Probabilidad Clásica (Concepto) -->
+        <div class="slide">
+            <h1>4.1 Probabilidad Clásica</h1>
+            <div class="slide-intro">
+                <p>La Probabilidad Clásica es un enfoque para calcular la probabilidad de un evento basado en el supuesto de que <strong>todos los resultados posibles de un experimento aleatorio son igualmente probables</strong>.</p>
+                <p>Si un experimento tiene \(N\) resultados posibles, y un evento \(A\) ocurre en \(k\) de estos resultados, entonces la probabilidad del evento \(A\) se calcula como la razón entre el número de resultados favorables y el total de resultados:</p>
+            </div>
+            
+            <div class="math-eq">
+                $$ P(A) = \frac{k}{N} $$
+            </div>
+            
+            <p style="font-size: 1.2rem; text-align: center; color: var(--text-color); margin-top: 20px;">
+                <em>Este enfoque es aplicable cuando el espacio muestral \(\Omega\) es finito y todos los resultados elementales tienen la misma probabilidad de ocurrir.</em>
+            </p>
+        </div>
+
+        <!-- Slide 3: Elementos Clave Probabilidad Clásica -->
+        <div class="slide">
+            <h1 style="font-size: clamp(1.5rem, 2.5vw, 2.5rem);">Elementos Clave: Probabilidad Clásica</h1>
+            
+            <div class="cards-grid">
+                <div class="concept-card">
+                    <h3><span class="number-badge">1</span> Espacio Muestral (\(\Omega\))</h3>
+                    <p>El conjunto de todos los posibles resultados del experimento. Debe ser finito.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><span class="number-badge">2</span> Resultados Elementales</h3>
+                    <p>Cada uno de los resultados individuales en el espacio muestral.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><span class="number-badge">3</span> Equiprobabilidad</h3>
+                    <p>El supuesto fundamental de que cada resultado elemental tiene la misma probabilidad de ocurrir.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><span class="number-badge">4</span> Evento (\(A\))</h3>
+                    <p>Un subconjunto del espacio muestral, que representa el conjunto de resultados favorables al evento de interés.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><span class="number-badge">5</span> Resultados Favorables (\(k\))</h3>
+                    <p>La cantidad de resultados elementales que pertenecen al evento \(A\).</p>
+                </div>
+                <div class="concept-card">
+                    <h3><span class="number-badge">6</span> Total de Resultados (\(N\))</h3>
+                    <p>La cantidad total de resultados elementales en el espacio muestral \(\Omega\).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Probabilidad Geométrica (Concepto) -->
+        <div class="slide">
+            <h1>Probabilidad Geométrica</h1>
+            <div class="slide-intro">
+                <p>Es un enfoque para calcular la probabilidad de un evento cuando el espacio muestral \(\Omega\) y el evento \(A\) son subconjuntos de un espacio geométrico <strong>continuo</strong> (como una línea, un área o un volumen).</p>
+                <p>La probabilidad de que un punto aleatorio caiga dentro del evento \(A\) se define como la razón entre la "medida" de \(A\) y la "medida" de \(\Omega\):</p>
+            </div>
+            
+            <div class="math-eq">
+                $$ P(A) = \frac{\text{Medida}(A)}{\text{Medida}(\Omega)} $$
+            </div>
+            
+            <p style="font-size: 1.15rem; color: var(--text-color); margin-top: 15px; padding: 0 20px;">
+                Donde "Medida" se refiere a la <strong>longitud</strong> (unidimensional), al <strong>área</strong> (bidimensional), o al <strong>volumen</strong> (tridimensional). El supuesto fundamental aquí es que la probabilidad es uniforme sobre el espacio muestral \(\Omega\), lo que significa que cualquier punto tiene la misma probabilidad de ser el resultado.
+            </p>
+        </div>
+
+        <!-- Slide 5: Elementos Clave Probabilidad Geométrica -->
+        <div class="slide">
+            <h1 style="font-size: clamp(1.5rem, 2.5vw, 2.5rem);">Elementos Clave: Probabilidad Geométrica</h1>
+            
+            <div class="cards-grid">
+                <div class="concept-card" style="border-top-color: var(--blue);">
+                    <h3 style="color: var(--green);"><span class="number-badge" style="background-color: var(--green);">1</span> Espacio Continuo (\(\Omega\))</h3>
+                    <p>Un subconjunto de un espacio geométrico continuo (línea, área, volumen) que enmarca todos los posibles resultados.</p>
+                </div>
+                <div class="concept-card" style="border-top-color: var(--blue);">
+                    <h3 style="color: var(--green);"><span class="number-badge" style="background-color: var(--green);">2</span> Evento (\(A\))</h3>
+                    <p>Un subconjunto específico dentro del espacio muestral \(\Omega\) que delimita nuestro evento de interés.</p>
+                </div>
+                <div class="concept-card" style="border-top-color: var(--blue);">
+                    <h3 style="color: var(--green);"><span class="number-badge" style="background-color: var(--green);">3</span> Uniformidad</h3>
+                    <p>El principio de que la probabilidad se distribuye de manera uniforme y equitativa sobre toda la extensión de \(\Omega\).</p>
+                </div>
+                <div class="concept-card" style="border-top-color: var(--blue);">
+                    <h3 style="color: var(--green);"><span class="number-badge" style="background-color: var(--green);">4</span> Medida</h3>
+                    <p>La magnitud cuantitativa (longitud, área o volumen) utilizada para comparar los conjuntos geométricos.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        function handleTouchStart(event) { touchStartX = event.touches[0].clientX; }
+        function handleTouchEnd(event) {
+            const touchEndX = event.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }
+
+        // Controles por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+    </script>
+</body>
+</html>
