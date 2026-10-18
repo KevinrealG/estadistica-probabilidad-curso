@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10251f">
+    <title>El Reino de los Datos | Una aventura con Julio Seferino</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --night: #101a22;
+            --ink: #17251e;
+            --paper: #f3e5bd;
+            --paper-dark: #ddc996;
+            --gold: #f3c96d;
+            --gold-bright: #ffe39a;
+            --green: #87c782;
+            --mint: #c8e7a0;
+            --muted: #c7c5ad;
+            --danger: #ef9c7c;
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background: #162b2c;
+            color: #fff8df;
+        }
+
+        button { font: inherit; }
+
+        #world {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 56% 39%, rgba(119, 179, 116, .38), transparent 26%),
+                radial-gradient(ellipse at 18% 38%, rgba(71, 124, 111, .47), transparent 32%),
+                linear-gradient(180deg, #192b39 0%, #315957 48%, #263d31 100%);
+        }
+
+        .scene-shade {
+            position: fixed;
+            z-index: 1;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(10, 19, 25, .56), transparent 27%, transparent 57%, rgba(10, 18, 21, .48)),
+                linear-gradient(90deg, rgba(10, 18, 21, .28), transparent 35%, transparent 74%, rgba(10, 18, 21, .28));
+        }
+
+        .game {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: min(1600px, 100%);
+            height: 100svh;
+            min-height: 600px;
+            flex-direction: column;
+            margin: 0 auto;
+            padding: 20px clamp(17px, 3vw, 44px) 23px;
+        }
+
+        .hud {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+        }
+
+        .brand-emblem {
+            display: grid;
+            width: 46px;
+            height: 46px;
+            place-items: center;
+            border: 2px solid rgba(255, 227, 154, .74);
+            border-radius: 13px 13px 13px 4px;
+            background: linear-gradient(145deg, rgba(243, 201, 109, .25), rgba(88, 133, 103, .46));
+            box-shadow: 0 0 24px rgba(243, 201, 109, .16), inset 0 0 12px rgba(255, 255, 255, .08);
+            color: var(--gold-bright);
+            font-size: 24px;
+        }
+
+        .brand-title { font-size: 13px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+        .brand-subtitle { margin-top: 4px; color: #e5d9b5; font-size: 11px; }
+
+        .quest-status {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 237, 190, .27);
+            border-radius: 12px;
+            background: rgba(15, 28, 29, .58);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+            color: #eee4c9;
+            font-size: 11px;
+            backdrop-filter: blur(10px);
+        }
+
+        .quest-gems { display: flex; gap: 4px; }
+        .gem { color: rgba(240, 230, 194, .27); font-size: 15px; }
+        .gem.earned { color: var(--gold-bright); text-shadow: 0 0 11px rgba(255, 224, 142, .85); }
+
+        .world-ui {
+            display: grid;
+            flex: 1;
+            grid-template-columns: minmax(205px, 250px) 1fr;
+            align-items: center;
+            gap: 20px;
+            min-height: 0;
+            pointer-events: none;
+        }
+
+        .quest-board {
+            align-self: center;
+            padding: 16px 13px;
+            border: 1px solid rgba(246, 226, 177, .28);
+            border-radius: 12px 12px 12px 4px;
+            background: rgba(19, 34, 30, .72);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, .16);
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+        }
+
+        .board-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 0 4px 7px;
+            color: var(--gold-bright);
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .board-count { color: #d8cda9; font-size: 10px; letter-spacing: .06em; }
+        .board-note { margin: 0 4px 13px; color: #c2c6aa; font-size: 10px; line-height: 1.45; }
+        .destinations { display: grid; gap: 5px; }
+
+        .destination {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 10px;
+            min-height: 38px;
+            padding: 5px 8px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            background: transparent;
+            color: #dedfc8;
+            text-align: left;
+            cursor: pointer;
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+        }
+
+        .destination:hover:not(:disabled) { transform: translateX(2px); background: rgba(255, 255, 255, .06); }
+        .destination[aria-current="step"] { border-color: rgba(255, 227, 154, .39); background: rgba(243, 201, 109, .13); color: #fff5d4; }
+        .destination:disabled { opacity: .46; cursor: not-allowed; }
+
+        .destination-icon {
+            display: grid;
+            width: 24px;
+            height: 24px;
+            flex: 0 0 24px;
+            place-items: center;
+            border: 1px solid rgba(232, 226, 194, .25);
+            border-radius: 50%;
+            background: rgba(12, 25, 24, .45);
+            color: #d7dbb6;
+            font-size: 11px;
+        }
+
+        .destination[aria-current="step"] .destination-icon { border-color: var(--gold); background: var(--gold); color: #243026; }
+        .destination[data-cleared="true"] .destination-icon { border-color: var(--mint); color: var(--mint); }
+        .destination-label { font-size: 10px; font-weight: 750; line-height: 1.3; }
+        .lock-hint { margin-left: auto; color: #beb99d; font-size: 10px; }
+
+        .landscape-caption {
+            align-self: start;
+            justify-self: end;
+            margin: 20px 2vw 0 0;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 237, 190, .19);
+            border-radius: 8px;
+            background: rgba(15, 28, 29, .45);
+            color: #e8dfc1;
+            font-size: 10px;
+            letter-spacing: .04em;
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+        }
+
+        .dialogue {
+            position: relative;
+            width: min(100%, 1050px);
+            flex: 0 0 auto;
+            align-self: center;
+            padding: 0 22px 20px;
+            border: 2px solid rgba(245, 224, 174, .76);
+            border-radius: 13px;
+            background:
+                linear-gradient(130deg, rgba(42, 54, 43, .97), rgba(25, 38, 35, .97) 65%, rgba(36, 48, 41, .97));
+            box-shadow: 0 12px 38px rgba(0, 0, 0, .42), inset 0 0 0 4px rgba(255, 248, 220, .055);
+        }
+
+        .dialogue::before {
+            position: absolute;
+            top: 9px;
+            right: 10px;
+            left: 10px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 227, 154, .37), transparent);
+            content: "";
+        }
+
+        .dialogue-topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 37px;
+            border-bottom: 1px solid rgba(242, 226, 184, .17);
+        }
+
+        .speaker { color: var(--gold-bright); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+        .speaker-label { color: #c3c5a9; font-size: 10px; }
+
+        .dialogue-body {
+            display: grid;
+            grid-template-columns: 64px minmax(0, 1fr);
+            gap: 15px;
+            align-items: start;
+            padding: 15px 0 13px;
+        }
+
+        .mentor-portrait {
+            position: relative;
+            display: grid;
+            width: 58px;
+            height: 58px;
+            place-items: center;
+            overflow: hidden;
+            border: 2px solid rgba(255, 227, 154, .72);
+            border-radius: 12px;
+            background:
+                linear-gradient(135deg, transparent 43%, rgba(10, 23, 22, .24) 44%),
+                linear-gradient(145deg, #a5bd7e, #668368 54%, #385947);
+            box-shadow: 0 0 19px rgba(243, 201, 109, .17);
+        }
+
+        .mentor-portrait::before {
+            position: absolute;
+            top: 8px;
+            width: 28px;
+            height: 16px;
+            border-radius: 17px 17px 4px 4px;
+            background: #ebd194;
+            box-shadow: 0 6px 0 -1px #c98d54;
+            content: "";
+        }
+
+        .mentor-portrait::after {
+            position: absolute;
+            top: 23px;
+            width: 25px;
+            height: 28px;
+            border: 2px solid rgba(246, 222, 165, .7);
+            border-radius: 8px 8px 5px 5px;
+            background: #426d58;
+            content: "";
+        }
+
+        .portrait-initials {
+            position: relative;
+            z-index: 1;
+            margin-top: 35px;
+            color: #fff1bb;
+            font-family: Georgia, serif;
+            font-size: 8px;
+            font-weight: bold;
+            letter-spacing: .1em;
+        }
+
+        .dialogue-copy { min-height: 54px; }
+        .dialogue-copy p { margin: 0; color: #f2ead0; font-size: 13px; line-height: 1.6; }
+        .lesson-box {
+            margin-top: 8px !important;
+            padding: 9px 11px;
+            border-left: 2px solid var(--gold);
+            background: rgba(255, 255, 255, .045);
+            color: #d5ddc0 !important;
+            font-size: 11px !important;
+        }
+
+        .challenge-box { display: none; margin-top: 8px; }
+        .challenge-box.visible { display: block; }
+        .challenge-question { margin: 0 0 8px !important; color: #fff0bf !important; font-size: 12px !important; font-weight: 750; }
+
+        .answers { display: flex; flex-wrap: wrap; gap: 7px; }
+        .answer-button {
+            min-height: 33px;
+            padding: 6px 10px;
+            border: 1px solid rgba(246, 226, 177, .28);
+            border-radius: 7px;
+            background: rgba(13, 25, 24, .52);
+            color: #e7e3cb;
+            font-size: 10px;
+            text-align: left;
+            cursor: pointer;
+            transition: background .18s ease, border-color .18s ease, transform .18s ease;
+        }
+
+        .answer-button:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--gold); background: rgba(243, 201, 109, .12); }
+        .answer-button:disabled { cursor: default; }
+        .answer-button.correct { border-color: #a3d390; background: rgba(135, 199, 130, .18); color: #d8f3b8; }
+        .answer-button.incorrect { border-color: #e49477; background: rgba(225, 122, 96, .15); color: #ffc0a3; }
+        .feedback { min-height: 16px; margin: 7px 0 0 !important; color: #d3d3b9 !important; font-size: 10px !important; }
+        .feedback.correct { color: #c8e7a0 !important; }
+        .feedback.incorrect { color: #ffbd9d !important; }
+
+        .dialogue-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .quest-objective { display: flex; align-items: center; gap: 7px; color: #bdc7ad; font-size: 10px; }
+        .quest-objective span:first-child { color: var(--gold); font-size: 14px; }
+
+        .game-button {
+            display: inline-flex;
+            min-height: 36px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 13px;
+            border: 1px solid rgba(255, 227, 154, .64);
+            border-radius: 8px;
+            background: linear-gradient(180deg, #e5bf6b, #c49548);
+            box-shadow: inset 0 1px rgba(255, 248, 221, .52), 0 3px 0 #755938;
+            color: #2d3025;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .035em;
+            cursor: pointer;
+            transition: transform .15s ease, filter .15s ease;
+        }
+
+        .game-button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+        .game-button:active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 1px rgba(255, 248, 221, .4), 0 1px 0 #755938; }
+        .game-button:disabled { opacity: .48; cursor: not-allowed; }
+        .game-button.secondary { border-color: rgba(242, 226, 184, .33); background: rgba(12, 25, 24, .72); box-shadow: none; color: #e4ddc5; }
+        .game-controls { display: flex; gap: 8px; }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        button:focus-visible { outline: 2px solid #fff0b4; outline-offset: 3px; }
+
+        @media (max-width: 760px) {
+            body { overflow: auto; }
+            .game { height: auto; min-height: 100svh; padding: 14px 14px 16px; }
+            .hud { gap: 8px; }
+            .brand-emblem { width: 39px; height: 39px; font-size: 20px; }
+            .brand-title { font-size: 10px; }
+            .brand-subtitle { font-size: 9px; }
+            .quest-status { gap: 7px; padding: 8px 9px; font-size: 9px; }
+            .world-ui { display: block; flex: 0 0 auto; height: 48svh; min-height: 300px; max-height: 470px; }
+            .quest-board { position: absolute; top: 11px; left: 0; width: min(230px, 63vw); padding: 10px 9px; }
+            .board-note { margin-bottom: 7px; font-size: 9px; }
+            .destinations { grid-template-columns: 1fr 1fr; gap: 3px; }
+            .destination { min-height: 31px; gap: 5px; padding: 3px 4px; }
+            .destination-icon { width: 20px; height: 20px; flex-basis: 20px; font-size: 9px; }
+            .destination-label { font-size: 8px; }
+            .landscape-caption { position: absolute; top: 7px; right: 0; max-width: 33vw; margin: 0; font-size: 8px; text-align: right; }
+            .dialogue { padding: 0 14px 14px; }
+            .dialogue-topline { min-height: 34px; }
+            .dialogue-body { grid-template-columns: 46px minmax(0, 1fr); gap: 10px; padding: 12px 0 10px; }
+            .mentor-portrait { width: 44px; height: 48px; }
+            .mentor-portrait::before { top: 5px; }
+            .mentor-portrait::after { top: 20px; }
+            .portrait-initials { margin-top: 34px; }
+            .dialogue-copy p { font-size: 11px; }
+            .lesson-box { font-size: 10px !important; }
+            .answer-button { flex: 1 1 145px; }
+            .quest-objective { max-width: 46%; font-size: 9px; line-height: 1.4; }
+            .game-button { min-height: 35px; padding: 0 10px; font-size: 9px; }
+        }
+
+        @media (max-width: 410px) {
+            .brand { gap: 8px; }
+            .brand-emblem { width: 34px; height: 34px; }
+            .brand-title { max-width: 155px; font-size: 9px; }
+            .quest-status { flex-direction: column; gap: 2px; align-items: flex-start; }
+            .quest-gems { gap: 2px; }
+            .dialogue-footer { align-items: flex-end; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="world" aria-hidden="true"></canvas>
+    <div class="scene-shade" aria-hidden="true"></div>
+
+    <div class="game">
+        <header class="hud">
+            <div class="brand">
+                <div class="brand-emblem" aria-hidden="true">✧</div>
+                <div>
+                    <div class="brand-title">El Reino de los Datos</div>
+                    <div class="brand-subtitle">Una aventura de conocimiento</div>
+                </div>
+            </div>
+            <div class="quest-status" aria-label="Progreso de gemas del conocimiento">
+                <span>Gemas del saber</span>
+                <span class="quest-gems" id="gem-count" aria-live="polite"></span>
+            </div>
+        </header>
+
+        <main class="world-ui">
+            <aside class="quest-board" aria-label="Mapa de destinos">
+                <div class="board-heading"><span>Mapa de aventura</span><span class="board-count" id="stage-count">01 / 05</span></div>
+                <p class="board-note">Julio Seferino te guiará por las cinco pruebas del estudio estadístico.</p>
+                <nav class="destinations" id="destinations" aria-label="Destinos de la aventura"></nav>
+            </aside>
+            <div class="landscape-caption" id="landscape-caption" aria-live="polite">Bosque de las Preguntas · Primera región</div>
+        </main>
+
+        <section class="dialogue" aria-label="Diálogo con el maestro Julio Seferino" aria-live="polite">
+            <div class="dialogue-topline">
+                <span class="speaker">Maestro Julio Seferino</span>
+                <span class="speaker-label" id="dialogue-label">Guardián del conocimiento</span>
+            </div>
+            <div class="dialogue-body">
+                <div class="mentor-portrait" aria-hidden="true"><span class="portrait-initials">JS</span></div>
+                <div class="dialogue-copy" id="dialogue-copy"></div>
+            </div>
+            <div class="dialogue-footer">
+                <div class="quest-objective"><span aria-hidden="true">✦</span><span id="objective-text">Misión: encontrar la pregunta que inicia la aventura.</span></div>
+                <div class="game-controls" id="game-controls"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script>
+        const regions = [
+            {
+                name: "Bosque de las Preguntas",
+                icon: "⌖",
+                objective: "Misión: encontrar la pregunta que inicia la aventura.",
+                greeting: "¡Bienvenida, viajera! Soy Julio Seferino. El Reino de los Datos está lleno de misterios; para resolverlos, seguiremos las huellas de un estudio estadístico.",
+                lesson: "Primero define qué quieres averiguar, a quiénes quieres conocer y en qué contexto. Una pregunta precisa es como una brújula: evita que la investigación se pierda.",
+                question: "La universidad quiere conocer el tiempo de traslado de sus estudiantes. ¿Cuál es la población de interés?",
+                answers: ["Solo quienes respondan primero", "Todos los estudiantes de la universidad", "Los buses que llegan al campus"],
+                correct: 1,
+                hint: "Piensa en el grupo completo sobre el que queremos aprender.",
+                success: "¡Una brújula excelente! La población es el grupo completo de interés. Has ganado la Gema de la Pregunta.",
+                reward: "Gema de la Pregunta"
+            },
+            {
+                name: "Aldea de la Recolección",
+                icon: "⌁",
+                objective: "Misión: reunir datos que representen bien al reino.",
+                greeting: "¡El camino nos lleva a la Aldea de la Recolección! Aquí aprenderás que una respuesta puede cambiar según a quién preguntamos y cómo lo hacemos.",
+                lesson: "Define las variables, elige una muestra pertinente y registra cada dato con el mismo cuidado. Incluir distintos horarios y programas ayuda a no escuchar una sola voz.",
+                question: "Para estimar el traslado típico, ¿qué selección reduce mejor el sesgo?",
+                answers: ["Encuestar solo a quienes llegan tarde", "Elegir estudiantes de distintos programas y horarios", "Preguntar a un único grupo de amigos"],
+                correct: 1,
+                hint: "Busca diversidad, no solo a las personas más fáciles de encontrar.",
+                success: "¡Muy bien observado! Una muestra diversa puede representar mejor a la población. Gema de la Recolección conseguida.",
+                reward: "Gema de la Recolección"
+            },
+            {
+                name: "Biblioteca de los Patrones",
+                icon: "▤",
+                objective: "Misión: revelar qué patrones esconden los datos.",
+                greeting: "¡Llegamos a la Biblioteca de los Patrones! Los datos en bruto son como páginas desordenadas: organicémoslos para que su historia pueda leerse.",
+                lesson: "Tablas y gráficos muestran la forma de los datos. Resume una variable para describirla; compara dos para explorar su relación. El gráfico también depende del tipo de variable.",
+                question: "Quieres estudiar la relación entre tiempo de traslado y número de transbordos. ¿Qué análisis inicial conviene?",
+                answers: ["Univariado: resumir una sola variable", "Bivariado: explorar dos variables juntas", "Multivariado: incluir todas las variables posibles"],
+                correct: 1,
+                hint: "Cuenta cuántas variables aparecen en la pregunta.",
+                success: "¡Encontraste la pista! El análisis bivariado explora dos variables a la vez. La Gema de los Patrones es tuya.",
+                reward: "Gema de los Patrones"
+            },
+            {
+                name: "Puente de la Incertidumbre",
+                icon: "∿",
+                objective: "Misión: cruzar del dato a la población con prudencia.",
+                greeting: "Este puente se mueve un poco, y eso está bien. Julio te acompaña: ninguna muestra es idéntica a otra, por eso inferir requiere medir la incertidumbre.",
+                lesson: "La probabilidad ayuda a cuantificar qué tan variables pueden ser nuestros resultados. La inferencia estima o contrasta ideas sobre la población usando evidencia de una muestra.",
+                question: "Dos muestras aleatorias de la misma universidad dan promedios algo distintos. ¿Qué lo explica?",
+                answers: ["La variabilidad del muestreo", "Un error seguro en los cálculos", "Que la población cambió necesariamente"],
+                correct: 0,
+                hint: "Las personas seleccionadas pueden variar de una muestra a otra.",
+                success: "¡Cruzaste con sabiduría! Las muestras varían, y la inferencia nos ayuda a medir cuánto. Gema de la Incertidumbre conseguida.",
+                reward: "Gema de la Incertidumbre"
+            },
+            {
+                name: "Torre de las Conclusiones",
+                icon: "✧",
+                objective: "Misión: revisar la evidencia antes de contar el final.",
+                greeting: "¡La última región! Antes de anunciar una conclusión, revisa el camino recorrido. El mejor explorador también sabe cuándo la evidencia tiene límites.",
+                lesson: "Comprueba los supuestos, identifica sesgos y comunica tus hallazgos con claridad. No afirmes más de lo que los datos permiten; una limitación honesta fortalece la conclusión.",
+                question: "Las respuestas vienen solo de estudiantes voluntarios. ¿Qué deberías hacer?",
+                answers: ["Afirmar que representa a todos", "Mencionar el posible sesgo y limitar la conclusión", "Ocultar cómo se recogieron los datos"],
+                correct: 1,
+                hint: "Una conclusión confiable cuenta tanto sus hallazgos como sus límites.",
+                success: "¡Has completado la aventura! Una conclusión rigurosa es clara, cuidadosa y transparente. El reino te confía la Gema de la Evidencia.",
+                reward: "Gema de la Evidencia"
+            }
+        ];
+
+        const cleared = new Set();
+        let currentRegion = 0;
+        let lessonShown = false;
+        let challengeShown = false;
+        let challengeSolved = false;
+        const destinations = document.getElementById("destinations");
+        const dialogueCopy = document.getElementById("dialogue-copy");
+        const controls = document.getElementById("game-controls");
+
+        function renderDestinations() {
+            destinations.innerHTML = regions.map((region, index) => {
+                const unlocked = index === 0 || cleared.has(index - 1) || cleared.has(index);
+                return `
+                    <button class="destination" type="button" data-region="${index}" aria-label="${unlocked ? `Región ${index + 1}: ${region.name}` : `Región bloqueada: ${region.name}`}" ${index === currentRegion ? 'aria-current="step"' : ""} ${cleared.has(index) ? 'data-cleared="true"' : ""} ${unlocked ? "" : "disabled"}>
+                        <span class="destination-icon" aria-hidden="true">${cleared.has(index) ? "✓" : region.icon}</span>
+                        <span class="destination-label">${region.name}</span>
+                        ${unlocked ? "" : '<span class="lock-hint" aria-hidden="true">◆</span>'}
+                    </button>
+                `;
+            }).join("");
+
+            destinations.querySelectorAll(".destination:not(:disabled)").forEach(button => {
+                button.addEventListener("click", () => visitRegion(Number(button.dataset.region)));
+            });
+
+            document.getElementById("stage-count").textContent =
+                `${String(currentRegion + 1).padStart(2, "0")} / ${String(regions.length).padStart(2, "0")}`;
+            document.getElementById("landscape-caption").textContent =
+                `${regions[currentRegion].name} · Región ${currentRegion + 1}`;
+            document.getElementById("gem-count").innerHTML = regions.map((region, index) =>
+                `<span class="gem${cleared.has(index) ? " earned" : ""}" title="${region.reward}" aria-label="${region.reward}${cleared.has(index) ? ", obtenida" : ", pendiente"}">${cleared.has(index) ? "✦" : "✧"}</span>`
+            ).join("");
+        }
+
+        function renderDialogue() {
+            const region = regions[currentRegion];
+            document.getElementById("objective-text").textContent = region.objective;
+
+            if (challengeSolved) {
+                dialogueCopy.innerHTML = `<p>${region.success}</p><p class="lesson-box">Julio: “${region.lesson}”</p>`;
+                controls.innerHTML = `
+                    ${currentRegion > 0 ? '<button class="game-button secondary" type="button" data-action="previous">← Región anterior</button>' : ""}
+                    <button class="game-button" type="button" data-action="next">${currentRegion === regions.length - 1 ? "Volver a la primera región" : "Seguir el camino"} <span aria-hidden="true">→</span></button>
+                `;
+                controls.querySelector('[data-action="next"]').addEventListener("click", () => {
+                    visitRegion(currentRegion === regions.length - 1 ? 0 : currentRegion + 1);
+                });
+                controls.querySelector('[data-action="previous"]')?.addEventListener("click", () => visitRegion(currentRegion - 1));
+                return;
+            }
+
+            if (challengeShown) {
+                document.getElementById("dialogue-label").textContent = "Prueba de la región";
+                dialogueCopy.innerHTML = `
+                    <p class="challenge-question">${region.question}</p>
+                    <div class="challenge-box visible">
+                        <div class="answers">
+                            ${region.answers.map((answer, index) => `<button class="answer-button" type="button" data-answer="${index}">${answer}</button>`).join("")}
+                        </div>
+                        <p class="feedback" id="feedback" aria-live="polite">Elige una respuesta para continuar tu aventura.</p>
+                    </div>
+                `;
+                dialogueCopy.querySelectorAll(".answer-button").forEach(button => {
+                    button.addEventListener("click", () => answerChallenge(Number(button.dataset.answer)));
+                });
+                controls.innerHTML = '<button class="game-button secondary" type="button" data-action="lesson">← Escuchar la pista</button>';
+                controls.querySelector('[data-action="lesson"]').addEventListener("click", () => {
+                    challengeShown = false;
+                    renderDialogue();
+                });
+                return;
+            }
+
+            document.getElementById("dialogue-label").textContent = lessonShown ? "Lección del maestro" : "Guardián del conocimiento";
+            dialogueCopy.innerHTML = lessonShown
+                ? `<p>Julio: “${region.lesson}”</p><p class="lesson-box">Recuerda, viajera: observa, pregunta y deja que la evidencia te muestre el camino.</p>`
+                : `<p>${region.greeting}</p>`;
+
+            controls.innerHTML = lessonShown
+                ? '<button class="game-button secondary" type="button" data-action="again">← Volver a escuchar</button><button class="game-button" type="button" data-action="challenge">Aceptar el reto <span aria-hidden="true">→</span></button>'
+                : '<button class="game-button" type="button" data-action="lesson">Escuchar la lección <span aria-hidden="true">→</span></button>';
+
+            controls.querySelector('[data-action="lesson"]')?.addEventListener("click", () => {
+                lessonShown = true;
+                renderDialogue();
+            });
+            controls.querySelector('[data-action="again"]')?.addEventListener("click", () => {
+                lessonShown = false;
+                renderDialogue();
+            });
+            controls.querySelector('[data-action="challenge"]')?.addEventListener("click", () => {
+                challengeShown = true;
+                renderDialogue();
+            });
+        }
+
+        function answerChallenge(selected) {
+            const region = regions[currentRegion];
+            const buttons = [...dialogueCopy.querySelectorAll(".answer-button")];
+            const feedback = dialogueCopy.querySelector("#feedback");
+            const correct = selected === region.correct;
+
+            buttons.forEach((button, index) => {
+                if (index === region.correct) button.classList.add("correct");
+                else if (index === selected) button.classList.add("incorrect");
+            });
+
+            if (correct) {
+                buttons.forEach(button => { button.disabled = true; });
+                feedback.className = "feedback correct";
+                feedback.textContent = region.success;
+                cleared.add(currentRegion);
+                challengeSolved = true;
+                renderDestinations();
+                setTimeout(renderDialogue, 450);
+            } else {
+                feedback.className = "feedback incorrect";
+                feedback.textContent = `No te rindas: ${region.hint}`;
+                const selectedButton = buttons[selected];
+                selectedButton.disabled = true;
+            }
+        }
+
+        function visitRegion(index) {
+            if (index < 0 || index >= regions.length) return;
+            if (index > 0 && !cleared.has(index - 1) && !cleared.has(index)) return;
+            currentRegion = index;
+            lessonShown = false;
+            challengeShown = false;
+            challengeSolved = cleared.has(index);
+            renderDestinations();
+            renderDialogue();
+            updateWorldRegion();
+        }
+
+        function initWorld() {
+            if (!window.THREE) return;
+            const canvas = document.getElementById("world");
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = .9;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x263b36, 18, 42);
+            const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, .1, 80);
+            camera.position.set(0, 10.5, 18);
+            camera.lookAt(0, 0, 0);
+
+            scene.add(new THREE.HemisphereLight(0xc8e6f2, 0x425441, 1.05));
+            const sun = new THREE.DirectionalLight(0xffdf9e, 1.3);
+            sun.position.set(-6, 11, 8);
+            sun.castShadow = true;
+            scene.add(sun);
+
+            const ground = new THREE.Mesh(
+                new THREE.PlaneGeometry(70, 50),
+                new THREE.MeshStandardMaterial({ color: 0x344a39, roughness: 1, transparent: true, opacity: .7 })
+            );
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -1.35;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            const destinations3d = [
+                new THREE.Vector3(-4.7, .05, 1.6),
+                new THREE.Vector3(-2.35, .05, -.1),
+                new THREE.Vector3(0, .05, 1.6),
+                new THREE.Vector3(2.35, .05, -.1),
+                new THREE.Vector3(4.7, .05, 1.6)
+            ];
+
+            const path = new THREE.CatmullRomCurve3(destinations3d.map(point => new THREE.Vector3(point.x, -.77, point.z)));
+            const pathMesh = new THREE.Mesh(
+                new THREE.TubeGeometry(path, 100, .055, 8, false),
+                new THREE.MeshStandardMaterial({ color: 0xd5b878, roughness: .9 })
+            );
+            scene.add(pathMesh);
+
+            const regionsMeshes = [];
+
+            function addTree(x, z, scale) {
+                const trunk = new THREE.Mesh(
+                    new THREE.CylinderGeometry(.1 * scale, .16 * scale, .66 * scale, 5),
+                    new THREE.MeshStandardMaterial({ color: 0x70533a, roughness: 1 })
+                );
+                trunk.position.set(x, -.26 * scale, z);
+                trunk.castShadow = true;
+                scene.add(trunk);
+                const crown = new THREE.Mesh(
+                    new THREE.IcosahedronGeometry(.56 * scale, 1),
+                    new THREE.MeshStandardMaterial({ color: 0x64935c, roughness: 1, flatShading: true })
+                );
+                crown.position.set(x, .3 * scale, z);
+                crown.castShadow = true;
+                scene.add(crown);
+            }
+
+            function addHouse(x, z, color) {
+                const base = new THREE.Mesh(new THREE.BoxGeometry(.82, .62, .72), new THREE.MeshStandardMaterial({ color: 0xd8bd83, roughness: 1 }));
+                base.position.set(x, -.18, z);
+                base.castShadow = true;
+                scene.add(base);
+                const roof = new THREE.Mesh(new THREE.ConeGeometry(.68, .57, 4), new THREE.MeshStandardMaterial({ color, roughness: 1, flatShading: true }));
+                roof.rotation.y = Math.PI / 4;
+                roof.position.set(x, .4, z);
+                roof.castShadow = true;
+                scene.add(roof);
+            }
+
+            function addLibrary(x, z) {
+                for (let row = 0; row < 3; row++) {
+                    const shelf = new THREE.Mesh(new THREE.BoxGeometry(1.05, .54, .25), new THREE.MeshStandardMaterial({ color: 0x755942, roughness: 1 }));
+                    shelf.position.set(x, -.43 + row * .53, z);
+                    scene.add(shelf);
+                    for (let book = 0; book < 4; book++) {
+                        const bookMesh = new THREE.Mesh(
+                            new THREE.BoxGeometry(.14, .33 + (book % 2) * .08, .3),
+                            new THREE.MeshStandardMaterial({ color: [0xc78d4d, 0x547a69, 0xa9654d, 0xd5c17d][(row + book) % 4], roughness: 1 })
+                        );
+                        bookMesh.position.set(x - .39 + book * .25, -.29 + row * .53, z);
+                        scene.add(bookMesh);
+                    }
+                }
+            }
+
+            function addBridge(x, z) {
+                for (let plank = 0; plank < 5; plank++) {
+                    const board = new THREE.Mesh(new THREE.BoxGeometry(.35, .13, 1.6), new THREE.MeshStandardMaterial({ color: plank % 2 ? 0xb58c51 : 0xc8a468, roughness: 1 }));
+                    board.position.set(x - .7 + plank * .35, -.48, z);
+                    board.castShadow = true;
+                    scene.add(board);
+                }
+                const arch = new THREE.Mesh(new THREE.TorusGeometry(.65, .08, 6, 14, Math.PI), new THREE.MeshStandardMaterial({ color: 0x9d7849, roughness: 1 }));
+                arch.rotation.z = Math.PI;
+                arch.position.set(x, -.38, z - .15);
+                scene.add(arch);
+            }
+
+            function addTower(x, z) {
+                const tower = new THREE.Mesh(new THREE.CylinderGeometry(.35, .48, 1.8, 7), new THREE.MeshStandardMaterial({ color: 0xd0c297, roughness: 1, flatShading: true }));
+                tower.position.set(x, -.08, z);
+                tower.castShadow = true;
+                scene.add(tower);
+                const roof = new THREE.Mesh(new THREE.ConeGeometry(.52, .72, 7), new THREE.MeshStandardMaterial({ color: 0xa85f49, roughness: 1, flatShading: true }));
+                roof.position.set(x, 1.18, z);
+                roof.castShadow = true;
+                scene.add(roof);
+                const opening = new THREE.Mesh(new THREE.TorusGeometry(.16, .045, 6, 14), new THREE.MeshStandardMaterial({ color: 0xf0cf82, emissive: 0x9a6838, emissiveIntensity: .55 }));
+                opening.position.set(x, .25, z + .36);
+                scene.add(opening);
+            }
+
+            destinations3d.forEach((point, index) => {
+                const island = new THREE.Mesh(
+                    new THREE.CylinderGeometry(1.08, 1.25, .3, 9),
+                    new THREE.MeshStandardMaterial({ color: [0x71945f, 0x7e9561, 0x788f66, 0x6d8e69, 0x82916a][index], roughness: 1, flatShading: true })
+                );
+                island.position.set(point.x, -.95, point.z);
+                island.castShadow = true;
+                island.receiveShadow = true;
+                scene.add(island);
+
+                const ring = new THREE.Mesh(
+                    new THREE.TorusGeometry(.82, .035, 7, 28),
+                    new THREE.MeshStandardMaterial({ color: 0xe6c66f, emissive: 0x7b5e2e, emissiveIntensity: .24, transparent: true, opacity: .7 })
+                );
+                ring.rotation.x = Math.PI / 2;
+                ring.position.set(point.x, -.69, point.z);
+                scene.add(ring);
+
+                const gem = new THREE.Mesh(
+                    new THREE.OctahedronGeometry(.22, 0),
+                    new THREE.MeshStandardMaterial({ color: 0xf5d778, emissive: 0xb88c36, emissiveIntensity: .5, roughness: .3, flatShading: true })
+                );
+                gem.position.set(point.x, .46, point.z);
+                gem.castShadow = true;
+                scene.add(gem);
+
+                if (index === 0) {
+                    addTree(point.x - .5, point.z - .15, .84);
+                    addTree(point.x + .55, point.z + .05, .63);
+                } else if (index === 1) {
+                    addHouse(point.x - .43, point.z - .08, 0xb66b4e);
+                    addHouse(point.x + .48, point.z + .12, 0x71865b);
+                } else if (index === 2) {
+                    addLibrary(point.x, point.z - .22);
+                } else if (index === 3) {
+                    addBridge(point.x, point.z);
+                } else {
+                    addTower(point.x, point.z - .12);
+                }
+
+                regionsMeshes.push({ point, ring, gem });
+            });
+
+            function addVoxelFigure(x, z, palette, scale) {
+                const figure = new THREE.Group();
+                const material = color => new THREE.MeshStandardMaterial({ color, roughness: 1, flatShading: true });
+                const body = new THREE.Mesh(new THREE.BoxGeometry(.36 * scale, .47 * scale, .27 * scale), material(palette.body));
+                body.position.y = .04 * scale;
+                figure.add(body);
+                const head = new THREE.Mesh(new THREE.BoxGeometry(.31 * scale, .31 * scale, .29 * scale), material(palette.skin));
+                head.position.y = .43 * scale;
+                figure.add(head);
+                const hair = new THREE.Mesh(new THREE.BoxGeometry(.35 * scale, .1 * scale, .32 * scale), material(palette.hair));
+                hair.position.y = .62 * scale;
+                figure.add(hair);
+                const hat = new THREE.Mesh(new THREE.ConeGeometry(.26 * scale, .3 * scale, 4), material(palette.hat));
+                hat.rotation.y = Math.PI / 4;
+                hat.position.y = .79 * scale;
+                figure.add(hat);
+                const eyeMaterial = material(0x292b25);
+                [-.075, .075].forEach(offset => {
+                    const eye = new THREE.Mesh(new THREE.BoxGeometry(.035 * scale, .04 * scale, .018 * scale), eyeMaterial);
+                    eye.position.set(offset * scale, .46 * scale, .15 * scale);
+                    figure.add(eye);
+                });
+                figure.position.set(x, -.72, z);
+                figure.traverse(object => { if (object.isMesh) object.castShadow = true; });
+                scene.add(figure);
+                return figure;
+            }
+
+            const hero = addVoxelFigure(destinations3d[0].x - .1, destinations3d[0].z + .83, { body: 0x4e8061, skin: 0xe9c99b, hair: 0x684b35, hat: 0x76a06a }, .76);
+            const teacher = addVoxelFigure(destinations3d[0].x + .65, destinations3d[0].z + .65, { body: 0x426451, skin: 0xe2c395, hair: 0xb5a178, hat: 0xd4ac59 }, .9);
+
+            const particles = new THREE.Group();
+            const particleMaterial = new THREE.MeshBasicMaterial({ color: 0xffe39a, transparent: true, opacity: .72 });
+            for (let index = 0; index < 24; index++) {
+                const mote = new THREE.Mesh(new THREE.BoxGeometry(.035, .035, .035), particleMaterial);
+                mote.position.set((Math.random() - .5) * 20, Math.random() * 3 - .1, (Math.random() - .5) * 8 - 1);
+                particles.add(mote);
+            }
+            scene.add(particles);
+
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            let target = destinations3d[0];
+
+            window.addEventListener("resize", () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, { passive: true });
+
+            window.updateWorldRegion = function () {
+                target = destinations3d[currentRegion];
+            };
+
+            renderer.setAnimationLoop(time => {
+                const seconds = time * .001;
+                hero.position.x += (target.x - .1 - hero.position.x) * .035;
+                hero.position.z += (target.z + .83 - hero.position.z) * .035;
+                teacher.position.x += (target.x + .65 - teacher.position.x) * .028;
+                teacher.position.z += (target.z + .65 - teacher.position.z) * .028;
+                hero.position.y = -.72 + (reducedMotion ? 0 : Math.sin(seconds * 2.5) * .045);
+                teacher.position.y = -.72 + (reducedMotion ? 0 : Math.sin(seconds * 2.5 + 1.2) * .035);
+                hero.rotation.y = .25 + (target.x - hero.position.x) * .08;
+                teacher.rotation.y = -.2;
+
+                regionsMeshes.forEach(({ ring, gem }, index) => {
+                    const active = index === currentRegion;
+                    ring.material.color.setHex(active ? 0xffe39a : 0xc5bd8d);
+                    ring.material.emissiveIntensity = active ? .5 : .16;
+                    ring.material.opacity = active ? .95 : .42;
+                    const bob = reducedMotion ? 0 : Math.sin(seconds * 2 + index) * .08;
+                    gem.position.y = .46 + bob + (cleared.has(index) ? .16 : 0);
+                    gem.rotation.y = reducedMotion ? 0 : seconds * .6;
+                    gem.material.color.setHex(cleared.has(index) ? 0xbbe991 : 0xf5d778);
+                });
+
+                if (!reducedMotion) particles.rotation.y = seconds * .018;
+                renderer.render(scene, camera);
+            });
+        }
+
+        function updateWorldRegion() {
+            if (typeof window.updateWorldRegion === "function") window.updateWorldRegion();
+        }
+
+        document.addEventListener("keydown", event => {
+            if (event.altKey || event.ctrlKey || event.metaKey) return;
+            if (event.target.closest("button, input, textarea, select, [contenteditable='true']")) return;
+            if (event.key === "ArrowRight" && cleared.has(currentRegion)) {
+                visitRegion(Math.min(currentRegion + 1, regions.length - 1));
+            } else if (event.key === "ArrowLeft") {
+                visitRegion(Math.max(currentRegion - 1, 0));
+            }
+        });
+
+        renderDestinations();
+        renderDialogue();
+        try {
+            initWorld();
+        } catch (error) {
+            console.warn("El mapa 3D no está disponible; los diálogos y retos siguen funcionando.", error);
+        }
+    </script>
+</body>
+</html>
