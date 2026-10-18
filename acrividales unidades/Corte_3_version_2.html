@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Actividad Formativa y Auténtica - Variables Aleatorias Discretas y Modelos Probabilísticos</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin:40px;
+    line-height:1.7;
+    color:#333;
+}
+h1,h2,h3{
+    color:#0B5394;
+}
+.caja{
+    background:#f4f9ff;
+    border-left:6px solid #0B5394;
+    padding:15px;
+    margin:15px 0;
+}
+.destacado{
+    background:#fff8e1;
+    border-left:6px solid #ffb300;
+    padding:15px;
+    margin:15px 0;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    border:1px solid #999;
+    padding:8px;
+}
+th{
+    background:#d9eaf7;
+}
+</style>
+</head>
+<body>
+
+<h1>Actividad Formativa y Auténtica</h1>
+
+<h2>Unidad Temática</h2>
+
+<ul>
+<li>Variables Aleatorias Discretas.</li>
+<li>Distribuciones de Probabilidad Discretas.</li>
+<li>Media y Varianza de una Variable Aleatoria.</li>
+<li>Distribución de Bernoulli.</li>
+<li>Distribución Binomial.</li>
+<li>Distribución Hipergeométrica.</li>
+<li>Distribución de Poisson.</li>
+<li>Distribución Binomial Negativa.</li>
+</ul>
+
+<h2>Contexto Profesional Auténtico</h2>
+
+<div class="caja">
+
+<p>
+Ustedes han sido contratados como Analistas de Calidad por una empresa que fabrica
+botellas térmicas reutilizables.
+</p>
+
+<p>
+Durante el proceso de producción se mide el diámetro de cierre de cada botella.
+La especificación técnica establece que una botella será considerada
+<b>defectuosa</b> si su diámetro se encuentra fuera del intervalo:
+</p>
+
+<p style="text-align:center">
+<b>49.80 mm ≤ Diámetro ≤ 50.20 mm</b>
+</p>
+
+<p>
+La empresa les entrega una muestra correspondiente a los últimos 100 productos fabricados,
+incluyendo las mediciones registradas.
+</p>
+
+<p>
+La gerencia desea tomar decisiones sobre la calidad de producción y necesita conocer
+el comportamiento probabilístico de los defectos.
+</p>
+
+</div>
+
+<h2>Propósito de Aprendizaje</h2>
+
+<p>
+Al finalizar la actividad, el estudiante será capaz de analizar datos reales de calidad,
+identificar productos defectuosos, modelar el número de defectos mediante variables
+aleatorias discretas y seleccionar una distribución probabilística apropiada para describir
+el fenómeno observado.
+</p>
+
+<h2>Competencias Evaluadas</h2>
+
+<ol>
+<li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+
+<li>Calcular e interpretar medidas estadísticas para describir y analizar conjuntos de datos.</li>
+
+<li>Modelar situaciones aleatorias aplicando conceptos de probabilidad y distribuciones discretas.</li>
+
+<li>Emplear herramientas digitales para realizar análisis exploratorios y comunicar resultados.</li>
+
+</ol>
+
+<h2>Situación Problema</h2>
+
+<div class="destacado">
+
+<p>
+La gerencia desea implementar controles de calidad por lotes de 10 botellas.
+</p>
+
+<p>
+Antes de hacerlo, necesita responder la siguiente pregunta:
+</p>
+
+<h3 style="text-align:center;">
+¿Cómo se comporta la variable aleatoria "Número de productos defectuosos en un lote de 10 botellas"?
+</h3>
+
+<p>
+La respuesta deberá estar sustentada mediante análisis estadístico y modelos probabilísticos.
+</p>
+
+</div>
+
+<h2>Fase 1. Exploración y Clasificación de los Datos</h2>
+
+<h3>Actividades</h3>
+
+<ol>
+
+<li>Importar la base de datos en Excel, Jamovi, R, SPSS, Python o software similar.</li>
+
+<li>Revisar las 100 mediciones suministradas.</li>
+
+<li>Crear una nueva variable llamada:
+<b>Estado del Producto</b>.</li>
+
+<ul>
+<li>Defectuoso = 1</li>
+<li>No defectuoso = 0</li>
+</ul>
+
+<li>Clasificar cada producto según el criterio establecido.</li>
+
+<li>Calcular el número total de productos defectuosos.</li>
+
+<li>Calcular el porcentaje de defectos.</li>
+
+</ol>
+
+<h3>Entregables</h3>
+
+<ul>
+<li>Tabla de datos clasificada.</li>
+<li>Porcentaje de defectos.</li>
+<li>Captura del procedimiento realizado.</li>
+</ul>
+
+<h2>Fase 2. Análisis Descriptivo</h2>
+
+<h3>Variable de Estudio</h3>
+
+<p>
+Número de defectos observados.
+</p>
+
+<h3>Actividades</h3>
+
+<ol>
+
+<li>Construir tabla de frecuencias.</li>
+
+<li>Construir gráfico adecuado:
+<ul>
+<li>Gráfico de barras.</li>
+<li>Diagrama de Pareto (opcional).</li>
+</ul>
+</li>
+
+<li>Calcular:
+<ul>
+<li>Media.</li>
+<li>Moda.</li>
+<li>Varianza.</li>
+<li>Desviación estándar.</li>
+</ul>
+</li>
+
+<li>Interpretar cada medida dentro del contexto de calidad.</li>
+
+</ol>
+
+<h3>Preguntas de Reflexión</h3>
+
+<ul>
+
+<li>¿Qué tan frecuente es encontrar defectos?</li>
+
+<li>¿La producción parece estable?</li>
+
+<li>¿Existen evidencias de problemas de calidad?</li>
+
+<li>¿La cantidad de defectos observada es preocupante para la empresa?</li>
+
+</ul>
+
+<h2>Fase 3. Construcción de la Variable Aleatoria</h2>
+
+<h3>Definición</h3>
+
+<p>
+Sea:
+</p>
+
+<p style="text-align:center">
+
+<b>X = Número de productos defectuosos encontrados en un lote de 10 botellas.</b>
+
+</p>
+
+<h3>Actividades</h3>
+
+<ol>
+
+<li>Identificar el experimento aleatorio.</li>
+
+<li>Determinar los posibles valores de X.</li>
+
+<li>Construir el espacio de valores posibles de la variable.</li>
+
+<li>Explicar por qué X es una variable aleatoria discreta.</li>
+
+</ol>
+
+<h2>Fase 4. Modelamiento Probabilístico</h2>
+
+<h3>Pregunta Central</h3>
+
+<p>
+¿Qué distribución probabilística modela mejor la variable
+“Número de productos defectuosos en un lote de 10 productos”?
+</p>
+
+<h3>Actividades</h3>
+
+<ol>
+
+<li>Estimar la probabilidad de defecto utilizando la muestra real.</li>
+
+<li>Evaluar si el proceso puede modelarse mediante una distribución Binomial.</li>
+
+<li>Determinar:
+<ul>
+<li>n</li>
+<li>p</li>
+<li>Media teórica</li>
+<li>Varianza teórica</li>
+</ul>
+</li>
+
+<li>Construir la distribución de probabilidad de X.</li>
+
+<li>Representar gráficamente la distribución.</li>
+
+<li>Interpretar:
+<ul>
+<li>P(X=0)</li>
+<li>P(X=1)</li>
+<li>P(X=2)</li>
+<li>P(X≥3)</li>
+</ul>
+</li>
+
+</ol>
+
+<h2>Fase 5. Comparación entre Modelos</h2>
+
+<p>
+Investigue y argumente cuál de las siguientes distribuciones podría utilizarse
+en contextos de control de calidad:
+</p>
+
+<ul>
+<li>Bernoulli.</li>
+<li>Binomial.</li>
+<li>Poisson.</li>
+<li>Hipergeométrica.</li>
+<li>Binomial Negativa.</li>
+</ul>
+
+<p>
+Explique cuándo sería apropiada cada una.
+</p>
+
+<h2>Fase 6. Storytelling Estadístico</h2>
+
+<div class="caja">
+
+<h3>Rol Profesional</h3>
+
+<p>
+Usted es el analista responsable de presentar los resultados al Director de Producción.
+</p>
+
+<h3>Pregunta guía</h3>
+
+<p style="text-align:center">
+<b>¿La calidad actual de producción es suficientemente buena para vender los lotes sin aumentar los controles de inspección?</b>
+</p>
+
+<h3>La presentación debe incluir</h3>
+
+<ol>
+
+<li>Introducción al problema.</li>
+
+<li>Descripción de los datos.</li>
+
+<li>Análisis descriptivo.</li>
+
+<li>Modelo probabilístico seleccionado.</li>
+
+<li>Interpretación de probabilidades.</li>
+
+<li>Conclusión ejecutiva.</li>
+
+<li>Recomendaciones para la empresa.</li>
+
+</ol>
+
+</div>
+
+<h2>Autoevaluación</h2>
+
+<ul>
+
+<li>¿Comprendo la diferencia entre dato, variable y variable aleatoria?</li>
+
+<li>¿Puedo justificar la elección de una distribución probabilística?</li>
+
+<li>¿Mis conclusiones están respaldadas por evidencia?</li>
+
+<li>¿Sé interpretar los resultados para la toma de decisiones?</li>
+
+<li>¿Qué aprendí sobre calidad y probabilidad?</li>
+
+</ul>
+
+</body>
+</html>

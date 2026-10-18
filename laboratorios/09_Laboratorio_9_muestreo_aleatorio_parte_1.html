@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 9: La Ilusión del Azar y la Muestra Aleatoria </h2>
+<p>Generación sintética de datos y aplicación de técnicas de muestreo aleatorio simple mediante programación.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Procedimiento</a></li>
+<li><a href="#entregables">Compromisos de Entrega</a></li>
+<li><a href="#evaluacion">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos</li>
+        <li>Modelar situaciones aleatorias aplicando conceptos de probabilidad, técnicas de conteo, eventos compuestos y teoremas fundamentales en contextos reales.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Generar poblaciones de datos sintéticos (arreglos numéricos) utilizando las funciones de distribución de la librería NumPy.</li>
+        <li>Extraer muestras aleatorias de una población computacional estableciendo una semilla única (<code>random_state</code> o <code>seed</code>).</li>
+        <li>Calcular y contrastar parámetros poblacionales frente a estadísticos muestrales básicos (media y varianza).</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas desarrolladas en esta práctica</h2>
+    <ul>
+        <li>Variables aleatorias discretas.</li>
+        <li>Generación de números pseudoaleatorios y semillas lógicas.</li>
+        <li>Población estadística vs. Muestra Aleatoria Simple.</li>
+        <li>Cálculo de media y varianza poblacional y muestral.</li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <h3 style="color: var(--primary);">"El Auditor de Calidad Aislado"</h3>
+    <p>Trabajas como auditor de calidad independiente para una planta de manufactura de microchips. La máquina central produce diariamente $10,000$ chips, y cada uno puede presentar entre $0$ y $5$ micro-defectos de soldadura (variable discreta). Es imposible revisar los $10,000$ chips por cuestiones de tiempo y destrucción de material. Tu misión es utilizar un simulador para "crear" la producción del día y extraer una muestra aleatoria de inspección de $50$ chips. ¿Podrá la media de defectos de tu pequeña muestra de 50 acercarse a la realidad de los $10,000$ chips de la fábrica?</p>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">Video y Procedimiento</h2>
+    <p><strong>Instrucción asincrónica sugerida:</strong> Revisar previamente un video cápsula (5 min) sobre la función <code>np.random.randint</code> y el concepto de <code>seed</code> en Python.</p>
+    
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Procedimiento en Google Colab (Trabajo Individual):</h3>
+    <ol>
+        <li><strong>Importar Librerías:</strong> <code>import numpy as np</code>, <code>import pandas as pd</code>.</li>
+        <li><strong>Individualización (El paso crítico):</strong> Cada estudiante debe configurar la semilla de aleatoriedad usando los últimos 4 dígitos de su código estudiantil: <code>np.random.seed(1234)</code>. <em>(Esto garantiza que ningún estudiante comparta los mismos datos).</em></li>
+        <li><strong>Generar la Población Sintética:</strong> Crear un arreglo de $10,000$ datos enteros aleatorios entre 0 y 5: <code>poblacion = np.random.randint(0, 6, 10000)</code>.</li>
+        <li><strong>Calcular la Realidad:</strong> Calcular y guardar la media exacta de la población completa <code>np.mean(poblacion)</code>.</li>
+        <li><strong>Extraer la Muestra:</strong> Utilizar la función de NumPy para elegir 50 datos al azar de la población: <code>muestra = np.random.choice(poblacion, size=50, replace=False)</code>.</li>
+        <li><strong>Contraste:</strong> Calcular la media de la <code>muestra</code> y programar un <code>print()</code> que muestre la diferencia absoluta entre la media de la muestra y la media poblacional.</li>
+    </ol>
+    
+    <div class="code-block">
+<pre>import numpy as np
+import pandas as pd
+
+# 2. Individualización: Reemplaza '1234' por los últimos 4 dígitos de tu código
+np.random.seed(1234)
+
+# 3. Generar la Población Sintética
+poblacion = np.random.randint(0, 6, 10000)
+
+# 4. Calcular la Realidad
+media_poblacional = np.mean(poblacion)
+
+# 5. Extraer la Muestra
+muestra = np.random.choice(poblacion, size=50, replace=False)
+
+# 6. Contraste
+media_muestral = np.mean(muestra)
+print(f"Media real de la fábrica: {media_poblacional}")
+print(f"Media de la muestra: {media_muestral}")
+print(f"Error de muestreo (Diferencia): {abs(media_poblacional - media_muestral)}")</pre>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos de entrega en la sesión</h2>
+    <ul>
+        <li><strong>Archivo:</strong> Enlace al Notebook de Google Colab (con permisos de lectura).</li>
+        <li><strong>Evidencia en el Notebook:</strong> Un bloque de texto (Markdown) al final del notebook de la Parte 1 que indique: <br><em>"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."</em></li>
+    </ul>
+</section>
+
+<section id="evaluacion" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Informe del lab (Parte 1)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Criterio</th>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Dominio Técnico</strong></td>
+                <td>Genera correctamente la población de 10,000 datos y extrae la muestra sin reemplazo utilizando funciones de NumPy.</td>
+                <td>40%</td>
+            </tr>
+            <tr>
+                <td><strong>Individualización</strong></td>
+                <td>Aplica correctamente la semilla (<code>seed</code>) utilizando los dígitos de su código. Los datos generados no son idénticos a los de ningún otro compañero.</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td><strong>Cálculo y Precisión</strong></td>
+                <td>Calcula correctamente las medias y documenta el error de muestreo mediante código en Python.</td>
+                <td>30%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 10: El Caos se Vuelve Orden (TLC y Muestreo Repetido)</h2>
+<p>Simulación de fenómenos para validar empíricamente la Ley de los Grandes Números y el Teorema del Límite Central.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Procedimiento</a></li>
+<li><a href="#entregables">Compromisos de Entrega</a></li>
+<li><a href="#evaluacion">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li> Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
+        <li>Emplear herramientas digitales (Excel) para realizar análisis estadísticos y comunicar hallazgos con claridad y rigor.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Construir bucles (<code>for</code> loops) en Python para simular el proceso de extraer múltiples muestras de forma iterativa.</li>
+        <li>Almacenar estadísticos calculados en cada iteración dentro de estructuras de datos (listas/arrays).</li>
+        <li>Construir e interpretar histogramas utilizando Seaborn y Matplotlib para visualizar la distribución de las medias muestrales.</li>
+        <li>Validar empíricamente la Ley de los Grandes Números y el Teorema del Límite Central (TLC).</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas desarrolladas en esta práctica</h2>
+    <ul>
+        <li>Muestreo repetido.</li>
+        <li>Distribución de medias muestrales y error estándar.</li>
+        <li>Construcción de Histogramas y estimación de densidad (KDE).</li>
+        <li>Ley de los Grandes Números.</li>
+        <li>Teorema del Límite Central (TLC).</li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <h3 style="color: var(--primary);">"El Colapso a la Normalidad"</h3>
+    <p>En la Parte 1 observaste que una sola muestra de $50$ chips tenía un margen de error frente a la población. Además, la población original tenía una distribución uniforme discreta (los valores 0, 1, 2, 3, 4 y 5 tenían la misma probabilidad).</p>
+    <p>Ahora actuarás como el Director Analítico. Vas a simular qué pasaría si repites el proceso de inspección tomando una muestra de $30$ chips, pero esta vez lo harás $2,000$ veces seguidas, guardando únicamente el promedio de cada inspección. ¿Qué forma geométrica tomará el gráfico si apilamos los promedios de esas $2,000$ inspecciones independientes?</p>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">Video y Procedimiento</h2>
+    <p><strong>Instrucción asincrónica sugerida:</strong> Cápsula de 4 minutos sobre cómo crear un bucle <code>for</code> básico en Python y cómo añadir elementos a una lista vacía con <code>.append()</code>.</p>
+    
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Procedimiento en Google Colab (Trabajo Individual):</h3>
+    <ol>
+        <li><strong>Preparación visual:</strong> <code>import seaborn as sns</code>, <code>import matplotlib.pyplot as plt</code>.</li>
+        <li><strong>El Bucle (El motor estadístico):</strong>
+            <ul>
+                <li>Crear una lista vacía: <code>medias_muestrales = []</code>.</li>
+                <li>Construir un ciclo <code>for i in range(2000):</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Muestreo Repetido:</strong> Dentro del bucle, extraer una muestra aleatoria de tamaño $n=30$ de la <code>poblacion</code> generada en la Parte 1.</li>
+        <li><strong>Almacenamiento:</strong> Calcular la media de esa muestra específica y agregarla a la lista con <code>medias_muestrales.append()</code>.</li>
+        <li><strong>Visualización:</strong> Fuera del bucle, utilizar <code>sns.histplot(medias_muestrales, kde=True, color='blue')</code> para dibujar el histograma de las 2,000 medias.</li>
+        <li><strong>El Contraste Final:</strong> Generar un segundo histograma de los $10,000$ datos de la población original para evidenciar que la población NO es normal, pero las medias muestrales SÍ lo son.</li>
+    </ol>
+
+    <div class="code-block">
+<pre>import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 1. Preparar lista y bucle
+medias_muestrales = []
+
+# 2 y 3. Repetir 2000 veces la extracción y almacenamiento
+for i in range(2000):
+    muestra = np.random.choice(poblacion, size=30, replace=False)
+    medias_muestrales.append(np.mean(muestra))
+
+# 4. Visualización de las medias (Forma de campana / Normal)
+plt.figure(figsize=(8, 5))
+sns.histplot(medias_muestrales, kde=True, color='blue')
+plt.title("Distribución de Medias Muestrales (TLC)")
+plt.xlabel("Media de defectos por muestra")
+plt.ylabel("Frecuencia")
+plt.show()
+
+# 5. El Contraste: Histograma de la población original (Uniforme)
+plt.figure(figsize=(8, 5))
+sns.histplot(poblacion, discrete=True, color='red')
+plt.title("Distribución de la Población Original (10,000 chips)")
+plt.xlabel("Número de defectos")
+plt.ylabel("Frecuencia")
+plt.show()</pre>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos de entrega en la sesión</h2>
+    <ul>
+        <li><strong>Archivo:</strong> Captura de pantalla de los dos gráficos generados en Colab (El histograma de la población original vs. El histograma de las medias muestrales en forma de campana).</li>
+        <li><strong>Análisis Metacognitivo:</strong> Un párrafo de máximo 3 líneas (en la tarea de entrega) donde el estudiante explique con sus propias palabras por qué el segundo gráfico forma una "Campana de Gauss" si los datos originales eran una variable uniforme discreta.</li>
+    </ul>
+</section>
+
+<section id="evaluacion" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Informe del lab (Parte 2)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Criterio</th>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Dominio Lógico y Simulación</strong></td>
+                <td>Estructura correctamente el bucle <code>for</code> iterando 2,000 veces y almacenando la media de cada nueva muestra en una lista sin errores de indentación o lógica.</td>
+                <td>40%</td>
+            </tr>
+            <tr>
+                <td><strong>Visualización de Datos</strong></td>
+                <td>Construye ambos histogramas correctamente utilizando Seaborn, incluyendo la curva de densidad (KDE), diferenciando visualmente la distribución poblacional de la distribución de las medias.</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td><strong>Pensamiento Crítico y Argumentación</strong></td>
+                <td>El estudiante redacta una conclusión precisa que demuestra comprensión del Teorema del Límite Central, identificando que el tamaño de muestra iterativo fuerza la normalidad independientemente de la distribución de origen.</td>
+                <td>30%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
