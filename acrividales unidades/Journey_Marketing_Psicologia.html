@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey de Aprendizaje - Neuromarketing</title>
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #0b0c10;
+        color: #c5c6c7;
+    }
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    header {
+        text-align: center;
+        padding: 100px 20px;
+        background: linear-gradient(to bottom, rgba(11, 12, 16, 0.9), transparent);
+    }
+    h1 {
+        color: #66fcf1;
+        font-size: 3em;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(102, 252, 241, 0.5);
+    }
+    h2, h3 { color: #45a29e; }
+    main {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+    .card {
+        background: rgba(31, 40, 51, 0.85);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 60px;
+        border: 1px solid rgba(102, 252, 241, 0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        background: #0b0c10;
+        border: 4px solid #66fcf1;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 15px #66fcf1;
+    }
+    .card.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 4px;
+        background: linear-gradient(to bottom, #66fcf1, transparent);
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+    ul, ol { padding-left: 20px; }
+    li { margin-bottom: 10px; }
+    .badge {
+        display: inline-block;
+        background: #45a29e;
+        color: #0b0c10;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin: 5px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Neuromarketing y Psicología del Consumidor</h1>
+    <p style="font-size: 1.2em;">Un Journey Interactivo de Probabilidad Discreta</p>
+</header>
+
+<main>
+    <div class="timeline-line"></div>
+
+    <div class="card">
+        <h2>📍 El Contexto Auténtico</h2>
+        <p>Ustedes han sido contratados como Analistas de Comportamiento del Consumidor en una agencia de Neuromarketing.</p>
+        <p>La agencia evalúa un nuevo empaque y anuncio. Se expuso a 100 participantes y se midió el <b>"Recuerdo de Marca" (Brand Recall)</b>.</p>
+        <p><b>El Reto:</b> El Director necesita saber cómo se comportará esta campaña en Focus Groups de 12 personas.</p>
+        <div>
+            <span class="badge">Variables Discretas</span>
+            <span class="badge">Distribuciones</span>
+            <span class="badge">Toma de Decisiones</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Fase 1: Exploración de Datos</h2>
+        <ol>
+            <li>Importar la base de datos (Excel, R, Python, etc.).</li>
+            <li>Revisar las 100 observaciones.</li>
+            <li>Crear variable <b>Estado de Recuerdo</b> (Éxito = 1, Fracaso = 0).</li>
+            <li>Calcular la tasa de recuerdo (%).</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>Fase 2: Análisis Descriptivo</h2>
+        <p>Entendiendo el comportamiento actual:</p>
+        <ul>
+            <li>Construir tabla de frecuencias y gráfico circular.</li>
+            <li>Calcular Media, Moda, Varianza y Desviación Estándar.</li>
+            <li><b>Reflexión:</b> ¿La tasa de recuerdo actual justifica el costo del anuncio?</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Fase 3: Construcción de la Variable</h2>
+        <p><b>Definición:</b></p>
+        <p style="font-size: 1.2em; text-align: center; color: #66fcf1;">X = Número de personas que recuerdan la marca en un Focus Group de 12 participantes.</p>
+        <p>Identifica el experimento aleatorio y determina los posibles valores de X (Dominio).</p>
+    </div>
+
+    <div class="card">
+        <h2>Fase 4: Modelamiento Probabilístico</h2>
+        <ol>
+            <li>Estimar la probabilidad de éxito (p) con los datos.</li>
+            <li>Evaluar los supuestos de la distribución Binomial.</li>
+            <li>Calcular <b>n, p, Media teórica, Varianza teórica</b>.</li>
+            <li>Interpretar: <b>P(X ≤ 3)</b> y <b>P(X ≥ 6)</b>.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>Fase 5 y 6: El Storytelling</h2>
+        <h3>Comparación de Modelos</h3>
+        <p>¿Cuándo usar Bernoulli, Poisson, Hipergeométrica o Binomial Negativa en marketing?</p>
+        <h3>Presentación Ejecutiva</h3>
+        <p>Rol: Analista de Consumer Insights frente al Director.</p>
+        <p><b>Pregunta:</b> ¿El anuncio es lo suficientemente memorable o requiere rediseño?</p>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // Three.js Network/Particles Background
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    for (let i = 0; i < 1500; i++) {
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // x
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // y
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // z
+    }
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+    // Cyan particles
+    const material = new THREE.PointsMaterial({ color: 0x66fcf1, size: 3, transparent: true, opacity: 0.8 });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    camera.position.z = 500;
+
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
+        mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        points.rotation.x += 0.0005;
+        points.rotation.y += 0.001;
+        
+        camera.position.x += (mouseX - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+        
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Scroll Reveal Logic
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+</script>
+</body>
+</html>

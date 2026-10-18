@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10151c">
+    <title>Expediente Urbano | Estadística en cinco ciudades</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #10151c;
+            --panel: rgba(22, 29, 36, .92);
+            --panel-soft: rgba(22, 29, 36, .78);
+            --line: rgba(233, 226, 205, .14);
+            --text: #f3f0e6;
+            --muted: #a9aaa1;
+            --orange: #f2a74b;
+            --lime: #c0e777;
+            --cyan: #6dc8d3;
+            --red: #ec7864;
+            font-family: "Arial Narrow", "Segoe UI", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 70% 25%, rgba(63, 85, 90, .35), transparent 36%),
+                linear-gradient(180deg, #202d34 0%, #293135 47%, #171b1d 100%);
+            color: var(--text);
+        }
+
+        button { font: inherit; }
+        button:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
+        #city-scene {
+            position: fixed;
+            z-index: 0;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .screen-grade {
+            position: fixed;
+            z-index: 1;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(9, 13, 17, .54), rgba(9, 13, 17, .05) 33%, rgba(9, 13, 17, .16) 58%, rgba(9, 13, 17, .77)),
+                linear-gradient(90deg, rgba(9, 13, 17, .58), transparent 35%, transparent 77%, rgba(9, 13, 17, .22));
+        }
+
+        .game-screen {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: min(1600px, 100%);
+            height: 100svh;
+            min-height: 610px;
+            flex-direction: column;
+            gap: 17px;
+            margin: 0 auto;
+            padding: 18px clamp(17px, 3vw, 46px) 20px;
+        }
+
+        .top-hud {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-shadow: 0 2px 9px rgba(0,0,0,.5);
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid rgba(242, 167, 75, .8);
+            background: linear-gradient(140deg, rgba(242, 167, 75, .32), rgba(236, 120, 100, .12));
+            color: #ffd48a;
+            font-size: 16px;
+            font-weight: 900;
+            transform: skew(-7deg);
+        }
+
+        .brand-title { font-size: 12px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+        .brand-subtitle { margin-top: 3px; color: #c7c7bb; font-size: 10px; letter-spacing: .06em; }
+
+        .hud-readouts { display: flex; align-items: center; gap: 9px; }
+
+        .readout {
+            min-width: 112px;
+            padding: 8px 11px;
+            border: 1px solid var(--line);
+            background: rgba(16, 21, 28, .76);
+            box-shadow: 0 5px 18px rgba(0,0,0,.16);
+            backdrop-filter: blur(10px);
+        }
+
+        .readout-label { color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+        .readout-value { margin-top: 3px; color: #f4e5c5; font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+        .cash { color: var(--lime); }
+        .heat { display: flex; gap: 4px; color: #4a4e4a; font-size: 12px; }
+        .heat .lit { color: var(--orange); text-shadow: 0 0 9px rgba(242, 167, 75, .5); }
+
+        .play-area {
+            display: grid;
+            flex: 1 1 auto;
+            grid-template-columns: minmax(214px, 260px) minmax(0, 1fr);
+            gap: 16px;
+            min-height: 0;
+        }
+
+        .mission-panel, .contact-panel {
+            border: 1px solid rgba(232, 224, 200, .2);
+            background: var(--panel-soft);
+            box-shadow: 0 16px 38px rgba(0,0,0,.23);
+            backdrop-filter: blur(12px);
+        }
+
+        .mission-panel {
+            align-self: start;
+            max-height: 100%;
+            padding: 13px 11px 12px;
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0 2px 7px;
+            color: var(--orange);
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .mission-count { color: #e5e0ce; font-size: 9px; letter-spacing: .08em; }
+        .campaign-name { margin: 0 2px 12px; color: #b9b9b0; font-size: 9px; line-height: 1.45; }
+        .mission-list { display: grid; gap: 5px; }
+
+        .mission {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 27px minmax(0,1fr) 14px;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 5px 7px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #d4d2c7;
+            text-align: left;
+            cursor: pointer;
+            transition: background .18s ease, border-color .18s ease, transform .18s ease;
+        }
+
+        .mission:hover:not(:disabled) { transform: translateX(2px); background: rgba(255,255,255,.045); }
+        .mission[aria-current="step"] { border-color: rgba(242, 167, 75, .53); background: linear-gradient(100deg, rgba(242, 167, 75, .18), rgba(242, 167, 75, .045)); color: #fff2d7; }
+        .mission:disabled { opacity: .43; cursor: not-allowed; }
+
+        .mission-stamp {
+            display: grid;
+            width: 26px;
+            height: 26px;
+            place-items: center;
+            border: 1px solid rgba(220, 218, 200, .28);
+            background: rgba(11, 16, 20, .56);
+            color: #d6d0b9;
+            font-size: 9px;
+            font-weight: 900;
+            transform: skew(-5deg);
+        }
+
+        .mission[aria-current="step"] .mission-stamp { border-color: var(--orange); background: var(--orange); color: #241c13; }
+        .mission[data-done="true"] .mission-stamp { border-color: var(--lime); color: var(--lime); }
+        .mission-name { font-size: 9px; font-weight: 800; line-height: 1.25; }
+        .mission-city { display: block; margin-top: 3px; color: #aaa99d; font-size: 8px; font-weight: 500; }
+        .mission-mark { color: var(--orange); font-size: 9px; }
+
+        .world-info {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 4px 1px;
+            pointer-events: none;
+        }
+
+        .city-card {
+            max-width: min(440px, 100%);
+            padding: 11px 14px;
+            border-left: 3px solid var(--orange);
+            background: rgba(16, 21, 28, .68);
+            box-shadow: 0 8px 24px rgba(0,0,0,.2);
+            backdrop-filter: blur(9px);
+            text-align: right;
+        }
+
+        .city-overline { color: var(--orange); font-size: 8px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+        .city-name { margin-top: 4px; font-size: clamp(17px, 2.6vw, 28px); font-weight: 900; letter-spacing: -.035em; text-transform: uppercase; }
+        .city-detail { margin-top: 4px; color: #d5d0bf; font-size: 9px; }
+
+        .minimap {
+            position: relative;
+            width: 154px;
+            height: 102px;
+            overflow: hidden;
+            border: 1px solid rgba(229, 227, 211, .45);
+            background: rgba(15, 22, 25, .75);
+            box-shadow: 0 8px 22px rgba(0,0,0,.28);
+            backdrop-filter: blur(5px);
+            transform: perspective(260px) rotateX(5deg);
+        }
+
+        .minimap::before, .minimap::after { position: absolute; background: rgba(190, 190, 167, .22); content: ""; }
+        .minimap::before { top: 48%; left: -8%; width: 116%; height: 8px; transform: rotate(-18deg); }
+        .minimap::after { top: -10%; left: 50%; width: 8px; height: 120%; transform: rotate(23deg); }
+        .mini-block { position: absolute; width: 18px; height: 11px; background: rgba(182, 184, 155, .24); }
+        .mini-block.one { top: 13px; left: 18px; }
+        .mini-block.two { top: 17px; right: 17px; width: 25px; height: 15px; }
+        .mini-block.three { bottom: 15px; left: 28px; width: 22px; height: 13px; }
+        .mini-block.four { right: 20px; bottom: 13px; }
+        .map-player {
+            position: absolute;
+            z-index: 1;
+            top: 48%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            border: 2px solid #fff1c3;
+            border-radius: 50%;
+            background: var(--orange);
+            box-shadow: 0 0 11px rgba(242, 167, 75, .9);
+            transform: translate(-50%, -50%);
+            transition: top .5s ease, left .5s ease;
+        }
+
+        .map-label { position: absolute; right: 6px; bottom: 4px; color: #aaa99d; font-size: 7px; letter-spacing: .12em; text-transform: uppercase; }
+
+        .contact-panel {
+            width: min(1040px, 100%);
+            flex: 0 0 auto;
+            align-self: center;
+            padding: 0 18px 15px;
+            border-color: rgba(234, 221, 190, .34);
+            background: linear-gradient(135deg, rgba(24, 31, 34, .96), rgba(17, 22, 25, .96));
+        }
+
+        .contact-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 35px;
+            gap: 10px;
+            border-bottom: 1px solid rgba(234, 221, 190, .13);
+        }
+
+        .contact-name { color: var(--orange); font-size: 9px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+        .contact-tag { color: #aaa99d; font-size: 8px; letter-spacing: .07em; text-transform: uppercase; }
+        .contact-body { display: grid; grid-template-columns: 53px minmax(0,1fr); gap: 12px; padding: 13px 0 10px; }
+
+        .contact-avatar {
+            position: relative;
+            display: grid;
+            width: 50px;
+            height: 50px;
+            place-items: center;
+            border: 1px solid rgba(242, 167, 75, .7);
+            background: linear-gradient(150deg, #7b6b4a, #313b38 65%, #1c2728);
+            color: #f5e4bb;
+            font-family: Georgia, serif;
+            font-size: 12px;
+            font-weight: 900;
+            box-shadow: inset 0 0 0 3px rgba(10, 15, 16, .23);
+        }
+
+        .contact-avatar::after {
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--lime);
+            box-shadow: 0 0 8px rgba(192, 231, 119, .65);
+            content: "";
+        }
+
+        .contact-copy { min-height: 49px; }
+        .contact-copy p { margin: 0; color: #ece8d9; font-size: 11px; line-height: 1.55; }
+
+        .briefing {
+            margin-top: 7px !important;
+            padding: 8px 10px;
+            border-left: 2px solid var(--orange);
+            background: rgba(255,255,255,.04);
+            color: #c9cbbd !important;
+            font-size: 10px !important;
+        }
+
+        .quiz { display: none; margin-top: 7px; }
+        .quiz.open { display: block; }
+        .question { margin: 0 0 7px !important; color: #f4dba9 !important; font-weight: 800; }
+        .answers { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .answer {
+            min-height: 31px;
+            padding: 6px 9px;
+            border: 1px solid rgba(231, 220, 190, .22);
+            background: rgba(8, 12, 15, .55);
+            color: #dbd8cb;
+            font-size: 9px;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color .17s ease, background .17s ease;
+        }
+
+        .answer:hover:not(:disabled) { border-color: var(--orange); background: rgba(242, 167, 75, .1); }
+        .answer:disabled { cursor: default; }
+        .answer.good { border-color: var(--lime); background: rgba(192, 231, 119, .1); color: #d6f39d; }
+        .answer.bad { border-color: var(--red); background: rgba(236, 120, 100, .1); color: #ffc0a8; }
+        .feedback { min-height: 14px; margin: 6px 0 0 !important; color: #c9c8bb !important; font-size: 9px !important; }
+        .feedback.good { color: #d4f09e !important; }
+        .feedback.bad { color: #ffc0a8 !important; }
+
+        .contact-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .objective { display: flex; align-items: center; gap: 7px; color: #b5b7ab; font-size: 9px; }
+        .objective-bullet { color: var(--orange); font-size: 13px; }
+        .action-buttons { display: flex; gap: 7px; }
+
+        .action {
+            display: inline-flex;
+            min-height: 34px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 0 12px;
+            border: 1px solid rgba(242, 167, 75, .64);
+            background: linear-gradient(180deg, #edb661, #c7813e);
+            color: #251b13;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: inset 0 1px rgba(255,255,255,.3);
+            transition: filter .16s ease, transform .16s ease;
+        }
+
+        .action:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+        .action:disabled { opacity: .5; cursor: not-allowed; }
+        .action.quiet { border-color: rgba(231, 220, 190, .24); background: rgba(8,12,15,.5); color: #ded9c9; box-shadow: none; }
+        .key-hint { position: absolute; right: clamp(17px, 3vw, 46px); bottom: 4px; color: rgba(231, 226, 208, .55); font-size: 8px; letter-spacing: .04em; }
+        .key-hint kbd { padding: 2px 4px; border: 1px solid rgba(231,226,208,.2); background: rgba(0,0,0,.2); font: inherit; }
+
+        @media (max-width: 760px) {
+            body { overflow: auto; }
+            .game-screen { height: auto; min-height: 100svh; gap: 10px; padding: 12px 12px 16px; }
+            .brand { gap: 8px; }
+            .brand-mark { width: 34px; height: 34px; font-size: 13px; }
+            .brand-title { font-size: 9px; }
+            .brand-subtitle { font-size: 8px; }
+            .top-hud { gap: 8px; }
+            .hud-readouts { gap: 5px; }
+            .readout { min-width: 78px; padding: 6px 7px; }
+            .readout-label { font-size: 7px; }
+            .readout-value { font-size: 9px; }
+            .play-area { display: block; position: relative; flex: 0 0 43svh; min-height: 280px; max-height: 390px; }
+            .mission-panel { position: absolute; z-index: 2; top: 8px; left: 0; width: min(235px, 66vw); padding: 9px 8px; }
+            .campaign-name { margin-bottom: 7px; font-size: 8px; }
+            .mission-list { grid-template-columns: 1fr 1fr; gap: 3px; }
+            .mission { grid-template-columns: 21px minmax(0,1fr); gap: 5px; min-height: 34px; padding: 3px 4px; }
+            .mission-stamp { width: 20px; height: 21px; font-size: 8px; }
+            .mission-name { font-size: 8px; }
+            .mission-city { font-size: 7px; }
+            .mission-mark { display: none; }
+            .world-info { position: absolute; inset: 0; padding: 8px 0; }
+            .city-card { max-width: 42%; padding: 7px 9px; }
+            .city-name { font-size: 14px; }
+            .city-overline { font-size: 7px; }
+            .city-detail { font-size: 8px; }
+            .minimap { width: 110px; height: 74px; }
+            .contact-panel { padding: 0 12px 12px; }
+            .contact-body { grid-template-columns: 39px minmax(0,1fr); gap: 9px; padding: 10px 0 8px; }
+            .contact-avatar { width: 38px; height: 42px; font-size: 10px; }
+            .contact-copy p { font-size: 10px; }
+            .briefing { font-size: 9px !important; }
+            .answer { flex: 1 1 130px; }
+            .objective { max-width: 44%; align-items: flex-start; font-size: 8px; line-height: 1.35; }
+            .action { min-height: 33px; padding: 0 9px; font-size: 8px; }
+            .key-hint { display: none; }
+        }
+
+        @media (max-width: 420px) {
+            .top-hud { align-items: flex-start; }
+            .hud-readouts { flex-direction: column; align-items: stretch; }
+            .readout { min-width: 86px; }
+            .heat { justify-content: flex-start; }
+            .mission-panel { width: 69vw; }
+            .city-card { max-width: 39%; }
+            .contact-footer { align-items: flex-end; }
+            .objective { max-width: 42%; }
+            .action { padding: 0 7px; letter-spacing: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="city-scene" aria-hidden="true"></canvas>
+    <div class="screen-grade" aria-hidden="true"></div>
+
+    <div class="game-screen">
+        <header class="top-hud">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">EU</div>
+                <div>
+                    <div class="brand-title">Expediente Urbano</div>
+                    <div class="brand-subtitle">Una ciudad. Una misión. Una pista.</div>
+                </div>
+            </div>
+            <div class="hud-readouts">
+                <div class="readout">
+                    <div class="readout-label">Recompensa</div>
+                    <div class="readout-value cash" id="cash-value">$ 000</div>
+                </div>
+                <div class="readout">
+                    <div class="readout-label">Rango de búsqueda</div>
+                    <div class="readout-value heat" id="heat-value" aria-label="Rango de búsqueda"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="play-area">
+            <aside class="mission-panel" aria-label="Lista de misiones">
+                <div class="panel-heading"><span>Trabajo disponible</span><span class="mission-count" id="mission-count">01 / 05</span></div>
+                <p class="campaign-name">Operación: datos bajo vigilancia<br>Contacto: Julio Seferino</p>
+                <nav class="mission-list" id="mission-list" aria-label="Misiones por ciudad"></nav>
+            </aside>
+
+            <section class="world-info" aria-label="Ciudad actual">
+                <div class="city-card">
+                    <div class="city-overline" id="city-overline">Sector 01 · Misión activa</div>
+                    <div class="city-name" id="city-name">Puerto Neón</div>
+                    <div class="city-detail" id="city-detail">Distrito costero · 22:40 · Cielo despejado</div>
+                </div>
+                <div class="minimap" aria-label="Minimapa de la ciudad">
+                    <span class="mini-block one"></span><span class="mini-block two"></span>
+                    <span class="mini-block three"></span><span class="mini-block four"></span>
+                    <span class="map-player" id="map-player"></span>
+                    <span class="map-label">GPS · ciudad</span>
+                </div>
+            </section>
+        </main>
+
+        <section class="contact-panel" aria-label="Mensaje de misión de Julio Seferino" aria-live="polite">
+            <div class="contact-top">
+                <span class="contact-name">Línea segura · Julio Seferino</span>
+                <span class="contact-tag" id="contact-tag">Contacto disponible</span>
+            </div>
+            <div class="contact-body">
+                <div class="contact-avatar" aria-hidden="true">JS</div>
+                <div class="contact-copy" id="contact-copy"></div>
+            </div>
+            <div class="contact-footer">
+                <div class="objective"><span class="objective-bullet" aria-hidden="true">◆</span><span id="objective">Objetivo: averiguar qué pregunta guía el caso.</span></div>
+                <div class="action-buttons" id="action-buttons"></div>
+            </div>
+        </section>
+        <div class="key-hint"><kbd>←</kbd> volver · <kbd>→</kbd> siguiente misión desbloqueada</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script>
+        const missions = [
+            {
+                city: "Puerto Neón", region: "Sector 01", district: "Distrito costero · 22:40 · Cielo despejado",
+                landmark: "Torre de Mareas", accent: 0xef9c54, sky: 0x334957, ground: 0x42443a, buildings: [0x50625f, 0x7a534d, 0x626a56],
+                title: "El caso de la pregunta perdida", type: "INVESTIGACIÓN",
+                objective: "Averiguar qué pregunta guía el caso.",
+                call: "¿Estás ahí? Soy Julio Seferino. Tengo un encargo en Puerto Neón: alguien quiere saber cuánto tardan los estudiantes en llegar al campus. Antes de mover una sola ficha, hay que entender qué estamos investigando.",
+                briefing: "Fija el objetivo, define la población y acota el contexto. Una pregunta clara te evita perseguir pistas que no responden al caso.",
+                question: "¿Cuál es la población de interés para este estudio?",
+                answers: ["Solo quienes respondan primero", "Todos los estudiantes de la universidad", "Los autobuses de la ciudad"],
+                correct: 1, hint: "Busca el grupo completo sobre el que se quiere aprender.",
+                reward: 250, unlock: "Expediente abierto. La población es el grupo total de interés. Buen comienzo; ya tienes acceso a la siguiente ciudad.",
+                map: [48, 43]
+            },
+            {
+                city: "Bahía Muestra", region: "Sector 02", district: "Zona portuaria · 23:15 · Brisa del mar",
+                landmark: "Terminal de Carga", accent: 0x62c5cb, sky: 0x283e4b, ground: 0x3b504d, buildings: [0x4d6d68, 0x6b6b56, 0x745749],
+                title: "Muestra a contrarreloj", type: "TRABAJO DE CAMPO",
+                objective: "Conseguir datos que representen a la población.",
+                call: "Te espero en Bahía Muestra. Hay datos por todas partes, pero el informante insiste en preguntarle solo a la gente que ve en la parada del bus. ¿Te parece una buena estrategia?",
+                briefing: "Define variables, selecciona una muestra pertinente y registra la información de manera consistente. Una muestra sesgada puede llevarte a una conclusión equivocada.",
+                question: "¿Qué selección ofrece una muestra más diversa de estudiantes?",
+                answers: ["Encuestar solo a quienes llegan tarde", "Elegir estudiantes de distintos programas y horarios", "Preguntar a un único grupo de amigos"],
+                correct: 1, hint: "Considera variedad de horarios y programas, no solo un grupo fácil de contactar.",
+                reward: 350, unlock: "Trabajo limpio. Incluir distintos horarios y programas ayuda a reducir el sesgo de selección.",
+                map: [59, 58]
+            },
+            {
+                city: "Centro de Frecuencias", region: "Sector 03", district: "Centro financiero · 00:05 · Luces encendidas",
+                landmark: "Archivo Central", accent: 0xe7bc5b, sky: 0x383d4b, ground: 0x464642, buildings: [0x6b6251, 0x4c5e60, 0x755b4c],
+                title: "El archivo desordenado", type: "ANÁLISIS",
+                objective: "Descubrir qué patrones esconden los datos.",
+                call: "El archivo central tiene miles de registros y ninguna pista clara. Organiza el material, busca patrones y recuerda que cada gráfico cuenta una historia distinta.",
+                briefing: "Tablas, medidas y gráficos describen lo observado. Univariado mira una variable; bivariado explora la relación entre dos; multivariado estudia varias simultáneamente.",
+                question: "¿Qué análisis estudia la relación entre tiempo de traslado y número de transbordos?",
+                answers: ["Univariado: una variable", "Bivariado: dos variables juntas", "Multivariado: todas las variables disponibles"],
+                correct: 1, hint: "Cuenta las variables mencionadas en la pregunta.",
+                reward: 450, unlock: "Conexión encontrada. El análisis bivariado explora la relación entre dos variables.",
+                map: [46, 69]
+            },
+            {
+                city: "Las Lomas del Azar", region: "Sector 04", district: "Distrito alto · 00:42 · Niebla ligera",
+                landmark: "Observatorio Norte", accent: 0x9b90da, sky: 0x33394e, ground: 0x394442, buildings: [0x5b5d74, 0x4a665d, 0x725f68],
+                title: "Cruzar la zona de incertidumbre", type: "INFERENCIA",
+                objective: "Medir cuánto puede variar la evidencia.",
+                call: "En Las Lomas del Azar, dos equipos consiguieron muestras distintas y sus promedios no coinciden. No es necesariamente un error: cada muestra trae algo de incertidumbre.",
+                briefing: "La probabilidad describe la incertidumbre. La inferencia usa una muestra para estimar o contrastar ideas sobre la población, expresando también la variabilidad del resultado.",
+                question: "Dos muestras aleatorias dan promedios algo diferentes. ¿Qué puede explicarlo?",
+                answers: ["La variabilidad del muestreo", "Un error seguro en los cálculos", "Que la población cambió necesariamente"],
+                correct: 0, hint: "Recuerda: cada muestra reúne personas distintas y puede dar un resultado algo diferente.",
+                reward: 550, unlock: "Cruzaste la zona. La variabilidad del muestreo explica por qué las estimaciones pueden cambiar.",
+                map: [35, 52]
+            },
+            {
+                city: "Distrito Veredicto", region: "Sector 05", district: "Centro cívico · 01:10 · Madrugada",
+                landmark: "Palacio de Justicia", accent: 0xc5d77a, sky: 0x293a40, ground: 0x3a483f, buildings: [0x68725a, 0x4e6363, 0x77614c],
+                title: "Cerrar el expediente", type: "CIERRE DEL CASO",
+                objective: "Concluir sin esconder los límites de la evidencia.",
+                call: "Última parada: Distrito Veredicto. Antes de cerrar el expediente, revisa los supuestos y cualquier sesgo. Una conclusión sólida no promete más de lo que los datos pueden sostener.",
+                briefing: "Diagnostica los supuestos, interpreta en contexto y comunica limitaciones. La transparencia no debilita una conclusión: le da credibilidad.",
+                question: "La encuesta solo recibió respuestas voluntarias. ¿Qué haces con esa limitación?",
+                answers: ["Afirmar que representa a toda la ciudad", "Mencionar el sesgo y limitar la conclusión", "Ocultar el método de recolección"],
+                correct: 1, hint: "Comunica la limitación y evita generalizar más allá de lo que la muestra respalda.",
+                reward: 700, unlock: "Expediente cerrado. Reconocer las limitaciones permite una conclusión honesta y defendible.",
+                map: [53, 36]
+            }
+        ];
+
+        const completed = new Set();
+        let currentMission = 0;
+        let briefingShown = false;
+        let quizOpen = false;
+        let missionPassed = false;
+        let cityScene = null;
+        let playerCar = null;
+        let targetCity = null;
+        const missionList = document.getElementById("mission-list");
+        const contactCopy = document.getElementById("contact-copy");
+        const actionButtons = document.getElementById("action-buttons");
+
+        function renderMissions() {
+            missionList.innerHTML = missions.map((mission, index) => {
+                const unlocked = index === 0 || completed.has(index - 1) || completed.has(index);
+                return `
+                    <button class="mission" type="button" data-mission="${index}" aria-label="${unlocked ? `${mission.title}, ${mission.city}` : `Bloqueada: ${mission.city}`}" ${index === currentMission ? 'aria-current="step"' : ""} ${completed.has(index) ? 'data-done="true"' : ""} ${unlocked ? "" : "disabled"}>
+                        <span class="mission-stamp" aria-hidden="true">${completed.has(index) ? "✓" : String(index + 1).padStart(2, "0")}</span>
+                        <span class="mission-name">${mission.title}<span class="mission-city">${mission.city}</span></span>
+                        <span class="mission-mark" aria-hidden="true">${unlocked ? "●" : "◆"}</span>
+                    </button>`;
+            }).join("");
+            missionList.querySelectorAll(".mission:not(:disabled)").forEach(button => {
+                button.addEventListener("click", () => goToMission(Number(button.dataset.mission)));
+            });
+
+            document.getElementById("mission-count").textContent =
+                `${String(currentMission + 1).padStart(2, "0")} / ${String(missions.length).padStart(2, "0")}`;
+            const mission = missions[currentMission];
+            document.getElementById("city-overline").textContent = `${mission.region} · ${mission.type}`;
+            document.getElementById("city-name").textContent = mission.city;
+            document.getElementById("city-detail").textContent = mission.district;
+            document.getElementById("objective").textContent = `Objetivo: ${mission.objective}`;
+            document.getElementById("cash-value").textContent = `$ ${String([...completed].reduce((sum, index) => sum + missions[index].reward, 0)).padStart(3, "0")}`;
+            const heat = document.querySelectorAll("#heat-value span");
+            heat.forEach((star, index) => star.classList.toggle("lit", index < Math.min(completed.size, 5)));
+            const [mapTop, mapLeft] = mission.map;
+            const mapPlayer = document.getElementById("map-player");
+            mapPlayer.style.top = `${mapTop}%`;
+            mapPlayer.style.left = `${mapLeft}%`;
+        }
+
+        function renderContact() {
+            const mission = missions[currentMission];
+            if (missionPassed) {
+                document.getElementById("contact-tag").textContent = "Misión completada";
+                contactCopy.innerHTML = `<p>${mission.unlock}</p><p class="briefing">Transferencia recibida: $${mission.reward}. Siguiente destino: ${currentMission === missions.length - 1 ? "operación completada" : missions[currentMission + 1].city}.</p>`;
+                actionButtons.innerHTML = `
+                    ${currentMission > 0 ? '<button class="action quiet" type="button" data-action="previous">← Volver</button>' : ""}
+                    <button class="action" type="button" data-action="travel">${currentMission === missions.length - 1 ? "Reiniciar recorrido" : "Conducir a la siguiente ciudad"} →</button>`;
+                actionButtons.querySelector('[data-action="previous"]')?.addEventListener("click", () => goToMission(currentMission - 1));
+                actionButtons.querySelector('[data-action="travel"]').addEventListener("click", () => {
+                    goToMission(currentMission === missions.length - 1 ? 0 : currentMission + 1);
+                });
+                return;
+            }
+
+            if (quizOpen) {
+                document.getElementById("contact-tag").textContent = "Pregunta de control";
+                contactCopy.innerHTML = `
+                    <p class="question">${mission.question}</p>
+                    <div class="quiz open">
+                        <div class="answers">${mission.answers.map((answer, index) => `<button class="answer" type="button" data-answer="${index}">${answer}</button>`).join("")}</div>
+                        <p class="feedback" id="feedback" aria-live="polite">Selecciona una opción para completar el encargo.</p>
+                    </div>`;
+                contactCopy.querySelectorAll(".answer").forEach(button => {
+                    button.addEventListener("click", () => answerMission(Number(button.dataset.answer)));
+                });
+                actionButtons.innerHTML = '<button class="action quiet" type="button" data-action="briefing">← Volver al informe</button>';
+                actionButtons.querySelector('[data-action="briefing"]').addEventListener("click", () => {
+                    quizOpen = false;
+                    renderContact();
+                });
+                return;
+            }
+
+            document.getElementById("contact-tag").textContent = briefingShown ? "Informe de misión" : "Contacto disponible";
+            contactCopy.innerHTML = briefingShown
+                ? `<p>${mission.call}</p><p class="briefing">Julio: “${mission.briefing}”</p>`
+                : `<p>${mission.call}</p>`;
+            actionButtons.innerHTML = briefingShown
+                ? '<button class="action quiet" type="button" data-action="call">Volver a llamar</button><button class="action" type="button" data-action="start">Iniciar misión →</button>'
+                : '<button class="action" type="button" data-action="brief">Recibir el informe →</button>';
+            actionButtons.querySelector('[data-action="brief"]')?.addEventListener("click", () => {
+                briefingShown = true;
+                renderContact();
+            });
+            actionButtons.querySelector('[data-action="call"]')?.addEventListener("click", () => {
+                briefingShown = false;
+                renderContact();
+            });
+            actionButtons.querySelector('[data-action="start"]')?.addEventListener("click", () => {
+                quizOpen = true;
+                renderContact();
+            });
+        }
+
+        function answerMission(selected) {
+            const mission = missions[currentMission];
+            const buttons = [...contactCopy.querySelectorAll(".answer")];
+            const feedback = contactCopy.querySelector("#feedback");
+            const isCorrect = selected === mission.correct;
+            buttons.forEach((button, index) => {
+                if (index === mission.correct) button.classList.add("good");
+                else if (index === selected) button.classList.add("bad");
+            });
+            if (isCorrect) {
+                buttons.forEach(button => { button.disabled = true; });
+                feedback.className = "feedback good";
+                feedback.textContent = "Correcto. " + mission.unlock;
+                completed.add(currentMission);
+                missionPassed = true;
+                renderMissions();
+                window.setTimeout(renderContact, 450);
+            } else {
+                feedback.className = "feedback bad";
+                feedback.textContent = `Esa pista no cuadra. Julio: “${mission.hint}”`;
+                buttons[selected].disabled = true;
+            }
+        }
+
+        function goToMission(index) {
+            if (index < 0 || index >= missions.length) return;
+            if (index > 0 && !completed.has(index - 1) && !completed.has(index)) return;
+            currentMission = index;
+            briefingShown = false;
+            quizOpen = false;
+            missionPassed = completed.has(index);
+            renderMissions();
+            renderContact();
+            updateCityScene();
+        }
+
+        function addBox(scene, geometry, material, position, rotationY = 0, castShadow = true) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(position[0], position[1], position[2]);
+            mesh.rotation.y = rotationY;
+            mesh.castShadow = castShadow;
+            mesh.receiveShadow = true;
+            scene.add(mesh);
+            return mesh;
+        }
+
+        function makeCity() {
+            if (!window.THREE) return;
+            const canvas = document.getElementById("city-scene");
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.03;
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(missions[0].sky);
+            scene.fog = new THREE.Fog(missions[0].sky, 24, 65);
+            const camera = new THREE.PerspectiveCamera(39, window.innerWidth / window.innerHeight, .1, 100);
+            camera.position.set(0, 12.5, 22);
+            camera.lookAt(0, 0, 0);
+
+            scene.add(new THREE.HemisphereLight(0xd5dddf, 0x222a26, 1.25));
+            const moon = new THREE.DirectionalLight(0xffd59b, 2.0);
+            moon.position.set(-8, 15, 9);
+            moon.castShadow = true;
+            scene.add(moon);
+
+            const ground = new THREE.Mesh(
+                new THREE.PlaneGeometry(90, 70),
+                new THREE.MeshStandardMaterial({ color: 0x3c403a, roughness: 1 })
+            );
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -.17;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            const asphalt = new THREE.MeshStandardMaterial({ color: 0x343a3b, roughness: .94 });
+            const lanePaint = new THREE.MeshStandardMaterial({ color: 0xd1b77f, roughness: 1 });
+            addBox(scene, new THREE.BoxGeometry(50, .09, 5.2), asphalt, [0, -.08, .7], 0, false);
+            addBox(scene, new THREE.BoxGeometry(5.2, .09, 45), asphalt, [0, -.07, 0], 0, false);
+            for (let x = -23; x <= 23; x += 3) {
+                addBox(scene, new THREE.BoxGeometry(1.1, .018, .07), lanePaint, [x, -.022, .7], 0, false);
+            }
+            for (let z = -21; z <= 21; z += 3) {
+                addBox(scene, new THREE.BoxGeometry(.07, .018, 1.1), lanePaint, [0, -.015, z], 0, false);
+            }
+
+            const sidewalks = new THREE.MeshStandardMaterial({ color: 0x6a685d, roughness: 1 });
+            addBox(scene, new THREE.BoxGeometry(50, .16, .7), sidewalks, [0, .02, -2.25], 0, false);
+            addBox(scene, new THREE.BoxGeometry(50, .16, .7), sidewalks, [0, .02, 3.65], 0, false);
+            addBox(scene, new THREE.BoxGeometry(.7, .16, 45), sidewalks, [-3.25, .02, 0], 0, false);
+            addBox(scene, new THREE.BoxGeometry(.7, .16, 45), sidewalks, [3.25, .02, 0], 0, false);
+
+            const buildings = [];
+            const buildingMaterial = color => new THREE.MeshStandardMaterial({ color, roughness: .86, metalness: .12, flatShading: true });
+            const positions = [
+                [-8.7, -7.4], [-3.5, -7.3], [3.5, -7.6], [8.8, -7.1],
+                [-8.8, -1.4], [8.7, -1.2],
+                [-8.5, 5.3], [-3.3, 5.7], [3.6, 5.4], [8.8, 5.6],
+                [-8.8, 11.6], [-3.4, 11.4], [3.7, 11.8], [8.7, 11.5],
+                [-14.6, -.8], [14.7, -.9], [-14.4, 8], [14.8, 8]
+            ];
+
+            positions.forEach(([x, z], index) => {
+                const width = 2.5 + (index % 3) * .42;
+                const depth = 2.2 + (index % 2) * .5;
+                const height = 2.4 + ((index * 7) % 6) * .74;
+                const building = addBox(scene,
+                    new THREE.BoxGeometry(width, height, depth),
+                    buildingMaterial(missions[0].buildings[index % missions[0].buildings.length]),
+                    [x, height / 2 - .08, z], ((index % 3) - 1) * .05
+                );
+                buildings.push(building);
+
+                const roof = addBox(scene,
+                    new THREE.BoxGeometry(width + .15, .12, depth + .15),
+                    buildingMaterial(0x343b3a),
+                    [x, height - .04, z], ((index % 3) - 1) * .05
+                );
+                buildings.push(roof);
+
+                const floors = Math.max(2, Math.floor(height / .7));
+                for (let floor = 0; floor < floors; floor++) {
+                    for (let window = 0; window < 3; window++) {
+                        const glassColor = index % 4 === 0 ? 0xf2bd68 : (window % 2 ? 0x9fc4bf : 0xd9a878);
+                        const windowMaterial = new THREE.MeshBasicMaterial({ color: glassColor, transparent: true, opacity: .65 });
+                        addBox(scene, new THREE.BoxGeometry(.18, .22, .035), windowMaterial,
+                            [x - width * .25 + window * width * .25, .24 + floor * .66, z + depth / 2 + .025], 0, false);
+                        addBox(scene, new THREE.BoxGeometry(.035, .22, .18), windowMaterial,
+                            [x + width / 2 + .025, .24 + floor * .66, z - depth * .25 + window * depth * .25], 0, false);
+                    }
+                }
+            });
+
+            const landmarkParts = new THREE.Group();
+            scene.add(landmarkParts);
+
+            const carMaterial = new THREE.MeshStandardMaterial({ color: 0xe2aa46, roughness: .48, metalness: .35 });
+            const car = new THREE.Group();
+            const carBody = new THREE.Mesh(new THREE.BoxGeometry(1.35, .38, .68), carMaterial);
+            carBody.position.y = .18;
+            car.add(carBody);
+            const cabin = new THREE.Mesh(new THREE.BoxGeometry(.67, .3, .55), new THREE.MeshStandardMaterial({ color: 0x789090, metalness: .25, roughness: .3 }));
+            cabin.position.set(-.04, .49, 0);
+            car.add(cabin);
+            const tireMaterial = new THREE.MeshStandardMaterial({ color: 0x171b1b, roughness: 1 });
+            for (const wheelX of [-.43, .43]) {
+                for (const wheelZ of [-.35, .35]) {
+                    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(.15, .15, .11, 10), tireMaterial);
+                    wheel.rotation.x = Math.PI / 2;
+                    wheel.position.set(wheelX, .04, wheelZ);
+                    car.add(wheel);
+                }
+            }
+            car.position.set(-.7, .02, 1.15);
+            car.rotation.y = Math.PI / 2;
+            car.traverse(object => { if (object.isMesh) object.castShadow = true; });
+            scene.add(car);
+            playerCar = car;
+            targetCity = new THREE.Vector3(-.7, .02, 1.15);
+
+            const traffic = [];
+            for (let index = 0; index < 4; index++) {
+                const vehicle = new THREE.Mesh(
+                    new THREE.BoxGeometry(.8, .3, .42),
+                    new THREE.MeshStandardMaterial({ color: [0x638a78, 0x9e6654, 0x596c82, 0xb5b2a0][index], metalness: .2, roughness: .5 })
+                );
+                vehicle.position.set(-17 + index * 10, .08, index % 2 ? .1 : 1.5);
+                vehicle.castShadow = true;
+                scene.add(vehicle);
+                traffic.push(vehicle);
+            }
+
+            const starsGeometry = new THREE.BufferGeometry();
+            const starPositions = new Float32Array(180 * 3);
+            for (let i = 0; i < starPositions.length; i += 3) {
+                starPositions[i] = (Math.random() - .5) * 65;
+                starPositions[i + 1] = 9 + Math.random() * 14;
+                starPositions[i + 2] = (Math.random() - .5) * 50;
+            }
+            starsGeometry.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
+            scene.add(new THREE.Points(starsGeometry, new THREE.PointsMaterial({ color: 0xf0dba7, size: .08, transparent: true, opacity: .65 })));
+
+            function drawLandmark(index) {
+                landmarkParts.clear();
+                const mission = missions[index];
+                const material = color => new THREE.MeshStandardMaterial({ color, roughness: .65, metalness: .22, flatShading: true });
+                const glow = new THREE.MeshStandardMaterial({ color: mission.accent, emissive: mission.accent, emissiveIntensity: .48, roughness: .35 });
+                const x = 11.3;
+                const z = -3.6;
+                let centerpiece;
+
+                if (index === 0) {
+                    centerpiece = new THREE.Mesh(new THREE.CylinderGeometry(.48, .8, 6.7, 7), material(0x8e8570));
+                    centerpiece.position.set(x, 3.15, z);
+                    landmarkParts.add(centerpiece);
+                    const crown = new THREE.Mesh(new THREE.ConeGeometry(.78, 1.1, 7), glow);
+                    crown.position.set(x, 6.9, z);
+                    landmarkParts.add(crown);
+                    for (let level = 1; level < 6; level++) {
+                        const band = new THREE.Mesh(new THREE.TorusGeometry(.5 - level * .025, .045, 6, 14), glow);
+                        band.position.set(x, level, z);
+                        landmarkParts.add(band);
+                    }
+                } else if (index === 1) {
+                    centerpiece = new THREE.Mesh(new THREE.BoxGeometry(1.1, 4.1, .6), material(0x7b7362));
+                    centerpiece.position.set(x + .1, 1.9, z);
+                    landmarkParts.add(centerpiece);
+                    for (const side of [-1, 1]) {
+                        const leg = new THREE.Mesh(new THREE.BoxGeometry(.13, 5.1, .15), glow);
+                        leg.position.set(x + side * 2.1, 2.4, z);
+                        landmarkParts.add(leg);
+                    }
+                    const beam = new THREE.Mesh(new THREE.BoxGeometry(4.3, .15, .2), glow);
+                    beam.position.set(x, 4.9, z);
+                    landmarkParts.add(beam);
+                    const hook = new THREE.Mesh(new THREE.BoxGeometry(.1, 1.05, .1), material(0xd5c49a));
+                    hook.position.set(x - .75, 4.35, z);
+                    landmarkParts.add(hook);
+                } else if (index === 2) {
+                    centerpiece = new THREE.Mesh(new THREE.BoxGeometry(2.2, 4.4, 1.5), material(0x74766f));
+                    centerpiece.position.set(x, 2.05, z);
+                    landmarkParts.add(centerpiece);
+                    for (let floor = 0; floor < 6; floor++) {
+                        for (let col = 0; col < 3; col++) {
+                            const windowMesh = new THREE.Mesh(new THREE.BoxGeometry(.28, .32, .045), glow);
+                            windowMesh.position.set(x - .65 + col * .65, .46 + floor * .55, z + .78);
+                            landmarkParts.add(windowMesh);
+                        }
+                    }
+                } else if (index === 3) {
+                    centerpiece = new THREE.Mesh(new THREE.CylinderGeometry(.17, .37, 5.1, 8), material(0x898377));
+                    centerpiece.position.set(x, 2.45, z);
+                    landmarkParts.add(centerpiece);
+                    const dish = new THREE.Mesh(new THREE.SphereGeometry(1.05, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), glow);
+                    dish.position.set(x, 5.05, z);
+                    landmarkParts.add(dish);
+                    const antenna = new THREE.Mesh(new THREE.CylinderGeometry(.025, .025, 1.4, 6), material(0xe7dcbd));
+                    antenna.position.set(x, 6.25, z);
+                    landmarkParts.add(antenna);
+                } else {
+                    centerpiece = new THREE.Mesh(new THREE.BoxGeometry(2.6, 3.2, 1.8), material(0x8a8575));
+                    centerpiece.position.set(x, 1.45, z);
+                    landmarkParts.add(centerpiece);
+                    const pediment = new THREE.Mesh(new THREE.ConeGeometry(1.9, .9, 4), glow);
+                    pediment.rotation.y = Math.PI / 4;
+                    pediment.position.set(x, 3.55, z);
+                    landmarkParts.add(pediment);
+                    for (let col = -1; col <= 1; col++) {
+                        const pillar = new THREE.Mesh(new THREE.CylinderGeometry(.13, .16, 2.6, 8), material(0xdfd1a9));
+                        pillar.position.set(x + col * .67, 1.45, z + .94);
+                        landmarkParts.add(pillar);
+                    }
+                }
+                landmarkParts.traverse(object => { if (object.isMesh) object.castShadow = true; });
+            }
+
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const resize = () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+            window.addEventListener("resize", resize, { passive: true });
+
+            window.setCityScene = index => {
+                const mission = missions[index];
+                scene.background.setHex(mission.sky);
+                scene.fog.color.setHex(mission.sky);
+                ground.material.color.setHex(mission.ground);
+                buildings.forEach((building, buildingIndex) => {
+                    if (buildingIndex % 2 === 0) building.material.color.setHex(mission.buildings[(buildingIndex / 2) % mission.buildings.length]);
+                });
+                drawLandmark(index);
+                targetCity.set(-.7 + (index % 3 - 1) * .65, .02, 1.15 + (index % 2 ? -1.2 : .25));
+            };
+
+            renderer.setAnimationLoop(time => {
+                const seconds = time * .001;
+                if (playerCar && targetCity) {
+                    playerCar.position.x += (targetCity.x - playerCar.position.x) * .026;
+                    playerCar.position.z += (targetCity.z - playerCar.position.z) * .026;
+                    if (!reducedMotion) playerCar.rotation.y = Math.PI / 2 + Math.sin(seconds * .8) * .025;
+                }
+                traffic.forEach((vehicle, index) => {
+                    if (!reducedMotion) vehicle.position.x = -18 + ((seconds * (1.4 + index * .12) + index * 10) % 36);
+                });
+                renderer.render(scene, camera);
+            });
+            cityScene = { renderer, scene, camera };
+            drawLandmark(0);
+        }
+
+        function updateCityScene() {
+            if (typeof window.setCityScene === "function") window.setCityScene(currentMission);
+        }
+
+        document.addEventListener("keydown", event => {
+            if (event.altKey || event.ctrlKey || event.metaKey) return;
+            if (event.target.closest("button, input, textarea, select, [contenteditable='true']")) return;
+            if (event.key === "ArrowLeft") goToMission(Math.max(currentMission - 1, 0));
+            if (event.key === "ArrowRight" && completed.has(currentMission)) {
+                goToMission(Math.min(currentMission + 1, missions.length - 1));
+            }
+        });
+
+        renderMissions();
+        renderContact();
+        try {
+            makeCity();
+        } catch (error) {
+            console.warn("La ciudad 3D no está disponible; las misiones siguen funcionando.", error);
+        }
+    </script>
+</body>
+</html>

@@ -2,177 +2,225 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Actividad Formativa y Auténtica - Neuromarketing y Psicología del Consumidor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey de Aprendizaje - Neuromarketing</title>
 <style>
-body{
-    font-family: Arial, sans-serif;
-    margin:40px;
-    line-height:1.7;
-    color:#333;
-}
-h1,h2,h3{
-    color:#0B5394;
-}
-.caja{
-    background:#f4f9ff;
-    border-left:6px solid #0B5394;
-    padding:15px;
-    margin:15px 0;
-}
-.destacado{
-    background:#fff8e1;
-    border-left:6px solid #ffb300;
-    padding:15px;
-    margin:15px 0;
-}
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-th,td{
-    border:1px solid #999;
-    padding:8px;
-}
-th{
-    background:#d9eaf7;
-}
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #0b0c10;
+        color: #c5c6c7;
+    }
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    header {
+        text-align: center;
+        padding: 100px 20px;
+        background: linear-gradient(to bottom, rgba(11, 12, 16, 0.9), transparent);
+    }
+    h1 {
+        color: #66fcf1;
+        font-size: 3em;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(102, 252, 241, 0.5);
+    }
+    h2, h3 { color: #45a29e; }
+    main {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+    .card {
+        background: rgba(31, 40, 51, 0.85);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 60px;
+        border: 1px solid rgba(102, 252, 241, 0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        background: #0b0c10;
+        border: 4px solid #66fcf1;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 15px #66fcf1;
+    }
+    .card.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 4px;
+        background: linear-gradient(to bottom, #66fcf1, transparent);
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+    ul, ol { padding-left: 20px; }
+    li { margin-bottom: 10px; }
+    .badge {
+        display: inline-block;
+        background: #45a29e;
+        color: #0b0c10;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin: 5px;
+    }
 </style>
 </head>
 <body>
 
-<h1>Actividad Formativa y Auténtica</h1>
+<header>
+    <h1>Neuromarketing y Psicología del Consumidor</h1>
+    <p style="font-size: 1.2em;">Un Journey Interactivo de Probabilidad Discreta</p>
+</header>
 
-<h2>Unidad Temática</h2>
-<ul>
-<li>Variables Aleatorias Discretas.</li>
-<li>Distribuciones de Probabilidad Discretas.</li>
-<li>Distribución de Bernoulli, Binomial, Hipergeométrica, Poisson y Binomial Negativa.</li>
-</ul>
+<main>
+    <div class="timeline-line"></div>
 
-<h2>Contexto Profesional Auténtico</h2>
-<div class="caja">
-<p>Ustedes han sido contratados como Analistas de Comportamiento del Consumidor en una agencia de Neuromarketing.</p>
-<p>La agencia está evaluando un nuevo diseño de empaque y un anuncio de 30 segundos para un cliente. Durante las pruebas preliminares, se expuso a 100 participantes al anuncio. Posteriormente, se midió el <b>"Recuerdo de Marca" (Brand Recall)</b>. La métrica establece que la campaña es efectiva en un sujeto si este logra mencionar la marca sin ayuda durante la entrevista posterior.</p>
-<p>La agencia les entrega la base de datos con las respuestas de estos 100 participantes. El Director de Marketing necesita saber cómo se comportará esta campaña al lanzarse a segmentos más grandes (Focus Groups).</p>
-</div>
+    <div class="card">
+        <h2>📍 El Contexto Auténtico</h2>
+        <p>Ustedes han sido contratados como Analistas de Comportamiento del Consumidor en una agencia de Neuromarketing.</p>
+        <p>La agencia evalúa un nuevo empaque y anuncio. Se expuso a 100 participantes y se midió el <b>"Recuerdo de Marca" (Brand Recall)</b>.</p>
+        <p><b>El Reto:</b> El Director necesita saber cómo se comportará esta campaña en Focus Groups de 12 personas.</p>
+        <div>
+            <span class="badge">Variables Discretas</span>
+            <span class="badge">Distribuciones</span>
+            <span class="badge">Toma de Decisiones</span>
+        </div>
+    </div>
 
-<h2>Propósito de Aprendizaje</h2>
-<p>Al finalizar, el estudiante será capaz de analizar datos conductuales reales, calcular tasas de conversión (recuerdo), modelar el número de respuestas positivas mediante variables aleatorias discretas y seleccionar la distribución probabilística adecuada para predecir el impacto de campañas de marketing.</p>
+    <div class="card">
+        <h2>Fase 1: Exploración de Datos</h2>
+        <ol>
+            <li>Importar la base de datos (Excel, R, Python, etc.).</li>
+            <li>Revisar las 100 observaciones.</li>
+            <li>Crear variable <b>Estado de Recuerdo</b> (Éxito = 1, Fracaso = 0).</li>
+            <li>Calcular la tasa de recuerdo (%).</li>
+        </ol>
+    </div>
 
-<h2>Competencias Evaluadas</h2>
-<ol>
-<li>Recolectar y sistematizar datos de comportamiento para construir tablas y gráficos pertinentes.</li>
-<li>Calcular e interpretar medidas estadísticas en el contexto de la psicología del consumidor.</li>
-<li>Modelar situaciones de toma de decisiones aplicando probabilidad y distribuciones discretas.</li>
-<li>Emplear software estadístico para el análisis exploratorio y presentar hallazgos gerenciales.</li>
-</ol>
+    <div class="card">
+        <h2>Fase 2: Análisis Descriptivo</h2>
+        <p>Entendiendo el comportamiento actual:</p>
+        <ul>
+            <li>Construir tabla de frecuencias y gráfico circular.</li>
+            <li>Calcular Media, Moda, Varianza y Desviación Estándar.</li>
+            <li><b>Reflexión:</b> ¿La tasa de recuerdo actual justifica el costo del anuncio?</li>
+        </ul>
+    </div>
 
-<h2>Situación Problema</h2>
-<div class="destacado">
-<p>La agencia planea realizar sesiones de "Focus Group" con lotes de 12 consumidores.</p>
-<p>Antes de invertir en la logística, necesitan responder:</p>
-<h3 style="text-align:center;">¿Cómo se comporta la variable aleatoria "Número de personas que recuerdan la marca en un grupo de 12 participantes"?</h3>
-<p>La respuesta deberá estar sustentada mediante análisis estadístico y modelos probabilísticos.</p>
-</div>
+    <div class="card">
+        <h2>Fase 3: Construcción de la Variable</h2>
+        <p><b>Definición:</b></p>
+        <p style="font-size: 1.2em; text-align: center; color: #66fcf1;">X = Número de personas que recuerdan la marca en un Focus Group de 12 participantes.</p>
+        <p>Identifica el experimento aleatorio y determina los posibles valores de X (Dominio).</p>
+    </div>
 
-<h2>Fase 1. Exploración y Clasificación de los Datos</h2>
-<h3>Actividades</h3>
-<ol>
-<li>Importar la base de datos (Excel, Jamovi, R, SPSS, Python).</li>
-<li>Revisar las 100 observaciones conductuales.</li>
-<li>Crear una nueva variable llamada: <b>Estado de Recuerdo</b>.
-  <ul>
-  <li>Recuerda la marca (Éxito) = 1</li>
-  <li>No recuerda la marca (Fracaso) = 0</li>
-  </ul>
-</li>
-<li>Calcular el número total de impactos positivos.</li>
-<li>Calcular la tasa de recuerdo (porcentaje de éxito).</li>
-</ol>
-<h3>Entregables</h3>
-<ul>
-<li>Tabla de datos clasificada.</li>
-<li>Tasa de recuerdo.</li>
-<li>Captura del procedimiento realizado.</li>
-</ul>
+    <div class="card">
+        <h2>Fase 4: Modelamiento Probabilístico</h2>
+        <ol>
+            <li>Estimar la probabilidad de éxito (p) con los datos.</li>
+            <li>Evaluar los supuestos de la distribución Binomial.</li>
+            <li>Calcular <b>n, p, Media teórica, Varianza teórica</b>.</li>
+            <li>Interpretar: <b>P(X ≤ 3)</b> y <b>P(X ≥ 6)</b>.</li>
+        </ol>
+    </div>
 
-<h2>Fase 2. Análisis Descriptivo</h2>
-<h3>Variable de Estudio</h3>
-<p>Frecuencia de recuerdo de marca en la muestra.</p>
-<h3>Actividades</h3>
-<ol>
-<li>Construir tabla de frecuencias absolutas y relativas.</li>
-<li>Construir gráfico de barras y/o gráfico circular (pie chart).</li>
-<li>Calcular Media, Moda, Varianza y Desviación Estándar.</li>
-<li>Interpretar las medidas en el lenguaje de marketing y psicología cognitiva.</li>
-</ol>
-<h3>Preguntas de Reflexión</h3>
-<ul>
-<li>¿Qué tan fácil es que el anuncio se fije en la memoria a corto plazo?</li>
-<li>¿La tasa de recuerdo actual justifica el costo del anuncio?</li>
-</ul>
+    <div class="card">
+        <h2>Fase 5 y 6: El Storytelling</h2>
+        <h3>Comparación de Modelos</h3>
+        <p>¿Cuándo usar Bernoulli, Poisson, Hipergeométrica o Binomial Negativa en marketing?</p>
+        <h3>Presentación Ejecutiva</h3>
+        <p>Rol: Analista de Consumer Insights frente al Director.</p>
+        <p><b>Pregunta:</b> ¿El anuncio es lo suficientemente memorable o requiere rediseño?</p>
+    </div>
+</main>
 
-<h2>Fase 3. Construcción de la Variable Aleatoria</h2>
-<h3>Definición</h3>
-<p>Sea:</p>
-<p style="text-align:center"><b>X = Número de personas que recuerdan la marca en un Focus Group de 12 participantes.</b></p>
-<h3>Actividades</h3>
-<ol>
-<li>Identificar el experimento aleatorio subyacente.</li>
-<li>Determinar los posibles valores de X (Dominio).</li>
-<li>Explicar por qué X es una variable aleatoria discreta y no continua.</li>
-</ol>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // Three.js Network/Particles Background
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-<h2>Fase 4. Modelamiento Probabilístico</h2>
-<h3>Pregunta Central</h3>
-<p>¿Qué distribución probabilística modela mejor la variable X?</p>
-<h3>Actividades</h3>
-<ol>
-<li>Estimar la probabilidad de éxito (p) usando la muestra de 100 sujetos.</li>
-<li>Evaluar si se cumplen los supuestos para usar una distribución Binomial.</li>
-<li>Determinar: n, p, Media teórica, Varianza teórica.</li>
-<li>Construir y graficar la distribución de probabilidad de X.</li>
-<li>Calcular e interpretar para la toma de decisiones:
-  <ul>
-  <li>P(X ≤ 3)</li>
-  <li>P(X ≥ 6)</li>
-  </ul>
-</li>
-</ol>
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    for (let i = 0; i < 1500; i++) {
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // x
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // y
+        vertices.push(THREE.MathUtils.randFloatSpread(2000)); // z
+    }
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+    // Cyan particles
+    const material = new THREE.PointsMaterial({ color: 0x66fcf1, size: 3, transparent: true, opacity: 0.8 });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
 
-<h2>Fase 5. Comparación entre Modelos (Marketing/Psicología)</h2>
-<p>Investigue y argumente en qué escenarios de esta agencia se usarían las siguientes distribuciones:</p>
-<ul>
-<li>Bernoulli.</li>
-<li>Binomial.</li>
-<li>Poisson.</li>
-<li>Hipergeométrica.</li>
-<li>Binomial Negativa.</li>
-</ul>
+    camera.position.z = 500;
 
-<h2>Fase 6. Storytelling Estadístico</h2>
-<div class="caja">
-<h3>Rol Profesional</h3>
-<p>Eres el Analista de Consumer Insights frente al Director de Marketing.</p>
-<h3>Pregunta guía</h3>
-<p style="text-align:center"><b>¿El anuncio es lo suficientemente memorable para lanzarlo a nivel nacional o requiere rediseño?</b></p>
-<h3>La presentación debe incluir</h3>
-<ol>
-<li>Introducción al problema cognitivo/publicitario.</li>
-<li>Análisis descriptivo de la prueba piloto.</li>
-<li>Modelo probabilístico para los Focus Groups.</li>
-<li>Interpretación de probabilidades clave.</li>
-<li>Conclusión ejecutiva.</li>
-<li>Recomendaciones (ej. pautas psicológicas para mejorar retención).</li>
-</ol>
-</div>
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
+        mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
+    });
 
-<h2>Autoevaluación</h2>
-<ul>
-<li>¿Entiendo la diferencia entre el comportamiento de un individuo y el modelo de un grupo?</li>
-<li>¿Puedo traducir un resultado estadístico a una recomendación de marketing o psicología?</li>
-<li>¿Justifiqué correctamente el uso de la distribución Binomial?</li>
-</ul>
+    function animate() {
+        requestAnimationFrame(animate);
+        points.rotation.x += 0.0005;
+        points.rotation.y += 0.001;
+        
+        camera.position.x += (mouseX - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+        
+        renderer.render(scene, camera);
+    }
+    animate();
 
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Scroll Reveal Logic
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+</script>
 </body>
 </html>

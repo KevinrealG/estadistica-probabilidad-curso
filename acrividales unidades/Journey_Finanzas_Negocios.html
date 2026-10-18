@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey de Aprendizaje - Finanzas y Riesgo</title>
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #0d1117;
+        color: #c9d1d9;
+    }
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    header {
+        text-align: center;
+        padding: 100px 20px;
+        background: linear-gradient(to bottom, rgba(13, 17, 23, 0.9), transparent);
+    }
+    h1 {
+        color: #58a6ff;
+        font-size: 3em;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+    }
+    h2, h3 { color: #79c0ff; }
+    main {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+    .card {
+        background: rgba(22, 27, 34, 0.85);
+        backdrop-filter: blur(12px);
+        border-radius: 15px;
+        padding: 40px;
+        margin-bottom: 60px;
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        transform: translateX(-100px);
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    .card:nth-child(even) {
+        transform: translateX(100px);
+    }
+    .card.visible {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 30px;
+        width: 4px;
+        background: linear-gradient(to bottom, #58a6ff, transparent);
+        z-index: 0;
+    }
+    @media(min-width: 768px){
+        .timeline-line { left: 50%; transform: translateX(-50%); }
+        .card { width: 40%; margin-left: auto; }
+        .card:nth-child(even) { margin-left: 0; margin-right: auto; }
+        .card::before {
+            content: ''; position: absolute; top: 20px; width: 20px; height: 20px;
+            background: #0d1117; border: 4px solid #58a6ff; border-radius: 50%;
+        }
+        .card:nth-child(even)::before { right: -65px; }
+        .card:nth-child(odd)::before { left: -65px; }
+    }
+    ul, ol { padding-left: 20px; }
+    li { margin-bottom: 10px; }
+    .highlight { color: #58a6ff; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Finanzas y Riesgo Contable</h1>
+    <p style="font-size: 1.2em;">Un Journey Interactivo de Auditoría y Probabilidad</p>
+</header>
+
+<main>
+    <div class="timeline-line"></div>
+
+    <div class="card">
+        <h2>📍 El Contexto Auténtico</h2>
+        <p>Ustedes son Analistas de Riesgo Financiero. La empresa enfrenta multas por inconsistencias en facturación electrónica.</p>
+        <p>Se les entrega una muestra de 100 facturas. Tienen que decidir si es viable invertir en un software de validación automática.</p>
+        <p><b>El Reto:</b> ¿Cómo se comporta el número de facturas erróneas en un lote diario de 15 documentos?</p>
+    </div>
+
+    <div class="card">
+        <h2>Fase 1: Exploración de Datos</h2>
+        <ol>
+            <li>Importar la base de facturación.</li>
+            <li>Revisar los 100 registros.</li>
+            <li>Clasificar: <span class="highlight">Factura con error = 1</span>, Correcta = 0.</li>
+            <li>Calcular la tasa de error histórico.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>Fase 2: Análisis Descriptivo</h2>
+        <ul>
+            <li>Construir Diagrama de Pareto para identificar problemas sistemáticos.</li>
+            <li>Calcular medidas de dispersión y tendencia central.</li>
+            <li><b>Reflexión:</b> ¿Qué impacto financiero tiene si cada multa cuesta $500 USD?</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Fase 3: Construcción de la Variable</h2>
+        <p><b>Definición formal:</b></p>
+        <p style="font-size: 1.2em; color: #58a6ff; text-align:center;">X = Facturas con inconsistencias en un lote de 15.</p>
+        <p>Explicar financieramente por qué X es discreta.</p>
+    </div>
+
+    <div class="card">
+        <h2>Fase 4: Modelamiento Probabilístico</h2>
+        <ol>
+            <li>Estimar la probabilidad (p) del riesgo.</li>
+            <li>Validar el uso de la distribución Binomial.</li>
+            <li>Calcular el riesgo para la empresa: <b>P(X = 0)</b> (Lote perfecto) y <b>P(X ≥ 3)</b> (Riesgo crítico).</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>Fase 5 y 6: Decisión Ejecutiva</h2>
+        <p>Investigar escenarios para modelos de Poisson, Hipergeométrica, etc., en contaduría.</p>
+        <h3>Presentación al CFO</h3>
+        <p><b>Storytelling:</b> ¿Es el proceso actual seguro o el riesgo probabilístico justifica comprar el software?</p>
+        <p>Incluir recomendación de Costo-Beneficio.</p>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // Three.js Synthwave/Finance Grid Background
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0d1117, 0.002);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create a moving wireframe plane
+    const geometry = new THREE.PlaneGeometry(2000, 2000, 40, 40);
+    const material = new THREE.MeshBasicMaterial({ color: 0x58a6ff, wireframe: true, transparent: true, opacity: 0.15 });
+    const plane = new THREE.Mesh(geometry, material);
+    plane.rotation.x = -Math.PI / 2;
+    plane.position.y = -200;
+    scene.add(plane);
+
+    camera.position.z = 400;
+    camera.position.y = 50;
+
+    let time = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        time += 0.005;
+        
+        // Move texture/vertices to simulate forward movement
+        const positions = plane.geometry.attributes.position.array;
+        for (let i = 2; i < positions.length; i += 3) {
+            positions[i] += 2;
+            if (positions[i] > 1000) positions[i] = -1000;
+        }
+        plane.geometry.attributes.position.needsUpdate = true;
+
+        // Slight camera sway
+        camera.position.x = Math.sin(time) * 100;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Scroll Reveal Logic
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+</script>
+</body>
+</html>
