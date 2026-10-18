@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Actividad Formativa y Auténtica - Variables Aleatorias Discretas y Modelos Probabilísticos</title>
+<title>Actividad Formativa y Auténtica - Neuromarketing y Psicología del Consumidor</title>
 <style>
 body{
     font-family: Arial, sans-serif;
@@ -43,251 +43,105 @@ th{
 <h1>Actividad Formativa y Auténtica</h1>
 
 <h2>Unidad Temática</h2>
-
 <ul>
 <li>Variables Aleatorias Discretas.</li>
 <li>Distribuciones de Probabilidad Discretas.</li>
-<li>Media y Varianza de una Variable Aleatoria.</li>
-<li>Distribución de Bernoulli.</li>
-<li>Distribución Binomial.</li>
-<li>Distribución Hipergeométrica.</li>
-<li>Distribución de Poisson.</li>
-<li>Distribución Binomial Negativa.</li>
+<li>Distribución de Bernoulli, Binomial, Hipergeométrica, Poisson y Binomial Negativa.</li>
 </ul>
 
 <h2>Contexto Profesional Auténtico</h2>
-
 <div class="caja">
-
-<p>
-Ustedes han sido contratados como Analistas de Calidad por una empresa que fabrica
-botellas térmicas reutilizables.
-</p>
-
-<p>
-Durante el proceso de producción se mide el diámetro de cierre de cada botella.
-La especificación técnica establece que una botella será considerada
-<b>defectuosa</b> si su diámetro se encuentra fuera del intervalo:
-</p>
-
-<p style="text-align:center">
-<b>49.80 mm ≤ Diámetro ≤ 50.20 mm</b>
-</p>
-
-<p>
-La empresa les entrega una muestra correspondiente a los últimos 100 productos fabricados,
-incluyendo las mediciones registradas.
-</p>
-
-<p>
-La gerencia desea tomar decisiones sobre la calidad de producción y necesita conocer
-el comportamiento probabilístico de los defectos.
-</p>
-
+<p>Ustedes han sido contratados como Analistas de Comportamiento del Consumidor en una agencia de Neuromarketing.</p>
+<p>La agencia está evaluando un nuevo diseño de empaque y un anuncio de 30 segundos para un cliente. Durante las pruebas preliminares, se expuso a 100 participantes al anuncio. Posteriormente, se midió el <b>"Recuerdo de Marca" (Brand Recall)</b>. La métrica establece que la campaña es efectiva en un sujeto si este logra mencionar la marca sin ayuda durante la entrevista posterior.</p>
+<p>La agencia les entrega la base de datos con las respuestas de estos 100 participantes. El Director de Marketing necesita saber cómo se comportará esta campaña al lanzarse a segmentos más grandes (Focus Groups).</p>
 </div>
 
 <h2>Propósito de Aprendizaje</h2>
-
-<p>
-Al finalizar la actividad, el estudiante será capaz de analizar datos reales de calidad,
-identificar productos defectuosos, modelar el número de defectos mediante variables
-aleatorias discretas y seleccionar una distribución probabilística apropiada para describir
-el fenómeno observado.
-</p>
+<p>Al finalizar, el estudiante será capaz de analizar datos conductuales reales, calcular tasas de conversión (recuerdo), modelar el número de respuestas positivas mediante variables aleatorias discretas y seleccionar la distribución probabilística adecuada para predecir el impacto de campañas de marketing.</p>
 
 <h2>Competencias Evaluadas</h2>
-
 <ol>
-<li>Recolectar y sistematizar datos utilizando métodos adecuados para construir tablas de frecuencias y representaciones gráficas pertinentes según el tipo de variable.</li>
-
-<li>Calcular e interpretar medidas estadísticas para describir y analizar conjuntos de datos.</li>
-
-<li>Modelar situaciones aleatorias aplicando conceptos de probabilidad y distribuciones discretas.</li>
-
-<li>Emplear herramientas digitales para realizar análisis exploratorios y comunicar resultados.</li>
-
+<li>Recolectar y sistematizar datos de comportamiento para construir tablas y gráficos pertinentes.</li>
+<li>Calcular e interpretar medidas estadísticas en el contexto de la psicología del consumidor.</li>
+<li>Modelar situaciones de toma de decisiones aplicando probabilidad y distribuciones discretas.</li>
+<li>Emplear software estadístico para el análisis exploratorio y presentar hallazgos gerenciales.</li>
 </ol>
 
 <h2>Situación Problema</h2>
-
 <div class="destacado">
-
-<p>
-La gerencia desea implementar controles de calidad por lotes de 10 botellas.
-</p>
-
-<p>
-Antes de hacerlo, necesita responder la siguiente pregunta:
-</p>
-
-<h3 style="text-align:center;">
-¿Cómo se comporta la variable aleatoria "Número de productos defectuosos en un lote de 10 botellas"?
-</h3>
-
-<p>
-La respuesta deberá estar sustentada mediante análisis estadístico y modelos probabilísticos.
-</p>
-
+<p>La agencia planea realizar sesiones de "Focus Group" con lotes de 12 consumidores.</p>
+<p>Antes de invertir en la logística, necesitan responder:</p>
+<h3 style="text-align:center;">¿Cómo se comporta la variable aleatoria "Número de personas que recuerdan la marca en un grupo de 12 participantes"?</h3>
+<p>La respuesta deberá estar sustentada mediante análisis estadístico y modelos probabilísticos.</p>
 </div>
 
 <h2>Fase 1. Exploración y Clasificación de los Datos</h2>
-
 <h3>Actividades</h3>
-
 <ol>
-
-<li>Importar la base de datos en Excel, Jamovi, R, SPSS, Python o software similar.</li>
-
-<li>Revisar las 100 mediciones suministradas.</li>
-
-<li>Crear una nueva variable llamada:
-<b>Estado del Producto</b>.</li>
-
-<ul>
-<li>Defectuoso = 1</li>
-<li>No defectuoso = 0</li>
-</ul>
-
-<li>Clasificar cada producto según el criterio establecido.</li>
-
-<li>Calcular el número total de productos defectuosos.</li>
-
-<li>Calcular el porcentaje de defectos.</li>
-
+<li>Importar la base de datos (Excel, Jamovi, R, SPSS, Python).</li>
+<li>Revisar las 100 observaciones conductuales.</li>
+<li>Crear una nueva variable llamada: <b>Estado de Recuerdo</b>.
+  <ul>
+  <li>Recuerda la marca (Éxito) = 1</li>
+  <li>No recuerda la marca (Fracaso) = 0</li>
+  </ul>
+</li>
+<li>Calcular el número total de impactos positivos.</li>
+<li>Calcular la tasa de recuerdo (porcentaje de éxito).</li>
 </ol>
-
 <h3>Entregables</h3>
-
 <ul>
 <li>Tabla de datos clasificada.</li>
-<li>Porcentaje de defectos.</li>
+<li>Tasa de recuerdo.</li>
 <li>Captura del procedimiento realizado.</li>
 </ul>
 
 <h2>Fase 2. Análisis Descriptivo</h2>
-
 <h3>Variable de Estudio</h3>
-
-<p>
-Número de defectos observados.
-</p>
-
+<p>Frecuencia de recuerdo de marca en la muestra.</p>
 <h3>Actividades</h3>
-
 <ol>
-
-<li>Construir tabla de frecuencias.</li>
-
-<li>Construir gráfico adecuado:
-<ul>
-<li>Gráfico de barras.</li>
-<li>Diagrama de Pareto (opcional).</li>
-</ul>
-</li>
-
-<li>Calcular:
-<ul>
-<li>Media.</li>
-<li>Moda.</li>
-<li>Varianza.</li>
-<li>Desviación estándar.</li>
-</ul>
-</li>
-
-<li>Interpretar cada medida dentro del contexto de calidad.</li>
-
+<li>Construir tabla de frecuencias absolutas y relativas.</li>
+<li>Construir gráfico de barras y/o gráfico circular (pie chart).</li>
+<li>Calcular Media, Moda, Varianza y Desviación Estándar.</li>
+<li>Interpretar las medidas en el lenguaje de marketing y psicología cognitiva.</li>
 </ol>
-
 <h3>Preguntas de Reflexión</h3>
-
 <ul>
-
-<li>¿Qué tan frecuente es encontrar defectos?</li>
-
-<li>¿La producción parece estable?</li>
-
-<li>¿Existen evidencias de problemas de calidad?</li>
-
-<li>¿La cantidad de defectos observada es preocupante para la empresa?</li>
-
+<li>¿Qué tan fácil es que el anuncio se fije en la memoria a corto plazo?</li>
+<li>¿La tasa de recuerdo actual justifica el costo del anuncio?</li>
 </ul>
 
 <h2>Fase 3. Construcción de la Variable Aleatoria</h2>
-
 <h3>Definición</h3>
-
-<p>
-Sea:
-</p>
-
-<p style="text-align:center">
-
-<b>X = Número de productos defectuosos encontrados en un lote de 10 botellas.</b>
-
-</p>
-
+<p>Sea:</p>
+<p style="text-align:center"><b>X = Número de personas que recuerdan la marca en un Focus Group de 12 participantes.</b></p>
 <h3>Actividades</h3>
-
 <ol>
-
-<li>Identificar el experimento aleatorio.</li>
-
-<li>Determinar los posibles valores de X.</li>
-
-<li>Construir el espacio de valores posibles de la variable.</li>
-
-<li>Explicar por qué X es una variable aleatoria discreta.</li>
-
+<li>Identificar el experimento aleatorio subyacente.</li>
+<li>Determinar los posibles valores de X (Dominio).</li>
+<li>Explicar por qué X es una variable aleatoria discreta y no continua.</li>
 </ol>
 
 <h2>Fase 4. Modelamiento Probabilístico</h2>
-
 <h3>Pregunta Central</h3>
-
-<p>
-¿Qué distribución probabilística modela mejor la variable
-“Número de productos defectuosos en un lote de 10 productos”?
-</p>
-
+<p>¿Qué distribución probabilística modela mejor la variable X?</p>
 <h3>Actividades</h3>
-
 <ol>
-
-<li>Estimar la probabilidad de defecto utilizando la muestra real.</li>
-
-<li>Evaluar si el proceso puede modelarse mediante una distribución Binomial.</li>
-
-<li>Determinar:
-<ul>
-<li>n</li>
-<li>p</li>
-<li>Media teórica</li>
-<li>Varianza teórica</li>
-</ul>
+<li>Estimar la probabilidad de éxito (p) usando la muestra de 100 sujetos.</li>
+<li>Evaluar si se cumplen los supuestos para usar una distribución Binomial.</li>
+<li>Determinar: n, p, Media teórica, Varianza teórica.</li>
+<li>Construir y graficar la distribución de probabilidad de X.</li>
+<li>Calcular e interpretar para la toma de decisiones:
+  <ul>
+  <li>P(X ≤ 3)</li>
+  <li>P(X ≥ 6)</li>
+  </ul>
 </li>
-
-<li>Construir la distribución de probabilidad de X.</li>
-
-<li>Representar gráficamente la distribución.</li>
-
-<li>Interpretar:
-<ul>
-<li>P(X=0)</li>
-<li>P(X=1)</li>
-<li>P(X=2)</li>
-<li>P(X≥3)</li>
-</ul>
-</li>
-
 </ol>
 
-<h2>Fase 5. Comparación entre Modelos</h2>
-
-<p>
-Investigue y argumente cuál de las siguientes distribuciones podría utilizarse
-en contextos de control de calidad:
-</p>
-
+<h2>Fase 5. Comparación entre Modelos (Marketing/Psicología)</h2>
+<p>Investigue y argumente en qué escenarios de esta agencia se usarían las siguientes distribuciones:</p>
 <ul>
 <li>Bernoulli.</li>
 <li>Binomial.</li>
@@ -296,62 +150,28 @@ en contextos de control de calidad:
 <li>Binomial Negativa.</li>
 </ul>
 
-<p>
-Explique cuándo sería apropiada cada una.
-</p>
-
 <h2>Fase 6. Storytelling Estadístico</h2>
-
 <div class="caja">
-
 <h3>Rol Profesional</h3>
-
-<p>
-Usted es el analista responsable de presentar los resultados al Director de Producción.
-</p>
-
+<p>Eres el Analista de Consumer Insights frente al Director de Marketing.</p>
 <h3>Pregunta guía</h3>
-
-<p style="text-align:center">
-<b>¿La calidad actual de producción es suficientemente buena para vender los lotes sin aumentar los controles de inspección?</b>
-</p>
-
+<p style="text-align:center"><b>¿El anuncio es lo suficientemente memorable para lanzarlo a nivel nacional o requiere rediseño?</b></p>
 <h3>La presentación debe incluir</h3>
-
 <ol>
-
-<li>Introducción al problema.</li>
-
-<li>Descripción de los datos.</li>
-
-<li>Análisis descriptivo.</li>
-
-<li>Modelo probabilístico seleccionado.</li>
-
-<li>Interpretación de probabilidades.</li>
-
+<li>Introducción al problema cognitivo/publicitario.</li>
+<li>Análisis descriptivo de la prueba piloto.</li>
+<li>Modelo probabilístico para los Focus Groups.</li>
+<li>Interpretación de probabilidades clave.</li>
 <li>Conclusión ejecutiva.</li>
-
-<li>Recomendaciones para la empresa.</li>
-
+<li>Recomendaciones (ej. pautas psicológicas para mejorar retención).</li>
 </ol>
-
 </div>
 
 <h2>Autoevaluación</h2>
-
 <ul>
-
-<li>¿Comprendo la diferencia entre dato, variable y variable aleatoria?</li>
-
-<li>¿Puedo justificar la elección de una distribución probabilística?</li>
-
-<li>¿Mis conclusiones están respaldadas por evidencia?</li>
-
-<li>¿Sé interpretar los resultados para la toma de decisiones?</li>
-
-<li>¿Qué aprendí sobre calidad y probabilidad?</li>
-
+<li>¿Entiendo la diferencia entre el comportamiento de un individuo y el modelo de un grupo?</li>
+<li>¿Puedo traducir un resultado estadístico a una recomendación de marketing o psicología?</li>
+<li>¿Justifiqué correctamente el uso de la distribución Binomial?</li>
 </ul>
 
 </body>
