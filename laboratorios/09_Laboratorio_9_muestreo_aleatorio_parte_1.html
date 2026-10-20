@@ -104,6 +104,16 @@
         overflow-x: auto;
         margin-top: 1rem;
     }
+    .video-container {
+        aspect-ratio: 16 / 9;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 8px;
+    }
 </style>
 </head>
 <body>
@@ -170,6 +180,10 @@
 <section id="procedimiento" class="section card">
     <h2 class="section-title">Video y Procedimiento</h2>
     <p><strong>Instrucción asincrónica sugerida:</strong> Revisar previamente un video cápsula (5 min) sobre la función <code>np.random.randint</code> y el concepto de <code>seed</code> en Python.</p>
+    <p><a href="https://youtu.be/ku3MwcmP1_Q" target="_blank" rel="noopener noreferrer">Ver video en YouTube</a></p>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/ku3MwcmP1_Q" title="Video sobre np.random.randint y seed en Python" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
     
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Procedimiento en Google Colab (Trabajo Individual):</h3>
     <ol>
@@ -208,8 +222,8 @@ print(f"Error de muestreo (Diferencia): {abs(media_poblacional - media_muestral)
 <section id="entregables" class="section card">
     <h2 class="section-title">Compromisos de entrega en la sesión</h2>
     <ul>
-        <li><strong>Archivo:</strong> Enlace al Notebook de Google Colab (con permisos de lectura).</li>
-        <li><strong>Evidencia en el Notebook:</strong> Un bloque de texto (Markdown) al final del notebook de la Parte 1 que indique: <br><em>"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."</em></li>
+        <li><strong>Archivo:</strong> Subir el archivo HTML generado.</li>
+        <li><strong>Evidencia en el HTML:</strong> Un bloque de texto al final del archivo de la Parte 1 que indique: <br><em>"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."</em></li>
     </ul>
 </section>
 

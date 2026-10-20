@@ -1,3 +1,9 @@
+
+
+
+# Taller
+
+
 - Evaluación en el tablero
     
     Aquí tienes **una propuesta creativa, activa y muy didáctica** para **recolectar datos reales** y luego **enseñar la distribución binomial**, conectando con experiencias cotidianas del estudiantado.

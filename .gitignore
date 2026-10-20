@@ -1,4 +1,7 @@
 /.venv
 /media
 /scriptsanim/media
+/scriptsanim/__pycache__
+/scriptsanim
+
 /__pycache__

@@ -42,8 +42,8 @@ Trabajas como auditor de calidad independiente para una planta de manufactura de
 
 # **Paso 2. Compromisos de entrega en cada sesion**
 
-* **Archivo:** Enlace al Notebook de Google Colab (con permisos de lectura).
-* **Evidencia en el Notebook:** Un bloque de texto (Markdown) al final del notebook de la Parte 1 que indique: *"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."*.
+* **Archivo:** Subir el archivo HTML generado.
+* **Evidencia en el HTML:** Un bloque de texto al final del archivo de la Parte 1 que indique: *"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."*.
 
 # ✅ **Rúbrica de Evaluación – para el informe del lab (Parte 1)**
 
@@ -153,8 +153,8 @@ Trabajas como auditor de calidad independiente para una planta de manufactura de
 
 # **Paso 2. Compromisos de entrega en cada sesion**
 
-* **Archivo:** Enlace al Notebook de Google Colab (con permisos de lectura).
-* **Evidencia en el Notebook:** Un bloque de texto (Markdown) al final del notebook de la Parte 1 que indique: *"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."*.
+* **Archivo:** Subir el archivo HTML generado.
+* **Evidencia en el HTML:** Un bloque de texto al final del archivo de la Parte 1 que indique: *"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."*.
 
 # ✅ **Rúbrica de Evaluación – para el informe del lab (Parte 1)**
 
