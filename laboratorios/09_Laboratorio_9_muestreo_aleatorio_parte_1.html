@@ -216,7 +216,9 @@ media_muestral = np.mean(muestra)
 print(f"Media real de la fábrica: {media_poblacional}")
 print(f"Media de la muestra: {media_muestral}")
 print(f"Error de muestreo (Diferencia): {abs(media_poblacional - media_muestral)}")
-# Extra
+# Extra, solo para Colab: Convertir el notebook a HTML y descargarlo completamente,
+# de esta manera se puede entregar el archivo HTML
+# generado en la sesión de Colab con el código y resultados completos.
 #@title Convert ipynb to HTML in Colab
 # Upload ipynb
 from google.colab import files
@@ -240,7 +242,7 @@ files.download(file0[:-5]+"html")</pre>
 <section id="entregables" class="section card">
     <h2 class="section-title">Compromisos de entrega en la sesión</h2>
     <ul>
-        <li><strong>Archivo:</strong> Subir el archivo HTML generado o su versión PDF</li>
+        <li><strong>Archivo:</strong> Subir el archivo  generado en su versión PDF</li>
         <li><strong>Evidencia en el HTML:</strong> Un bloque de texto al final del archivo de la Parte 1 que indique: <br><em>"Mi código de estudiante es [XXXX]. La media real de mi fábrica fue [Valor 1], y la media de mi muestra aleatoria fue [Valor 2]. El error de muestreo fue de [Diferencia]."</em></li>
     </ul>
 </section>
