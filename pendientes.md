@@ -1,5 +1,8 @@
 Bueno para los cursos de estadistica me queda pendiente:
 - Invitación a suscripción del canal.
+- ENtregar datos.
+- Anunciar temas a evaluar
+- algebra clase interectiva
 4. Preparar la semana  de estadistica
     1. Estructuras
     2. Diapositivas
