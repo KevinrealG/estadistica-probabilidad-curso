@@ -2,45 +2,88 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Actividad Formativa y Auténtica - Variables Aleatorias Discretas y Modelos Probabilísticos</title>
 <style>
-body{
-    font-family: Arial, sans-serif;
-    margin:40px;
-    line-height:1.7;
-    color:#333;
+* { box-sizing: border-box; }
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    background: #f3f7fb;
+    color: #263445;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
 }
-h1,h2,h3{
-    color:#0B5394;
+h1, h2, h3 { color: #0b5394; line-height: 1.3; }
+h1 {
+    margin: 0 0 24px;
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: linear-gradient(120deg, #0b5394, #168aad);
+    box-shadow: 0 10px 24px rgba(11, 83, 148, 0.18);
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
 }
-.caja{
-    background:#f4f9ff;
-    border-left:6px solid #0B5394;
-    padding:15px;
-    margin:15px 0;
+h2 {
+    margin-top: 40px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #d5e5f3;
 }
-.destacado{
-    background:#fff8e1;
-    border-left:6px solid #ffb300;
-    padding:15px;
-    margin:15px 0;
+h2.fase-titulo {
+    margin-top: 48px;
+    padding: 14px 18px;
+    border: 0;
+    border-left: 6px solid #168aad;
+    border-radius: 0 10px 10px 0;
+    background: #e6f2fa;
 }
-table{
-    width:100%;
-    border-collapse:collapse;
+h3 { margin-bottom: 8px; }
+.subtitulo {
+    margin: -18px 0 30px;
+    color: #53677d;
+    font-size: 1.1rem;
 }
-th,td{
-    border:1px solid #999;
-    padding:8px;
+.caja, .destacado {
+    margin: 20px 0;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(32, 63, 94, 0.06);
 }
-th{
-    background:#d9eaf7;
+.caja {
+    border-left: 6px solid #0b5394;
+    background: #fff;
+}
+.destacado {
+    border-left: 6px solid #ffb300;
+    background: #fff8e1;
+}
+.entregables {
+    margin: 20px 0 32px;
+    padding: 16px 22px;
+    border: 1px solid #b8ddcb;
+    border-left: 6px solid #2e8b57;
+    border-radius: 10px;
+    background: #eff9f2;
+}
+.entregables h3 { color: #246b45; }
+ul, ol { padding-left: 26px; }
+li { margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 8px; border: 1px solid #999; }
+th { background: #d9eaf7; }
+@media (max-width: 600px) {
+    body { padding: 20px 16px 40px; }
+    h1 { padding: 22px; }
+    .caja, .destacado { padding: 16px; }
 }
 </style>
 </head>
 <body>
 
 <h1>Actividad Formativa y Auténtica</h1>
+<p class="subtitulo">Variables aleatorias discretas y modelos probabilísticos aplicados al control de calidad.</p>
 
 <h2>Unidad Temática</h2>
 
@@ -125,7 +168,7 @@ La respuesta deberá estar sustentada mediante análisis estadístico y modelos 
 
 </div>
 
-<h2>Fase 1. Exploración y Clasificación de los Datos</h2>
+<h2 class="fase-titulo">Fase 1. Exploración y Clasificación de los Datos</h2>
 
 <h3>Actividades</h3>
 
@@ -136,12 +179,12 @@ La respuesta deberá estar sustentada mediante análisis estadístico y modelos 
 <li>Revisar las 100 mediciones suministradas.</li>
 
 <li>Crear una nueva variable llamada:
-<b>Estado del Producto</b>.</li>
-
+<b>Estado del Producto</b>:
 <ul>
 <li>Defectuoso = 1</li>
 <li>No defectuoso = 0</li>
 </ul>
+</li>
 
 <li>Clasificar cada producto según el criterio establecido.</li>
 
@@ -151,6 +194,7 @@ La respuesta deberá estar sustentada mediante análisis estadístico y modelos 
 
 </ol>
 
+<div class="entregables">
 <h3>Entregables</h3>
 
 <ul>
@@ -158,8 +202,9 @@ La respuesta deberá estar sustentada mediante análisis estadístico y modelos 
 <li>Porcentaje de defectos.</li>
 <li>Captura del procedimiento realizado.</li>
 </ul>
+</div>
 
-<h2>Fase 2. Análisis Descriptivo</h2>
+<h2 class="fase-titulo">Fase 2. Análisis Descriptivo</h2>
 
 <h3>Variable de Estudio</h3>
 
@@ -207,7 +252,17 @@ Número de defectos observados.
 
 </ul>
 
-<h2>Fase 3. Construcción de la Variable Aleatoria</h2>
+<div class="entregables">
+<h3>Entregables</h3>
+<ul>
+<li>Tabla de frecuencias de los defectos observados.</li>
+<li>Gráfico de barras y, si resulta pertinente, diagrama de Pareto.</li>
+<li>Media, moda, varianza y desviación estándar, con interpretación en el contexto de calidad.</li>
+<li>Respuestas argumentadas a las preguntas de reflexión.</li>
+</ul>
+</div>
+
+<h2 class="fase-titulo">Fase 3. Construcción de la Variable Aleatoria</h2>
 
 <h3>Definición</h3>
 
@@ -235,7 +290,16 @@ Sea:
 
 </ol>
 
-<h2>Fase 4. Modelamiento Probabilístico</h2>
+<div class="entregables">
+<h3>Entregables</h3>
+<ul>
+<li>Definición de la variable aleatoria y descripción del experimento.</li>
+<li>Espacio de valores posibles de X: 0, 1, 2, ..., 10.</li>
+<li>Explicación de por qué X es discreta y de qué representa cada valor en un lote.</li>
+</ul>
+</div>
+
+<h2 class="fase-titulo">Fase 4. Modelamiento Probabilístico</h2>
 
 <h3>Pregunta Central</h3>
 
@@ -276,7 +340,17 @@ Sea:
 
 </ol>
 
-<h2>Fase 5. Comparación entre Modelos</h2>
+<div class="entregables">
+<h3>Entregables</h3>
+<ul>
+<li>Estimación de la probabilidad de defecto (p) y parámetros del modelo (n = 10 y p).</li>
+<li>Justificación de los supuestos para utilizar la distribución Binomial.</li>
+<li>Distribución de probabilidad de X y su representación gráfica.</li>
+<li>Cálculos e interpretación de P(X=0), P(X=1), P(X=2) y P(X≥3).</li>
+</ul>
+</div>
+
+<h2 class="fase-titulo">Fase 5. Comparación entre Modelos</h2>
 
 <p>
 Investigue y argumente cuál de las siguientes distribuciones podría utilizarse
@@ -295,7 +369,16 @@ en contextos de control de calidad:
 Explique cuándo sería apropiada cada una.
 </p>
 
-<h2>Fase 6. Storytelling Estadístico</h2>
+<div class="entregables">
+<h3>Entregables</h3>
+<ul>
+<li>Cuadro comparativo de Bernoulli, Binomial, Poisson, Hipergeométrica y Binomial Negativa.</li>
+<li>Ejemplo de uso y condiciones de aplicación de cada distribución en control de calidad.</li>
+<li>Fuentes consultadas.</li>
+</ul>
+</div>
+
+<h2 class="fase-titulo">Fase 6. Storytelling Estadístico</h2>
 
 <div class="caja">
 
@@ -330,6 +413,15 @@ Usted es el analista responsable de presentar los resultados al Director de Prod
 <li>Recomendaciones para la empresa.</li>
 
 </ol>
+
+<div class="entregables">
+<h3>Entregables</h3>
+<ul>
+<li>Presentación ejecutiva con datos, análisis descriptivo y modelo probabilístico seleccionado.</li>
+<li>Interpretación de las probabilidades, conclusión y recomendaciones para la empresa.</li>
+<li>Captura o archivo de la presentación realizada.</li>
+</ul>
+</div>
 
 </div>
 
