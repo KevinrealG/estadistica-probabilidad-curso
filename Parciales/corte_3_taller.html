@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Taller de Probabilidad y Conteo</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+     <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+<style>
+@page{
+    size:A4;
+    margin:1.2cm;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    font-size:10pt;
+    line-height:1.25;
+    margin:0;
+}
+
+.encabezado{
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.columnas{
+    column-count:2;
+    column-gap:25px;
+}
+
+.pregunta{
+    break-inside:avoid;
+    border:1px solid #000;
+    padding:8px;
+    margin-bottom:12px;
+}
+
+.opcion{
+    margin-left:15px;
+}
+
+.justificacion{
+    margin-top:8px;
+    border-top:1px dashed #999;
+    padding-top:6px;
+    min-height:55px;
+}
+
+h2,h3{
+    margin:0;
+}
+
+.instrucciones{
+    border:1px solid black;
+    padding:8px;
+    margin-bottom:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="encabezado">
+
+    <!-- Reemplace la ruta por la ubicación real del logo o mantenga el texto institucional -->
+    <img src="logoutb.png" alt="Logo UTB" class="logo" onerror="this.style.display='none'">
+    <div>
+        <h2>Universidad Tecnológica de Bolívar</h2>
+        <h3>Dirección de Ciencias Básicas</h3>
+        <h3>Estadística y Probabilidad</h3>
+        <h3>Taller - Corte 3</h3>
+    </div>
+
+</div>
+<p>
+<strong>Nombre:</strong> _________________________________
+&nbsp;&nbsp;&nbsp;
+<strong>Grupo:</strong> _______________
+</p>
+
+<div class="instrucciones">
+Seleccione la respuesta correcta en cada caso y justifique el procedimiento utilizado. No se evaluarán respuestas sin justificación.
+</div>
+
+<div class="columnas">
+
+<div class="pregunta">
+<strong>1.</strong> En un control de aduanas, se sabe que 1 de cada 100 viajeros transporta mercancía no declarada. Un escáner detecta correctamente al infractor en el 98% de los casos, pero genera una falsa alarma en el 4% de los viajeros honestos. Si el escáner emite una alarma, ¿cuál es la probabilidad de que el viajero realmente transporte mercancía no declarada?
+
+<div class="opcion">A. 4.94%</div>
+<div class="opcion">B. 19.84%</div>
+<div class="opcion">C. 98%</div>
+<div class="opcion">D. 39.60%</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>2.</strong> De un grupo de 5 matrimonios (10 personas en total), se debe seleccionar una delegación de 4 personas. ¿De cuántas maneras puede conformarse si incluye exactamente dos matrimonios completos?
+
+<div class="opcion">A. 5</div>
+<div class="opcion">B. 10</div>
+<div class="opcion">C. 80</div>
+<div class="opcion">D. 120</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>3.</strong> De un grupo de 5 matrimonios (10 personas en total), se debe seleccionar una delegación de 4 personas. ¿De cuántas maneras puede conformarse si no incluye ningún matrimonio completo?
+
+<div class="opcion">A. 40</div>
+<div class="opcion">B. 60</div>
+<div class="opcion">C. 80</div>
+<div class="opcion">D. 120</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>4.</strong> En un equipo de desarrollo hay 8 programadores backend y 4 frontend. Se requiere conformar un comité de 5 integrantes. ¿De cuántas formas puede integrarse si debe contar con al menos un desarrollador frontend?
+
+<div class="opcion">A. 56</div>
+<div class="opcion">B. 736</div>
+<div class="opcion">C. 792</div>
+<div class="opcion">D. 848</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>5.</strong> En un grupo de 120 estudiantes, 72 cursan estadística, 54 cursan programación y 26 cursan ambas asignaturas. ¿Cuál es la probabilidad de que un estudiante seleccionado al azar curse al menos una de las dos asignaturas?
+
+<div class="opcion">A. 16.67%</div>
+<div class="opcion">B. 60%</div>
+<div class="opcion">C. 83.33%</div>
+<div class="opcion">D. 72%</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>6.</strong> Con la información del ejercicio anterior, ¿cuál es la probabilidad de que el estudiante no curse ninguna de las dos asignaturas?
+
+<div class="opcion">A. 16.67%</div>
+<div class="opcion">B. 26%</div>
+<div class="opcion">C. 54%</div>
+<div class="opcion">D. 83.33%</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>7.</strong> Una urna contiene 5 bolas rojas, 4 azules y 3 verdes. Se extraen tres bolas consecutivamente sin reemplazo. ¿Cuál es la probabilidad de obtener primero una roja, luego una azul y finalmente una verde?
+
+<div class="opcion">A. 1/12</div>
+<div class="opcion">B. 1/22</div>
+<div class="opcion">C. 1/10</div>
+<div class="opcion">D. 3/22</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>8.</strong> Se ordenan en un estante 4 libros de matemáticas, 3 de física y 2 de química. ¿De cuántas maneras pueden alinearse si todos los libros de una misma materia deben permanecer juntos?
+
+<div class="opcion">A. 864</div>
+<div class="opcion">B. 1296</div>
+<div class="opcion">C. 1728</div>
+<div class="opcion">D. 3024</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>9.</strong> De un grupo de 5 matrimonios se selecciona una delegación de 4 personas. ¿De cuántas maneras puede conformarse si incluye exactamente un matrimonio completo?
+
+<div class="opcion">A. 80</div>
+<div class="opcion">B. 100</div>
+<div class="opcion">C. 120</div>
+<div class="opcion">D. 210</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+<div class="pregunta">
+<strong>10.</strong> En el problema del comité conformado por 8 backend y 4 frontend, ¿cuántas formas existen de seleccionar el comité si todos sus integrantes son desarrolladores backend?
+
+<div class="opcion">A. 56</div>
+<div class="opcion">B. 70</div>
+<div class="opcion">C. 120</div>
+<div class="opcion">D. 792</div>
+
+<div class="justificacion">
+<strong>Justificación:</strong>
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
