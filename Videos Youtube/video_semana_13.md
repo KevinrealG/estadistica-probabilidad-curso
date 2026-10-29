@@ -43,9 +43,6 @@ $$P(A) = \sum P(B_i) \times P(A\vert{}B_i)$$
 
 * **Visual (Manim):** Volvemos al árbol médico. La palabra *"POSITIVO"* en rojo domina la pantalla. Una flecha empieza a recorrer el árbol **hacia atrás**, desde "Positivo" buscando el camino de regreso hacia el nodo de "Enfermo". Aparece un enorme signo de interrogación.
 > **Audio:** Ya sabemos que la probabilidad de dar positivo es del 14%. Pero ahora, pongámonos en tus zapatos. Imagina que te haces la prueba y... ¡das positivo! El evento ya ocurrió. Ahora quieres saber: dado que ya tengo el papel con el positivo en la mano, ¿cuál es la probabilidad de que REALMENTE esté enfermo? Para responder esto, tenemos que viajar en el tiempo, recorrer el árbol matemático hacia atrás. Y para lograr eso, necesitamos la joya de la corona de la estadística: El Teorema de Bayes. Ese es nuestro próximo video. ¡Suscríbete y vamos a descubrirlo!
-5. Teorema de BAyes
-5. Tecnicas de Conteo 1. yt tecnicas de conteo 2.
-1. 📹 Video 4: Distribuciones de probabilidad discretas
-
-2. 📹 Video 5: Distribución de Bernoulli
-3. Binomial
+## Reglas de Probabilidad
+##  Teorema de BAyes
+## Tecnicas de Conteo 1. yt tecnicas de conteo 2.
