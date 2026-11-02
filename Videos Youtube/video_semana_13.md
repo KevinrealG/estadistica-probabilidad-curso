@@ -44,5 +44,39 @@ $$P(A) = \sum P(B_i) \times P(A\vert{}B_i)$$
 * **Visual (Manim):** Volvemos al árbol médico. La palabra *"POSITIVO"* en rojo domina la pantalla. Una flecha empieza a recorrer el árbol **hacia atrás**, desde "Positivo" buscando el camino de regreso hacia el nodo de "Enfermo". Aparece un enorme signo de interrogación.
 > **Audio:** Ya sabemos que la probabilidad de dar positivo es del 14%. Pero ahora, pongámonos en tus zapatos. Imagina que te haces la prueba y... ¡das positivo! El evento ya ocurrió. Ahora quieres saber: dado que ya tengo el papel con el positivo en la mano, ¿cuál es la probabilidad de que REALMENTE esté enfermo? Para responder esto, tenemos que viajar en el tiempo, recorrer el árbol matemático hacia atrás. Y para lograr eso, necesitamos la joya de la corona de la estadística: El Teorema de Bayes. Ese es nuestro próximo video. ¡Suscríbete y vamos a descubrirlo!
 ## Reglas de Probabilidad
-##  Teorema de BAyes
+Video 10: El Teorema de Bayes
+Gancho (0:00 - 0:45)
+ * Visual (Manim/Simulación): Una animación en primera persona. Unas manos virtuales abren un sobre blanco de laboratorio. El papel en su interior tiene un sello rojo gigante que dice: "RESULTADO: POSITIVO". Un latido de corazón acelerado suena de fondo. Aparece un texto flotante: "Precisión de la prueba: 95%".
+ * Audio: Imagina esto: te haces una prueba médica de rutina para una enfermedad. Abres el sobre y dice "Positivo". Entras en pánico porque recuerdas que el doctor te dijo que la prueba tiene una precisión del 95%. Tu intuición te grita que tienes un 95% de probabilidades de estar enfermo. ¡Pero detente ahí! Tu intuición te está mintiendo. Esa es la trampa más grande de la estadística. La probabilidad real de que estés enfermo es mucho menor, y para demostrarlo, vamos a viajar en el tiempo matemático.
+Intro y Promesa (0:45 - 1:00)
+ * Visual (Manim): El papel médico se desvanece en partículas. De esas partículas se forma una ecuación elegante y brillante en el centro de la pantalla. Título: "TEOREMA DE BAYES". Subtítulo: "Actualizando la realidad con nueva evidencia".
+ * Audio: Bienvenidos a la joya de la corona de la estadística: El Teorema de Bayes. Hoy aprenderemos la fórmula que permite a la inteligencia artificial, a los científicos y a los médicos "reversar" las probabilidades y descubrir la verdad cuando aparece nueva evidencia.
+Desarrollo: La Trampa de la Intuición y la Fórmula (1:00 - 1:50)
+ * Visual (Manim): Aparece la gran fórmula de Bayes:
+   
+   
+   Se reescribe automáticamente al contexto médico:
+   
+ * Audio: El Teorema de Bayes nos permite responder nuestra gran pregunta: ¿Cuál es la probabilidad de estar Enfermo, dado que ya di Positivo? La fórmula nos dice que esto es igual a la probabilidad de dar positivo estando enfermo (la eficacia de la prueba), multiplicado por la probabilidad inicial de estar enfermo en la población, todo esto dividido por la probabilidad TOTAL de dar positivo. ¡Exacto, el resultado de nuestro video anterior!
+Desarrollo: Resolviendo el Misterio (1:50 - 2:40)
+ * Visual (Manim): Regresa el árbol de decisión del video anterior.
+   * Nodo inicial \to Enfermo (10%) \to Prueba Positiva (95%). Camino total: 0.095.
+   * La caja de suma final abajo dice: "Probabilidad Total de Positivo = 14% (0.14)".
+     Una flecha animada hace el recorrido hacia atrás, desde la caja del 14% hacia la rama de "Enfermo" (0.095).
+ * Audio: En nuestro video anterior, descubrimos que la probabilidad de que cualquier persona elegida al azar esté enferma es apenas del 10%. Y calculamos que la probabilidad TOTAL de obtener un examen positivo (mezclando a los enfermos reales y a los falsos positivos de los sanos) era del 14%, o 0.14.
+ * Visual (Manim): Los números reemplazan las variables en la fórmula:
+   
+   
+   El resultado se calcula en pantalla con un efecto de caja registradora: 0.678 (67.8%).
+ * Audio: Apliquemos Bayes. Tomamos el camino de los que realmente están enfermos y dan positivo, que es 0.095, y lo dividimos por nuestro universo de todos los que dieron positivo, que es 0.14. ¿El resultado? 67.8%. ¡Boom! A pesar de que tu prueba tiene una eficacia del 95%, tu probabilidad real de estar enfermo es solo de un 68%.
+Desarrollo: ¿Por qué ocurre esto? (La Paradoja) (2:40 - 3:20)
+ * Visual (Manim): Se muestran 1,000 avatares pequeños en pantalla. 100 se pintan de rojo (Enfermos) y 900 de verde (Sanos). La máquina de pruebas ilumina a 95 rojos (verdaderos positivos) y, debido a su 5% de error, ilumina a 45 verdes (falsos positivos).
+ * Audio: ¿Por qué bajó tanto? A esto se le llama ignorar la tasa base. Como la enfermedad es rara (solo el 10% de la población la tiene), hay muchísimas más personas sanas haciéndose la prueba. Ese 5% de error de la máquina aplicado a una enorme multitud de sanos genera un montón de falsos positivos que "diluyen" los resultados. Bayes toma en cuenta el contexto completo, tu intuición no.
+Cierre, Aplicaciones y CTA (3:20 - 4:00)
+ * Visual (Manim / Gráficos de tecnología): Aparece un filtro de Gmail enviando correos con la palabra "Oferta" a la carpeta de Spam. Luego un submarino amarillo con un radar mapeando el fondo del océano.
+ * Audio: El Teorema de Bayes no solo salva vidas evitando diagnósticos apresurados. Es el motor principal detrás de los filtros de Spam en tu correo y los algoritmos de Machine Learning. Incluso se usó matemáticamente para encontrar submarinos perdidos en el océano, actualizando el mapa de búsqueda cada vez que encontraban una nueva pista.
+ * Visual (Manim): Un mosaico con pequeñas miniaturas abstractas de los conceptos vistos en toda la serie: Dados (Clásica), Gráficas (Frecuentista), Relojes (Geométrica), Árboles (Multiplicación) y la Fórmula de Bayes brillando en el centro.
+ * Audio: Con esto cerramos nuestro viaje por las leyes de la probabilidad. Desde los simples juegos de azar hasta la matemática predictiva que domina la inteligencia artificial. Si dominas esto, dominarás los datos. Si te gustó esta serie, suscríbete, deja un buen like, y cuéntame en los comentarios qué otra rama de las matemáticas o la programación quieres que exploremos. ¡Hasta la próxima!
+
+##  Reglas básicas de probabilidad 
 ## Tecnicas de Conteo 1. yt tecnicas de conteo 2.
