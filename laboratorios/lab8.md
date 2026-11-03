@@ -7,7 +7,7 @@
 - Emplear herramientas digitales y software estadístico para realizar análisis exploratorios, aplicar modelos probabilísticos y comunicar hallazgos con argumentos cuantitativos sólidos.
 
  
-
+  asss
 ## **Resultados de Aprendizaje**
 
 - Recolecto y organizo información cuantitativa y cualitativa de manera sistemática, utilizando instrumentos adecuados para construir bases de datos confiables en distintos contextos.
