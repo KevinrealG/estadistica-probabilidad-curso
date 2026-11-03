@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB (Lab 11)</title>
+<!-- Librería MathJax para renderizar ecuaciones matemáticas en LaTeX -->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    /* Variables globales de diseño institucional UTB */
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    /* Encabezado principal (Hero) */
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    /* Tarjetas de contenido */
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+    /* Menú lateral */
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    /* Estilo de tablas y rúbrica */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; vertical-align: top; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    /* Botones de acción (Colab / Enlaces) */
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.3s ease;
+    }
+    .btn-action:hover {
+        background-color: #dca000;
+    }
+    /* Contenedor responsivo 16:9 para YouTube */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    /* Bloques de código Python */
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+    .callout {
+        background-color: #eef6ff;
+        border-left: 4px solid var(--primary);
+        padding: 1rem;
+        border-radius: 4px;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística y Probabilidad · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 11 (Parte 1): Modelos Probabilísticos Discretos (40 Minutos)</h2>
+<p>Modelado de situaciones aleatorias discretas (Binomial, Binomial Negativa, Poisson e Hipergeométrica) en Python con parametrización algorítmica individual.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Recursos y Código Base</a></li>
+<li><a href="#entregables">Compromisos de Entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Modelar situaciones aleatorias discretas aplicando conceptos de probabilidad, conteo de éxitos, tiempos de espera entre eventos y muestreos sin reemplazo en contextos reales de ingeniería y negocios.</li>
+        <li>Emplear herramientas digitales y librerías científicas en Python (<code>scipy.stats</code>) para parametrizar modelos discretos, simular escenarios personalizados y comunicar hallazgos con argumentos cuantitativos sólidos.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Aplico principios y modelos probabilísticos discretos (Binomial, Binomial Negativa, Hipergeométrica y Poisson) en la evaluación de fenómenos aleatorios parametrizados de forma individual.</li>
+        <li>Utilizo Google Colab y Python para calcular funciones de masa de probabilidad (PMF), momentos estadísticos (esperanza y varianza) y sustentar decisiones operativas basadas en datos.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en esta práctica</h2>
+    <ul>
+        <li><strong>Modelos Probabilísticos Discretos y Función de Masa de Probabilidad (PMF).</strong></li>
+        <li><strong>Distribución Binomial:</strong> ensayos independientes, cálculo de probabilidades y momentos.</li>
+        <li><strong>Distribución Binomial Negativa:</strong> modelado de ensayos fallidos antes del $r$-ésimo éxito.</li>
+        <li><strong>Distribución de Poisson:</strong> modelado de tasas de ocurrencia ($\lambda$) en intervalos de tiempo o espacio.</li>
+        <li><strong>Distribución Hipergeométrica:</strong> muestreo sin reemplazo en poblaciones finitas.</li>
+        <li><strong>Visualización e interpretación comparativa en Python.</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <h3 style="color: var(--primary);">"Auditoría Algorítmica de Operaciones y Riesgo"</h3>
+    <p>Eres el analista principal de datos asignado a auditar una planta automatizada de comercio electrónico. Debido a que cada analista audita una línea de producción distinta, <strong>tus parámetros operativos dependen exclusivamente de los últimos 4 dígitos de tu código estudiantil</strong>. Deberás modelar cuatro fenómenos críticos en tu línea asignada:</p>
+    <ol>
+        <li><strong>Control de Conversión (Binomial):</strong> La planta procesa un lote de pedidos y considera éxito cada envío entregado correctamente; cada pedido tiene la misma probabilidad de éxito y se analiza de forma independiente. Con los parámetros individuales generados a partir de tu código estudiantil ($n$ pedidos y probabilidad de éxito $p$), modela el número de entregas exitosas. Calcula la probabilidad de obtener exactamente una cantidad determinada de éxitos y la de alcanzar o superar una meta operativa, y usa la media esperada para estimar cuántos pedidos del lote llegarían correctamente a su destino.</li>
+        <li><strong>Desgaste de Maquinaria (Binomial Negativa):</strong> Predecir cuántos envíos fallidos ocurrirán antes de alcanzar una cuota fija de entregas exitosas.</li>
+        <li><strong>Tráfico en Servidores (Poisson):</strong> Calcular el riesgo de saturación según la tasa media de pedidos por minuto ($\lambda$).</li>
+        <li><strong>Inspección de Lote Finito (Hipergeométrica):</strong> Determinar la probabilidad de detectar paquetes defectuosos al extraer una muestra de auditoría <strong>sin reemplazo</strong>.</li>
+    </ol>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">2. Recursos Multimedia y Procedimiento Técnico</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1 en SAVIO</h3>
+    <ol>
+        <li>Ingresar a <strong>SAVIO → Semana 14</strong>.</li>
+        <li>Revisar el video guía: <strong>“Laboratorio 14 – Modelos Probabilísticos”</strong>.</li>
+        <li>Abrir el Notebook base en Google Colab: <code>Lab14_Modelos_Discretos.ipynb</code>.</li>
+    </ol>
+
+    <a href="https://colab.research.google.com/drive/1iaYF35JB-Dj2RiN41yUyxv51w1YhM0np" target="_blank" class="btn-action">
+        🚀 Abrir Plantilla en Google Colab
+    </a>
+
+    <!-- Video de YouTube Embebido -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/V9_RTHYqMz8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top: 0.8rem;">🔗 <strong>Enlace directo al video:</strong> <a href="https://youtu.be/V9_RTHYqMz8" target="_blank" style="color: var(--primary); font-weight: bold;">https://youtu.be/V9_RTHYqMz8</a></p>
+
+    <h3 style="color: var(--primary); margin-top: 2rem;">Código Base para el Estudiante</h3>
+    <p>Cada estudiante debe ejecutar esta celda inicial en Google Colab ingresando los <strong>últimos 4 dígitos de su código estudiantil</strong> para generar su entorno único:</p>
+
+    <div class="code-block">
+<pre>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import binom, nbinom, poisson, hypergeom
+
+# ==========================================================
+# PASO CRÍTICO: INGRESA LOS ÚLTIMOS 4 DÍGITOS DE TU CÓDIGO
+# ==========================================================
+mi_codigo = 4829  # &lt;-- Reemplaza con tus últimos 4 dígitos
+np.random.seed(mi_codigo)
+
+# Generación automática de tus parámetros únicos de auditoría
+n_binom = 12 + (mi_codigo % 8)                  # Ensayos entre 12 y 19
+p_exito = round(0.30 + (mi_codigo % 45) / 100, 2) # Probabilidad entre 0.30 y 0.74
+r_exitos = 3 + (mi_codigo % 4)                  # Éxitos objetivo entre 3 y 6
+lambda_pois = 4 + (mi_codigo % 7)               # Tasa Poisson entre 4 y 10
+M_pob = 50                                      # Tamaño del lote finito
+n_def = 8 + (mi_codigo % 7)                     # Defectuosos en el lote
+N_muestra = 10                                  # Muestra extraída sin reemplazo
+
+print(f"--- PARÁMETROS ÚNICOS DEL ANALISTA [{mi_codigo}] ---")
+print(f"1. Binomial: n = {n_binom}, p = {p_exito}")
+print(f"2. Binomial Negativa: r = {r_exitos}, p = {p_exito}")
+print(f"3. Poisson: lambda = {lambda_pois}")
+print(f"4. Hipergeométrica: Lote M={M_pob}, Defectuosos={n_def}, Muestra N={N_muestra}")</pre>
+    </div>
+
+    <div class="callout">
+        <strong>Tareas a desarrollar a partir de tus parámetros únicos:</strong>
+        <ol style="margin-bottom: 0;">
+            <li>Calcular la media teórica $\mu$ y varianza $\sigma^2$ de tus 4 distribuciones usando <code>.stats(moments='mv')</code>.</li>
+            <li>Graficar en un panel $2 \times 2$ las funciones de masa de probabilidad (PMF) de tus 4 modelos con títulos que incluyan tu código estudiantil.</li>
+            <li>Responder en una celda de texto cómo cambia tu gráfica de Poisson si tu tasa $\lambda$ se incrementa en un 50%.</li>
+        </ol>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    <h3 style="color: var(--primary);">📌 Entregable Parte 1 (Subida en SAVIO al finalizar los primeros 40 min)</h3>
+    <p>Un único archivo <strong>PDF exportado desde Google Colab</strong> que contenga:</p>
+    <ol>
+        <li><strong>Bloque de Identificación y Semilla:</strong> Ejecución visible de la celda con su código estudiantil y sus parámetros generados.</li>
+        <li><strong>Modelado de las 4 Distribuciones:</strong> Código funcional, cálculo de probabilidades puntuales/acumuladas y momentos ($\mu, \sigma^2$) para Binomial, Binomial Negativa, Poisson e Hipergeométrica.</li>
+        <li><strong>Panel Visual:</strong> Los 4 gráficos de barras/tallos (PMF) correctamente rotulados con el código del estudiante en el título.</li>
+        <li><strong>Simulación Autónoma y Conclusión Ejecutiva:</strong> Gráfico comparativo del escenario modificado (incremento del 50% en $\lambda$) y un párrafo de análisis conectando los resultados con la toma de decisiones operativas.</li>
+    </ol>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Informe del Lab (Parte 1)</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 4 – Excelente (5.0)</th>
+                    <th>Nivel 3 – Bueno (4.0)</th>
+                    <th>Nivel 2 – Aceptable (3.0)</th>
+                    <th>Nivel 1 – Insuficiente (1.0 - 2.9)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Individualización y Código en Python (20%)</strong></td>
+                    <td>Configura correctamente su semilla con su código estudiantil; el script es limpio, comentado y 100% funcional.</td>
+                    <td>Configura su semilla correctamente; el código funciona con leves detalles de orden o comentarios.</td>
+                    <td>Usa parámetros genéricos sin personalizar su semilla o presenta errores de sintaxis parciales.</td>
+                    <td>No incluye código funcional o copia los parámetros de otro compañero.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Aplicación de los 4 Modelos Discretos (25%)</strong></td>
+                    <td>Calcula con exactitud PMF, CDF y momentos (media y varianza) de las 4 distribuciones usando sus parámetros únicos.</td>
+                    <td>Calcula correctamente al menos 3 de las 4 distribuciones con sus momentos estadísticos.</td>
+                    <td>Aplica las funciones de SciPy de forma incompleta o confunde los parámetros de entrada.</td>
+                    <td>No construye los modelos discretos solicitados.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Calidad Gráfica de la PMF (20%)</strong></td>
+                    <td>Genera los 4 gráficos claros, con ejes rotulados, títulos personalizados e identificación visual del valor esperado.</td>
+                    <td>Genera los gráficos correctamente pero omite rótulos secundarios o personalización en títulos.</td>
+                    <td>Gráficos incompletos, superpuestos o con escalas en el eje X mal definidas.</td>
+                    <td>No presenta las gráficas de las distribuciones.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Escenario Autónomo de Sensibilidad (20%)</strong></td>
+                    <td>Ejecuta la variación autónoma de parámetros ($\lambda + 50\%$) y contrasta rigurosamente el cambio en la dispersión y asimetría.</td>
+                    <td>Ejecuta la variación de parámetros pero la explicación comparativa es breve o superficial.</td>
+                    <td>Modifica los parámetros sin generar el gráfico comparativo ni explicar el impacto.</td>
+                    <td>No realiza el ejercicio autónomo de sensibilidad.</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Argumentación y Entrega en PDF (15%)</strong></td>
+                    <td>Entrega el PDF bien estructurado; redacta conclusiones gerenciales conectadas con las competencias del curso.</td>
+                    <td>Entrega el PDF completo con conclusiones descriptivas correctas pero poco aplicadas al contexto.</td>
+                    <td>Entrega desorganizada o con conclusiones de menos de dos líneas sin sustento numérico.</td>
+                    <td>No entrega en formato PDF o carece de conclusiones.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Estadística y Probabilidad · Universidad Tecnológica de Bolívar<br>
+    
+</footer>
+</body></html>

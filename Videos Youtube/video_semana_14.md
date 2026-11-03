@@ -2,4 +2,5 @@
 2. 📹 Video 5: Distribución de Bernoulli parte 1
 2. 📹 Video 5: Distribución de Bernoulli parte 2
 3. Binomial parte 1:
+## Tecnicas de Conteo 1. yt tecnicas de conteo 2.
 

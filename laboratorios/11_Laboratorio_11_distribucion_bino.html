@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB (Lab 11)</title>
+<!-- Librería MathJax para renderizar ecuaciones matemáticas en LaTeX -->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    /* Variables globales de diseño institucional UTB */
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    /* Encabezado principal (Hero) */
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    /* Tarjetas de contenido */
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+    /* Menú lateral */
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    /* Estilo de tablas y rúbrica */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; vertical-align: top; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    /* Botones de acción (Colab / Enlaces) */
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.3s ease;
+    }
+    .btn-action:hover {
+        background-color: #dca000;
+    }
+    /* Contenedor responsivo 16:9 para YouTube */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    /* Bloques de código Python */
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+    .callout {
+        background-color: #eef6ff;
+        border-left: 4px solid var(--primary);
+        padding: 1rem;
+        border-radius: 4px;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística y Probabilidad · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 11 (Parte 1): Distribución Binomial (40 Minutos)</h2>
+<p>Modelado de la conversión de pedidos mediante la distribución binomial en Python con parametrización algorítmica individual.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Recursos y Código Base</a></li>
+<li><a href="#entregables">Compromisos de Entrega</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Modelar el número de entregas exitosas en lotes de pedidos mediante ensayos independientes con probabilidad de éxito constante.</li>
+        <li>Emplear Python y <code>scipy.stats</code> para calcular probabilidades y momentos de la distribución binomial, visualizar resultados y comunicar conclusiones operativas.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Aplico la distribución binomial para evaluar el número de entregas exitosas en un lote de pedidos con parámetros individualizados.</li>
+        <li>Utilizo Google Colab y Python para calcular funciones de masa de probabilidad (PMF), momentos estadísticos (esperanza y varianza) y sustentar decisiones operativas basadas en datos.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en esta práctica</h2>
+    <ul>
+        <li><strong>Distribución Binomial:</strong> ensayos independientes con probabilidad de éxito constante.</li>
+        <li><strong>Función de masa de probabilidad (PMF) y función de distribución acumulada (CDF).</strong></li>
+        <li><strong>Media, varianza e interpretación operativa del número de éxitos.</strong></li>
+        <li><strong>Visualización e interpretación de resultados en Python.</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <h3 style="color: var(--primary);">"Auditoría Algorítmica de Operaciones y Riesgo"</h3>
+    <p>Eres el analista principal de datos asignado a auditar una planta automatizada de comercio electrónico. Debido a que cada analista audita una línea de producción distinta, <strong>tus parámetros operativos dependen exclusivamente de los últimos 4 dígitos de tu código estudiantil</strong>. Analizarás la conversión de pedidos de tu línea de producción:</p>
+    <ol>
+        <li><strong>Control de Conversión (Binomial):</strong> La planta procesa un lote de pedidos y considera éxito cada envío entregado correctamente; cada pedido tiene la misma probabilidad de éxito y se analiza de forma independiente. Con los parámetros individuales generados a partir de tu código estudiantil ($n$ pedidos y probabilidad de éxito $p$), modela el número de entregas exitosas. Calcula la probabilidad de obtener exactamente una cantidad determinada de éxitos y la de alcanzar o superar una meta operativa, y usa la media esperada para estimar cuántos pedidos del lote llegarían correctamente a su destino.</li>
+    </ol>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">2. Recursos Multimedia y Procedimiento Técnico</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1 en SAVIO</h3>
+    <ol>
+        <li>Ingresar a <strong>SAVIO → Semana 14</strong>.</li>
+        <li>Revisar el video guía: <strong>“Laboratorio 14 – Modelos Probabilísticos”</strong>.</li>
+        <li>Abrir el Notebook base en Google Colab: <code>Lab14_Modelos_Discretos.ipynb</code>.</li>
+    </ol>
+
+    <a href="https://colab.research.google.com/drive/1iaYF35JB-Dj2RiN41yUyxv51w1YhM0np" target="_blank" class="btn-action">
+        🚀 Abrir Plantilla en Google Colab
+    </a>
+
+    <!-- Video de YouTube Embebido -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/V9_RTHYqMz8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top: 0.8rem;">🔗 <strong>Enlace directo al video:</strong> <a href="https://youtu.be/V9_RTHYqMz8" target="_blank" style="color: var(--primary); font-weight: bold;">https://youtu.be/V9_RTHYqMz8</a></p>
+
+    <h3 style="color: var(--primary); margin-top: 2rem;">Código Base para el Estudiante</h3>
+    <p>Cada estudiante debe ejecutar esta celda inicial en Google Colab ingresando los <strong>últimos 4 dígitos de su código estudiantil</strong> para generar su entorno único:</p>
+
+    <div class="code-block">
+<pre>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import binom
+
+# ==========================================================
+# PASO CRÍTICO: INGRESA LOS ÚLTIMOS 4 DÍGITOS DE TU CÓDIGO
+# ==========================================================
+mi_codigo = 4829  # &lt;-- Reemplaza con tus últimos 4 dígitos
+np.random.seed(mi_codigo)
+
+# Generación automática de tus parámetros binomiales
+n_binom = 12 + (mi_codigo % 8)                  # Ensayos entre 12 y 19
+p_exito = round(0.30 + (mi_codigo % 45) / 100, 2) # Probabilidad entre 0.30 y 0.74
+p_exito_mejorada = min(p_exito * 1.20, 1.0)     # Aumento relativo del 20%
+
+print(f"--- PARÁMETROS ÚNICOS DEL ANALISTA [{mi_codigo}] ---")
+print(f"1. Binomial: n = {n_binom}, p = {p_exito}")
+print(f"Escenario con tasa de éxito 20% mayor: p = {p_exito_mejorada:.3f}")
+print(f"Número esperado de entregas exitosas: {n_binom * p_exito:.2f}")
+print(f"Número esperado con la tasa mejorada: {n_binom * p_exito_mejorada:.2f}")</pre>
+    </div>
+
+    <div class="callout">
+        <strong>Tareas a desarrollar a partir de tus parámetros únicos:</strong>
+        <ol style="margin-bottom: 0;">
+            <li>Calcular la media teórica $\mu$ y la varianza $\sigma^2$ de tu distribución binomial usando <code>binom.stats(n_binom, p_exito, moments='mv')</code>.</li>
+            <li>Graficar en un panel la funcion de masa de probabilidad (PMF). Incluye leyenda, ejes rotulados, título con tu código estudiantil y marca o comenta los valores esperados.</li>
+            
+            <li>Incrementar en un 20% relativo la tasa de éxito original ($p_{\text{mejorada}} = 1.20p$, sin superar 1) y calcular la nueva distribución binomial manteniendo constante el tamaño del lote $n$.</li>
+            <li>Calcular y comparar, para ambos escenarios, la probabilidad de alcanzar o superar una misma meta operativa; interpreta cómo cambia el resultado para la planta.</li>
+        </ol>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    <h3 style="color: var(--primary);">📌 Entregable Parte 1 (Subida en SAVIO al finalizar los primeros 40 min)</h3>
+    <p>Un único archivo <strong>PDF exportado desde Google Colab</strong> que contenga:</p>
+    <ol>
+        <li><strong>Bloque de Identificación y Semilla:</strong> Ejecución visible de la celda con su código estudiantil y sus parámetros generados.</li>
+        <li><strong>Modelado Binomial:</strong> Código funcional y cálculo de probabilidades puntuales y acumuladas, media y varianza ($\mu, \sigma^2$) usando los parámetros individuales.</li>
+        <li><strong>Gráfica Comparativa:</strong> PMF del escenario original y del escenario con la tasa de éxito aumentada en un 20% relativo, representadas en los mismos ejes con leyenda, rótulos, código estudiantil y valores esperados identificados.</li>
+        <li><strong>Análisis y Conclusión Ejecutiva:</strong> Comparación de la probabilidad de alcanzar la misma meta operativa en ambos escenarios y explicación del impacto del aumento de la tasa de éxito en las decisiones de la planta.</li>
+    </ol>
+</section>
+
+</main>
+</div>
+<footer>
+    © 2026 · Estadística y Probabilidad · Universidad Tecnológica de Bolívar<br>
+    
+</footer>
+</body></html>
