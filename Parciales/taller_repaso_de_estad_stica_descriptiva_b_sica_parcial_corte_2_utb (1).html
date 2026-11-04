@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller de Repaso Estadística Descriptiva (UTB)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --utb-navy: #0f2942;
+      --utb-blue: #1d4ed8;
+      --utb-accent: #0284c7;
+      --utb-light: #f0f7ff;
+      --ink: #111827;
+      --ink-muted: #4b5563;
+      --border: #cbd5e1;
+      --border-dark: #334155;
+      --bg-app: #e2e8f0;
+      --sheet-bg: #ffffff;
+      --sol-bg: #ecfdf5;
+      --sol-border: #059669;
+      --sol-text: #065f46;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-app);
+      color: var(--ink);
+      line-height: 1.38;
+      padding-bottom: 3rem;
+    }
+
+    /* Top Interactive Control Bar (Hidden in Print) */
+    .control-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--utb-navy);
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      box-shadow: 0 4px 12px rgba(15, 41, 66, 0.25);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-badge {
+      background: #ffffff;
+      color: var(--utb-navy);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-group {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem;
+      border-radius: 8px;
+      gap: 0.2rem;
+    }
+
+    .toolbar-btn {
+      border: none;
+      background: transparent;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .toolbar-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .toolbar-btn.active {
+      background: #ffffff;
+      color: var(--utb-navy);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-print {
+      background: #10b981;
+      color: #ffffff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.48rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.15s ease;
+    }
+
+    .btn-print:hover {
+      background: #059669;
+    }
+
+    /* Pedagogical Verification Banner */
+    .info-drawer {
+      max-width: 216mm;
+      margin: 1rem auto 0;
+      background: #ffffff;
+      border-left: 5px solid var(--utb-blue);
+      border-radius: 8px;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+      font-size: 0.82rem;
+    }
+
+    .info-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: var(--utb-navy);
+      margin-bottom: 0.45rem;
+      font-size: 0.88rem;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .time-card {
+      background: var(--utb-light);
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+    }
+
+    .time-card strong {
+      display: block;
+      color: var(--utb-navy);
+      font-size: 0.78rem;
+    }
+
+    .time-card span {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+    }
+
+    /* Exam Sheet Container (Letter / A4 Printable Proportions) */
+    .exam-wrapper {
+      max-width: 216mm;
+      margin: 1rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .exam-version-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .exam-sheet {
+      background: var(--sheet-bg);
+      width: 100%;
+      padding: 10mm 12mm;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+      border-radius: 4px;
+      position: relative;
+      border: 1px solid #cbd5e1;
+    }
+
+    .print-blank-page {
+      display: none;
+    }
+
+    /* Institutional Header requested by User */
+    .inst-header {
+      text-align: center;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 0.45rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .inst-header .uni-name {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .inst-header .dept-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .inst-header .course-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .inst-header .exam-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--utb-navy);
+      margin-top: 0.12rem;
+    }
+
+    .workshop-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border-dark);
+      padding: 0.28rem 0.65rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.77rem;
+      font-weight: 700;
+    }
+
+    .student-fields {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-size: 0.81rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      padding: 0.1rem 0;
+    }
+
+    .field-line {
+      flex: 1;
+      border-bottom: 1px solid var(--ink);
+      display: inline-block;
+      min-width: 120px;
+      height: 0.95rem;
+    }
+
+    .instructions-box {
+      background: #f8fafc;
+      border: 1px solid #94a3b8;
+      border-radius: 4px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.73rem;
+      line-height: 1.35;
+      margin-bottom: 0.55rem;
+      text-align: justify;
+    }
+
+    .instructions-box strong {
+      color: var(--utb-navy);
+    }
+
+    /* Two-Column Exam Layout */
+    .two-col-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      align-items: start;
+    }
+
+    .col-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 0.48rem;
+    }
+
+    .section-heading {
+      background: var(--utb-navy);
+      color: #ffffff;
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 0.25rem 0.55rem;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .q-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 0.4rem 0.52rem;
+      background: #ffffff;
+      font-size: 0.73rem;
+    }
+
+    .q-stem {
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      text-align: justify;
+    }
+
+    .q-num {
+      font-weight: 800;
+      color: var(--utb-navy);
+    }
+
+    .q-pts {
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: #334155;
+      background: #e2e8f0;
+      padding: 0.05rem 0.35rem;
+      border-radius: 3px;
+      margin-left: 0.2rem;
+      white-space: nowrap;
+    }
+
+    .options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+      padding-left: 0.1rem;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+      font-size: 0.71rem;
+      line-height: 1.3;
+      padding: 0.1rem 0.2rem;
+      border-radius: 3px;
+    }
+
+    .opt-bubble {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border: 1.3px solid #334155;
+      border-radius: 50%;
+      font-size: 0.62rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.08rem;
+    }
+
+    /* Calculation Exercise Card (3.0 points total with explicit weights) */
+    .dev-card {
+      border: 1.5px solid #64748b;
+      border-radius: 4px;
+      padding: 0.48rem 0.58rem;
+      background: #fcfdff;
+      font-size: 0.73rem;
+    }
+
+    .weighted-subquestions {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.24rem;
+      margin: 0.3rem 0 0.42rem 0;
+      font-size: 0.71rem;
+      line-height: 1.32;
+    }
+
+    .weighted-subquestions li {
+      padding-left: 0.2rem;
+      border-left: 2.5px solid #94a3b8;
+    }
+
+    .weight-tag {
+      display: inline-block;
+      font-weight: 800;
+      color: var(--utb-navy);
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 0.02rem 0.3rem;
+      border-radius: 3px;
+      font-size: 0.66rem;
+      margin-right: 0.25rem;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.32rem 0.55rem;
+      background: #f8fafc;
+      border: 1px dashed #64748b;
+      padding: 0.42rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.3rem;
+    }
+
+    .result-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .result-row.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .pts-mini {
+      font-size: 0.62rem;
+      color: #475569;
+      font-weight: 700;
+    }
+
+    .ans-blank {
+      flex: 1;
+      border-bottom: 1.2px solid #0f172a;
+      min-width: 55px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--sol-text);
+      padding: 0 0.15rem;
+    }
+
+    .back-notice {
+      font-size: 0.66rem;
+      font-style: italic;
+      color: #475569;
+      margin-top: 0.28rem;
+      text-align: right;
+    }
+
+    /* Data-based Interpretative Question Card (1.0 point, max 4 sentences) */
+    .interp-card {
+      border: 1.5px solid #0f2942;
+      border-radius: 4px;
+      padding: 0.45rem 0.58rem;
+      background: #ffffff;
+      font-size: 0.72rem;
+    }
+
+    .data-pill-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 3px;
+      padding: 0.3rem 0.45rem;
+      font-size: 0.69rem;
+      margin: 0.25rem 0 0.35rem 0;
+      line-height: 1.32;
+    }
+
+    .four-lines-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+      margin-top: 0.35rem;
+      padding-top: 0.1rem;
+    }
+
+    .write-line {
+      border-bottom: 1px solid #475569;
+      height: 1.05rem;
+      font-size: 0.68rem;
+      color: #64748b;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .score-summary-box {
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      padding: 0.32rem 0.55rem;
+      background: #f8fafc;
+      font-size: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    /* Back Page (Respaldo: Shared Dataset + Workspace) */
+    .respaldo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--utb-navy);
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .respaldo-header h3 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--utb-navy);
+      text-transform: uppercase;
+    }
+
+    .vars-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 0.32rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.71rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dataset-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      margin-bottom: 0.5rem;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.69rem;
+    }
+
+    .data-table th {
+      background: var(--utb-navy);
+      color: #ffffff;
+      font-weight: 700;
+      padding: 0.2rem 0.35rem;
+      border: 1px solid #1e293b;
+      text-align: center;
+    }
+
+    .data-table td {
+      padding: 0.14rem 0.35rem;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+    }
+
+    .data-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .helper-sums-box {
+      background: #fffbeb;
+      border: 1px solid #f59e0b;
+      border-radius: 4px;
+      padding: 0.38rem 0.6rem;
+      font-size: 0.7rem;
+      margin-bottom: 0.55rem;
+      line-height: 1.38;
+    }
+
+    .helper-sums-box strong {
+      color: #92400e;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .work-panel {
+      border: 1.2px dashed #64748b;
+      border-radius: 4px;
+      min-height: 86mm;
+      padding: 0.45rem 0.55rem;
+      background-image: linear-gradient(#f1f5f9 1px, transparent 1px);
+      background-size: 100% 6mm;
+    }
+
+    .work-panel-title {
+      font-size: 0.71rem;
+      font-weight: 700;
+      color: var(--utb-navy);
+      background: #ffffff;
+      display: inline-block;
+      padding-right: 0.4rem;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    /* Teacher Solution Mode Styling */
+    .sol-only {
+      display: none;
+    }
+
+    body.mode-teacher .sol-only {
+      display: block;
+    }
+
+    body.mode-teacher .ans-blank .sol-val {
+      display: inline;
+    }
+
+    .ans-blank .sol-val {
+      display: none;
+    }
+
+    body.mode-teacher .four-lines-box {
+      display: none;
+    }
+
+    body.mode-teacher .option-item.correct-opt {
+      background: var(--sol-bg);
+      border: 1px solid var(--sol-border);
+      color: var(--sol-text);
+      font-weight: 700;
+    }
+
+    body.mode-teacher .option-item.correct-opt .opt-bubble {
+      background: var(--sol-border);
+      color: #ffffff;
+      border-color: var(--sol-border);
+    }
+
+    .sol-rationale {
+      margin-top: 0.28rem;
+      padding: 0.28rem 0.45rem;
+      background: var(--sol-bg);
+      border-left: 3px solid var(--sol-border);
+      color: var(--sol-text);
+      font-size: 0.68rem;
+      border-radius: 2px;
+      line-height: 1.35;
+    }
+
+    .sol-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.67rem;
+      margin-top: 0.25rem;
+      background: #ffffff;
+    }
+
+    .sol-table th, .sol-table td {
+      border: 1px solid #94a3b8;
+      padding: 0.15rem 0.3rem;
+      text-align: center;
+    }
+
+    .sol-table th {
+      background: #d1fae5;
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    .hidden-el {
+      display: none !important;
+    }
+
+    /* Responsive adjustments for smaller Canvas viewports */
+    @media (max-width: 760px) {
+      .exam-sheet {
+        padding: 6mm;
+      }
+      .two-col-layout,
+      .dataset-two-col,
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+      .student-fields {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    /* Print Rules: Strict 2-column Front Page + Back Page per Version */
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 8mm 10mm;
+      }
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .exam-wrapper {
+        max-width: 100%;
+        margin: 0;
+        gap: 0;
+      }
+      .exam-version-block {
+        gap: 0;
+      }
+      .exam-sheet {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        page-break-after: always;
+        break-after: page;
+      }
+      .print-blank-page {
+        display: block;
+        flex: 0 0 263mm;
+        height: 263mm;
+        page-break-after: always;
+        break-after: page;
+      }
+      .two-col-layout {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 5.5mm !important;
+      }
+      .dataset-two-col,
+      .work-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Interactive Control Bar -->
+  <header class="control-bar no-print">
+    <div class="brand-group">
+      <span class="brand-badge">UTB</span>
+      <div>
+        <div class="brand-title">Taller de Repaso Estadística Descriptiva</div>
+        <div class="brand-subtitle">3 Versiones (A, B, C) • 5 Selección Múltiple (1.0 pt) + 1 Cálculo Ponderado (3.0 pts) + 1 Interpretativa (1.0 pt)</div>
+      </div>
+    </div>
+
+    <div class="toolbar-actions">
+      <div class="btn-group" role="group" aria-label="Selector de versión">
+        <button type="button" class="toolbar-btn active" id="btn-ver-all" data-version="all">Todas (A, B, C)</button>
+        <button type="button" class="toolbar-btn" id="btn-ver-a" data-version="A">Versión A</button>
+        <button type="button" class="toolbar-btn" id="btn-ver-b" data-version="B">Versión B</button>
+        <button type="button" class="toolbar-btn" id="btn-ver-c" data-version="C">Versión C</button>
+      </div>
+
+      <div class="btn-group" role="group" aria-label="Modo de visualización">
+        <button type="button" class="toolbar-btn active" id="btn-mode-student" data-mode="student">Vista Estudiante</button>
+        <button type="button" class="toolbar-btn" id="btn-mode-teacher" data-mode="teacher">Solucionario Docente</button>
+      </div>
+
+      <div class="btn-group" role="group" aria-label="Sumatorias de apoyo">
+        <button type="button" class="toolbar-btn active" id="btn-ToggleSums">Ocultar/Mostrar Sumatorias</button>
+      </div>
+
+      <button type="button" class="btn-print" id="btn-print-exam">
+        Imprimir / PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- Pedagogical & Time Verification Banner (Non-printing) -->
+  <section class="info-drawer no-print" id="time-verification-banner">
+    <div class="info-drawer-header">
+      <span>Distribución de Puntaje (5.0 Puntos) y Verificación de Tiempos (Duración: 60 min)</span>
+      <span style="font-size:0.75rem; color:#0284c7;">Teóricas: 1.0 pt (5 &times; 0.2) &bull; Ejercicio de Cálculo: 3.0 pts &bull; Interpretativa de Datos: 1.0 pt</span>
+    </div>
+    <p style="color:#334155; font-size:0.78rem;">
+      Con un único ejercicio integrador de cálculo (<strong>3.0 puntos</strong> desglosados por inciso) y una pregunta interpretativa basada en indicadores del dataset (<strong>1.0 punto</strong>, máximo 4 oraciones), el estudiante completa la prueba en <strong>45 a 50 minutos</strong>:
+    </p>
+    <div class="time-grid">
+      <div class="time-card">
+        <strong>1. Parte I: 5 Preguntas Cerradas (5 &times; 0.2 = 1.0 pt)</strong>
+        <span>~10 min (2 min c/u). Evalúa lectura de gráficos (histograma, barras, pastel, boxplot, dispersión) y conceptos teóricos.</span>
+      </div>
+      <div class="time-card">
+        <strong>2. Parte II: 1 Ejercicio de Cálculo (3.0 pts)</strong>
+        <span>~25–28 min. Cinco incisos ponderados (0.6 pts c/u = 3.0 pts) con espacios para resultados finales en el frente y desarrollo en el respaldo.</span>
+      </div>
+      <div class="time-card">
+        <strong>3. Parte III: 1 Pregunta Interpretativa (1.0 pt)</strong>
+        <span>~8–10 min. Análisis estadístico aplicado basado en datos reales del grupo (máximo 4 oraciones breves y directas).</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Exam Wrapper -->
+  <main class="exam-wrapper" id="exam-container">
+
+    <!-- =====================================================================
+         VERSIÓN A (ANVERSO + RESPALDO)
+         ===================================================================== -->
+    <section class="exam-version-block" data-version-block="A" id="version-block-A">
+      <!-- ANVERSO VERSIÓN A -->
+      <article class="exam-sheet">
+        <div class="inst-header">
+          <div class="uni-name">Universidad Tecnológica de Bolívar</div>
+          <div class="dept-name">Dirección de Ciencias Básicas</div>
+          <div class="course-name">Estadística y Probabilidades</div>
+          <div class="exam-title">Taller de Repaso Estadística Descriptiva – Estadística Bivariada</div>
+        </div>
+
+        <div class="workshop-banner">
+          <span>Taller repaso de Estadística Descriptiva Básica</span>
+          <span>Duración: 1 hora &bull; Nota máxima: 5.0 puntos</span>
+        </div>
+
+        <div class="student-fields">
+          <div style="flex: 2; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Nombre:</span>
+            <span class="field-line"></span>
+          </div>
+          <div style="flex: 1; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Grupo:</span>
+            <span class="field-line"></span>
+          </div>
+        </div>
+
+        <div class="instructions-box">
+          <strong>Instrucciones:</strong> Realice todos los procedimientos necesarios. Justifique los cálculos realizados e interprete cada resultado en el contexto del problema. Se permite el uso de calculadora científica. El dataset es el mismo para todos (30 personas) y se encuentra en el respaldo. En la Parte I (<strong>1.0 punto</strong>), marque una única opción. En la Parte II (<strong>3.0 puntos</strong>), escriba <strong>únicamente los resultados finales</strong> en los espacios en blanco y desarrolle las tablas y procedimientos en el respaldo. En la Parte III (<strong>1.0 punto</strong>), responda en un máximo de 4 oraciones.
+        </div>
+
+        <!-- 2-COLUMN BODY VERSIÓN A -->
+        <div class="two-col-layout">
+          <!-- COLUMNA IZQUIERDA (VERSIÓN A) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte I. Selección Múltiple</span>
+              <span>5 &times; 0.2 = 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 1A -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">1.</span> ¿Cuál es la diferencia fundamental entre una tabla de frecuencia para una variable categórica y una para una variable numérica agrupada en intervalos? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>En la categórica no se pueden calcular frecuencias relativas (<i>h<sub>i</sub></i>), mientras que en la agrupada sí.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>En la categórica las clases son modalidades cualitativas discretas, mientras que en la agrupada se particiona el rango en intervalos contiguos con marcas de clase (<i>x<sub>m</sub></i>) y frecuencias acumuladas por orden natural.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>En la tabla agrupada el tamaño de muestra <i>n</i> disminuye al construir los intervalos de clase.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Las tablas categóricas requieren calcular la amplitud como <i>A</i> = (Máx &minus; Mín) / <i>k</i>.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> Las variables numéricas agrupadas requieren intervalos ordenados y marcas de clase (<i>x<sub>m</sub></i>) para resumir valores continuos.
+              </div>
+            </div>
+
+            <!-- Pregunta 2A -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">2.</span> Al analizar una variable cuantitativa con valores extremos atípicos muy altos, ¿por qué la mediana representa mejor el centro de los datos que la media aritmética? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>Porque la mediana utiliza el cuadrado de todas las observaciones en su fórmula.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>Porque la mediana siempre coincide con el valor máximo de la distribución.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>Porque la mediana es una medida de posición robusta que depende del orden central (<i>P</i><sub>50</sub>) y no se desplaza ante observaciones extremas.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Porque la media solo puede calcularse cuando la desviación estándar es igual a cero.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> La media es sensible a valores atípicos, mientras que la mediana (<i>Q</i><sub>2</sub> = <i>P</i><sub>50</sub>) es resistente a colas largas.
+              </div>
+            </div>
+
+            <!-- Pregunta 3A -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">3.</span> Si el histograma de una variable cuantitativa presenta una cola larga extendida hacia la derecha, ¿qué se concluye sobre su distribución? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item correct-opt"><span class="opt-bubble">A</span><span>Presenta asimetría positiva (sesgo a la derecha), por lo que típicamente Moda &lt; Mediana &lt; Media.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>Presenta asimetría negativa (sesgo a la izquierda), siendo la media menor que la mediana.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>La distribución es perfectamente simétrica y su rango intercuartílico es nulo.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Es preferible sustituir el histograma por un gráfico de pastel con 30 sectores individuales.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: A.</strong> La cola derecha arrastra la media aritmética hacia valores mayores que la mediana y la moda.
+              </div>
+            </div>
+
+            <!-- Pregunta 4A -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">4.</span> ¿Qué información aporta una tabla de contingencia entre <em>Programa</em> y <em>Jornada</em> que no puede obtenerse de dos tablas univariadas separadas? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>El total general de estudiantes evaluados en la muestra (<i>n</i> = 30).</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>La media aritmética y la varianza exacta del promedio académico.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>Las frecuencias conjuntas y las distribuciones condicionales para evaluar si existe asociación entre ambas variables categóricas.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Únicamente las frecuencias marginales de cada programa académico.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> Las tablas univariadas solo muestran los marginales; la tabla cruzada revela la distribución conjunta y condicional.
+              </div>
+            </div>
+
+            <!-- Pregunta 5A -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">5.</span> En un diagrama de dispersión entre dos variables numéricas se obtiene un coeficiente de correlación de Pearson <i>r</i> = 0.85. ¿Cuál es la interpretación correcta? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>Por cada unidad que aumenta <i>X</i>, la variable <i>Y</i> aumenta exactamente 0.85 unidades y existe relación causal probada.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>Existe una asociación lineal positiva fuerte entre ambas variables: a medida que <i>X</i> aumenta, <i>Y</i> tiende linealmente a aumentar.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>El 85% de la varianza de <i>Y</i> queda explicada por la recta de regresión (<i>R</i><sup>2</sup> = 0.85).</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>La covarianza entre las dos variables es negativa (<i>s<sub>xy</sub></i> &lt; 0).</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> <i>r</i> = 0.85 indica correlación lineal positiva fuerte; el porcentaje explicado es <i>R</i><sup>2</sup> = 0.85<sup>2</sup> = 72.25%.
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA (VERSIÓN A) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte II. Ejercicio Único de Cálculo</span>
+              <span>Total: 3.0 pts</span>
+            </div>
+
+            <!-- Ejercicio 6A (3.0 puntos desglosados) -->
+            <div class="dev-card">
+              <div class="q-stem">
+                <span class="q-num">6. Análisis Descriptivo Univariado y Bivariado</span> <span class="q-pts">(3.0 puntos)</span>
+              </div>
+              <p style="font-size:0.71rem; color:#334155;">
+                Con el dataset de 30 estudiantes del respaldo, realice los procedimientos en el reverso y registre aquí los resultados finales (cada inciso vale <strong>0.6 puntos</strong>):
+              </p>
+              <ul class="weighted-subquestions">
+                <li><span class="weight-tag">a) 0.6 pts</span> Construya en el respaldo la tabla agrupada de <strong>Horas de estudio/semana (<i>X</i>)</strong> en 4 intervalos: [5, 9), [9, 13), [13, 17) y [17, 21], e indique la frecuencia absoluta y relativa de [9, 13).</li>
+                <li><span class="weight-tag">b) 0.6 pts</span> Para <strong>Horas de estudio (<i>X</i>)</strong>, calcule la media (<i>x&#772;</i>), la mediana (<i>Me</i>) y el percentil 80 (<i>P</i><sub>80</sub>).</li>
+                <li><span class="weight-tag">c) 0.6 pts</span> Para <strong>Horas de estudio (<i>X</i>)</strong>, calcule la desviación estándar muestral (<i>s<sub>x</sub></i>), el coeficiente de variación (<i>CV</i>%) y el rango intercuartílico (<i>RIC</i>).</li>
+                <li><span class="weight-tag">d) 0.6 pts</span> Construya en el respaldo la tabla de contingencia <strong>Programa &times; Jornada</strong> y reporte el porcentaje de estudiantes en <em>Ingeniería Diurna</em>.</li>
+                <li><span class="weight-tag">e) 0.6 pts</span> Determine la recta de mínimos cuadrados (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>), el coeficiente de determinación (<i>R</i><sup>2</sup>) y el promedio estimado para <i>X</i> = 14 horas.</li>
+              </ul>
+
+              <div class="results-grid">
+                <div class="result-row"><span>a) <i>f<sub>i</sub></i> y <i>h<sub>i</sub></i> en [9, 13) <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">fi = 12 | hi = 40.0%</span></span></div>
+                <div class="result-row"><span>b) Media (<i>x&#772;</i>) / <i>Me</i> <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">12.00 h / 12.00 h</span></span></div>
+                <div class="result-row"><span>b) Percentil 80 (<i>P</i><sub>80</sub>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">16.00 h</span></span></div>
+                <div class="result-row"><span>c) Desv. Est. (<i>s<sub>x</sub></i>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">4.16 h (Agr: 3.84)</span></span></div>
+                <div class="result-row"><span>c) C.V. (%) / <i>RIC</i> <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">34.67% | RIC = 6.0 h</span></span></div>
+                <div class="result-row"><span>d) % Ing. Diurna <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">43.33% (13/30)</span></span></div>
+                <div class="result-row"><span>e) Coef. Det. (<i>R</i><sup>2</sup>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">0.9760 (97.60%)</span></span></div>
+                <div class="result-row full-width"><span>e) Recta (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>) y <i>Y&#770;</i>(14) <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">Ŷ = 2.3490 + 0.1209X | Ŷ(14) = 4.04</span></span></div>
+              </div>
+              <div class="back-notice">* Todos los procedimientos, tablas y justificaciones deben constar en el respaldo.</div>
+            </div>
+
+            <div class="section-heading">
+              <span>Parte III. Pregunta Interpretativa Basada en Datos</span>
+              <span>Valor: 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 7A (1.0 punto - máx 4 oraciones) -->
+            <div class="interp-card">
+              <div class="q-stem">
+                <span class="q-num">7. Análisis Comparativo por Jornada</span> <span class="q-pts">(1.0 punto &bull; Máx. 4 oraciones)</span>
+              </div>
+              <div class="data-pill-box">
+                <strong>Resumen del Dataset (<i>n</i> = 30):</strong><br/>
+                &bull; <strong>Jornada Diurna (<i>n</i> = 19):</strong> Promedio con Mediana = 4.20, <i>Q</i><sub>1</sub> = 3.80, <i>Q</i><sub>3</sub> = 4.50 (<i>RIC</i> = 0.70) y media de estudio de 14.37 h/semana.<br/>
+                &bull; <strong>Jornada Nocturna (<i>n</i> = 11):</strong> Promedio con Mediana = 3.30, <i>Q</i><sub>1</sub> = 3.10, <i>Q</i><sub>3</sub> = 3.40 (<i>RIC</i> = 0.30) y media de estudio de 7.91 h/semana.
+              </div>
+              <p style="font-size:0.71rem; color:#1f2937; text-align:justify;">
+                Con base en estos indicadores (equivalentes a un <em>boxplot comparativo</em>), redacte en <strong>máximo 4 oraciones</strong> una conclusión que compare el nivel central y la dispersión intercuartílica del promedio entre ambas jornadas y explique cómo se vincula esta brecha con el tiempo de estudio semanal.
+              </p>
+              <div class="four-lines-box">
+                <div class="write-line"><span>1.</span></div>
+                <div class="write-line"><span>2.</span></div>
+                <div class="write-line"><span>3.</span></div>
+                <div class="write-line"><span>4.</span></div>
+              </div>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta modelo (3 oraciones):</strong> (1) La jornada Diurna presenta un rendimiento central sustancialmente superior (mediana de 4.20 frente a 3.30 en la Nocturna), sin traslape entre sus cajas intercuartílicas ([3.80, 4.50] vs. [3.10, 3.40]). (2) No obstante, la jornada Nocturna exhibe menor dispersión en su 50% central (<i>RIC</i> = 0.30 frente a 0.70 en Diurna), lo que indica que sus calificaciones son más homogéneas pero concentradas en niveles bajos. (3) Esta brecha académica se explica directamente por la correlación positiva con el tiempo de estudio, ya que los estudiantes diurnos dedican en promedio casi el doble de horas semanales (14.37 h vs. 7.91 h).
+              </div>
+            </div>
+
+            <div class="score-summary-box">
+              <span>Puntaje: Parte I (1.0) + Parte II (3.0) + Parte III (1.0)</span>
+              <span>Nota Final: _______ / 5.0</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- RESPALDO VERSIÓN A -->
+      <article class="exam-sheet">
+        <div class="respaldo-header">
+          <h3>Respaldo de la Hoja — Dataset Oficial (<i>n</i> = 30 Estudiantes) y Espacio de Procedimientos</h3>
+          <span style="font-size:0.75rem; font-weight:700; color:#475569;">Versión A</span>
+        </div>
+
+        <div class="vars-strip">
+          <span><strong>Variables Categóricas (2):</strong> 1. <em>Programa</em> (Ingeniería, Administración, Derecho) | 2. <em>Jornada</em> (Diurna, Nocturna)</span>
+          <span><strong>Variables Numéricas (2):</strong> 3. <em>Horas de estudio/semana (<i>X</i>)</em> | 4. <em>Promedio académico del corte (<i>Y</i>, escala 0.0 a 5.0)</em></span>
+        </div>
+
+        <div class="dataset-two-col" id="dataset-mount-A"></div>
+
+        <div class="helper-sums-box sums-toggle-target">
+          <strong>Datos Ordenados y Sumatorias Verificadas para Calculadora Científica (<i>n</i> = 30):</strong><br/>
+          &bull; <strong>Horas (<i>X</i>) ordenadas:</strong> 5, 5, 6, 6, 7, 8, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 17, 18, 19, 20.<br/>
+          &bull; <strong>Promedio (<i>Y</i>) ordenado:</strong> 3.0, 3.1, 3.1, 3.2, 3.2, 3.3, 3.4, 3.4, 3.4, 3.5, 3.5, 3.5, 3.5, 3.7, 3.8, 3.8, 3.8, 3.9, 3.9, 4.0, 4.1, 4.2, 4.2, 4.3, 4.3, 4.4, 4.5, 4.6, 4.7, 4.7.<br/>
+          &bull; <strong>Sumatorias:</strong> &Sigma;<i>x<sub>i</sub></i> = 360 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub></i><sup>2</sup> = 4822 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i> = 114.0 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i><sup>2</sup> = 440.72 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub>y<sub>i</sub></i> = 1428.70.
+        </div>
+
+        <div class="work-grid">
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (a), (b) y (c) — Tablas y Estadística Univariada</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Intervalo Horas (<i>X</i>)</th><th>Marca (<i>x<sub>m</sub></i>)</th><th><i>f<sub>i</sub></i></th><th><i>F<sub>i</sub></i></th><th><i>h<sub>i</sub></i> (%)</th><th><i>H<sub>i</sub></i> (%)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>[5, 9)</td><td>7.0</td><td>6</td><td>6</td><td>20.00%</td><td>20.00%</td></tr>
+                  <tr><td>[9, 13)</td><td>11.0</td><td>12</td><td>18</td><td>40.00%</td><td>60.00%</td></tr>
+                  <tr><td>[13, 17)</td><td>15.0</td><td>8</td><td>26</td><td>26.67%</td><td>86.67%</td></tr>
+                  <tr><td>[17, 21]</td><td>19.0</td><td>4</td><td>30</td><td>13.33%</td><td>100.00%</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>a) Intervalo modal [9, 13):</strong> <i>f</i><sub>2</sub> = 12 estudiantes (<i>h</i><sub>2</sub> = 40.00%).<br/>
+                <strong>b) Tendencia central y posición (<i>X</i>):</strong> <i>x&#772;</i> = 360/30 = 12.00 h; <i>Me</i> = (12 + 12)/2 = 12.00 h; <i>P</i><sub>80</sub> = 16.00 h.<br/>
+                <strong>c) Dispersión (<i>X</i>):</strong> <i>s<sub>x</sub></i><sup>2</sup> = [4822 &minus; 30(12)<sup>2</sup>]/29 = 502/29 = 17.3103 h<sup>2</sup> &rArr; <i>s<sub>x</sub></i> = 4.1606 h; <i>CV</i> = (4.1606/12.00)&times;100 = 34.67%; <i>Q</i><sub>1</sub> = 9.00 h, <i>Q</i><sub>3</sub> = 15.00 h &rArr; <i>RIC</i> = 6.00 h. (Agrupado: <i>x&#772;</i><sub>agr</sub> = 12.33 h, <i>s</i><sub>agr</sub> = 3.84 h, <i>CV</i><sub>agr</sub> = 31.10%).
+              </div>
+            </div>
+          </div>
+
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (d) y (e) — Contingencia y Regresión</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Programa \ Jornada</th><th>Diurna</th><th>Nocturna</th><th>Total Marginal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Ingeniería</strong></td><td>13 (43.33%)</td><td>2 (6.67%)</td><td>15 (50.00%)</td></tr>
+                  <tr><td><strong>Administración</strong></td><td>4 (13.33%)</td><td>4 (13.33%)</td><td>8 (26.67%)</td></tr>
+                  <tr><td><strong>Derecho</strong></td><td>2 (6.67%)</td><td>5 (16.67%)</td><td>7 (23.33%)</td></tr>
+                  <tr><td><strong>Total Marginal</strong></td><td>19 (63.33%)</td><td>11 (36.67%)</td><td>30 (100.00%)</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>d) Tabla de contingencia:</strong> Ingeniería Diurna = 13/30 = 43.33%.<br/>
+                <strong>e) Regresión Mínimos Cuadrados:</strong> <i>b</i><sub>1</sub> = 2.0931 / 17.3103 = 0.1209; <i>b</i><sub>0</sub> = 3.80 &minus; 0.1209(12.0) = 2.3490 &rArr; <i>Y&#770;</i> = 2.3490 + 0.1209<i>X</i>. <i>R</i><sup>2</sup> = (0.9879)<sup>2</sup> = 0.9760 (97.60%). Para <i>X</i> = 14 h: <i>Y&#770;</i>(14) = 2.3490 + 0.1209(14) = 4.0418 &approx; 4.04.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="exam-sheet print-blank-page" aria-hidden="true"></article>
+    </section>
+
+    <!-- =====================================================================
+         VERSIÓN B (ANVERSO + RESPALDO)
+         ===================================================================== -->
+    <section class="exam-version-block" data-version-block="B" id="version-block-B">
+      <!-- ANVERSO VERSIÓN B -->
+      <article class="exam-sheet">
+        <div class="inst-header">
+          <div class="uni-name">Universidad Tecnológica de Bolívar</div>
+          <div class="dept-name">Dirección de Ciencias Básicas</div>
+          <div class="course-name">Estadística y Probabilidades</div>
+          <div class="exam-title">Taller de Repaso Estadística Descriptiva – Estadística Bivariada</div>
+        </div>
+
+        <div class="workshop-banner">
+          <span>Taller repaso de Estadística Descriptiva Básica</span>
+          <span>Duración: 1 hora &bull; Nota máxima: 5.0 puntos</span>
+        </div>
+
+        <div class="student-fields">
+          <div style="flex: 2; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Nombre:</span>
+            <span class="field-line"></span>
+          </div>
+          <div style="flex: 1; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Grupo:</span>
+            <span class="field-line"></span>
+          </div>
+        </div>
+
+        <div class="instructions-box">
+          <strong>Instrucciones:</strong> Realice todos los procedimientos necesarios. Justifique los cálculos realizados e interprete cada resultado en el contexto del problema. Se permite el uso de calculadora científica. El dataset es el mismo para todos (30 personas) y se encuentra en el respaldo. En la Parte I (<strong>1.0 punto</strong>), marque una única opción. En la Parte II (<strong>3.0 puntos</strong>), escriba <strong>únicamente los resultados finales</strong> en los espacios en blanco y desarrolle las tablas y procedimientos en el respaldo. En la Parte III (<strong>1.0 punto</strong>), responda en un máximo de 4 oraciones.
+        </div>
+
+        <!-- 2-COLUMN BODY VERSIÓN B -->
+        <div class="two-col-layout">
+          <!-- COLUMNA IZQUIERDA (VERSIÓN B) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte I. Selección Múltiple</span>
+              <span>5 &times; 0.2 = 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 1B -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">1.</span> ¿Qué criterio emplea el diagrama de caja y bigotes (<em>boxplot</em>) para identificar objetivamente observaciones candidatas a valores atípicos (<em>outliers</em>)? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>Todo dato que se encuentre por fuera del intervalo [<i>x&#772;</i> &minus; <i>s</i>, <i>x&#772;</i> + <i>s</i>].</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>Cualquier observación menor que <i>Q</i><sub>1</sub> &minus; 1.5(<i>RIC</i>) o mayor que <i>Q</i><sub>3</sub> + 1.5(<i>RIC</i>).</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>Cualquier valor que supere a la moda de la distribución en más de un 10%.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Únicamente el valor mínimo y el valor máximo de cualquier muestra de tamaño <i>n</i>.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> Los cercos internos del boxplot se definen como [<i>Q</i><sub>1</sub> &minus; 1.5<i>RIC</i>, <i>Q</i><sub>3</sub> + 1.5<i>RIC</i>].
+              </div>
+            </div>
+
+            <!-- Pregunta 2B -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">2.</span> ¿Cuál es la diferencia esencial entre el Rango total (<i>R</i>) y el Rango Intercuartílico (<i>RIC</i>)? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>El rango mide tendencia central y el <i>RIC</i> mide correlación lineal entre dos variables.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>El <i>RIC</i> siempre es mayor que el rango total en distribuciones asimétricas.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>El rango depende exclusivamente de los dos valores extremos (Máx &minus; Mín), mientras que el <i>RIC</i> mide la amplitud del 50% central de los datos (<i>Q</i><sub>3</sub> &minus; <i>Q</i><sub>1</sub>) sin verse afectado por valores atípicos.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>El <i>RIC</i> se expresa en unidades cuadráticas y el rango en porcentaje adimensional.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> El <i>RIC</i> acota la dispersión entre el percentil 25 y el percentil 75, siendo robusto ante extremos.
+              </div>
+            </div>
+
+            <!-- Pregunta 3B -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">3.</span> Al comparar el <em>Promedio académico</em> según la <em>Jornada</em> mediante <strong>boxplots comparativos</strong>, ¿qué ventaja ofrece este gráfico frente a un gráfico de barras de promedios? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item correct-opt"><span class="opt-bubble">A</span><span>Permite contrastar simultáneamente la mediana, la dispersión intercuartílica (<i>RIC</i>), la asimetría y posibles valores atípicos entre ambas jornadas.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>Muestra directamente la ecuación de la recta de regresión por mínimos cuadrados.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>Sustituye a la tabla de contingencia para contar frecuencias conjuntas cualitativas.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Solo permite visualizar el tamaño de muestra <i>n</i> de cada jornada.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: A.</strong> El boxplot comparativo resume los 5 números (Mín, <i>Q</i><sub>1</sub>, <i>Me</i>, <i>Q</i><sub>3</sub>, Máx) y la forma de cada subgrupo.
+              </div>
+            </div>
+
+            <!-- Pregunta 4B -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">4.</span> ¿Cómo se interpreta una covarianza muestral positiva (<i>s<sub>xy</sub></i> &gt; 0) entre dos variables cuantitativas y cuál es su limitación frente al coeficiente de Pearson (<i>r</i>)? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>Indica relación inversa, pero siempre toma valores restringidos al intervalo [&minus;1, 1].</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>Indica que valores por encima de <i>x&#772;</i> suelen asociarse con valores por encima de <i>y&#772;</i> (tendencia directa), pero su magnitud depende de las unidades de medida de <i>X</i> y <i>Y</i>.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>Garantiza que la pendiente de mínimos cuadrados sea negativa (<i>b</i><sub>1</sub> &lt; 0).</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Significa que las dos variables son estadísticamente independientes.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> La covarianza indica el signo de la asociación lineal, pero requiere dividirse por <i>s<sub>x</sub>s<sub>y</sub></i> (Pearson) para ser adimensional.
+              </div>
+            </div>
+
+            <!-- Pregunta 5B -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">5.</span> En un modelo de regresión lineal simple se obtiene un coeficiente de determinación <i>R</i><sup>2</sup> = 0.90. ¿Qué significa este resultado? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>El 90% de los puntos observados caen exactamente sobre la línea recta sin ningún residuo.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>La pendiente de la recta de regresión es necesariamente igual a +0.90.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>El 90% de la variabilidad total de la variable respuesta <i>Y</i> es explicada por su relación lineal con la variable predictora <i>X</i>.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Existe una relación causal del 90% libre de variables de confusión.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> <i>R</i><sup>2</sup> mide la proporción de varianza de <i>Y</i> explicada por el modelo lineal de mínimos cuadrados.
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA (VERSIÓN B) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte II. Ejercicio Único de Cálculo</span>
+              <span>Total: 3.0 pts</span>
+            </div>
+
+            <!-- Ejercicio 6B (3.0 puntos desglosados) -->
+            <div class="dev-card">
+              <div class="q-stem">
+                <span class="q-num">6. Análisis Descriptivo Univariado y Bivariado</span> <span class="q-pts">(3.0 puntos)</span>
+              </div>
+              <p style="font-size:0.71rem; color:#334155;">
+                Con el dataset de 30 estudiantes del respaldo, realice los procedimientos en el reverso y registre aquí los resultados finales (cada inciso vale <strong>0.6 puntos</strong>):
+              </p>
+              <ul class="weighted-subquestions">
+                <li><span class="weight-tag">a) 0.6 pts</span> Construya en el respaldo la tabla agrupada de <strong>Promedio académico (<i>Y</i>)</strong> en 4 intervalos: [3.0, 3.5), [3.5, 4.0), [4.0, 4.5) y [4.5, 5.0], e indique la frecuencia absoluta y relativa de [3.5, 4.0).</li>
+                <li><span class="weight-tag">b) 0.6 pts</span> Para <strong>Promedio académico (<i>Y</i>)</strong>, calcule la media (<i>y&#772;</i>), la moda (<i>Mo</i>) y el cuartil 1 (<i>Q</i><sub>1</sub>).</li>
+                <li><span class="weight-tag">c) 0.6 pts</span> Para <strong>Promedio académico (<i>Y</i>)</strong>, calcule la varianza muestral (<i>s<sub>y</sub></i><sup>2</sup>), el coeficiente de variación (<i>CV<sub>y</sub></i>%) y el rango intercuartílico (<i>RIC</i>).</li>
+                <li><span class="weight-tag">d) 0.6 pts</span> Construya en el respaldo la tabla de contingencia <strong>Programa &times; Jornada</strong> y reporte qué porcentaje de los estudiantes <em>Nocturnos</em> estudia <em>Derecho</em>.</li>
+                <li><span class="weight-tag">e) 0.6 pts</span> Determine la recta de mínimos cuadrados (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>), el coeficiente de determinación (<i>R</i><sup>2</sup>) y el promedio estimado para <i>X</i> = 10 horas.</li>
+              </ul>
+
+              <div class="results-grid">
+                <div class="result-row"><span>a) <i>f<sub>i</sub></i> y <i>h<sub>i</sub></i> en [3.5, 4.0) <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">fi = 10 | hi = 33.33%</span></span></div>
+                <div class="result-row"><span>b) Media (<i>y&#772;</i>) / Moda <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">3.80 / Mo = 3.5</span></span></div>
+                <div class="result-row"><span>b) Cuartil 1 (<i>Q</i><sub>1</sub>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">3.40</span></span></div>
+                <div class="result-row"><span>c) Varianza (<i>s<sub>y</sub></i><sup>2</sup>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">0.2593 (Agr: 0.2655)</span></span></div>
+                <div class="result-row"><span>c) C.V. (%) / <i>RIC</i> <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">13.40% | RIC = 0.80</span></span></div>
+                <div class="result-row"><span>d) % Derecho | Noct. <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">45.45% (5/11)</span></span></div>
+                <div class="result-row"><span>e) Coef. Det. (<i>R</i><sup>2</sup>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">0.9760 (97.60%)</span></span></div>
+                <div class="result-row full-width"><span>e) Recta (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>) y <i>Y&#770;</i>(10) <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">Ŷ = 2.3490 + 0.1209X | Ŷ(10) = 3.56</span></span></div>
+              </div>
+              <div class="back-notice">* Todos los procedimientos, tablas y justificaciones deben constar en el respaldo.</div>
+            </div>
+
+            <div class="section-heading">
+              <span>Parte III. Pregunta Interpretativa Basada en Datos</span>
+              <span>Valor: 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 7B (1.0 punto - máx 4 oraciones) -->
+            <div class="interp-card">
+              <div class="q-stem">
+                <span class="q-num">7. Análisis Integrado por Programa y Regresión</span> <span class="q-pts">(1.0 punto &bull; Máx. 4 oraciones)</span>
+              </div>
+              <div class="data-pill-box">
+                <strong>Resumen del Dataset (<i>n</i> = 30):</strong><br/>
+                &bull; <strong>Ingeniería (50.0% de la muestra, 86.7% en Diurna):</strong> Media de estudio = 15.33 h/sem y Promedio = 4.25.<br/>
+                &bull; <strong>Administración (26.7% de la muestra):</strong> Media de estudio = 9.63 h/sem y Promedio = 3.54.<br/>
+                &bull; <strong>Derecho (23.3% de la muestra, 71.4% en Nocturna):</strong> Media de estudio = 7.57 h/sem y Promedio = 3.26. Pendiente global: <i>b</i><sub>1</sub> = +0.1209.
+              </div>
+              <p style="font-size:0.71rem; color:#1f2937; text-align:justify;">
+                A partir de estos resultados del grupo, explique en <strong>máximo 4 oraciones</strong> cómo se asocian el programa académico y la jornada con la dedicación de estudio, y cuantifique según la pendiente <i>b</i><sub>1</sub> en cuánto aumentaría el promedio estimado si un estudiante incrementa su estudio en 5 horas semanales.
+              </p>
+              <div class="four-lines-box">
+                <div class="write-line"><span>1.</span></div>
+                <div class="write-line"><span>2.</span></div>
+                <div class="write-line"><span>3.</span></div>
+                <div class="write-line"><span>4.</span></div>
+              </div>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta modelo (3 oraciones):</strong> (1) Los datos evidencian una segmentación marcada por programa y jornada: Ingeniería concentra la mayor proporción de estudiantes diurnos (86.7%) y lidera tanto en dedicación semanal (15.33 h) como en rendimiento académico (4.25). (2) En contraste, Derecho tiene predominio nocturno (71.4%), menor disponibilidad de horas de estudio autónomo (7.57 h) y el promedio más bajo (3.26), ubicándose Administración en una posición intermedia (9.63 h y 3.54). (3) De acuerdo con la pendiente de mínimos cuadrados (<i>b</i><sub>1</sub> = 0.1209), un incremento de 5 horas de estudio por semana aumentaría el promedio estimado en 5 &times; 0.1209 &approx; 0.60 puntos.
+              </div>
+            </div>
+
+            <div class="score-summary-box">
+              <span>Puntaje: Parte I (1.0) + Parte II (3.0) + Parte III (1.0)</span>
+              <span>Nota Final: _______ / 5.0</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- RESPALDO VERSIÓN B -->
+      <article class="exam-sheet">
+        <div class="respaldo-header">
+          <h3>Respaldo de la Hoja — Dataset Oficial (<i>n</i> = 30 Estudiantes) y Espacio de Procedimientos</h3>
+          <span style="font-size:0.75rem; font-weight:700; color:#475569;">Versión B</span>
+        </div>
+
+        <div class="vars-strip">
+          <span><strong>Variables Categóricas (2):</strong> 1. <em>Programa</em> (Ingeniería, Administración, Derecho) | 2. <em>Jornada</em> (Diurna, Nocturna)</span>
+          <span><strong>Variables Numéricas (2):</strong> 3. <em>Horas de estudio/semana (<i>X</i>)</em> | 4. <em>Promedio académico del corte (<i>Y</i>, escala 0.0 a 5.0)</em></span>
+        </div>
+
+        <div class="dataset-two-col" id="dataset-mount-B"></div>
+
+        <div class="helper-sums-box sums-toggle-target">
+          <strong>Datos Ordenados y Sumatorias Verificadas para Calculadora Científica (<i>n</i> = 30):</strong><br/>
+          &bull; <strong>Horas (<i>X</i>) ordenadas:</strong> 5, 5, 6, 6, 7, 8, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 17, 18, 19, 20.<br/>
+          &bull; <strong>Promedio (<i>Y</i>) ordenado:</strong> 3.0, 3.1, 3.1, 3.2, 3.2, 3.3, 3.4, 3.4, 3.4, 3.5, 3.5, 3.5, 3.5, 3.7, 3.8, 3.8, 3.8, 3.9, 3.9, 4.0, 4.1, 4.2, 4.2, 4.3, 4.3, 4.4, 4.5, 4.6, 4.7, 4.7.<br/>
+          &bull; <strong>Sumatorias:</strong> &Sigma;<i>x<sub>i</sub></i> = 360 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub></i><sup>2</sup> = 4822 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i> = 114.0 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i><sup>2</sup> = 440.72 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub>y<sub>i</sub></i> = 1428.70.
+        </div>
+
+        <div class="work-grid">
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (a), (b) y (c) — Tablas y Estadística Univariada</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Intervalo Promedio (<i>Y</i>)</th><th>Marca (<i>y<sub>m</sub></i>)</th><th><i>f<sub>i</sub></i></th><th><i>F<sub>i</sub></i></th><th><i>h<sub>i</sub></i> (%)</th><th><i>H<sub>i</sub></i> (%)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>[3.0, 3.5)</td><td>3.25</td><td>9</td><td>9</td><td>30.00%</td><td>30.00%</td></tr>
+                  <tr><td>[3.5, 4.0)</td><td>3.75</td><td>10</td><td>19</td><td>33.33%</td><td>63.33%</td></tr>
+                  <tr><td>[4.0, 4.5)</td><td>4.25</td><td>7</td><td>26</td><td>23.33%</td><td>86.67%</td></tr>
+                  <tr><td>[4.5, 5.0]</td><td>4.75</td><td>4</td><td>30</td><td>13.33%</td><td>100.00%</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>a) Intervalo modal [3.5, 4.0):</strong> <i>f</i><sub>2</sub> = 10 estudiantes (<i>h</i><sub>2</sub> = 33.33%).<br/>
+                <strong>b) Tendencia central y posición (<i>Y</i>):</strong> <i>y&#772;</i> = 114.0/30 = 3.80; <i>Mo</i> = 3.5 (4 veces); <i>Q</i><sub>1</sub> = 3.40.<br/>
+                <strong>c) Dispersión (<i>Y</i>):</strong> <i>s<sub>y</sub></i><sup>2</sup> = [440.72 &minus; 30(3.80)<sup>2</sup>]/29 = 7.52/29 = 0.2593 &rArr; <i>s<sub>y</sub></i> = 0.5092; <i>CV<sub>y</sub></i> = (0.5092/3.80)&times;100 = 13.40%; <i>Q</i><sub>3</sub> = 4.20 &rArr; <i>RIC</i> = 4.20 &minus; 3.40 = 0.80. (Agrupado: <i>y&#772;</i><sub>agr</sub> = 3.85, <i>s</i><sub>agr</sub><sup>2</sup> = 0.2655, <i>CV</i><sub>agr</sub> = 13.38%).
+              </div>
+            </div>
+          </div>
+
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (d) y (e) — Contingencia y Regresión</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Programa \ Jornada</th><th>Diurna</th><th>Nocturna</th><th>Total Marginal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Ingeniería</strong></td><td>13</td><td>2</td><td>15</td></tr>
+                  <tr><td><strong>Administración</strong></td><td>4</td><td>4</td><td>8</td></tr>
+                  <tr><td><strong>Derecho</strong></td><td>2</td><td>5</td><td>7</td></tr>
+                  <tr><td><strong>Total Marginal</strong></td><td>19</td><td>11</td><td>30</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>d) Tabla de contingencia:</strong> Proporción condicional P(Derecho | Nocturna) = 5/11 = 45.45%.<br/>
+                <strong>e) Regresión Mínimos Cuadrados:</strong> <i>Y&#770;</i> = 2.3490 + 0.1209<i>X</i>; <i>R</i><sup>2</sup> = 0.9760 (97.60%). Para <i>X</i> = 10 h: <i>Y&#770;</i>(10) = 2.3490 + 0.1209(10) = 3.5582 &approx; 3.56.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="exam-sheet print-blank-page" aria-hidden="true"></article>
+    </section>
+
+    <!-- =====================================================================
+         VERSIÓN C (ANVERSO + RESPALDO)
+         ===================================================================== -->
+    <section class="exam-version-block" data-version-block="C" id="version-block-C">
+      <!-- ANVERSO VERSIÓN C -->
+      <article class="exam-sheet">
+        <div class="inst-header">
+          <div class="uni-name">Universidad Tecnológica de Bolívar</div>
+          <div class="dept-name">Dirección de Ciencias Básicas</div>
+          <div class="course-name">Estadística y Probabilidades</div>
+          <div class="exam-title">Taller de Repaso Estadística Descriptiva – Estadística Bivariada</div>
+        </div>
+
+        <div class="workshop-banner">
+          <span>Taller repaso de Estadística Descriptiva Básica</span>
+          <span>Duración: 1 hora &bull; Nota máxima: 5.0 puntos</span>
+        </div>
+
+        <div class="student-fields">
+          <div style="flex: 2; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Nombre:</span>
+            <span class="field-line"></span>
+          </div>
+          <div style="flex: 1; display:flex; align-items:baseline; gap:0.4rem;">
+            <span>Grupo:</span>
+            <span class="field-line"></span>
+          </div>
+        </div>
+
+        <div class="instructions-box">
+          <strong>Instrucciones:</strong> Realice todos los procedimientos necesarios. Justifique los cálculos realizados e interprete cada resultado en el contexto del problema. Se permite el uso de calculadora científica. El dataset es el mismo para todos (30 personas) y se encuentra en el respaldo. En la Parte I (<strong>1.0 punto</strong>), marque una única opción. En la Parte II (<strong>3.0 puntos</strong>), escriba <strong>únicamente los resultados finales</strong> en los espacios en blanco y desarrolle las tablas y procedimientos en el respaldo. En la Parte III (<strong>1.0 punto</strong>), responda en un máximo de 4 oraciones.
+        </div>
+
+        <!-- 2-COLUMN BODY VERSIÓN C -->
+        <div class="two-col-layout">
+          <!-- COLUMNA IZQUIERDA (VERSIÓN C) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte I. Selección Múltiple</span>
+              <span>5 &times; 0.2 = 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 1C -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">1.</span> ¿Qué información aporta un gráfico de pastel sobre una variable categórica y en qué caso <strong>no</strong> es recomendable utilizarlo frente a un gráfico de barras? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item correct-opt"><span class="opt-bubble">A</span><span>Representa la proporción de cada categoría respecto al total (100%), pero no se recomienda cuando existen muchas categorías o proporciones muy similares difíciles de distinguir por ángulo.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>Muestra la evolución temporal de la varianza y solo sirve para variables continuas.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>No es recomendable cuando la muestra tiene exactamente 30 observaciones.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>Permite detectar valores atípicos mediante bigotes proporcionales al rango intercuartílico.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: A.</strong> El gráfico de pastel muestra participación porcentual del total, pero pierde legibilidad con muchas clases o frecuencias similares.
+              </div>
+            </div>
+
+            <!-- Pregunta 2C -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">2.</span> Si se desea comparar cuál de las dos variables (<em>Horas de estudio</em> en horas vs. <em>Promedio</em> en puntos) presenta mayor dispersión relativa, ¿qué estadístico debe emplearse? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>La varianza muestral (<i>s</i><sup>2</sup>), porque eleva las unidades originales al cuadrado.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>El rango total (<i>R</i>), porque es invariante frente a cambios de escala.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>El Coeficiente de Variación (<i>CV</i> = (<i>s</i> / |<i>x&#772;</i>|) &times; 100%), porque es adimensional y expresa la desviación estándar como porcentaje de la media.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>La desviación estándar (<i>s</i>) directamente, sin importar que tengan unidades y medias distintas.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> El <i>CV</i> elimina las unidades de medida y permite comparar variabilidad relativa entre variables con distintas escalas.
+              </div>
+            </div>
+
+            <!-- Pregunta 3C -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">3.</span> Si en un gráfico de dispersión bivariado el coeficiente de correlación lineal de Pearson es cercano a cero (<i>r</i> &approx; 0), ¿qué se puede concluir? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>Existe una asociación lineal inversa perfecta entre las dos variables.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>Existe ausencia de asociación <em>lineal</em> entre las variables (nube de puntos sin tendencia rectilínea o con relación no lineal).</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>La media de <i>X</i> es exactamente igual a la media de <i>Y</i>.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>El coeficiente de determinación <i>R</i><sup>2</sup> es igual a 1.00.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> <i>r</i> &approx; 0 indica que no hay tendencia lineal entre <i>X</i> y <i>Y</i>.
+              </div>
+            </div>
+
+            <!-- Pregunta 4C -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">4.</span> En la ecuación de regresión lineal de mínimos cuadrados <i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>, ¿qué representa la pendiente <i>b</i><sub>1</sub>? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>El valor estimado de la variable respuesta <i>Y</i> cuando <i>X</i> toma el valor de cero.</span></li>
+                <li class="option-item"><span class="opt-bubble">B</span><span>El porcentaje de varianza explicada por el modelo lineal.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">C</span><span>El cambio promedio estimado en la variable respuesta <i>Y</i> por cada incremento de una unidad en la variable explicativa <i>X</i>.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>El cociente entre la media de <i>Y</i> y la media de <i>X</i> (<i>y&#772;</i> / <i>x&#772;</i>).</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: C.</strong> La pendiente <i>b</i><sub>1</sub> = <i>s<sub>xy</sub></i> / <i>s<sub>x</sub></i><sup>2</sup> cuantifica la tasa de cambio marginal de <i>Y&#770;</i> ante un aumento unitario en <i>X</i>.
+              </div>
+            </div>
+
+            <!-- Pregunta 5C -->
+            <div class="q-card">
+              <div class="q-stem">
+                <span class="q-num">5.</span> Al construir un <em>boxplot comparativo</em> de las horas de estudio por programa, se observa que el borde superior de la caja (<i>Q</i><sub>3</sub> = <i>P</i><sub>75</sub>) de Ingeniería es 16 h. ¿Cómo se interpreta? <span class="q-pts">(0.2 pts)</span>
+              </div>
+              <ul class="options-list">
+                <li class="option-item"><span class="opt-bubble">A</span><span>El 75% de los estudiantes de Ingeniería estudia exactamente 16 horas por semana.</span></li>
+                <li class="option-item correct-opt"><span class="opt-bubble">B</span><span>El 75% de los estudiantes de Ingeniería estudia 16 horas o menos por semana, y el 25% restante estudia 16 horas o más.</span></li>
+                <li class="option-item"><span class="opt-bubble">C</span><span>El rango intercuartílico del grupo de Ingeniería es igual a 16 horas.</span></li>
+                <li class="option-item"><span class="opt-bubble">D</span><span>16 horas representa un valor atípico extremo dentro del programa de Ingeniería.</span></li>
+              </ul>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta correcta: B.</strong> El tercer cuartil (<i>Q</i><sub>3</sub> = <i>P</i><sub>75</sub>) acumula el 75% inferior de las observaciones ordenadas del grupo.
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA (VERSIÓN C) -->
+          <div class="col-pane">
+            <div class="section-heading">
+              <span>Parte II. Ejercicio Único de Cálculo</span>
+              <span>Total: 3.0 pts</span>
+            </div>
+
+            <!-- Ejercicio 6C (3.0 puntos desglosados) -->
+            <div class="dev-card">
+              <div class="q-stem">
+                <span class="q-num">6. Análisis Descriptivo Univariado y Bivariado</span> <span class="q-pts">(3.0 puntos)</span>
+              </div>
+              <p style="font-size:0.71rem; color:#334155;">
+                Con el dataset de 30 estudiantes del respaldo, realice los procedimientos en el reverso y registre aquí los resultados finales (cada inciso vale <strong>0.6 puntos</strong>):
+              </p>
+              <ul class="weighted-subquestions">
+                <li><span class="weight-tag">a) 0.6 pts</span> Construya en el respaldo la tabla agrupada de <strong>Promedio académico (<i>Y</i>)</strong> en 4 intervalos: [3.0, 3.5), [3.5, 4.0), [4.0, 4.5) y [4.5, 5.0], e indique la frecuencia acumulada <i>F<sub>i</sub></i> y <i>H<sub>i</sub></i>% hasta [4.0, 4.5).</li>
+                <li><span class="weight-tag">b) 0.6 pts</span> Para <strong>Promedio académico (<i>Y</i>)</strong>, calcule la media (<i>y&#772;</i>), la mediana (<i>Me</i>) y el percentil 75 (<i>P</i><sub>75</sub>).</li>
+                <li><span class="weight-tag">c) 0.6 pts</span> Para <strong>Promedio académico (<i>Y</i>)</strong>, calcule la desviación estándar muestral (<i>s<sub>y</sub></i>), el coeficiente de variación (<i>CV<sub>y</sub></i>%) y el percentil 80 (<i>P</i><sub>80</sub>).</li>
+                <li><span class="weight-tag">d) 0.6 pts</span> Construya en el respaldo la tabla de contingencia <strong>Programa &times; Jornada</strong> y reporte qué porcentaje de los estudiantes <em>Diurnos</em> cursa <em>Ingeniería</em>.</li>
+                <li><span class="weight-tag">e) 0.6 pts</span> Determine la recta de mínimos cuadrados (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>), el coeficiente de determinación (<i>R</i><sup>2</sup>) y el promedio estimado para <i>X</i> = 15 horas.</li>
+              </ul>
+
+              <div class="results-grid">
+                <div class="result-row"><span>a) <i>F<sub>i</sub></i> y <i>H<sub>i</sub></i> hasta [4.0, 4.5) <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">Fi = 26 | Hi = 86.67%</span></span></div>
+                <div class="result-row"><span>b) Media (<i>y&#772;</i>) / <i>Me</i> <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">3.80 / 3.80</span></span></div>
+                <div class="result-row"><span>b) Percentil 75 (<i>P</i><sub>75</sub>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">4.20</span></span></div>
+                <div class="result-row"><span>c) Desv. Est. (<i>s<sub>y</sub></i>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">0.5092 (Agr: 0.5153)</span></span></div>
+                <div class="result-row"><span>c) C.V. (%) / <i>P</i><sub>80</sub> <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">13.40% | P80 = 4.30</span></span></div>
+                <div class="result-row"><span>d) % Ing. | Diurna <span class="pts-mini">(0.6)</span>:</span><span class="ans-blank"><span class="sol-val">68.42% (13/19)</span></span></div>
+                <div class="result-row"><span>e) Coef. Det. (<i>R</i><sup>2</sup>) <span class="pts-mini">(0.2)</span>:</span><span class="ans-blank"><span class="sol-val">0.9760 (97.60%)</span></span></div>
+                <div class="result-row full-width"><span>e) Recta (<i>Y&#770;</i> = <i>b</i><sub>0</sub> + <i>b</i><sub>1</sub><i>X</i>) y <i>Y&#770;</i>(15) <span class="pts-mini">(0.4)</span>:</span><span class="ans-blank"><span class="sol-val">Ŷ = 2.3490 + 0.1209X | Ŷ(15) = 4.16</span></span></div>
+              </div>
+              <div class="back-notice">* Todos los procedimientos, tablas y justificaciones deben constar en el respaldo.</div>
+            </div>
+
+            <div class="section-heading">
+              <span>Parte III. Pregunta Interpretativa Basada en Datos</span>
+              <span>Valor: 1.0 pt</span>
+            </div>
+
+            <!-- Pregunta 7C (1.0 punto - máx 4 oraciones) -->
+            <div class="interp-card">
+              <div class="q-stem">
+                <span class="q-num">7. Homogeneidad, Simetría y Bondad de Ajuste</span> <span class="q-pts">(1.0 punto &bull; Máx. 4 oraciones)</span>
+              </div>
+              <div class="data-pill-box">
+                <strong>Resumen del Dataset (<i>n</i> = 30):</strong><br/>
+                &bull; <strong>Horas de estudio (<i>X</i>):</strong> <i>x&#772;</i> = 12.00 h, Mediana = 12.00 h, <i>s<sub>x</sub></i> = 4.16 h, <i>CV<sub>x</sub></i> = 34.67%, <i>Q</i><sub>1</sub> = 9.0 h, <i>Q</i><sub>3</sub> = 15.0 h.<br/>
+                &bull; <strong>Promedio académico (<i>Y</i>):</strong> <i>y&#772;</i> = 3.80, Mediana = 3.80, <i>s<sub>y</sub></i> = 0.51, <i>CV<sub>y</sub></i> = 13.40%, <i>Q</i><sub>1</sub> = 3.40, <i>Q</i><sub>3</sub> = 4.20, <i>R</i><sup>2</sup> = 0.9760.
+              </div>
+              <p style="font-size:0.71rem; color:#1f2937; text-align:justify;">
+                Con base en estos indicadores, responda en <strong>máximo 4 oraciones</strong>: ¿cuál de las dos variables es estadísticamente más homogénea?, ¿qué sugiere la coincidencia entre media y mediana sobre la simetría de ambas variables?, y ¿qué tan confiable es pronosticar el promedio usando la recta de regresión?
+              </p>
+              <div class="four-lines-box">
+                <div class="write-line"><span>1.</span></div>
+                <div class="write-line"><span>2.</span></div>
+                <div class="write-line"><span>3.</span></div>
+                <div class="write-line"><span>4.</span></div>
+              </div>
+              <div class="sol-only sol-rationale">
+                <strong>Respuesta modelo (3 oraciones):</strong> (1) El promedio académico es estadísticamente mucho más homogéneo que el tiempo de estudio, ya que su coeficiente de variación es de apenas 13.40% frente al 34.67% de las horas semanales. (2) En ambas variables la media coincide exactamente con la mediana (12.00 h y 3.80) y los cuartiles son equidistantes al centro, lo que refleja distribuciones altamente simétricas y sin sesgo marcado. (3) Finalmente, el coeficiente de determinación <i>R</i><sup>2</sup> = 0.9760 confirma que el 97.60% de la variación en el promedio es explicada linealmente por las horas de estudio, haciendo que las predicciones de la recta sean altamente confiables.
+              </div>
+            </div>
+
+            <div class="score-summary-box">
+              <span>Puntaje: Parte I (1.0) + Parte II (3.0) + Parte III (1.0)</span>
+              <span>Nota Final: _______ / 5.0</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- RESPALDO VERSIÓN C -->
+      <article class="exam-sheet">
+        <div class="respaldo-header">
+          <h3>Respaldo de la Hoja — Dataset Oficial (<i>n</i> = 30 Estudiantes) y Espacio de Procedimientos</h3>
+          <span style="font-size:0.75rem; font-weight:700; color:#475569;">Versión C</span>
+        </div>
+
+        <div class="vars-strip">
+          <span><strong>Variables Categóricas (2):</strong> 1. <em>Programa</em> (Ingeniería, Administración, Derecho) | 2. <em>Jornada</em> (Diurna, Nocturna)</span>
+          <span><strong>Variables Numéricas (2):</strong> 3. <em>Horas de estudio/semana (<i>X</i>)</em> | 4. <em>Promedio académico del corte (<i>Y</i>, escala 0.0 a 5.0)</em></span>
+        </div>
+
+        <div class="dataset-two-col" id="dataset-mount-C"></div>
+
+        <div class="helper-sums-box sums-toggle-target">
+          <strong>Datos Ordenados y Sumatorias Verificadas para Calculadora Científica (<i>n</i> = 30):</strong><br/>
+          &bull; <strong>Horas (<i>X</i>) ordenadas:</strong> 5, 5, 6, 6, 7, 8, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 13, 14, 15, 15, 15, 16, 16, 16, 17, 18, 19, 20.<br/>
+          &bull; <strong>Promedio (<i>Y</i>) ordenado:</strong> 3.0, 3.1, 3.1, 3.2, 3.2, 3.3, 3.4, 3.4, 3.4, 3.5, 3.5, 3.5, 3.5, 3.7, 3.8, 3.8, 3.8, 3.9, 3.9, 4.0, 4.1, 4.2, 4.2, 4.3, 4.3, 4.4, 4.5, 4.6, 4.7, 4.7.<br/>
+          &bull; <strong>Sumatorias:</strong> &Sigma;<i>x<sub>i</sub></i> = 360 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub></i><sup>2</sup> = 4822 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i> = 114.0 &nbsp;|&nbsp; &Sigma;<i>y<sub>i</sub></i><sup>2</sup> = 440.72 &nbsp;|&nbsp; &Sigma;<i>x<sub>i</sub>y<sub>i</sub></i> = 1428.70.
+        </div>
+
+        <div class="work-grid">
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (a), (b) y (c) — Tablas y Estadística Univariada</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Intervalo Promedio (<i>Y</i>)</th><th>Marca (<i>y<sub>m</sub></i>)</th><th><i>f<sub>i</sub></i></th><th><i>F<sub>i</sub></i></th><th><i>h<sub>i</sub></i> (%)</th><th><i>H<sub>i</sub></i> (%)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>[3.0, 3.5)</td><td>3.25</td><td>9</td><td>9</td><td>30.00%</td><td>30.00%</td></tr>
+                  <tr><td>[3.5, 4.0)</td><td>3.75</td><td>10</td><td>19</td><td>33.33%</td><td>63.33%</td></tr>
+                  <tr><td>[4.0, 4.5)</td><td>4.25</td><td>7</td><td>26</td><td>23.33%</td><td>86.67%</td></tr>
+                  <tr><td>[4.5, 5.0]</td><td>4.75</td><td>4</td><td>30</td><td>13.33%</td><td>100.00%</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>a) Frecuencias acumuladas hasta [4.0, 4.5):</strong> <i>F</i><sub>3</sub> = 26 estudiantes (<i>H</i><sub>3</sub> = 86.67%).<br/>
+                <strong>b) y c) Estadísticos de Promedio (<i>Y</i>):</strong> <i>y&#772;</i> = 3.80; <i>Me</i> = 3.80; <i>s<sub>y</sub></i> = &radic;0.2593 = 0.5092; <i>CV<sub>y</sub></i> = 13.40%; <i>P</i><sub>75</sub> = <i>Q</i><sub>3</sub> = 4.20; <i>P</i><sub>80</sub> = 4.30. (Agrupado: <i>y&#772;</i><sub>agr</sub> = 3.85, <i>s</i><sub>agr</sub> = 0.5153, <i>CV</i><sub>agr</sub> = 13.38%).
+              </div>
+            </div>
+          </div>
+
+          <div class="work-panel">
+            <div class="work-panel-title">Desarrollo Incisos (d) y (e) — Contingencia y Regresión</div>
+            <div class="sol-only">
+              <table class="sol-table">
+                <thead>
+                  <tr><th>Programa \ Jornada</th><th>Diurna</th><th>Nocturna</th><th>Total Marginal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Ingeniería</strong></td><td>13</td><td>2</td><td>15</td></tr>
+                  <tr><td><strong>Administración</strong></td><td>4</td><td>4</td><td>8</td></tr>
+                  <tr><td><strong>Derecho</strong></td><td>2</td><td>5</td><td>7</td></tr>
+                  <tr><td><strong>Total Marginal</strong></td><td>19</td><td>11</td><td>30</td></tr>
+                </tbody>
+              </table>
+              <div class="sol-rationale" style="margin-top:0.35rem;">
+                <strong>d) Tabla de contingencia:</strong> Proporción condicional P(Ingeniería | Diurna) = 13/19 = 68.42%.<br/>
+                <strong>e) Regresión Mínimos Cuadrados:</strong> <i>Y&#770;</i> = 2.3490 + 0.1209<i>X</i>; <i>R</i><sup>2</sup> = 0.9760 (97.60%). Para <i>X</i> = 15 h: <i>Y&#770;</i>(15) = 2.3490 + 0.1209(15) = 4.1627 &approx; 4.16.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="exam-sheet print-blank-page" aria-hidden="true"></article>
+    </section>
+
+  </main>
+
+  <script>
+    // Shared 30-person dataset (2 categorical + 2 numerical variables)
+    const SHARED_DATASET = [
+      { id: 1,  prog: "Ingeniería",     jorn: "Diurna",   horas: 12, prom: "3.8" },
+      { id: 2,  prog: "Administración", jorn: "Nocturna", horas: 9,  prom: "3.4" },
+      { id: 3,  prog: "Ingeniería",     jorn: "Diurna",   horas: 15, prom: "4.2" },
+      { id: 4,  prog: "Derecho",        jorn: "Nocturna", horas: 6,  prom: "3.1" },
+      { id: 5,  prog: "Ingeniería",     jorn: "Diurna",   horas: 18, prom: "4.6" },
+      { id: 6,  prog: "Administración", jorn: "Diurna",   horas: 12, prom: "3.7" },
+      { id: 7,  prog: "Derecho",        jorn: "Diurna",   horas: 10, prom: "3.5" },
+      { id: 8,  prog: "Ingeniería",     jorn: "Nocturna", horas: 14, prom: "4.0" },
+      { id: 9,  prog: "Ingeniería",     jorn: "Diurna",   horas: 20, prom: "4.7" },
+      { id: 10, prog: "Administración", jorn: "Nocturna", horas: 6,  prom: "3.2" },
+      { id: 11, prog: "Derecho",        jorn: "Nocturna", horas: 5,  prom: "3.0" },
+      { id: 12, prog: "Ingeniería",     jorn: "Diurna",   horas: 16, prom: "4.3" },
+      { id: 13, prog: "Ingeniería",     jorn: "Diurna",   horas: 19, prom: "4.7" },
+      { id: 14, prog: "Administración", jorn: "Diurna",   horas: 10, prom: "3.5" },
+      { id: 15, prog: "Derecho",        jorn: "Nocturna", horas: 9,  prom: "3.4" },
+      { id: 16, prog: "Ingeniería",     jorn: "Diurna",   horas: 12, prom: "3.8" },
+      { id: 17, prog: "Administración", jorn: "Diurna",   horas: 11, prom: "3.5" },
+      { id: 18, prog: "Ingeniería",     jorn: "Nocturna", horas: 15, prom: "4.2" },
+      { id: 19, prog: "Derecho",        jorn: "Nocturna", horas: 7,  prom: "3.2" },
+      { id: 20, prog: "Ingeniería",     jorn: "Diurna",   horas: 13, prom: "3.9" },
+      { id: 21, prog: "Administración", jorn: "Nocturna", horas: 9,  prom: "3.4" },
+      { id: 22, prog: "Derecho",        jorn: "Diurna",   horas: 11, prom: "3.5" },
+      { id: 23, prog: "Ingeniería",     jorn: "Diurna",   horas: 16, prom: "4.4" },
+      { id: 24, prog: "Administración", jorn: "Diurna",   horas: 12, prom: "3.8" },
+      { id: 25, prog: "Derecho",        jorn: "Nocturna", horas: 5,  prom: "3.1" },
+      { id: 26, prog: "Ingeniería",     jorn: "Diurna",   horas: 12, prom: "3.9" },
+      { id: 27, prog: "Administración", jorn: "Nocturna", horas: 8,  prom: "3.3" },
+      { id: 28, prog: "Ingeniería",     jorn: "Diurna",   horas: 15, prom: "4.1" },
+      { id: 29, prog: "Ingeniería",     jorn: "Diurna",   horas: 16, prom: "4.3" },
+      { id: 30, prog: "Ingeniería",     jorn: "Diurna",   horas: 17, prom: "4.5" }
+    ];
+
+    function buildSubTable(rows) {
+      let html = '<table class="data-table"><thead><tr><th>ID</th><th>Programa</th><th>Jornada</th><th>Horas/sem (X)</th><th>Promedio (Y)</th></tr></thead><tbody>';
+      for (let i = 0; i < rows.length; i++) {
+        const r = rows[i];
+        html += '<tr><td><strong>' + r.id + '</strong></td><td>' + r.prog + '</td><td>' + r.jorn + '</td><td>' + r.horas + '</td><td>' + r.prom + '</td></tr>';
+      }
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function renderDatasets() {
+      const leftHalf = SHARED_DATASET.slice(0, 15);
+      const rightHalf = SHARED_DATASET.slice(15, 30);
+      const combinedHtml = buildSubTable(leftHalf) + buildSubTable(rightHalf);
+      const mounts = ["dataset-mount-A", "dataset-mount-B", "dataset-mount-C"];
+      for (let i = 0; i < mounts.length; i++) {
+        const el = document.getElementById(mounts[i]);
+        if (el) {
+          el.innerHTML = combinedHtml;
+        }
+      }
+    }
+
+    function setupControls() {
+      const verButtons = [
+        document.getElementById("btn-ver-all"),
+        document.getElementById("btn-ver-a"),
+        document.getElementById("btn-ver-b"),
+        document.getElementById("btn-ver-c")
+      ];
+      const blocks = {
+        A: document.getElementById("version-block-A"),
+        B: document.getElementById("version-block-B"),
+        C: document.getElementById("version-block-C")
+      };
+
+      verButtons.forEach(function(btn) {
+        if (!btn) return;
+        btn.addEventListener("click", function() {
+          const targetVer = btn.getAttribute("data-version");
+          verButtons.forEach(function(b) { if (b) b.classList.remove("active"); });
+          btn.classList.add("active");
+
+          Object.keys(blocks).forEach(function(key) {
+            const block = blocks[key];
+            if (!block) return;
+            if (targetVer === "all" || targetVer === key) {
+              block.classList.remove("hidden-el");
+            } else {
+              block.classList.add("hidden-el");
+            }
+          });
+        });
+      });
+
+      const btnStudent = document.getElementById("btn-mode-student");
+      const btnTeacher = document.getElementById("btn-mode-teacher");
+
+      if (btnStudent && btnTeacher) {
+        btnStudent.addEventListener("click", function() {
+          document.body.classList.remove("mode-teacher");
+          btnStudent.classList.add("active");
+          btnTeacher.classList.remove("active");
+        });
+
+        btnTeacher.addEventListener("click", function() {
+          document.body.classList.add("mode-teacher");
+          btnTeacher.classList.add("active");
+          btnStudent.classList.remove("active");
+        });
+      }
+
+      const btnToggleSums = document.getElementById("btn-ToggleSums");
+      if (btnToggleSums) {
+        btnToggleSums.addEventListener("click", function() {
+          const boxes = document.querySelectorAll(".sums-toggle-target");
+          let anyVisible = false;
+          boxes.forEach(function(box) {
+            box.classList.toggle("hidden-el");
+            if (!box.classList.contains("hidden-el")) {
+              anyVisible = true;
+            }
+          });
+          if (anyVisible) {
+            btnToggleSums.classList.add("active");
+          } else {
+            btnToggleSums.classList.remove("active");
+          }
+        });
+      }
+
+      const btnPrint = document.getElementById("btn-print-exam");
+      if (btnPrint) {
+        btnPrint.addEventListener("click", function() {
+          window.print();
+        });
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      renderDatasets();
+      setupControls();
+    });
+  </script>
+</body>
+</html>

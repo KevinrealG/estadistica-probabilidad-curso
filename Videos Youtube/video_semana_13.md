@@ -121,35 +121,18 @@ El resultado aparece: $P = \frac{60 + 50 - 20}{100} = \frac{90}{100} = 90\%$.
 
 **Desarrollo: La Trampa de la Intuición y la Fórmula (1:00 - 1:50)**
 
-* **Visual (Manim):** Aparece la gran fórmula de Bayes:
-
-$$P(A\vert{}B) = \frac{P(B\vert{}A) \times P(A)}{P(B)}$$
-
-
-
-Se reescribe automáticamente al contexto médico:
-
-$$P(\text{Enfermo}\vert{}\text{Positivo}) = \frac{P(\text{Positivo}\vert{}\text{Enfermo}) \times P(\text{Enfermo})}{P(\text{Positivo Total})}$$
+* **Visual (Manim):** Aparece la gran fórmula de Bayes: $$P(A\vert{}B) = \frac{P(B\vert{}A) \times P(A)}{P(B)}$$ Se reescribe automáticamente al contexto médico:$$P(\text{Enfermo}\vert{}\text{Positivo}) = \frac{P(\text{Positivo}\vert{}\text{Enfermo}) \times P(\text{Enfermo})}{P(\text{Positivo Total})}$$
 
 
 > **Audio:** El Teorema de Bayes nos permite responder nuestra gran pregunta: ¿Cuál es la probabilidad de estar Enfermo, *dado que* ya di Positivo? La fórmula nos dice que esto es igual a la probabilidad de dar positivo estando enfermo (la eficacia de la prueba), multiplicado por la probabilidad inicial de estar enfermo en la población, todo esto dividido por la probabilidad TOTAL de dar positivo. ¡Exacto, el resultado de nuestro video anterior!
 
 **Desarrollo: Resolviendo el Misterio (1:50 - 2:40)**
 
-* **Visual (Manim):** Regresa el árbol de decisión del video anterior.
-* Nodo inicial $\to$ Enfermo (10%) $\to$ Prueba Positiva (95%). Camino total: $0.095$.
-* La caja de suma final abajo dice: *"Probabilidad Total de Positivo = 14% (0.14)"*.
-Una flecha animada hace el recorrido **hacia atrás**, desde la caja del 14% hacia la rama de "Enfermo" ($0.095$).
+* **Visual (Manim):** Regresa el árbol de decisión del video anterior. * Nodo inicial $\to$ Enfermo (10%) $\to$ Prueba Positiva (95%). Camino total: $0.095$. * La caja de suma final abajo dice: *"Probabilidad Total de Positivo = 14% (0.14)"*. Una flecha animada hace el recorrido **hacia atrás**, desde la caja del 14% hacia la rama de "Enfermo" ($0.095$).
 
 
 > **Audio:** En nuestro video anterior, descubrimos que la probabilidad de que cualquier persona elegida al azar esté enferma es apenas del 10%. Y calculamos que la probabilidad TOTAL de obtener un examen positivo (mezclando a los enfermos reales y a los falsos positivos de los sanos) era del 14%, o 0.14.
-* **Visual (Manim):** Los números reemplazan las variables en la fórmula:
-
-$$P(\text{Enfermo}\vert{}\text{Positivo}) = \frac{0.095}{0.14}$$
-
-
-
-El resultado se calcula en pantalla con un efecto de caja registradora: **$0.678$ (67.8%)**.
+* **Visual (Manim):** Los números reemplazan las variables en la fórmula:$$P(\text{Enfermo}\vert{}\text{Positivo}) = \frac{0.095}{0.14}$$El resultado se calcula en pantalla con un efecto de caja registradora: **$0.678$ (67.8%)**.
 > **Audio:** Apliquemos Bayes. Tomamos el camino de los que realmente están enfermos y dan positivo, que es 0.095, y lo dividimos por nuestro universo de todos los que dieron positivo, que es 0.14. ¿El resultado? 67.8%. ¡Boom! A pesar de que tu prueba tiene una eficacia del 95%, tu probabilidad real de estar enfermo es solo de un 68%.
 
 **Desarrollo: ¿Por qué ocurre esto? (La Paradoja) (2:40 - 3:20)**
@@ -181,30 +164,14 @@ Aquí tienes el guion enfocado exclusivamente en la Regla de la Suma, utilizando
 
 **Desarrollo: La Trampa del Doble Conteo (0:55 - 1:45)**
 
-* **Visual (Manim):** Se dibuja un Diagrama de Venn.
-Un gran círculo azul a la izquierda etiquetado como *"Béisbol (A)"* con el número 80.
-Un gran círculo verde a la derecha etiquetado como *"Fútbol (B)"* con el número 100.
-Los círculos se mueven hacia el centro y se superponen. La zona de intersección en el medio se ilumina en amarillo brillante y aparece el número 30.
+* **Visual (Manim):** Se dibuja un Diagrama de Venn. Un gran círculo azul a la izquierda etiquetado como *"Béisbol (A)"* con el número 80. Un gran círculo verde a la derecha etiquetado como *"Fútbol (B)"* con el número 100. Los círculos se mueven hacia el centro y se superponen. La zona de intersección en el medio se ilumina en amarillo brillante y aparece el número 30.
 * **Audio:** Miremos los datos reales con un Diagrama de Venn. Tienes 80 beisbolistas y 100 futbolistas. Pero aquí está el secreto: hay 30 estudiantes con un talento doble que practican *ambos* deportes. Cuando sumaste 80 más 100 hace un momento, sumaste a esos 30 estudiantes dos veces: una vez en la lista de béisbol y otra vez en la de fútbol.
 
 **Desarrollo: La Fórmula y el Cálculo (1:45 - 2:30)**
 
-* **Visual (Manim):** Aparece la fórmula matemática en la parte superior:
-
-$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
-
-
-
-Los elementos del Diagrama de Venn saltan hacia la fórmula mientras se mencionan.
+* **Visual (Manim):** Aparece la fórmula matemática en la parte superior: $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$ Los elementos del Diagrama de Venn saltan hacia la fórmula mientras se mencionan.
 * **Audio:** Para corregir este error, usamos la Regla General de la Suma. Ésta nos dice que la probabilidad de A *unión* B (es decir, béisbol O fútbol) es igual a la probabilidad de A, más la probabilidad de B, *menos* la intersección de ambos.
-* **Visual (Manim):** La ecuación se llena con los números de la escuela:
-
-$$P(\text{Béisbol} \cup \text{Fútbol}) = \frac{80}{200} + \frac{100}{200} - \frac{30}{200}$$
-
-
-
-El cálculo se resuelve visualmente: $\frac{180}{200} - \frac{30}{200} = \frac{150}{200}$.
-El resultado final salta en grande: **$0.75$ o $75\%$**.
+* **Visual (Manim):** La ecuación se llena con los números de la escuela: $$P(\text{Béisbol} \cup \text{Fútbol}) = \frac{80}{200} + \frac{100}{200} - \frac{30}{200}$$ El cálculo se resuelve visualmente: $\frac{180}{200} - \frac{30}{200} = \frac{150}{200}$. El resultado final salta en grande: **$0.75$ o $75\%$**.
 * **Audio:** Si lo aplicamos a nuestra escuela: 80 más 100 es 180. A eso le restamos los 30 estudiantes que contamos dos veces, lo que nos da 150 estudiantes únicos que hacen deporte. 150 dividido entre nuestro universo de 200 estudiantes, nos da exactamente un 75%. Tienes un 75% de probabilidad de elegir a alguien que juegue al menos un deporte.
 
 **Desarrollo: ¿Cuándo Aplicar esta Regla? (2:30 - 3:00)**
