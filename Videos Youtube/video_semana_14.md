@@ -56,14 +56,13 @@
 
 * **Visual (Manim):** Los dos resultados se enfrentan en pantalla como en un ring de boxeo: 125 (Con Repetición) vs 60 (Sin Repetición). El número 125 es más del doble de grande, destacando visualmente la inmensa diferencia. Luego, ambos números se disuelven y empiezan a formar puntos de datos que trazan una campana de Gauss.
 * **Audio:** Con solo bloquear la capacidad de repetir elementos, tus opciones se redujeron a menos de la mitad, pasando de 125 a solo 60. Las reglas de reemplazo cambian la realidad entera de tus probabilidades. 
-3. # Principio de Multiplicación (Regla del "y")
-Aquí tienes el guion para el video del Principio de la Multiplicación, respetando el formato de viñetas con párrafos únicos, utilizando animaciones puras (sin aparecer en cámara) y con un tema fresco y distinto.
+# Principio de Multiplicación (Regla del "y")
 
 ## Video: Principio de la Multiplicación (La Regla del "Y")
 
 **Gancho (0:00 - 0:35)**
 
-* **Visual (Manim / Simulación 2D):** Una escena en estilo *pixel art* de un videojuego retro de atracos. Un personaje (un ladrón) está dentro de la bóveda de un banco con el botín. La interfaz del juego muestra en pantalla: *"PLAN DE ESCAPE"*. Paso 1: Elegir Salida (aparecen 3 íconos: Ventilación, Puerta Principal, Alcantarillas). Paso 2: Elegir Vehículo (aparecen 4 íconos: Moto, Furgoneta, Helicóptero, Patineta). Un reloj hace una cuenta regresiva rápida.
+* **Visual (Manim / Simulación 2D):** Una escena en estilo *pixel art* de un videojuego retro de escape. Un personaje (un ladrón) está dentro de la bóveda con el botín. La interfaz del juego muestra en pantalla: *"PLAN DE ESCAPE"*. Paso 1: Elegir Salida (aparecen 3 íconos: Ventilación, Puerta Principal, Alcantarillas). Paso 2: Elegir Vehículo (aparecen 4 íconos: Moto, Furgoneta, Helicóptero, Patineta). Un reloj hace una cuenta regresiva rápida.
 * **Audio:** Imagina que estás jugando un videojuego de escapes y acabas de vaciar la bóveda. Ahora debes planear tu escape perfecto. El juego te obliga a elegir una ruta de salida entre 3 opciones: la ventilación, la puerta principal o las alcantarillas. Pero eso no es todo, también debes elegir un vehículo de escape entre 4 opciones: una moto, una furgoneta, un helicóptero o una patineta. Si obligatoriamente necesitas elegir una salida "Y" un vehículo para ganar, ¿cuántos planes de escape únicos puedes formar en total antes de que se acabe el tiempo?
 
 **Intro y Promesa (0:35 - 0:50)**
@@ -84,7 +83,7 @@ Aquí tienes el guion para el video del Principio de la Multiplicación, respeta
 **Cierre y Conexión (2:30 - 3:00)**
 
 * **Visual (Manim):** El candado numérico se abre de golpe, liberando esferas de luz que se agrupan en el centro para formar el enorme símbolo matemático del Factorial ($!$). Las esferas comienzan a alinearse en fila, intercambiando posiciones rápidamente de todas las formas posibles como si compitieran por el primer lugar.
-* **Audio:** La regla de la multiplicación es la base que hace funcionar a todas las fórmulas avanzadas de probabilidad. Pero, ¿qué pasaría si en lugar de elegir entre opciones separadas, tuvieras un grupo cerrado de elementos y simplemente quisieras saber de cuántas formas puedes ordenarlos absolutamente todos en una sola fila? Ahí es donde la multiplicación consecutiva evoluciona hacia una de las operaciones más hermosas de la matemática: El Factorial. Y ese, será nuestro próximo video. 
+* **Audio:** La regla de la multiplicación es la base de las tecnicas de conteo. Pero, ¿qué pasaría si en lugar de elegir entre opciones separadas, tuvieras un grupo cerrado de elementos y simplemente quisieras saber de cuántas formas puedes ordenarlos absolutamente todos en una sola fila? Ahí es donde la multiplicación consecutiva evoluciona hacia una de las operaciones más utiles de la matemática: El Factorial. Y ese, será nuestro próximo video. 
 
 
 # Video 1: El Factorial
@@ -97,7 +96,7 @@ Aquí tienes el guion para el video del Principio de la Multiplicación, respeta
 **Intro y Promesa (0:35 - 0:50)**
 
 * **Visual (Manim):** La interfaz de música se desintegra y sus píxeles forman un gigantesco signo de exclamación ($!$) que brilla con luces de neón. Aparece el título: *"EL FACTORIAL"*. Debajo, se escribe el subtítulo: *"La matemática del orden total"*.
-* **Audio:** Bienvenidos al símbolo más efusivo de las matemáticas. Hoy vamos a conocer el Factorial, la operación maestra que nos permite calcular instantáneamente de cuántas formas distintas podemos ordenar un grupo completo de elementos en una sola fila.
+* **Audio:** Hoy vamos a conocer el Factorial, la operación maestra que nos permite calcular instantáneamente de cuántas formas distintas podemos ordenar un grupo completo de elementos en una sola fila.
 
 **Desarrollo: Construyendo el Orden (0:50 - 1:45)**
 
@@ -112,7 +111,7 @@ Aquí tienes el guion para el video del Principio de la Multiplicación, respeta
 **Cierre y Conexión (2:40 - 3:10)**
 
 * **Visual (Manim):** Regresan las 5 notas musicales a la pantalla. Un brazo robótico desciende, agarra aleatoriamente solo 3 notas y las guarda en una carpeta que dice *"Mini-Playlist"*. El símbolo de factorial ($!$) mira la acción con un enorme signo de interrogación arriba.
-* **Audio:** Ordenar absolutamente todo el grupo de datos es fascinante. Pero, ¿qué pasaría si no queremos escuchar las 5 canciones? ¿Qué pasa si solo queremos seleccionar 3 de ellas al azar para hacer una mini-lista y no nos importa en lo absoluto en qué orden suenen? El factorial directo ya no nos sirve porque nos daría datos duplicados. Para resolver esto, necesitamos una nueva herramienta: Los Números Combinatorios. Y ese, será nuestro próximo video. ¡Suscríbete y acompáñame!
+* **Audio:** Ordenar absolutamente todo el grupo de datos es fascinante. Pero, ¿qué pasaría si no queremos escuchar las 5 canciones? ¿Qué pasa si solo queremos seleccionar 3 de ellas al azar para hacer una mini-lista y no nos importa en lo absoluto en qué orden suenen? El factorial directo ya no nos sirve porque nos daría datos duplicados. Para resolver esto, necesitamos una nueva herramienta: Los Números Combinatorios. Y ese, será nuestro próximo video. 
 
 ---
 
@@ -126,7 +125,7 @@ Aquí tienes el guion para el video del Principio de la Multiplicación, respeta
 **Intro y Promesa (0:35 - 0:50)**
 
 * **Visual (Manim):** Los avatares se desvanecen. En el centro de la pantalla se dibujan unos paréntesis grandes, con el número 8 en la parte superior y el número 3 en la inferior: $\binom{8}{3}$. Aparece el título: *"NÚMEROS COMBINATORIOS"*. Subtítulo: *"Elegir sin importar el orden"*.
-* **Audio:** Bienvenidos al arte abstracto de seleccionar grupos. Hoy descubriremos los Números Combinatorios, la estructura matemática que nos permite calcular con precisión quirúrgica cuántos subgrupos únicos podemos extraer de un conjunto más grande cuando el orden no importa en lo absoluto.
+* **Audio:**  Hoy descubriremos los Números Combinatorios, la estructura matemática que nos permite calcular con precisión cuántos subgrupos únicos podemos extraer de un conjunto más grande cuando el orden no importa en lo absoluto.
 
 **Desarrollo: La Estructura y la Fórmula (0:50 - 1:45)**
 
@@ -136,26 +135,25 @@ Aquí tienes el guion para el video del Principio de la Multiplicación, respeta
 **Desarrollo: El Truco de la Cancelación (1:45 - 2:35)**
 
 * **Visual (Manim):** La ecuación se desarrolla. El numerador pasa de $8!$ a escribirse como $8 \times 7 \times 6 \times 5!$. El denominador se mantiene como $3 \times 2 \times 1 \times 5!$. Una línea roja tipo "slash" tacha el $5!$ de arriba y el $5!$ de abajo, eliminándolos. Nos queda la fracción $\frac{8 \times 7 \times 6}{6}$, que se simplifica y estalla revelando el número **56**. Se dibujan 56 mini-cohetes en el fondo.
-* **Audio:** Antes de que busques una calculadora para resolver esos factoriales gigantes, te voy a enseñar el mejor truco de los estadísticos: la cancelación. En lugar de desarrollar todo el 8 factorial hasta el número uno, lo escribimos solo como 8 por 7 por 6... por 5 factorial. ¿Para qué? Para poder cancelar directamente ese 5 factorial de arriba con el 5 factorial de abajo. El problema se reduce a 8 por 7 por 6, dividido entre 3 por 2 por 1. Al resolver esa simple fracción, el resultado es 56. ¡Tienes exactamente 56 formas únicas de armar tu tripulación a Marte!
+* **Audio:**  En lugar de desarrollar todo el 8 factorial hasta el número uno, lo escribimos solo como 8 por 7 por 6... por 5 factorial. ¿Para qué? Para poder cancelar directamente ese 5 factorial de arriba con el 5 factorial de abajo. El problema se reduce a 8 por 7 por 6, dividido entre 3 por 2 por 1. Al resolver esa simple fracción, el resultado es 56. ¡Tienes exactamente 56 formas únicas de armar tu tripulación a Marte!
 
 **Cierre y Conexión (2:35 - 3:00)**
 
 * **Visual (Manim):** Los 56 mini-cohetes se agrupan, apilándose uno sobre otro para formar las barras de un histograma. Una línea curva y suave atraviesa las puntas de las barras formando la gráfica de una Distribución Binomial. En una esquina, la fórmula de la Binomial aparece resaltando su componente combinatorio: $\binom{n}{k} p^k q^{n-k}$.
-* **Audio:** Estos números combinatorios son la pieza fundamental que nos faltaba en nuestro arsenal estadístico. Ahora que sabemos cómo empaquetar y calcular estos subgrupos de forma limpia, estamos listos para insertarlos dentro de fórmulas predictivas reales. En el próximo video, usaremos este mismo número combinatorio como el motor para construir una de las gráficas de probabilidad más importantes del mundo: La Distribución Binomial. ¡Suscríbete, deja un buen like y prepárate para el siguiente nivel matemático!
+* **Audio:** Estos números combinatorios son la pieza fundamental que nos faltaba en nuestro arsenal estadístico. Ahora que sabemos cómo comtar estos subgrupos de forma limpia, estamos listos para insertarlos dentro de fórmulas predictivas reales. 
 
-Aquí tienes el guion para el video de Permutación Básica, cumpliendo con la estructura de viñetas, párrafos únicos por sección, y el formato 100% de animación (Manim/código) sin apariciones a cámara. He utilizado un tema de logística y algoritmos de enrutamiento para mantener el enfoque analítico.
 
 # Video: Permutación Básica
 
 **Gancho (0:00 - 0:35)**
 
 * **Visual (Manim / Simulación 2D):** Un mapa digital oscuro estilo radar aparece en pantalla con 5 nodos brillantes etiquetados del $A$ al $E$ (representando ciudades o servidores). Un dron de entregas (o paquete de datos) se sitúa en el centro. Se traza rápidamente una ruta: $A \to B \to C$, marcando un tiempo de "15 ms". Luego la ruta se borra y se traza a la inversa: $C \to B \to A$, marcando un tiempo de "45 ms" debido a la resistencia de la red. Un reloj de batería parpadea en rojo.
-* **Audio:** Eres el ingeniero de datos a cargo de trazar la ruta de un dron de entregas urgentes. Tienes 5 destinos críticos en el mapa, pero la batería solo alcanza para visitar exactamente 3 antes de volver a la base. ¿El orden importa? Por supuesto. Volar de la ciudad A a la B y luego a la C toma un tiempo y energía completamente distintos que hacer la ruta a la inversa debido al viento y la distancia. Si necesitas programar un algoritmo para encontrar la ruta más rápida, primero debes saber exactamente cuántas rutas posibles existen. Y calcular eso a mano te tomará más tiempo del que le queda a la batería.
+* **Audio:** Eres el ingeniero  a cargo de trazar la ruta de un dron de entregas urgentes. Tienes 5 destinos críticos en el mapa, pero la batería solo alcanza para visitar exactamente 3 antes de volver a la base. ¿El orden importa? Por supuesto. Volar de la ciudad A a la B y luego a la C toma un tiempo y energía completamente distintos que hacer la ruta a la inversa debido al viento y la distancia. Si necesitas programar un algoritmo para encontrar la ruta más rápida, primero debes saber exactamente cuántas rutas posibles existen.
 
 **Intro y Promesa (0:35 - 0:50)**
 
 * **Visual (Manim):** El mapa digital se desintegra en partículas geométricas que se reagrupan en el centro para formar el título brillante: *"PERMUTACIÓN BÁSICA"*. Debajo, un subtítulo dinámico se escribe como si fuera código: `orden == True`.
-* **Audio:** Bienvenidos a la matemática de la logística y la precisión. Hoy vamos a dominar la Permutación Básica, la herramienta estadística que te permite calcular al instante de cuántas formas puedes elegir y ordenar un grupo específico de elementos cuando la posición de cada uno cambia por completo el resultado final.
+* **Audio:** Hoy vamos a dominar la Permutación Básica, la herramienta estadística que te permite calcular al instante de cuántas formas puedes elegir y ordenar un grupo específico de elementos cuando la posición de cada uno cambia por completo el resultado final.
 
 **Desarrollo: La Lógica del Espacio (0:50 - 1:45)**
 
@@ -164,21 +162,13 @@ Aquí tienes el guion para el video de Permutación Básica, cumpliendo con la e
 
 **Desarrollo: La Fórmula Matemática (1:45 - 2:35)**
 
-* **Visual (Manim):** Las ranuras desaparecen y la fórmula oficial de la permutación se escribe en elegante formato LaTeX: 
-$$P(n,r) = \frac{n!}{(n-r)!}$$
-
-
-. La variable $n$ se ilumina y se transforma en un $5$ (Destinos Totales). La variable $r$ se transforma en un $3$ (Paradas). La ecuación se actualiza a: 
-$$\frac{5!}{(5-3)!} = \frac{5!}{2!}$$
-
-
-. El numerador se expande como $5 \times 4 \times 3 \times 2!$, y una animación de corte de espada ("slash" rojo) cancela el $2!$ de arriba con el $2!$ de abajo. El resultado brillante $60$ ocupa la pantalla.
-* **Audio:** Para no tener que hacer multiplicaciones manuales cuando trabajes con bases de datos de miles de registros, usamos la fórmula general de la permutación. "$n$" es tu número total de elementos disponibles (tus 5 destinos), y "$r$" es el número de espacios que vas a llenar (tus 3 paradas). Arriba colocamos 5 factorial, y abajo la resta de 5 menos 3, es decir, 2 factorial. Aquí aplicamos nuestro viejo truco de cancelación: desarrollamos el 5 factorial solo hasta el 2 factorial para cancelarlo directamente con el de abajo, dejándonos exactamente la misma operación: 5 por 4 por 3. ¡60 rutas calculadas con código en milisegundos!
+* **Visual (Manim):** Las ranuras desaparecen y la fórmula oficial de la permutación se escribe en elegante formato LaTeX: $$P(n,r) = \frac{n!}{(n-r)!}$$. La variable $n$ se ilumina y se transforma en un $5$ (Destinos Totales). La variable $r$ se transforma en un $3$ (Paradas). La ecuación se actualiza a:  $$\frac{5!}{(5-3)!} = \frac{5!}{2!}$$. El numerador se expande como $5 \times 4 \times 3 \times 2!$, y una animación de corte de espada ("slash" rojo) cancela el $2!$ de arriba con el $2!$ de abajo. El resultado brillante $60$ ocupa la pantalla.
+* **Audio:** Para no tener que hacer multiplicaciones manuales cuando trabajes con bases de datos de miles de registros, usamos la fórmula general de la permutación. "$n$" es tu número total de elementos disponibles (tus 5 destinos), y "$r$" es el número de espacios que vas a llenar (tus 3 paradas). Arriba colocamos 5 factorial, y abajo la resta de 5 menos 3, es decir, 2 factorial. desarrollamos el 5 factorial solo hasta el 2 factorial para cancelarlo directamente con el de abajo, dejándonos exactamente la misma operación: 5 por 4 por 3. ¡60 rutas!
 
 **Cierre y Conexión (2:35 - 3:00)**
 
-* **Visual (Manim):** El número $60$ se transforma en un bloque de código y se guarda en un candado cerrado marcado como *"Permutación"*. A su lado, aparece un candado abierto marcado como *"Combinación"*. El número $60$ salta al candado abierto, se divide por $3!$, y se transforma en un número $10$. Aparece un signo de interrogación.
-* **Audio:** La permutación básica es el motor de los algoritmos de enrutamiento y las contraseñas, porque asume que cada ligero cambio de posición crea un universo nuevo. Pero, ¿y si las reglas del juego cambian de repente? ¿Qué pasaría si tu director te dice que ya no le importa el orden en que entregues, sino que solo quiere saber cuáles 3 paquetes específicos vas a subir al dron del grupo de 5? Ese simple cambio destruye la permutación y nos devuelve al mundo de las combinaciones. ¿Cómo se conectan y se dividen estas dos fórmulas? Ese será nuestro próximo desafío. ¡Suscríbete, deja un buen like y nos vemos en el siguiente algoritmo!
+* **Visual (Manim):** El número $60$ se transforma en un bloque de código y se guarda en un candado cerrado marcado como *"Permutación"*. A su lado, aparece un candado abierto marcado como *"Con Repetición"*. El número $60$ salta al candado abierto, se divide por $3!$, y se transforma en un número $10$. Aparece un signo de interrogación.
+* **Audio:** La permutación  es el motor de los algoritmos de enrutamiento y las contraseñas, porque asume que cada ligero cambio de posición crea un universo nuevo. Pero, ¿y que pasa si algunos de los elementos son iguales? Como vamos a menejar las permutaciones. Ese será nuestro próximo video
 
 6. #  Permutaciones con Repetición
 
@@ -192,79 +182,65 @@ $$\frac{5!}{(5-3)!} = \frac{5!}{2!}$$
 **Intro y Promesa (0:40 - 0:55)**
 
 * **Visual (Manim):** Las letras corruptas en la terminal estallan en fragmentos de código. Esos fragmentos se reagrupan en el centro para formar el título brillante: *"PERMUTACIONES CON REPETICIÓN"*. Debajo, un subtítulo en fuente de código se despliega: *"Cuando los clones engañan a las matemáticas"*.
-* **Audio:** Bienvenidos al mundo de los elementos idénticos. Hoy descubriremos las Permutaciones con Repetición, la técnica maestra que nos permite calcular el número real de arreglos posibles cuando en nuestro universo existen objetos repetidos que nuestro cerebro no puede distinguir.
+* **Audio:** Hoy descubriremos las Permutaciones con Repetición, la técnica  que nos permite calcular el número real de arreglos posibles cuando en nuestro universo existen objetos repetidos.
 
 **Desarrollo: La Trampa de los Clones Invisibles (0:55 - 1:45)**
 
 * **Visual (Manim):** Se dibuja la palabra correcta *"S U C C E S S"*. Para que el espectador lo note, a cada letra idéntica se le asigna un pequeño subíndice de color: $S_1, S_2, S_3$ y $C_1, C_2$. Una animación rápida intercambia la posición de la $S_1$ (al inicio) con la $S_3$ (al final). Los subíndices desaparecen un segundo, revelando que la palabra se ve exactamente igual. Aparece una alerta en rojo: *"DUPLICADO FANTASMA DETECTADO"*.
-* **Audio:** Volvamos a la palabra "SUCCESS". Tiene siete letras en total. Si calculas un 7 factorial clásico, estás tratando a las tres letras "S" como si fueran completamente distintas entre sí, y a las dos letras "C" como si fueran diferentes. El problema es que, si la computadora simplemente intercambia la primera "S" con la última "S", el resultado visual es exactamente la misma palabra. Si no ajustamos nuestro cálculo estadístico, estaremos contando miles de palabras fantasma que son copias visualmente idénticas, inflando nuestro espacio muestral artificialmente.
+* **Audio:** Volvamos a la palabra "SUCCESS". Tiene siete letras en total. Si calculas un 7 factorial clásico, estás tratando a las tres letras "S" como si fueran completamente distintas entre sí, y a las dos letras "C" como si fueran diferentes. El problema es que, si la computadora simplemente intercambia la primera "S" con la última "S", el resultado visual es exactamente la misma palabra. Si no ajustamos nuestro cálculo estadístico, estaremos contando miles de palabras fantasma que son copias visualmente idénticas.
 
 **Desarrollo: La Fórmula del Ajuste (1:45 - 2:40)**
 
 * **Visual (Manim):** La palabra desaparece y da paso a la poderosa fórmula en formato LaTeX: 
-$$P = \frac{n!}{n_1! \cdot n_2! \cdot \dots \cdot n_k!}$$
-
-
-
-Las variables se iluminan. El numerador $n!$ se transforma en el total de letras: $7!$. El denominador se construye destacando las repeticiones: $3!$ (por las tres S) multiplicado por $2!$ (por las dos C). La ecuación queda: 
-$$\frac{7!}{3! \times 2!}$$
-
-
-
-El cálculo se desarrolla fluidamente: el $7!$ de arriba ($5,040$) se divide por el producto de abajo ($6 \times 2 = 12$). El resultado final de $5,040 / 12$ salta a la pantalla y brilla en dorado: **$420$**.
-* **Audio:** Para eliminar a estos clones invisibles, usamos la fórmula de la permutación con repetición. En el numerador, ponemos el factorial de nuestro total absoluto de elementos, es decir, 7 factorial. Pero la magia purificadora ocurre en el denominador: aquí vamos a dividir por el factorial de las repeticiones de cada elemento idéntico. Como tenemos tres letras "S", dividimos entre 3 factorial. Y como tenemos dos letras "C", multiplicamos ese fondo por 2 factorial. Al dividir, matemáticamente estamos "borrando" de nuestro conteo todas las veces que los clones cambiaron de lugar entre ellos. Tu espacio muestral real cae de 5,040 a tan solo 420 formas únicas.
+$$P = \frac{n!}{n_1! \cdot n_2! \cdot \dots \cdot n_k!}$$ Las variables se iluminan. El numerador $n!$ se transforma en el total de letras: $7!$. El denominador se construye destacando las repeticiones: $3!$ (por las tres S) multiplicado por $2!$ (por las dos C). La ecuación queda: $$\frac{7!}{3! \times 2!}$$El cálculo se desarrolla fluidamente: el $7!$ de arriba ($5,040$) se divide por el producto de abajo ($6 \times 2 = 12$). El resultado final de $5,040 / 12$ salta a la pantalla y brilla en dorado: **$420$**.
+* **Audio:** Para eliminar a estos clones invisibles, usamos la fórmula de la permutación con repetición. En el numerador, ponemos el factorial de nuestro total absoluto de elementos, es decir, 7 factorial. Pero la magia ocurre en el denominador: aquí vamos a dividir por el factorial de las repeticiones de cada elemento idéntico. Como tenemos tres letras "S", dividimos entre 3 factorial. Y como tenemos dos letras "C", multiplicamos ese fondo por 2 factorial. Al dividir, matemáticamente estamos "borrando" de nuestro conteo todas las veces que los clones cambiaron de lugar entre ellos. Tu espacio muestral real cae de 5,040 a tan solo 420 formas únicas.
 
 **Cierre y Conexión (2:40 - 3:10)**
 
-* **Visual (Manim):** El número $420$ se descompone en 420 pequeños bloques de texto que forman una matriz perfecta en el fondo. Todos esos bloques se comprimen en un solo cubo de datos brillante. Este cubo se deja caer dentro de una "máquina" abstracta que tiene un plano cartesiano (ejes X y Y) en su interior, lista para graficar.
-* **Audio:** Ahora ya sabes cómo corregir tus cálculos cuando la realidad te lanza objetos idénticos. Con esta última técnica, nuestro cinturón negro en estrategias de conteo está oficialmente completo y a prueba de errores. Pero, ¿qué pasa cuando ya no queremos solo contar, sino tomar todos estos universos de datos, extraer muestras al azar y graficar sus probabilidades reales en el tiempo? Ha llegado la hora de aplicar todo esto en los grandes modelos matemáticos. En el próximo video, entraremos oficialmente al fascinante mundo de las Distribuciones de Probabilidad. ¡Suscríbete, deja un buen like y prepárate para graficar el futuro!
+* **Visual (Manim):** El número $420$ se descompone en 420 pequeños bloques de texto que forman una matriz perfecta en el fondo. .
+* **Audio:** Ahora ya sabes cómo corregir tus cálculos cuando la realidad te lanza objetos idénticos. 
 4. #  Principio de Adición (Regla del "o")
 
-Aquí tienes el guion para el Principio de Adición (Regla del "o"), manteniendo la estructura de viñetas con párrafos únicos, sin apariciones a cámara y utilizando animaciones visuales inmersivas basadas en un entorno de videojuegos RPG.
+**Gancho (0:00 - 0:40)**
 
-## Video: Principio de Adición (La Regla del "O")
+* **Visual (Manim / Simulación 2D):** Un mapa digital estilo GPS muestra un punto marcado como "Ciudad A" y otro como "Ciudad B". Un avatar en la Ciudad A tiene un símbolo de alerta roja parpadeando sobre su cabeza. El mapa despliega las opciones de ruta: por el aire, se dibujan 3 aviones pequeños (representando 3 aerolíneas distintas); por tierra, se dibujan 2 autobuses (representando 2 empresas). Un cronómetro gigante hace una cuenta regresiva.
+* **Audio:** Imagina que estás en la ciudad A y tienes una emergencia absoluta: necesitas llegar a la ciudad B hoy mismo. Abres tu aplicación de viajes y el algoritmo te muestra tus opciones. Puedes tomar un vuelo rápido, donde operan 3 aerolíneas distintas, o puedes irte por tierra en un autobús, donde tienes 2 empresas de transporte disponibles. Si la base de datos necesita calcular de cuántas formas totalmente diferentes puedes hacer este viaje, ¿qué harías? ¿Multiplicarías las opciones como hicimos en el video anterior? Si haces eso, la matemática colapsa. Aquí es físicamente imposible viajar en avión y en bus al mismo tiempo. Tienes que tomar una decisión.
 
-**Gancho (0:00 - 0:35)**
+**Intro y Promesa (0:40 - 0:55)**
 
-* **Visual (Manim / Simulación 2D):** Una interfaz clásica de un videojuego RPG (Role-Playing Game). El inventario de un jugador muestra exactamente 1,000 monedas de oro brillantes. El jugador llega a una encrucijada en la ciudad principal con dos tiendas distintas. A la izquierda, la "Tienda de Bestias", que ofrece 3 caballos acorazados y 2 lobos gigantes. A la derecha, el "Taller Mecánico", que ofrece 4 motos a vapor. Un letrero parpadea indicando: *"Fondos insuficientes para comprar en ambas tiendas. Elige SOLO UNA montura"*.
-* **Audio:** Imagina que llevas semanas jugando un RPG y por fin reuniste mil monedas de oro para comprar tu primera montura épica. Llegas a la ciudad y tienes dos opciones: ir a la Tienda de Bestias, que tiene 5 animales distintos, o ir al Taller Mecánico, que ofrece 4 motos a vapor. Tu oro solo alcanza para comprar un único vehículo, así que debes elegir una bestia "O" una moto. ¿Cuántas opciones totales tienes disponibles para gastar tu oro? Si tu mente matemática rápida pensó en multiplicar los números, acabas de desperdiciar todo tu oro en una fórmula equivocada.
+* **Visual (Manim):** Los íconos de aviones y autobuses vuelan al centro de la pantalla y colisionan, transformándose en un gigantesco y brillante signo de suma ($+$). Aparece el título en tipografía audaz: *"PRINCIPIO DE ADICIÓN"*, y debajo el subtítulo que pulsa lentamente: *"La Regla del 'O'"*.
+* **Audio:**  Hoy vamos a dominar el Principio de Adición, también conocido como la Regla del "O". Descubrirás por qué en ciertos escenarios multiplicar destruye la lógica, y cómo la suma es la única herramienta matemática capaz de abarcar tus universos posibles cuando los caminos nunca se cruzan.
 
-**Intro y Promesa (0:35 - 0:50)**
+**Desarrollo: La Lógica Básica (0:55 - 1:40)**
 
-* **Visual (Manim):** La interfaz del RPG se congela y las tiendas se transforman en bloques abstractos de datos. En el centro, una gran letra *"O"* se dibuja con fuego mágico, seguida del título: *"PRINCIPIO DE ADICIÓN"*. Abajo, el subtítulo: *"La Regla de los Caminos Separados"*.
-* **Audio:** Bienvenidos a la regla más intuitiva pero más incomprendida del conteo. Hoy vamos a dominar el Principio de Adición, conocido como la regla del "O". Vas a descubrir cómo calcular el tamaño de tus opciones cuando los caminos de tus decisiones jamás pueden cruzarse.
+* **Visual (Manim):** La pantalla se divide en dos carriles. Carril superior (Aire): 3 aviones se alinean. Carril inferior (Tierra): 2 autobuses se alinean. En el medio de ambos carriles aparece una gran letra "O" ($\cup$). La ecuación se escribe de forma fluida: $3 + 2 = 5$.
+* **Audio:** Volvamos a tu viaje de emergencia. La clave definitiva para usar este principio es la palabra "O". Viajas en avión, "O" viajas en autobús. Como no puedes estar en dos lugares a la vez, estos eventos son mutuamente excluyentes; si eliges uno, anulas instantáneamente la existencia del otro. Cuando te enfrentas a decisiones paralelas que no ocurren en secuencia, abandonamos la multiplicación y aplicamos el Principio de Adición. Simplemente sumas tus 3 opciones de aerolíneas con tus 2 opciones de autobuses, dándote un gran total de 5 formas distintas de llegar a tu destino.
 
-**Desarrollo: La Lógica y la Suma (0:50 - 1:45)**
+**Desarrollo: Combinando Universos (El Comité) (1:40 - 2:30)**
 
-* **Visual (Manim):** La pantalla se divide en dos bloques separados por una barrera de energía láser que impide que se toquen. En el bloque izquierdo (Bestias), flotan 5 íconos circulares. En el bloque derecho (Mecánicos), flotan 4 íconos cuadrados. Un cursor virtual debe hacer un solo clic. Si selecciona un ícono izquierdo, el lado derecho se apaga por completo, y viceversa. Aparece la ecuación matemática: $5 + 4 = 9$.
-* **Audio:** La clave de este principio es un concepto que ya vimos: eventos mutuamente excluyentes. Esto significa que si eliges una opción, es físicamente imposible elegir la otra al mismo tiempo; tus decisiones no se mezclan. Como solo tienes dinero para comprar una única montura, si compras una bestia, el taller mecánico se bloquea para ti. Como los caminos no pueden ocurrir de forma consecutiva ni mezclarse, simplemente sumas tus alternativas. Tienes 5 opciones de un lado más 4 del otro, lo que te da un total de 9 monturas posibles para elegir.
+* **Visual (Manim):** La pantalla se limpia y aparece un salón de clases representado por avatares: 9 niños (en azul) y 3 niñas (en morado). Un marco dorado vacío con 4 asientos aparece abajo bajo el título: *"COMITÉ NACIONAL"*. Una regla estricta parpadea en letras rojas: *"REQUISITO: Al menos 1 niña"*.
+* **Audio:** Pero, ¿qué pasa si el algoritmo se enfrenta a un problema complejo donde necesitamos usar la multiplicación y la suma al mismo tiempo? Imagina una clase con 9 niños y 3 niñas. Debes escoger al azar un comité de exactamente 4 estudiantes para un congreso nacional, pero hay una restricción obligatoria en el código: el comité debe tener "por lo menos" una niña. Esa pequeña frase "por lo menos" divide nuestro problema en tres escenarios diferentes. Como un comité no puede tener 1 niña y 3 niñas al mismo tiempo, estos escenarios son mutuamente excluyentes.
 
-**Desarrollo: La Diferencia entre el "O" y el "Y" (1:45 - 2:30)**
+**Desarrollo: Calculando los Casos (2:30 - 3:30)**
 
-* **Visual (Manim):** Se muestran dos cajas de texto enfrentadas.
-A la izquierda: *"Bestia O Moto"*. La letra "O" baja y se convierte en un signo gigante de suma ($+$). El resultado $5 + 4 = 9$ brilla en azul.
-A la derecha: *"Bestia Y Moto"*. La letra "Y" baja y se convierte en un signo de multiplicación ($\times$). El resultado $5 \times 4 = 20$ brilla en rojo.
-* **Audio:** ¿Cómo saber cuándo sumar y cuándo multiplicar en un examen o en un código? Todo se esconde en el lenguaje. Si tu problema dice que debes elegir una opción "O" la otra, significa que son excluyentes, por lo tanto, sumas (+). Pero si el juego te diera oro infinito y te exigiera comprar una bestia "Y" también una moto, los eventos ocurrirían en cadena. En ese caso aplicarías el principio multiplicativo de nuestro video anterior, multiplicando 5 por 4 para obtener 20 combinaciones distintas de garaje. El "O" divide los caminos y suma; el "Y" los encadena y multiplica.
+* **Visual (Manim):** Se abren tres recuadros paralelos en pantalla, resolviendo las ecuaciones combinatorias en simultáneo:* *Caso 1 (1 Niña y 3 Niños):* $\binom{3}{1} \times \binom{9}{3} = 3 \times 84 = 252$ * *Caso 2 (2 Niñas y 2 Niños):* $\binom{3}{2} \times \binom{9}{2} = 3 \times 36 = 108$ * *Caso 3 (3 Niñas y 1 Niño):* $\binom{3}{3} \times \binom{9}{1} = 1 \times 9 = 9$ Finalmente, los tres resultados caen a una caja sumadora final: $252 + 108 + 9 = 369$.
+* **Audio:** Desglosemos los tres casos. Caso 1: que el comité tenga exactamente 1 niña "Y" 3 niños. Usando combinaciones (porque el orden no importa), combinamos 1 de 3 niñas, por 3 de 9 niños, dándonos 252 formas. Caso 2: tener 2 niñas y 2 niños. Hacemos la combinatoria y nos da 108 formas. Caso 3: llevar a las 3 niñas y a 1 solo niño. La combinatoria nos arroja 9 formas. Ahora aplicamos nuestro principio maestro. Como solo puede ocurrir el Caso 1, "O" el Caso 2, "O" el Caso 3, sumamos los universos: 252 más 108 más 9. ¡Existen exactamente 369 maneras totales de armar este comité cumpliendo la regla!
 
-**Cierre y Conexión (2:30 - 3:00)**
+Cierre y Conexión (3:30 - 4:00) reescrito:
+Visual (Manim): El gran número $369$ brilla en el centro y se desintegra en partículas. Estas partículas se transforman en una caja fuerte abierta de la cual salen flotando distintos objetos (avatares, esferas de colores y bloques). Algunos de estos objetos son únicos, pero de repente, varios de ellos comienzan a clonarse repetidamente llenando la pantalla. Sobre esta nube de clones aparece un gran signo de interrogación brillante y las palabras "¿Y si se repiten?".
+Audio: Hasta ahora, al formar nuestros equipos y comités, siempre usamos combinaciones asumiendo lógicamente que no podemos elegir a la misma persona dos veces. Pero, ¿qué pasa cuando la regla cambia y el sistema sí te permite elegir elementos repetidos? para terminar las tecnicas de conteo nos vemos en el siguiente video, en el próximo video dominaremos las Combinaciones con y sin repetición. 
 
-* **Visual (Manim):** Los números 9 y 20 se fusionan en un vórtice matemático y se transforman en una gran caja fuerte cerrada con múltiples cerraduras, algunas exigiendo sumas y otras multiplicaciones. Un texto flotante dice: *"Problemas Combinados"*.
-* **Audio:** Ahora ya conoces los dos pilares del conteo numérico: el principio multiplicativo y el principio de adición. Pero en la vida real, como en el desarrollo de software o la criptografía, los problemas no son tan amables como para pedirte solo uno u otro. ¿Qué pasa cuando te enfrentas a un sistema que tiene reglas del "Y" mezcladas en la misma ecuación con reglas del "O"? Para resolver esos acertijos de alto nivel, necesitamos combinar nuestras reglas.
-
-8. # combinaciones con y sin repe
-Aquí tienes el guion para el video de Combinaciones (Con y Sin Repetición). He utilizado una analogía orientada a la tecnología y el hardware (muy cercana al mundo del *Machine Learning*) para mantener el nivel analítico, respetando el formato visual 100% de animaciones y código en Manim.
-
-## Video: Combinaciones (Con y Sin Repetición)
+# Video: Combinaciones (Con y Sin Repetición)
 
 **Gancho (0:00 - 0:40)**
 
 * **Visual (Manim / Simulación 2D):** Una interfaz estilo tienda de tecnología. Tienes un chasis de servidor vacío con exactamente 4 ranuras (slots) para tarjetas gráficas (GPUs). En el inventario de la tienda hay 3 marcas con un símbolo de infinito ($\infty$) sobre ellas: *"Nvidia"*, *"AMD"*, y *"Intel"*. Un brazo robótico toma 2 Nvidias, 1 AMD y 1 Intel, arrojándolas en un carrito de compras. Al caer en el carrito, las cajas rebotan y se mezclan, dejando claro que su orden final no importa en lo absoluto. Aparece un cartel rojo: *"Error de fórmula clásica"*.
-* **Audio:** Imagina que estás construyendo un servidor para entrenar modelos de Inteligencia Artificial y tienes espacio para instalar exactamente 4 tarjetas gráficas. La tienda ofrece 3 marcas distintas, pero tienen un inventario infinito, por lo que puedes comprar varias de la misma marca. Además, como van en el mismo servidor, no importa en qué orden las saques de la caja, el rendimiento final será idéntico. Sabes que si el orden no importa es una combinación, pero ¿cómo la calculas matemáticamente si estás repitiendo marcas? Nuestra fórmula clásica acaba de quedarse corta.
+* **Audio:** Imagina que estás construyendo un servidor para entrenar modelos de Inteligencia Artificial y tienes espacio para instalar exactamente 4 tarjetas gráficas. La tienda ofrece 3 marcas distintas, pero tienen un inventario muy grande, por lo que puedes comprar varias de la misma marca. Además, como van en el mismo servidor, no importa en qué orden las saques de la caja, el rendimiento final será idéntico. Sabes que si el orden no importa es una combinación, pero ¿cómo la calculas matemáticamente si estás repitiendo marcas? Nuestra fórmula clásica acaba de quedarse corta.
 
 **Intro y Promesa (0:40 - 0:55)**
 
 * **Visual (Manim):** El carrito de compras se transforma en un cubo de datos luminoso. Aparece el título en la pantalla: *"COMBINACIONES: Con y Sin Repetición"*. Las letras del título se duplican rápidamente, simulando el efecto de repetición.
-* **Audio:** Bienvenidos a la última frontera de las técnicas de conteo. Hoy dominaremos las combinaciones en sus dos facetas. Repasaremos la regla clásica donde todo es único, y descubriremos la elegante fórmula oculta para calcular nuestro universo cuando sí podemos clonar nuestras opciones.
+* **Audio:**  Hoy dominaremos las combinaciones en sus dos facetas. Repasaremos la regla clásica donde todo es único, y descubriremos la elegante fórmula oculta para calcular nuestro universo cuando sí podemos clonar nuestras opciones.
 
 **Desarrollo: Sin Repetición (El Mundo Único) (0:55 - 1:40)**
 
@@ -273,28 +249,101 @@ Aquí tienes el guion para el video de Combinaciones (Con y Sin Repetición). He
 
 **Desarrollo: Con Repetición (El Mundo Infinito) (1:40 - 2:35)**
 
-* **Visual (Manim):** Del lado derecho aparece el texto: *"Con Repetición"*. Regresamos a las 3 marcas de GPU ($n=3$) y las 4 ranuras a llenar ($k=4$). La nueva y poderosa fórmula de Combinación con Repetición aparece en formato LaTeX: 
-$$CR(n,k) = \binom{n+k-1}{k} = \frac{(n+k-1)!}{k!(n-1)!}$$
-
-
-. Las variables se iluminan. El numerador se vuelve $(3+4-1)! = 6!$. El denominador se vuelve $4!(3-1)! = 4!2!$. La ecuación $\frac{6!}{4! \times 2!}$ se resuelve rápidamente cancelando factoriales, dando un resultado brillante: **$15$**.
+* **Visual (Manim):** Del lado derecho aparece el texto: *"Con Repetición"*. Regresamos a las 3 marcas de GPU ($n=3$) y las 4 ranuras a llenar ($k=4$). La nueva y poderosa fórmula de Combinación con Repetición aparece en formato LaTeX:  $$CR(n,k) = \binom{n+k-1}{k} = \frac{(n+k-1)!}{k!(n-1)!}$$ Las variables se iluminan. El numerador se vuelve $(3+4-1)! = 6!$. El denominador se vuelve $4!(3-1)! = 4!2!$. La ecuación $\frac{6!}{4! \times 2!}$ se resuelve rápidamente cancelando factoriales, dando un resultado brillante: **$15$**.
 * **Audio:** Pero volvamos a tu servidor. Tienes 3 marcas disponibles, que es tu variable "$n$", y debes hacer 4 selecciones, tu variable "$k$", con permiso total para repetir. Para esto usamos la fórmula de Combinaciones con Repetición. En el numerador del fraccionario, sumamos nuestras opciones "$n$", más nuestras selecciones "$k$", le restamos 1, y a todo eso le sacamos el factorial. En el denominador, multiplicamos "$k$" factorial por "$n$" menos 1 factorial. Si reemplazamos con nuestros datos, nos queda 6 factorial dividido entre 4 factorial por 2 factorial. Al resolverlo, descubrimos que tienes exactamente 15 formas únicas de armar tu servidor de Inteligencia Artificial.
 
-**Cierre y Conexión al Siguiente Gran Tema (2:35 - 3:00)**
+Cierre y Conexión Modificado (Video Anterior)
 
-* **Visual (Manim):** El número 15 se eleva en la pantalla. Las 15 configuraciones posibles de servidores caen desde arriba apilándose en forma de barras. Una curva brillante, similar a una Distribución Normal, se dibuja abrazando las barras desde abajo hacia arriba, transformando los bloques rígidos en una gráfica estadística fluida.
-* **Audio:** Con esta última fórmula, dominas por completo las reglas de los elementos idénticos. Las permutaciones, las combinaciones y las reglas del "Y" y el "O" ya no tienen secretos para ti. Oficialmente, tienes todas las herramientas matemáticas para medir cualquier azar. Ya estamos listos para tomar estos conteos y dar el salto hacia las gráficas predictivas masivas. En nuestro próximo video, estrenamos temporada y entramos al poderoso mundo de las Variables Aleatorias. ¡Suscríbete, deja un buen like y prepárate para la verdadera estadística!
+Visual (Manim): El número 15 se eleva en la pantalla. Las 15 configuraciones posibles caen desde arriba y, al tocar el fondo, se transforman en las intersecciones de un mapa urbano cuadriculado estilo GPS. Un punto luminoso empieza a trazar múltiples caminos diferentes y caóticos desde la esquina inferior izquierda del mapa hasta la superior derecha. Un cartel holográfico parpadea con el texto: "Calculando rutas posibles...".
+
+Audio: Con esta última fórmula dominas por completo las reglas de los elementos idénticos. Las combinaciones y las repeticiones ya no tienen secretos para ti en la teoría. Pero, ¿qué pasa si sacamos estas fórmulas de los números y las letras, y las llevamos al espacio físico? ¿Podemos usar este mismo poder matemático para calcular exactamente cuántas rutas alternativas existen en el plano de una ciudad, o incluso en un tablero de ajedrez? En nuestro próximo video, aplicaremos esta lógica para dominar el Conteo de Rutas en Cuadrículas. ¡Suscríbete, deja un buen like y vamos a trazar el mapa!
 8. # Aplicación: Conteo de Rutas en una Cuadrícula 
-    # cuantos caminos tiene una Torre en un tablero de ajedrez para llegar a la casilla de la torre diagonalmente contraria.
+   Aquí tienes la modificación del cierre del video anterior para conectar con el nuevo tema, seguido del guion completo para el video de Conteo de Rutas en una Cuadrícula.
+
+**Cierre y Conexión Modificado (Video Anterior)**
+
+* **Visual (Manim):** El número 15 se eleva en la pantalla. Las 15 configuraciones posibles caen desde arriba y, al tocar el fondo, se transforman en las intersecciones de un mapa urbano cuadriculado estilo GPS. Un punto luminoso empieza a trazar múltiples caminos diferentes y caóticos desde la esquina inferior izquierda del mapa hasta la superior derecha. Un cartel holográfico parpadea con el texto: *"Calculando rutas posibles..."*.
+* **Audio:** Con esta última fórmula dominas por completo las reglas de los elementos idénticos. Las combinaciones y las repeticiones ya no tienen secretos para ti en la teoría. Pero, ¿qué pasa si sacamos estas fórmulas de los números y las letras, y las llevamos al espacio físico? ¿Podemos usar este mismo poder matemático para calcular exactamente cuántas rutas alternativas existen en el plano de una ciudad, o incluso en un tablero de ajedrez? En nuestro próximo video, aplicaremos esta lógica para dominar el Conteo de Rutas en Cuadrículas. ¡Suscríbete, deja un buen like y vamos a trazar el mapa!
+
+---
+
+## Video: Conteo de Rutas en una Cuadrícula
+
+**Gancho (0:00 - 0:40)**
+
+* **Visual (Manim / Simulación 3D):** Un tablero de ajedrez clásico de $8 \times 8$ casillas flota en un espacio oscuro. Una Torre de cristal iluminada se sitúa en la esquina inferior izquierda (casilla A1). La casilla diagonalmente opuesta en la esquina superior derecha (H8) brilla en rojo como el objetivo. Un texto advierte las reglas del juego: *"Movimientos permitidos: SOLO Arriba o Derecha"*. La Torre empieza a trazar rápidamente dos caminos distintos dejando una estela de luz. Un contador gigante arriba empieza a girar rápidamente buscando el total.
+* **Audio:** Imagina que tienes una Torre en un tablero de ajedrez en la esquina inferior izquierda, y necesitas llevarla hasta la esquina superior derecha, al otro lado del tablero. Para hacerlo interesante, la regla es que la Torre solo puede moverse hacia adelante o hacia la derecha, nunca puede retroceder. Si te pregunto cuántos caminos únicos y distintos puede tomar esa Torre para llegar a su destino final, ¿qué dirías? ¿20 caminos? ¿100 caminos? La verdad es que son miles, y para calcular el número exacto en un solo segundo no necesitas un motor de ajedrez, solo necesitas reciclar una fórmula que ya conoces.
+
+**Intro y Promesa (0:40 - 0:55)**
+
+* **Visual (Manim):** El tablero de ajedrez gira y se aplana hasta convertirse en un plano cartesiano. El título se dibuja con líneas rectas y precisas: *"CONTEO DE RUTAS"*. Debajo aparece el subtítulo matemático: *"La geometría de las combinaciones"*.
+* **Audio:** Bienvenidos a la geometría del azar. Hoy aprenderemos a calcular el número exacto de caminos posibles en cualquier cuadrícula o mapa urbano, transformando un problema de rutas físicas en un simple juego de palabras matemáticas.
+
+**Desarrollo: Traduciendo el Mapa a Letras (0:55 - 1:50)**
+
+* **Visual (Manim):** Se dibuja el mapa de una ciudad pequeña. Se marcan $4$ calles verticales y $3$ calles horizontales. Un auto en la esquina inferior izquierda debe ir a la superior derecha. Las flechas muestran los espacios entre las calles: para llegar al objetivo, obligatoriamente se deben avanzar $3$ manzanas a la Derecha ($D, D, D$) y $2$ manzanas hacia Arriba ($A, A$). El auto hace una ruta ($D-A-D-A-D$) y la deja escrita en la pantalla como una palabra.
+* **Audio:** Empecemos con una ciudad. Tienes un mapa con 4 calles verticales y 3 horizontales, y quieres ir de la esquina inferior izquierda a la superior derecha. Si cuentas los bloques, verás que sin importar la ruta que elijas, obligatoriamente tendrás que moverte 3 espacios a la Derecha y 2 espacios hacia Arriba para llegar. Es decir, tu ruta siempre será una combinación de tres letras "D" y dos letras "A". Por ejemplo: Derecha, Arriba, Derecha, Arriba, Derecha. ¡Acabamos de transformar un mapa en una palabra de cinco letras! Y como descubrimos en videos anteriores, si queremos saber cuántas formas hay de ordenar un grupo de letras donde hay clones repetidos, usamos nuestra vieja amiga: la permutación con repetición.
+
+**Desarrollo: La Fórmula y la Solución del Ajedrez (1:50 - 2:45)**
+
+* **Visual (Manim):** La palabra $D-D-D-A-A$ se eleva y se convierte en la ecuación combinatoria: 
+$$\frac{5!}{3! \times 2!} = 10 \text{ rutas}$$
+
+
+.
+Inmediatamente, la pantalla vuelve al tablero de ajedrez de $8 \times 8$ casillas. Se trazan las flechas de movimiento: para ir de la primera casilla a la octava, hay que dar $7$ pasos a la Derecha ($7D$) y $7$ pasos hacia Arriba ($7A$). Total: $14$ pasos.
+Aparece la súper fórmula: 
+$$\frac{14!}{7! \times 7!}$$
+
+
+ o $\binom{14}{7}$. El cálculo rápido cancela los factoriales y el resultado final estalla en pantalla: **$3,432$ rutas**.
+* **Audio:** En la ciudad, tu total de pasos es 5. Divides 5 factorial entre 3 factorial (por las derechas) y 2 factorial (por los arribas), lo que te da 10 rutas posibles. ¡Fácil! Ahora resolvamos el problema de la Torre de ajedrez. Un tablero tiene 8 por 8 casillas. Para cruzarlo de esquina a esquina, la Torre debe dar exactamente 7 saltos a la Derecha y 7 saltos hacia Arriba. En total, siempre dará 14 movimientos. Aplicamos la fórmula: 14 factorial dividido por la multiplicación de 7 factorial por 7 factorial. Los factoriales se cancelan, la computadora hace la magia y el resultado es brutal: ¡Existen 3,432 caminos completamente diferentes para llevar esa Torre a su destino!
+
+Visual (Manim): Los 3,432 caminos dibujados sobre el tablero de ajedrez se levantan en 3D y se transforman en una sola línea recta de 5 sillas vacías. Un candado rojo brillante aparece y bloquea de golpe dos de las sillas uniéndolas con una cadena. Aparece un cartel parpadeante que dice: "RESTRICCIÓN DETECTADA".
+
+Audio: Convertimos un problema de espacio físico en un simple arreglo de letras. Pero espera, antes de dar el gran salto hacia las gráficas, nos queda un último jefe final en el mundo del conteo. ¿Qué pasa cuando las reglas del juego te obligan a que ciertos elementos nunca se separen? Si estás organizando una fila y te dicen "estas personas tienen que sentarse juntas obligatoriamente", toda la matemática que hemos visto tiene que ajustarse. En nuestro próximo y último video de esta serie, dominaremos las Permutaciones con Restricciones y el famoso Método de los Bloques. ¡Suscríbete y vamos a resolver este último acertijo!
 9. # Permutaciones y combinaciones con restricciones (bloques, puestos fijos, elementos fijos)
+**Cierre y Conexión Modificado (Video: Conteo de Rutas en Cuadrícula)**
+
+* **Visual (Manim):** Los 3,432 caminos dibujados sobre el tablero de ajedrez se levantan en 3D y se transforman en una sola línea recta de 5 sillas vacías. Un candado rojo brillante aparece y bloquea de golpe dos de las sillas uniéndolas con una cadena. Aparece un cartel parpadeante que dice: *"RESTRICCIÓN DETECTADA"*.
+* **Audio:** Convertimos un problema de espacio físico en un simple arreglo de letras. Pero espera, antes de dar el gran salto hacia las gráficas, nos queda un último jefe final en el mundo del conteo. ¿Qué pasa cuando las reglas del juego te obligan a que ciertos elementos nunca se separen? Si estás organizando una fila y te dicen "estas personas tienen que sentarse juntas obligatoriamente", toda la matemática que hemos visto tiene que ajustarse. En nuestro próximo y último video de esta serie, dominaremos las Permutaciones con Restricciones y el famoso Método de los Bloques. ¡Suscríbete y vamos a resolver este último acertijo!
+
+---
+
+## Video: Permutaciones con Restricciones (El Método de los Bloques)
+
+**Gancho (0:00 - 0:40)**
+
+* **Visual (Manim / Simulación 2D):** Una sala de exámenes. Hay 5 sillas en una sola fila. Arriba de cada silla flota un cuestionario diferente marcado del 1 al 5 (entregados en orden de izquierda a derecha). Aparecen 5 avatares en pantalla: 3 hombres (en azul) y 2 mujeres (en morado). Un cronómetro inicia.
+* **Audio:** Imagina que tienes 5 sillas en fila y 5 cuestionarios diferentes que deben ser entregados en estricto orden de izquierda a derecha. Tienes a 3 hombres y 2 mujeres esperando para sentarse y resolverlos. Si se sentaran al azar sin que les importe nada, usaríamos una simple permutación de "5 factorial" y obtendríamos 120 formas. Pero, ¿y si te exigen reglas estrictas? Por ejemplo, ¿qué pasa si las mujeres deciden que obligatoriamente se van a sentar juntas, y los hombres también? Si intentas adivinar el número de formas de ordenarlos con esas barreras, el cerebro colapsa. Necesitamos un truco estadístico.
+
+**Intro y Promesa (0:40 - 0:55)**
+
+* **Visual (Manim):** Los avatares se agrupan y una cuerda de luz brillante amarra a los hombres por un lado y a las mujeres por el otro, formando "cajas". Aparece el título dinámico: *"PERMUTACIONES CON RESTRICCIONES"*. Debajo, un subtítulo en letras doradas: *"El Método de los Bloques"*.
+* **Audio:** Bienvenidos al último nivel de las técnicas de conteo. Hoy dominaremos las Permutaciones con Restricciones usando el "Método de los Bloques". Aprenderás a empaquetar variables matemáticas para calcular combinaciones exactas cuando ciertos elementos están obligados a permanecer pegados.
+
+**Desarrollo: Caso A - Hombres juntos y Mujeres juntas (0:55 - 1:55)**
+
+* **Visual (Manim):** La pantalla muestra las 5 sillas. Los 3 avatares de hombres se meten dentro de una caja azul gigante translúcida (Bloque 1). Las 2 mujeres se meten dentro de una caja morada (Bloque 2).
+Dentro de la caja azul, los hombres intercambian de lugar ($3! = 6$). Dentro de la caja morada, las mujeres cambian de lugar ($2! = 2$).
+Luego, las dos cajas gigantes completas intercambian posiciones entre sí ($2!$).
+La ecuación se escribe abajo: $3! \times 2! \times 2! = 6 \times 2 \times 2 = 24$.
+* **Audio:** Primer reto: Los hombres deben sentarse juntos, y las mujeres también. El truco maestro aquí es empaquetarlos. Metemos a los 3 hombres en un solo "súper-bloque", y a las 2 mujeres en otro bloque distinto. Ahora hacemos la matemática por capas. Dentro de su propio bloque, los 3 hombres pueden cambiar de asiento entre ellos de "3 factorial" formas. Las 2 mujeres dentro de su bloque pueden cambiar de "2 factorial" formas. Y a nivel general, tenemos dos grandes bloques que pueden intercambiar de lugar: los hombres primero y mujeres después, o viceversa, lo que nos da otro "2 factorial". Multiplicamos los tres aislamientos: 3 factorial (que es 6), por 2 factorial (que es 2), por 2 factorial. Seis por dos por dos, ¡nos da exactamente 24 formas únicas de sentarlos!
+
+**Desarrollo: Caso B - Solo las mujeres juntas (1:55 - 2:45)**
+
+* **Visual (Manim):** La restricción se reinicia. Ahora, solo las 2 mujeres están unidas por la cuerda de luz morada (un solo bloque). Los 3 hombres se liberan de su caja y quedan totalmente sueltos.
+Una mano robótica cuenta los elementos en pantalla que se pueden mover libremente: el bloque de mujeres (1) + Hombre A (2) + Hombre B (3) + Hombre C (4). Total = $4$ elementos.
+Ecuación central: $4!$ (movimiento de los 4 elementos) $\times 2!$ (movimiento de las mujeres dentro del bloque).
+Se resuelve: $24 \times 2 = 48$. El número $48$ brilla en verde.
+* **Audio:** Ahora cambiemos las reglas del cuestionario. ¿Qué pasa si *justamente* las mujeres exigen sentarse juntas, pero a los hombres les da exactamente igual si están juntos o separados? Aplicamos el método otra vez: Atamos a las dos mujeres en un solo súper-bloque. Ahora, ¿cuántas entidades independientes tenemos en total en la fila? Tenemos a los 3 hombres sueltos, más nuestro súper-bloque indivisible de mujeres. ¡Son 4 entidades! Estos 4 elementos pueden ordenarse y mezclarse en la fila de "4 factorial" formas. Y no olvides que, en secreto dentro de su bloque, las dos mujeres pueden intercambiar asientos de "2 factorial" formas. Multiplicamos 4 factorial (que es 24) por 2 factorial (que es 2), ¡y obtenemos 48 formas de acomodar los exámenes!
+
+**Cierre y CTA Final (2:45 - 3:20)**
+
+* **Visual (Manim):** El número 48 destella y se descompone en 48 candados abriéndose simultáneamente. Los avatares y las sillas se transforman en puntos de datos de un plano cartesiano. Una línea curva y perfecta se traza formando una espectacular campana de Gauss (Distribución de Probabilidad) mientras el plano gira en 3D.
+* **Audio:** Al empaquetar tus datos rebeldes en bloques, puedes dominar cualquier restricción extrema que te ponga un algoritmo o un problema de lógica. Con este truco de jefes finales, ahora sí, oficialmente cerramos nuestro entrenamiento en el mundo del conteo y la probabilidad discreta. Tienes todo el arsenal matemático en tus manos. Nos vemos en nuestra próxima serie donde daremos el gran salto evolutivo hacia la estadística predictiva moderna: Las Variables Aleatorias y sus distribuciones. ¡Suscríbete, deja un buen like y prepárate para graficar el futuro!
 
 
 
-1. 📹 Video 4: Distribuciones de probabilidad discretas
-3. Variable aleatoria discreta
-4. funsion de masa de probabilidad, esperanza y varianza
-2. 📹 Video 5: Distribución de Bernoulli parte 1
-2. 📹 Video 5: Distribución de Bernoulli parte 2
-3. Binomial parte 1:
 
 
