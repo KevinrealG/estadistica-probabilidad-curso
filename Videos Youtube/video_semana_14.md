@@ -257,7 +257,7 @@ Cierre y Conexión Modificado (Video Anterior)
 Visual (Manim): El número 15 se eleva en la pantalla. Las 15 configuraciones posibles caen desde arriba y, al tocar el fondo, se transforman en las intersecciones de un mapa urbano cuadriculado estilo GPS. Un punto luminoso empieza a trazar múltiples caminos diferentes y caóticos desde la esquina inferior izquierda del mapa hasta la superior derecha. Un cartel holográfico parpadea con el texto: "Calculando rutas posibles...".
 
 Audio: Con esta última fórmula dominas por completo las reglas de los elementos idénticos. Las combinaciones y las repeticiones ya no tienen secretos para ti en la teoría. Pero, ¿qué pasa si sacamos estas fórmulas de los números y las letras, y las llevamos al espacio físico? ¿Podemos usar este mismo poder matemático para calcular exactamente cuántas rutas alternativas existen en el plano de una ciudad, o incluso en un tablero de ajedrez? En nuestro próximo video, aplicaremos esta lógica para dominar el Conteo de Rutas en Cuadrículas. 
-8. # Aplicación: Conteo de Rutas en una Cuadrícula 
+# Aplicación: Conteo de Rutas en una Cuadrícula 
 **Gancho (0:00 - 0:40)**
 
 * **Visual (Manim / Simulación 3D):** Un tablero de ajedrez clásico de $8 \times 8$ casillas flota en un espacio oscuro. Una Torre de cristal iluminada se sitúa en la esquina inferior izquierda (casilla A1). La casilla diagonalmente opuesta en la esquina superior derecha (H8) brilla en rojo como el objetivo. Un texto advierte las reglas del juego: *"Movimientos permitidos: SOLO Arriba o Derecha"*. La Torre empieza a trazar rápidamente dos caminos distintos dejando una estela de luz. Un contador gigante arriba empieza a girar rápidamente buscando el total.

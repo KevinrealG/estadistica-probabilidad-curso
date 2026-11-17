@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Estadística UTB (Lab 12)</title>
+<!-- Librería MathJax para renderizar ecuaciones matemáticas en LaTeX -->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    /* Variables globales de diseño institucional UTB */
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    /* Encabezado principal (Hero) */
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    /* Tarjetas de contenido */
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    /* Menú lateral */
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    /* Estilo de tablas y rúbrica */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; vertical-align: top; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    /* Contenedor responsivo 16:9 para YouTube */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    /* Bloques de código Python */
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+    .callout {
+        background-color: #eef6ff;
+        border-left: 4px solid var(--primary);
+        padding: 1rem;
+        border-radius: 4px;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Estadística y Probabilidad · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 12 (Parte 2): Variable Continua y Distribución Normal</h2>
+<p>Simulación de funciones de densidad de probabilidad (PDF), verificación de la regla empírica 68–95–99.7% y análisis de sensibilidad en Python.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Recursos, tareas y código base</a></li>
+<li><a href="#entregables">Compromisos de Entrega</a></li>
+<li><a href="#rubrica">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li>Modelar situaciones aleatorias continuas aplicando funciones de densidad de probabilidad (PDF), estandarización y propiedades de la Distribución Normal en contextos reales.</li>
+        <li>Emplear herramientas computacionales en Python para simular variables continuas, verificar empíricamente la regla $68\text{–}95\text{–}99.7$ y comunicar hallazgos con rigor analítico.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Aplico principios y modelos probabilísticos continuos en el análisis de fenómenos aleatorios utilizando funciones de densidad (PDF) y áreas bajo la curva (CDF).</li>
+        <li>Utilizo Google Colab (<code>numpy</code>, <code>scipy.stats.norm</code>, <code>seaborn</code>) para simular poblaciones normales personalizadas, superponer curvas teóricas a histogramas empíricos y sustentar decisiones de control de calidad.</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">Temáticas que se desarrollan en esta práctica</h2>
+    <ul>
+        <li><strong>Variable aleatoria continua:</strong> puede tomar cualquier valor dentro de un intervalo; en esta práctica, el volumen de llenado medido en mililitros. Las probabilidades se calculan para intervalos: la probabilidad de un valor exacto es cero.</li>
+        <li><strong>Función de Densidad de Probabilidad (PDF):</strong> describe cómo se distribuyen los valores posibles. El área total bajo la curva es 1 y el área entre dos valores representa la probabilidad de que la variable esté en ese intervalo; la altura de la curva en un punto no es, por sí sola, una probabilidad.</li>
+        <li><strong>Distribución Normal $N(\mu, \sigma)$:</strong> simetría, centro y dispersión.</li>
+        <li><strong>Regla Empírica ($68\text{–}95\text{–}99.7\%$):</strong> en una distribución aproximadamente normal, cerca del $68\%$, $95\%$ y $99.7\%$ de los datos se encuentran, respectivamente, dentro de los intervalos $\mu \pm \sigma$, $\mu \pm 2\sigma$ y $\mu \pm 3\sigma$.</li>
+        <li><strong>Simulación computacional e histogramas con densidad superpuesta en Python.</strong></li>
+        <li><strong>Análisis de sensibilidad modificando $\mu$ (traslación) y $\sigma$ (escalamiento).</strong></li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">Problema de aplicación</h2>
+    <h3 style="color: var(--primary);">"Control de Precisión en Dosificación Industrial"</h3>
+    <p>Continúas tu auditoría pasando al área de llenado automatizado de un compuesto líquido de alta precisión. A diferencia del conteo de paquetes (discreto), el volumen de llenado en mililitros es una <strong>variable aleatoria continua</strong> que sigue una Distribución Normal.</p>
+    <p>Cada estudiante auditará un reactor calibrado con una media $\mu$ y una desviación estándar $\sigma$ <strong>generadas únicamente por su código estudiantil</strong>. Tu misión es simular $1,000$ mediciones del reactor, comprobar si cumple con la Regla Empírica ($68\text{–}95\text{–}99.7$) y evaluar qué sucede con la curva de densidad si el reactor sufre un desajuste térmico (aumento de $\sigma$).</p>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">Recursos, tareas a desarrollar y código base</h2>
+    
+    <h3 style="color: var(--primary);">Recurso de apoyo</h3>
+    <ol>
+        <li>Ingresar a <strong>SAVIO → Semana 15</strong> y consultar el video guía <strong>“Laboratorio 12 Distribución Normal”</strong>.</li>
+    </ol>
+
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/IE05MY20k-Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top: 0.8rem;">🔗 <strong>Enlace directo al video:</strong> <a href="https://www.youtube.com/watch?v=IE05MY20k-Q&list=PLagy6nq0rvZr5p6V2F1GsFquuXE4OL0wi&index=10" target="_blank" style="color: var(--primary); font-weight: bold;">Ver en YouTube</a></p>
+
+    <h3 style="color: var(--primary); margin-top: 2rem;">Tareas a desarrollar</h3>
+    <ol>
+        <li>Abre un Notebook en Google Colab e ingresa los últimos cuatro dígitos de tu código estudiantil en <code>mi_codigo</code>.</li>
+        <li>Ejecuta el código base para simular las 1,000 mediciones y generar el histograma con la PDF teórica.</li>
+        <li>Compara los porcentajes simulados dentro de $\mu \pm \sigma$, $\mu \pm 2\sigma$ y $\mu \pm 3\sigma$ con la Regla Empírica. Explica por qué los valores de la simulación pueden diferir ligeramente de los porcentajes teóricos.</li>
+        <li>Interpreta el gráfico de sensibilidad: compara la distribución original con el cambio de media y el aumento de desviación estándar. Explica cuál cambio representa un desfase de calibración y cuál una pérdida de precisión.</li>
+        <li>Incluye el código ejecutado, los resultados, ambos gráficos y tus conclusiones en un PDF; súbelo a SAVIO según los compromisos de entrega.</li>
+    </ol>
+
+    <h3 style="color: var(--primary); margin-top: 2rem;">Código base para el estudiante</h3>
+    <p>Ejecuta el bloque completo en Google Colab. Reemplaza el valor de ejemplo por tus últimos cuatro dígitos; conserva el mismo código para que los resultados sean reproducibles.</p>
+
+    <div class="code-block">
+<pre>import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+
+# ==========================================================
+# PASO CRÍTICO: INGRESA LOS ÚLTIMOS 4 DÍGITOS DE TU CÓDIGO
+# ==========================================================
+mi_codigo = 4829  # &lt;-- Reemplaza con tus últimos 4 dígitos
+np.random.seed(mi_codigo)
+
+# Parámetros únicos de tu reactor industrial (en mililitros)
+mu = 250 + (mi_codigo % 50)          # Media entre 250 y 299 ml
+sigma = round(4 + (mi_codigo % 11) * 0.5, 1) # Desviación entre 4.0 y 9.0 ml
+
+# 1. Simulación de 1,000 mediciones continuas
+datos_simulados = np.random.normal(loc=mu, scale=sigma, size=1000)
+media_muestral = np.mean(datos_simulados)
+sigma_muestral = np.std(datos_simulados, ddof=1)
+
+# Gráficos exploratorios: histograma con KDE y diagrama de caja
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+sns.histplot(datos_simulados, bins=30, kde=True, color='skyblue', edgecolor='black', ax=axes[0])
+axes[0].axvline(mu, color='navy', linestyle='--', linewidth=2, label=f'Media: {mu} ml')
+axes[0].set_title('Histograma de Volumen de Llenado')
+axes[0].set_xlabel('Volumen (ml)')
+axes[0].set_ylabel('Frecuencia')
+axes[0].legend()
+axes[0].grid(alpha=0.3)
+
+sns.boxplot(x=datos_simulados, color='lightgreen', ax=axes[1])
+axes[1].axvline(mu, color='navy', linestyle='--', linewidth=2, label=f'Media: {mu} ml')
+axes[1].set_title('Boxplot de Volumen de Llenado')
+axes[1].set_xlabel('Volumen (ml)')
+axes[1].legend()
+axes[1].grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+# 2. Verificación de la Regla Empírica (68 - 95 - 99.7) en tu muestra
+dentro_1sigma = np.mean((datos_simulados &gt;= mu - sigma) &amp; (datos_simulados &lt;= mu + sigma)) * 100
+dentro_2sigma = np.mean((datos_simulados &gt;= mu - 2*sigma) &amp; (datos_simulados &lt;= mu + 2*sigma)) * 100
+dentro_3sigma = np.mean((datos_simulados &gt;= mu - 3*sigma) &amp; (datos_simulados &lt;= mu + 3*sigma)) * 100
+
+print(f"--- AUDITORÍA NORMAL DEL ANALISTA [{mi_codigo}] ---")
+print(f"Parámetros Teóricos: Media (mu) = {mu} ml | Desviación (sigma) = {sigma} ml")
+print(f"Parámetros Muestrales: Media = {media_muestral:.2f} ml | Desviación = {sigma_muestral:.2f} ml")
+print(f"Regla Empírica Simulada: 1s = {dentro_1sigma:.1f}% | 2s = {dentro_2sigma:.1f}% | 3s = {dentro_3sigma:.1f}%")
+
+# 3. Gráfico: Histograma Empírico + Curva de Densidad Teórica (PDF)
+x = np.linspace(mu - 4*sigma, mu + 4*sigma, 200)
+plt.figure(figsize=(8, 4))
+plt.hist(datos_simulados, bins=30, density=True, alpha=0.6, color='skyblue', edgecolor='black', label='Simulación (n=1000)')
+plt.plot(x, norm.pdf(x, mu, sigma), 'r-', lw=2.5, label=f'PDF Teórica N({mu}, {sigma})')
+plt.axvline(mu, color='navy', linestyle='--', label='Media')
+plt.axvline(mu - sigma, color='gray', linestyle=':', label='Media ± 1σ')
+plt.axvline(mu + sigma, color='gray', linestyle=':')
+plt.title(f'Distribución Normal de Llenado - Analista {mi_codigo}')
+plt.xlabel('Volumen (ml)')
+plt.ylabel('Densidad de Probabilidad')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+# 4. Sensibilidad: desfase de la media y pérdida de precisión
+x_sens = np.linspace(mu - 8*sigma, mu + 15 + 8*sigma, 400)
+plt.figure(figsize=(8, 4))
+plt.plot(x_sens, norm.pdf(x_sens, mu, sigma), lw=2.5, label='Base')
+plt.plot(x_sens, norm.pdf(x_sens, mu + 15, sigma), lw=2, label='Desfase: mu + 15')
+plt.plot(x_sens, norm.pdf(x_sens, mu, 2*sigma), lw=2, label='Menor precisión: 2 sigma')
+plt.title('Análisis de sensibilidad de la distribución normal')
+plt.xlabel('Volumen (ml)')
+plt.ylabel('Densidad de Probabilidad')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()</pre>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Paso 2. Compromisos de entrega</h2>
+    <h3 style="color: var(--primary);">📌 Entregable Parte 2 (Subida en SAVIO al finalizar el segundo bloque de 40 min)</h3>
+    <p>Un archivo <strong>PDF exportado desde Google Colab</strong> que incluya:</p>
+    <ol>
+        <li><strong>Simulación Guiada Individualizada:</strong> Código ejecutado con su semilla única, media y desviación empírica vs. teórica, y comprobación numérica de la regla empírica $68\text{–}95\text{–}99.7\%$.</li>
+        <li><strong>Gráfico de Ajuste:</strong> Histograma de densidad (<code>density=True</code>) con la curva teórica <code>norm.pdf</code> superpuesta y líneas verticales marcando $\mu$ y $\mu \pm \sigma$.</li>
+        <li><strong>Repetición Autónoma Comparativa:</strong> Un gráfico superpuesto con <strong>3 curvas de densidad</strong>:
+            <ul>
+                <li>Curva Base: $(\mu, \sigma)$ original del estudiante.</li>
+                <li>Escenario A (Desfase de calibración): $(\mu + 15, \sigma)$.</li>
+                <li>Escenario B (Pérdida de precisión): $(\mu, 2\sigma)$.</li>
+            </ul>
+        </li>
+        <li><strong>Conclusiones Fundamentadas:</strong> Análisis explicando el efecto geométrico de cambiar $\mu$ y $\sigma$, vinculado directamente con los resultados de aprendizaje del curso.</li>
+    </ol>
+</section>
+
+<section id="rubrica" class="section card">
+    <h2 class="section-title">✅ Rúbrica de Evaluación – Informe del Lab (Parte 2)</h2>
+    <div style="overflow-x: auto;">
+        <table style="font-size: 0.9rem;">
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Nivel 4 – Excelente (5.0)</th>
+                    <th>Nivel 3 – Bueno (4.0)</th>
+                    <th>Nivel 2 – Aceptable (3.0)</th>
+                    <th>Nivel 1 – Insuficiente (1.0 - 2.9)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Código y Parametrización Única (20%)</strong></td>
+                    <td>Aplica su semilla personal; el código está limpio, bien estructurado y emplea correctamente <code>numpy</code> y <code>scipy.stats.norm</code>.</td>
+                    <td>Aplica su semilla; el código es funcional con detalles menores de organización o formato.</td>
+                    <td>Código incompleto, sin parametrización individual o con errores en el uso de librerías.</td>
+                    <td>No entrega código funcional o repite datos ajenos.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Simulación y Regla Empírica (25%)</strong></td>
+                    <td>Simula los 1,000 datos, contrasta media/desviación empírica vs. teórica y valida con precisión la regla 68–95–99.7%.</td>
+                    <td>Simula los datos y analiza $\mu$ y $\sigma$, pero revisa parcialmente la regla empírica.</td>
+                    <td>Simula la variable normal sin analizar sus propiedades de simetría ni intervalos.</td>
+                    <td>No realiza la simulación continua o está incorrecta.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Gráficos de Densidad (PDF) e Histograma (20%)</strong></td>
+                    <td>Superpone perfectamente la curva PDF sobre el histograma normalizado (<code>density=True</code>), con títulos y leyendas claras.</td>
+                    <td>Genera el histograma y la PDF por separado o con leves omisiones de rotulado.</td>
+                    <td>Olvida el parámetro <code>density=True</code> (la curva se aplasta) o entrega gráficos sin títulos.</td>
+                    <td>No genera los gráficos solicitados.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Repetición Autónoma Comparativa (20%)</strong></td>
+                    <td>Grafica y compara en un mismo plano su curva base frente a los cambios en $\mu$ y $\sigma$, extrayendo conclusiones sólidas.</td>
+                    <td>Realiza la repetición con nuevos parámetros en gráficos separados o con análisis breve.</td>
+                    <td>Cambia un solo parámetro o presenta el gráfico sin interpretación analítica.</td>
+                    <td>No realiza la repetición autónoma con nuevos parámetros.</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Rigor Argumentativo y Entrega en PDF (15%)</strong></td>
+                    <td>Entrega el PDF ordenado y redacta conclusiones críticas que articulan la teoría continua con la toma de decisiones reales.</td>
+                    <td>Entrega el PDF completo con conclusiones descriptivas básicas.</td>
+                    <td>Entrega desordenada o con conclusiones desconectadas de los gráficos generados.</td>
+                    <td>No entrega el documento en PDF.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+</main>
+</div>
+<footer>
+    © 2026 · Estadística y Probabilidad · Universidad Tecnológica de Bolívar<br>
+</footer>
+</body></html>
