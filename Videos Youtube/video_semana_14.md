@@ -16,9 +16,7 @@
 
 **Desarrollo: Estrategias, el Orden y el Cálculo (1:40 - 2:50)**
 
-* **Visual (Manim):** La pantalla se divide en dos con una línea brillante.
-* **Izquierda ("EL ORDEN IMPORTA"):** Se escribe *"Permutación"*. Aparecen los bloques $M-A-M-A$. Luego cambian a $A-M-A-M$. Se marca con una $X$ roja gigante, demostrando que aunque son las mismas letras, no son la misma palabra.
-* **Derecha ("EL ORDEN NO IMPORTA"):** Se escribe *"Combinación"*. Aparece un pequeño saco o bolsa de tela. Entran los bloques $M, M, A, A$. Se agitan y salen. El resultado se marca con un check verde $\checkmark$.
+* **Visual (Manim):** La pantalla se divide en dos con una línea brillante. * **Izquierda ("EL ORDEN IMPORTA"):** Se escribe *"Permutación"*. Aparecen los bloques $M-A-M-A$. Luego cambian a $A-M-A-M$. Se marca con una $X$ roja gigante, demostrando que aunque son las mismas letras, no son la misma palabra * **Derecha ("EL ORDEN NO IMPORTA"):** Se escribe *"Combinación"*. Aparece un pequeño saco o bolsa de tela. Entran los bloques $M, M, A, A$. Se agitan y salen. El resultado se marca con un check verde $\checkmark$.
 
 
 > **Audio:** Estas técnicas son la base fundamental para calcular probabilidades en cualquier espacio muestral finito. Dominarlas te permite resolver problemas extremadamente complejos de forma eficiente. Y todo el secreto se reduce a una sola pregunta: ¿Importa el orden?
